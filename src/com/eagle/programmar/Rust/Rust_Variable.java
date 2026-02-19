@@ -38,7 +38,7 @@ public class Rust_Variable extends TokenSequence implements AbstractVariable, Ea
 		interpreter.pushEagleValue(value);
 	}
 
-	public static Rust_Variable newVariable(String name)
+	public static Rust_Variable generateVariable(String name)
 	{
 		Rust_Variable var = new Rust_Variable();
 		var.var = new Rust_Identifier_Reference();

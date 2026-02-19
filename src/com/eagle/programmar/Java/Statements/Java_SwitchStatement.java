@@ -68,18 +68,19 @@ public class Java_SwitchStatement extends TokenSequence
 		return _scope;
 	}
 
-	public Java_Statement generateSwitch(Java_Expression expr,
+	public static Java_Statement generateSwitch(Java_Expression expr,
 			ArrayList<Java_Expression> values, ArrayList<ArrayList<Java_Statement>> cases,
 			ArrayList<Java_Statement> defaultCase, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.val = expr;
+		Java_SwitchStatement switchStmt = new Java_SwitchStatement();
+		switchStmt.leftParen = new PunctuationLeftParen();
+		switchStmt.rightParen = new PunctuationRightParen();
+		switchStmt.leftBrace = new PunctuationLeftBrace();
+		switchStmt.rightBrace = new PunctuationRightBrace();
+		switchStmt.val = expr;
 
 		int numCases = values.size();
-		caseClauses = new TokenList<Java_SwitchCase>();
+		switchStmt.caseClauses = new TokenList<Java_SwitchCase>();
 		for (int i = 0; i < numCases; i++)
 		{
 			Java_CaseClause caseClause = new Java_CaseClause();
@@ -96,14 +97,13 @@ public class Java_SwitchStatement extends TokenSequence
 				stmtComm1.setWhich(stmt1);
 				caseClause.statements.addToken(stmtComm1);
 			}
-			Java_BreakStatement brk1 = new Java_BreakStatement();
 			Java_StatementOrComment stmtComm1 = new Java_StatementOrComment();
-			stmtComm1.setWhich(brk1.generateBreak(this));
+			stmtComm1.setWhich(Java_BreakStatement.generateBreak(switchStmt));
 			caseClause.statements.addToken(stmtComm1);
 
 			Java_SwitchCase switchCase1 = new Java_SwitchCase();
 			switchCase1.setWhich(caseClause);
-			caseClauses.addToken(switchCase1);
+			switchStmt.caseClauses.addToken(switchCase1);
 		}
 
 		if (defaultCase != null && defaultCase.size() > 0)
@@ -119,16 +119,15 @@ public class Java_SwitchStatement extends TokenSequence
 				stmtComm2.setWhich(stmt2);
 				defaultClause.statements.addToken(stmtComm2);
 			}
-			Java_BreakStatement brk2 = new Java_BreakStatement();
 			Java_StatementOrComment stmtComm2 = new Java_StatementOrComment();
-			stmtComm2.setWhich(brk2.generateBreak(this));
+			stmtComm2.setWhich(Java_BreakStatement.generateBreak(switchStmt));
 			defaultClause.statements.addToken(stmtComm2);
 
 			Java_SwitchCase switchCase2 = new Java_SwitchCase();
 			switchCase2.setWhich(defaultClause);
-			caseClauses.addToken(switchCase2);
+			switchStmt.caseClauses.addToken(switchCase2);
 		}
 
-		return Java_Generator.wrapStatement(this);
+		return Java_Generator.wrapStatement(switchStmt);
 	}
 }

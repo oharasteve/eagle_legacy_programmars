@@ -76,20 +76,29 @@ public class CSharp_StatementBlock extends TokenSequence
 		return generator.newBlockStatement(result, this);
 	}
 
-	public CSharp_Statement generateBlock(
+	public static CSharp_Statement generateBlock(
 			ArrayList<CSharp_Statement> stmts, AbstractToken source)
 	{
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.statements = new TokenList<CSharp_StatementOrComment>();
-		this.statements.setPresent(true);
+		CSharp_StatementBlock blk = new CSharp_StatementBlock();
+		blk.leftBrace = new PunctuationLeftBrace();
+		blk.rightBrace = new PunctuationRightBrace();
+		blk.statements = new TokenList<CSharp_StatementOrComment>();
+		blk.statements.setPresent(true);
+		
 		for (CSharp_Statement stmt : stmts)
 		{
 			CSharp_StatementOrComment stmtComm = new CSharp_StatementOrComment();
 			stmtComm.setWhich(stmt);
-			this.statements.addToken(stmtComm);
+			blk.statements.addToken(stmtComm);
+
+			// If the parent block gets the 'while' as the parent, line numbers in the
+			// side-by-side will pick up the 'while' instead of the first statement.
+			if (blk.getTransformationSource() == null)
+			{
+				blk.setTransformationSource(stmt.getTransformationSource());
+			}
 		}
-		return CSharp_Generator.wrapStatement(this);
+		return CSharp_Generator.wrapStatement(blk);
 	}
 
 	public static AbstractStatement collectStatements(EagleTransformer transformer,

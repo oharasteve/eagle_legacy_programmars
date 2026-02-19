@@ -30,15 +30,16 @@ public class CSharp_StringFormatFunc extends TokenSequence implements EagleRunna
 		interpreter.pushStr(String.format(fmt, Integer.valueOf(num)));
 	}
 
-	public CSharp_Expression generateStringFormat(CSharp_Expression num, CSharp_Expression fmt,
+	public static CSharp_Expression generateStringFormat(CSharp_Expression num, CSharp_Expression fmt,
 			AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.format = fmt;
-		this.comma = new PunctuationComma();
-		this.number = num;
-		this.rightParen = new PunctuationRightParen();
+		CSharp_StringFormatFunc strFmt = new CSharp_StringFormatFunc();
+		strFmt.leftParen = new PunctuationLeftParen();
+		strFmt.format = fmt;
+		strFmt.comma = new PunctuationComma();
+		strFmt.number = num;
+		strFmt.rightParen = new PunctuationRightParen();
 
-		return CSharp_StringFunction.wrapStringFunction(this, source);
+		return CSharp_StringFunction.wrapStringFunction(strFmt, source);
 	}
 }

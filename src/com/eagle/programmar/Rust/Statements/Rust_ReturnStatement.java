@@ -46,15 +46,16 @@ public class Rust_ReturnStatement extends TokenSequence
 		return generator.newReturnStatement(retExpr, this);
 	}
 
-	public Rust_Statement generateReturn(Rust_Expression ret, AbstractToken source)
+	public static Rust_Statement generateReturn(Rust_Expression ret, AbstractToken source)
 	{
+		Rust_ReturnStatement retStmt = new Rust_ReturnStatement();
 		if (ret != null)
 		{
-			this.expr = ret;
-			this.expr.setPresent(true);
+			retStmt.expr = ret;
+			retStmt.expr.setPresent(true);
 		}
-		this.semicolon = new PunctuationSemicolon();
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapStatement(this);
+		retStmt.semicolon = new PunctuationSemicolon();
+		retStmt.setTransformationSource(source);
+		return Rust_Generator.wrapStatement(retStmt);
 	}
 }

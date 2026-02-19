@@ -73,41 +73,42 @@ public class Java_PrintFunction extends PrimaryOperator
 		return generator.newPrintFunction(value, newLine, false, this);
 	}
 
-	public Java_Expression generatePrintFunc(Java_Expression line, boolean newLine,
+	public static Java_Expression generatePrintFunc(Java_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		dot1 = new PunctuationPeriod();
-		dot1.setPresent(true);
+		Java_PrintFunction prtFn = new Java_PrintFunction();
+		prtFn.dot1 = new PunctuationPeriod();
+		prtFn.dot1.setPresent(true);
 		if (toErr)
 		{
-			OUT = new Java_KeywordChoice("err");
+			prtFn.OUT = new Java_KeywordChoice("err");
 		}
 		else
 		{
-			OUT = new Java_KeywordChoice("out");
+			prtFn.OUT = new Java_KeywordChoice("out");
 		}
-		dot2 = new PunctuationPeriod();
-		dot2.setPresent(true);
+		prtFn.dot2 = new PunctuationPeriod();
+		prtFn.dot2.setPresent(true);
 
 		if (newLine)
 		{
-			PRINT = new Java_KeywordChoice("println");
+			prtFn.PRINT = new Java_KeywordChoice("println");
 		}
 		else
 		{
-			PRINT = new Java_KeywordChoice("print");
+			prtFn.PRINT = new Java_KeywordChoice("print");
 		}
 
-		leftParen = new PunctuationLeftParen();
-		rightParen = new PunctuationRightParen();
+		prtFn.leftParen = new PunctuationLeftParen();
+		prtFn.rightParen = new PunctuationRightParen();
 
-		expr = line;
+		prtFn.expr = line;
 		if (line != null)
 		{
-			expr.setPresent(true);
+			prtFn.expr.setPresent(true);
 		}
 
-		setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		prtFn.setTransformationSource(source);
+		return Java_Generator.wrapExpression(prtFn);
 	}
 }

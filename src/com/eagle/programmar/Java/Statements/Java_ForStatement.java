@@ -17,7 +17,6 @@ import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
-import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Java_Syntax;
 import com.eagle.programmar.Java.Java_Type;
 import com.eagle.programmar.Java.Java_Variable;
@@ -35,15 +34,12 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -247,10 +243,11 @@ public class Java_ForStatement extends TokenSequence
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 
-	public Java_Statement generateForLoop1(Java_Expression initExpression,
+	public static Java_Statement generateForLoopOne(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			Java_Statement act, AbstractToken source)
 	{
+		Java_ForStatement forStmt = new Java_ForStatement();
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
 		forWhat.setPresent(true);
@@ -260,40 +257,40 @@ public class Java_ForStatement extends TokenSequence
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
 		loopIncrements.addPrimaryElement(incrExpression);
 
-		this.leftParen = new PunctuationLeftParen();
-		this.initial = new Java_ForInit();
-		this.initial.setPresent(true);
-		this.initial.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		forStmt.leftParen = new PunctuationLeftParen();
+		forStmt.initial = new Java_ForInit();
+		forStmt.initial.setPresent(true);
+		forStmt.initial.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat what = new Java_ForWhat();
 		what.setWhich(initExpression);
-		this.initial.what.addPrimaryElement(what);
+		forStmt.initial.what.addPrimaryElement(what);
 
-		this.semicolon1 = new PunctuationSemicolon();
-		this.terminateCondition = condExpression;
-		this.terminateCondition.setPresent(true);
-		this.semicolon2 = new PunctuationSemicolon();
-		this.increments = loopIncrements;
-		this.rightParen = new PunctuationRightParen();
-		this.action = act;
+		forStmt.semicolon1 = new PunctuationSemicolon();
+		forStmt.terminateCondition = condExpression;
+		forStmt.terminateCondition.setPresent(true);
+		forStmt.semicolon2 = new PunctuationSemicolon();
+		forStmt.increments = loopIncrements;
+		forStmt.rightParen = new PunctuationRightParen();
+		forStmt.action = act;
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		forStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(forStmt);
 	}
 
-	public Java_Statement generateForLoop(Java_Expression initExpression,
+	public static Java_Statement generateForLoopMany(Java_Expression initExpression,
 			Java_Expression condExpression, Java_Expression incrExpression,
-			ArrayList<Java_Statement> acts, AbstractToken source)
+			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_StatementBlock block = new Java_StatementBlock();
-		Java_Statement stmt = block.generateBlock(acts, source);
-		return generateForLoop1(initExpression, condExpression, incrExpression,
-				stmt, source);
+		Java_Statement block = Java_StatementBlock.generateBlock(actions, source);
+		return generateForLoopOne(initExpression, condExpression, incrExpression,
+				block, source);
 	}
 
-	public Java_Statement generateForRange1(Java_Variable var, TypeEnum type,
+	public static Java_Statement generateForRangeOne(Java_Variable var, TypeEnum type,
 			Java_Expression fromExpression, RelationalEnum relOp, Java_Expression toExpression,
 			Java_Expression delta, Java_Statement act, AbstractToken source)
 	{
+		Java_ForStatement forStmt = new Java_ForStatement();
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
 		Java_ForWhat forWhat = new Java_ForWhat();
 		if (type == TypeEnum.INTEGER)
@@ -311,9 +308,9 @@ public class Java_ForStatement extends TokenSequence
 		}
 		else
 		{
-			Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-			asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
-			forWhat.setWhich(Java_Generator.wrapExpression(asgExpr));
+			Java_Expression asgExpr = Java_AssignmentExpression.generateAssignment(
+					var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
+			forWhat.setWhich(asgExpr);
 		}
 		initializer.addPrimaryElement(forWhat);
 
@@ -321,8 +318,7 @@ public class Java_ForStatement extends TokenSequence
 		Java_Expression loopIncr;
 		if (delta == null)
 		{
-			Java_PostIncrementExpression postExpr = new Java_PostIncrementExpression();
-			loopIncr = postExpr.generateIncrement(var, IncrementEnum.INCREMENT, source);
+			loopIncr = Java_PostIncrementExpression.generateIncrement(var, IncrementEnum.INCREMENT, source);
 		}
 		else
 		{
@@ -332,8 +328,8 @@ public class Java_ForStatement extends TokenSequence
 				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
 			}
 
-			Java_AssignmentExpression asgExp2 = new Java_AssignmentExpression();
-			loopIncr = asgExp2.generateAssignment(var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
+			loopIncr = Java_AssignmentExpression.generateAssignment(
+					var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
 		loopIncrements.addPrimaryElement(loopIncr);
 
@@ -341,44 +337,32 @@ public class Java_ForStatement extends TokenSequence
 		tempVar.variable = var;
 		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
 
-		Java_RelationalExpression relExpr = new Java_RelationalExpression();
-		relExpr.generateRelational(new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER),
-				varExpr, relOp, toExpression, toExpression);
-		Java_Expression untilCondition = Java_Generator.wrapExpression(relExpr);
-		Java_Expression loopTest = untilCondition;
+		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		Java_Expression loopTest = Java_RelationalExpression.generateRelational(
+				types, varExpr, relOp, toExpression, toExpression);
 
-		this.leftParen = new PunctuationLeftParen();
-		this.initial = new Java_ForInit();
-		this.initial.setPresent(true);
-		this.initial.what = initializer;
-		this.semicolon1 = new PunctuationSemicolon();
-		this.terminateCondition = loopTest;
-		this.terminateCondition.setPresent(true);
-		this.semicolon2 = new PunctuationSemicolon();
-		this.increments = loopIncrements;
-		this.rightParen = new PunctuationRightParen();
-		this.action = act;
+		forStmt.leftParen = new PunctuationLeftParen();
+		forStmt.initial = new Java_ForInit();
+		forStmt.initial.setPresent(true);
+		forStmt.initial.what = initializer;
+		forStmt.semicolon1 = new PunctuationSemicolon();
+		forStmt.terminateCondition = loopTest;
+		forStmt.terminateCondition.setPresent(true);
+		forStmt.semicolon2 = new PunctuationSemicolon();
+		forStmt.increments = loopIncrements;
+		forStmt.rightParen = new PunctuationRightParen();
+		forStmt.action = act;
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		forStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(forStmt);
 	}
 
-	public Java_Statement generateForRange(Java_Variable var, TypeEnum type,
+	public static Java_Statement generateForRangeMany(Java_Variable var, TypeEnum type,
 			Java_Expression fromExpression, RelationalEnum relOper, Java_Expression toExpression,
 			Java_Expression delta, ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_StatementBlock block = new Java_StatementBlock();
-		block.leftBrace = new PunctuationLeftBrace();
-		block.rightBrace = new PunctuationRightBrace();
-		block.statements = new TokenList<Java_StatementOrComment>();
-		for (Java_Statement stmt : actions)
-		{
-			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			block.statements.addToken(stmtOrComment);
-		}
-
-		return generateForRange1(var, type, fromExpression, relOper, toExpression,
-				delta, Java_Generator.wrapStatement(block), source);
+		Java_Statement block = Java_StatementBlock.generateBlock(actions, source);
+		return generateForRangeOne(var, type, fromExpression, relOper, toExpression,
+				delta, block, source);
 	}
 }

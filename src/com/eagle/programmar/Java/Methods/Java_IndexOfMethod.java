@@ -51,23 +51,24 @@ public class Java_IndexOfMethod extends PrimaryOperator
 		}
 	}
 
-	public Java_Expression generateIndexOf(Java_Variable str, Java_Expression patt,
+	public static Java_Expression generateIndexOf(Java_Variable str, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		this.string = str;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattern = patt;
+		Java_IndexOfMethod indexMeth = new Java_IndexOfMethod();
+		indexMeth.string = str;
+		indexMeth.dot = new PunctuationPeriod();
+		indexMeth.leftParen = new PunctuationLeftParen();
+		indexMeth.pattern = patt;
 		if (sc != null)
 		{
-			this.scExpr = new Java_Index_SC();
-			this.scExpr.setPresent(true);
-			this.scExpr.comma = new PunctuationComma();
-			this.scExpr.start = sc;
+			indexMeth.scExpr = new Java_Index_SC();
+			indexMeth.scExpr.setPresent(true);
+			indexMeth.scExpr.comma = new PunctuationComma();
+			indexMeth.scExpr.start = sc;
 		}
-		this.rightParen = new PunctuationRightParen();
+		indexMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		indexMeth.setTransformationSource(source);
+		return Java_Generator.wrapExpression(indexMeth);
 	}
 }

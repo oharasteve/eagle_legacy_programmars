@@ -41,14 +41,15 @@ public class Java_LengthMethod extends PrecedenceOperator
 		return generator.newLengthFunction(theExpr, this);
 	}
 
-	public Java_Expression generateLength(Java_Expression expr, AbstractToken source)
+	public static Java_Expression generateLength(Java_Expression expr, AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
+		Java_LengthMethod lenFn = new Java_LengthMethod();
+		lenFn.expression = expr;
+		lenFn.dot = new PunctuationPeriod();
+		lenFn.leftParen = new PunctuationLeftParen();
+		lenFn.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		lenFn.setTransformationSource(source);
+		return Java_Generator.wrapExpression(lenFn);
 	}
 }

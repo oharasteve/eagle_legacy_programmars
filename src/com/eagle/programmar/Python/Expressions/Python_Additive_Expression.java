@@ -93,32 +93,32 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		}
 	}
 
-	public Python_Expression generateAdditive(Oper2Types types, Python_Expression leftExpr,
+	public static Python_Expression generateAdditive(Oper2Types types, Python_Expression leftExpr,
 			AdditiveEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Python_Additive_Expression addExpr = new Python_Additive_Expression();
+		addExpr.left = leftExpr;
+		addExpr.right = rightExpr;
 		if (types != null)
 		{
 			if (types._type1.equals(EagleString.STRING) && !types._type2.equals(EagleString.STRING))
 			{
-				Python_Str_Function strFn = new Python_Str_Function();
-				this.right = strFn.generateString(null, rightExpr, rightExpr);
+				addExpr.right = Python_Str_Function.generateString(null, rightExpr, rightExpr);
 			}
 		}
 
 		switch (oper)
 		{
 		case PLUS:
-			this.operator.setValue("+");
+			addExpr.operator.setValue("+");
 			break;
 		case MINUS:
-			this.operator.setValue("-");
+			addExpr.operator.setValue("-");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		addExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(addExpr);
 	}
 }

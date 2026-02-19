@@ -57,38 +57,37 @@ public class Python_VariableExpression extends PrimaryOperator
 				SubscriptEnum.FIRST_IS_ZERO, null, this);
 	}
 
-	public Python_Expression generateVarExpr(String name, SubscriptEnum offset,
+	public static Python_Expression generateVariableExpression(String name, SubscriptEnum offset,
 			Python_Expression subscrExpr, AbstractToken source)
 	{
-		this.variable = Python_Variable.newVariable(name);
+		Python_VariableExpression varExp = new Python_VariableExpression();
+		varExp.variable = Python_Variable.newVariable(name);
 
 		if (subscrExpr != null)
 		{
-			this.subscript = new Python_Subscript();
-			this.subscript.setPresent(true);
-			this.subscript.leftBracket = new PunctuationLeftBracket();
-			this.subscript.rightBracket = new PunctuationRightBracket();
-			this.subscript.body = new Python_SubscrExpr();
+			varExp.subscript = new Python_Subscript();
+			varExp.subscript.setPresent(true);
+			varExp.subscript.leftBracket = new PunctuationLeftBracket();
+			varExp.subscript.rightBracket = new PunctuationRightBracket();
+			varExp.subscript.body = new Python_SubscrExpr();
 
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
-				Python_Number num = new Python_Number();
-				Python_Expression one = Python_Generator.wrapExpression(num.generateNumber("1", source));
-				Python_Additive_Expression addExp = new Python_Additive_Expression();
+				Python_Expression one = Python_Number.generateNumberExpression("1", source);
 				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-				Python_Expression minusOne = addExp.generateAdditive(types, subscrExpr,
+				Python_Expression minusOne = Python_Additive_Expression.generateAdditive(types, subscrExpr,
 						AdditiveEnum.MINUS, one, source);
-				this.subscript.body.subscr = minusOne;
+				varExp.subscript.body.subscr = minusOne;
 			}
 			else
 			{
-				this.subscript.body.subscr = subscrExpr;
+				varExp.subscript.body.subscr = subscrExpr;
 			}
 
-			this.subscript.body.subscr.setPresent(true);
+			varExp.subscript.body.subscr.setPresent(true);
 		}
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		varExp.setTransformationSource(source);
+		return Python_Generator.wrapExpression(varExp);
 	}
 }

@@ -16,9 +16,10 @@ public class Java_ShiftExpression extends PrecedenceOperator
 	public @S(20) Java_PunctuationChoice operator = new Java_PunctuationChoice(">>>", "<<", ">>");
 	public @S(30) Java_Expression right = new Java_Expression(this, AllowedPrecedence.HIGHER);
 
-	public Java_Expression generateShift(Java_Expression leftExpr, ShiftEnum shift,
+	public static Java_Expression generateShift(Java_Expression leftExpr, ShiftEnum shift,
 			Java_Expression rightExpr, AbstractToken source)
 	{
+		Java_ShiftExpression shiftExpr = new Java_ShiftExpression();
 		String oper;
 		switch (shift)
 		{
@@ -35,10 +36,10 @@ public class Java_ShiftExpression extends PrecedenceOperator
 			return null;
 		}
 
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.operator = new Java_PunctuationChoice(oper);
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		shiftExpr.left = leftExpr;
+		shiftExpr.right = rightExpr;
+		shiftExpr.operator = new Java_PunctuationChoice(oper);
+		shiftExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(shiftExpr);
 	}
 }

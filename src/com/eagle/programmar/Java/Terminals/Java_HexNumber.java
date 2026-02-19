@@ -15,10 +15,11 @@ public class Java_HexNumber extends TerminalHexNumberToken
 		return genericHex(lines, "0x", "Ll", true);
 	}
 
-	public Java_HexNumber generateHexNumber(String value, AbstractToken source)
+	public static Java_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Java_HexNumber hex = new Java_HexNumber();
+		hex.setValue(value);
+		hex.setTransformationSource(source);
+		return hex;
 	}
 }

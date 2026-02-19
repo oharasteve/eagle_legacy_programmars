@@ -259,15 +259,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Statement newBlockStatement(
 			ArrayList<CSharp_Statement> statements, AbstractToken source)
 	{
-		CSharp_StatementBlock block = new CSharp_StatementBlock();
-		return block.generateBlock(statements, source);
+		return CSharp_StatementBlock.generateBlock(statements, source);
 	}
 
 	@Override
 	public CSharp_Statement newBreakStatement(AbstractToken source)
 	{
-		CSharp_BreakStatement brkStmt = new CSharp_BreakStatement();
-		return brkStmt.generateBreak(source);
+		return CSharp_BreakStatement.generateBreak(source);
 	}
 
 	@Override
@@ -281,16 +279,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Statement newDoUntilStatement1(CSharp_Expression condition,
 			CSharp_Statement action, AbstractToken source)
 	{
-		CSharp_DoWhileStatement doStmt = new CSharp_DoWhileStatement();
-		return doStmt.generateDoUntil1(condition, action, source);
+		return CSharp_DoWhileStatement.generateDoUntilOne(condition, action, source);
 	}
 
 	@Override
 	public CSharp_Statement newDoUntilStatement(CSharp_Expression condition,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		CSharp_DoWhileStatement doStmt = new CSharp_DoWhileStatement();
-		return doStmt.generateDoUntil(condition, actions, source);
+		return CSharp_DoWhileStatement.generateDoUntilMany(condition, actions, source);
 	}
 
 	@Override
@@ -316,8 +312,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression term, CSharp_Expression incr, CSharp_Statement action,
 			AbstractToken source)
 	{
-		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.generateForLoop1(init, term, incr, action, source);
+		return CSharp_ForStatement.generateForLoopOne(init, term, incr, action, source);
 	}
 
 	@Override
@@ -325,8 +320,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression term, CSharp_Expression incr,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.generateForLoop(init, term,
+		return CSharp_ForStatement.generateForLoopMany(init, term,
 				incr, actions, source);
 	}
 
@@ -335,8 +329,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression first, RelationalEnum relOper, CSharp_Expression last,
 			CSharp_Expression step, CSharp_Statement action, AbstractToken source)
 	{
-		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.generateForRange1(var, type, first, relOper, last, step, action, source);
+		return CSharp_ForStatement.generateForRangeOne(var, type, first, relOper, last, step, action, source);
 	}
 
 	@Override
@@ -344,16 +337,15 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression first, RelationalEnum relOper, CSharp_Expression last,
 			CSharp_Expression step, ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		CSharp_ForStatement forStmt = new CSharp_ForStatement();
-		return forStmt.generateForRange(var, type, first, relOper, last, step, actions, source);
+		return CSharp_ForStatement.generateForRangeMany(var, type, first,
+				relOper, last, step, actions, source);
 	}
 
 	@Override
 	public CSharp_Statement newIfStatement1(CSharp_Expression condition,
 			CSharp_Statement ifTrue, CSharp_Statement ifFalse, AbstractToken source)
 	{
-		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
-		return ifStmt.generateIfElse1(condition, ifTrue, ifFalse, source);
+		return CSharp_IfStatement.generateIfElseOne(condition, ifTrue, ifFalse, source);
 	}
 
 	@Override
@@ -361,16 +353,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			ArrayList<CSharp_Statement> ifTrue,
 			ArrayList<CSharp_Statement> ifFalse, AbstractToken source)
 	{
-		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
-		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
+		return CSharp_IfStatement.generateIfElseMany(condition, ifTrue, ifFalse, source);
 	}
 
 	@Override
 	public CSharp_Expression newPrintFunction(CSharp_Expression line,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		CSharp_PrintFunction prtFunc = new CSharp_PrintFunction();
-		return prtFunc.generatePrintFunc(line, newLine, toErr, source);
+		return CSharp_PrintFunction.generatePrintFunc(line, newLine, toErr, source);
 	}
 
 	@Override
@@ -385,8 +375,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Statement newReturnStatement(CSharp_Expression ret,
 			AbstractToken source)
 	{
-		CSharp_ReturnStatement retStmt = new CSharp_ReturnStatement();
-		return retStmt.generateReturn(ret, source);
+		return CSharp_ReturnStatement.generateReturn(ret, source);
 	}
 
 	@Override
@@ -394,24 +383,21 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			ArrayList<CSharp_Expression> values, ArrayList<ArrayList<CSharp_Statement>> cases,
 			ArrayList<CSharp_Statement> defaultCase, AbstractToken source)
 	{
-		CSharp_SwitchStatement switchStmt = new CSharp_SwitchStatement();
-		return switchStmt.generateSwitch(expr, values, cases, defaultCase, source);
+		return CSharp_SwitchStatement.generateSwitch(expr, values, cases, defaultCase, source);
 	}
 
 	@Override
 	public CSharp_Statement newWhileStatement1(CSharp_Expression condition,
 			CSharp_Statement action, AbstractToken source)
 	{
-		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
-		return whileStmt.generateWhile1(condition, action, source);
+		return CSharp_WhileStatement.generateWhileOne(condition, action, source);
 	}
 
 	@Override
 	public CSharp_Statement newWhileStatement(CSharp_Expression condition,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		CSharp_WhileStatement whileStmt = new CSharp_WhileStatement();
-		return whileStmt.generateWhile(condition, actions, source);
+		return CSharp_WhileStatement.generateWhileMany(condition, actions, source);
 	}
 
 	// ================ Expressions ================
@@ -420,17 +406,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Expression newAdditiveExpression(Oper2Types types,
 			CSharp_Expression left, AdditiveEnum oper, CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
-		return addExp.generateAdditive(types, left,
-				oper, right, source);
+		return CSharp_AdditiveExpression.generateAdditive(types, left, oper, right, source);
 	}
 
 	@Override
 	public CSharp_Expression newAppendExpression(Oper2Types types,
 			CSharp_Expression left, CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_AdditiveExpression appendExp = new CSharp_AdditiveExpression();
-		return appendExp.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
+		return CSharp_AdditiveExpression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 
 	@Override
@@ -439,8 +422,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			AbstractToken source)
 	{
 		CSharp_Variable var = CSharp_Variable.newVariable(name);
-		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
-		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
+		return CSharp_AssignmentExpression.generateAssignment(var, subscript, oper, expression, source);
 	}
 
 	@Override
@@ -456,8 +438,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		CSharp_Variable var = CSharp_Variable.newVariable(name);
-		CSharp_PostIncrementExpression incrExpr = new CSharp_PostIncrementExpression();
-		return incrExpr.generateIncrement(var, oper, source);
+		return CSharp_PostIncrementExpression.generateIncrement(var, oper, source);
 	}
 
 	@Override
@@ -465,15 +446,13 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		CSharp_Variable var = CSharp_Variable.newVariable(name);
-		CSharp_PreIncrementExpression incrExpr = new CSharp_PreIncrementExpression();
-		return incrExpr.generateIncrement(var, oper, source);
+		return CSharp_PreIncrementExpression.generateIncrement(var, oper, source);
 	}
 
 	@Override
 	public CSharp_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		CSharp_BuiltIn built = new CSharp_BuiltIn();
-		return built.generateBuiltIn(builtin, source);
+		return CSharp_BuiltIn.generateBuiltIn(builtin, source);
 	}
 
 	@Override
@@ -486,56 +465,49 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	@Override
 	public CSharp_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
-		CSharp_Literal lit = new CSharp_Literal();
-		return wrapExpression(lit.generateLiteral(literal, source));
+		return CSharp_Literal.generateLiteralExpression(literal, source);
 	}
 
 	@Override
 	public CSharp_Expression newLogicalAndExpression(CSharp_Expression left,
 			CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_LogicalAndExpression andExpr = new CSharp_LogicalAndExpression();
-		return andExpr.generateLogicalAnd(left, right, source);
+		return CSharp_LogicalAndExpression.generateLogicalAnd(left, right, source);
 	}
 
 	@Override
 	public CSharp_Expression newLogicalOrExpression(CSharp_Expression left,
 			LogicalOrEnum oper, CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_LogicalOrExpression orExpr = new CSharp_LogicalOrExpression();
-		return orExpr.generateLogicalOr(left, oper, right, source);
+		return CSharp_LogicalOrExpression.generateLogicalOr(left, oper, right, source);
 	}
 
 	@Override
 	public AbstractExpression newBitwiseExpression(CSharp_Expression left,
 			BitwiseEnum oper, CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_BitwiseExpression bitExpr = new CSharp_BitwiseExpression();
-		return bitExpr.generateBitwise(left, oper, right, source);
+		return CSharp_BitwiseExpression.generateBitwise(left, oper, right, source);
 	}
 
 	@Override
 	public AbstractExpression newBitwiseNotExpression(CSharp_Expression expr,
 			AbstractToken source)
 	{
-		CSharp_BitwiseNotExpression bitExpr = new CSharp_BitwiseNotExpression();
-		return bitExpr.generateBitwiseNot(expr, source);
+		return CSharp_BitwiseNotExpression.generateBitwiseNot(expr, source);
 	}
 
 	@Override
 	public CSharp_Expression newMultiplicativeExpression(CSharp_Expression left,
 			MultiplicativeEnum oper, CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_MultiplicativeExpression multExp = new CSharp_MultiplicativeExpression();
-		return multExp.generateMultiplicative(left, oper,
+		return CSharp_MultiplicativeExpression.generateMultiplicative(left, oper,
 				right, source);
 	}
 
 	@Override
 	public CSharp_Expression newNegativeExpression(NegativeEnum sign, CSharp_Expression expr, AbstractToken source)
 	{
-		CSharp_NegativeExpression negExp = new CSharp_NegativeExpression();
-		return negExp.generateNegative(sign, expr, source);
+		return CSharp_NegativeExpression.generateNegative(sign, expr, source);
 	}
 
 	@Override
@@ -548,46 +520,40 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	@Override
 	public CSharp_Expression newLogicalNotExpression(CSharp_Expression expr, AbstractToken source)
 	{
-		CSharp_LogicalNotExpression notExp = new CSharp_LogicalNotExpression();
 		AbstractToken which = expr.getWhich();
 		if (which instanceof TerminalToken || which instanceof CSharp_ParenthesizedExpression)
 		{
-			return notExp.generateLogicalNot(expr, source);
+			return CSharp_LogicalNotExpression.generateLogicalNot(expr, source);
 		}
 
-		CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
-		parens.generateParentheses(expr, source);
-		return notExp.generateLogicalNot(CSharp_Generator.wrapExpression(parens), source);
+		CSharp_Expression parens = CSharp_ParenthesizedExpression.generateParentheses(expr, source);
+		return CSharp_LogicalNotExpression.generateLogicalNot(parens, source);
 	}
 
 	@Override
-	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
+	public CSharp_Expression newLogicalExpression(boolean bool, AbstractToken source)
 	{
-		CSharp_BuiltIn builtin = new CSharp_BuiltIn();
-		builtin.builtinConstant.setValue(bool ? "true" : "false");
-		return wrapExpression(builtin);
+		return CSharp_BuiltIn.generateBuiltIn(
+				(bool ? BuiltInEnum.TRUE : BuiltInEnum.FALSE), source);
 	}
 
 	@Override
 	public CSharp_Expression newNumberExpression(String number, AbstractToken source)
 	{
-		CSharp_Number num = new CSharp_Number();
-		return wrapExpression(num.generateNumber(number, source));
+		return CSharp_Number.generateNumberExpression(number, source);
 	}
 
 	@Override
 	public CSharp_Expression newParenthesizedExpression(CSharp_Expression expr, AbstractToken source)
 	{
-		CSharp_ParenthesizedExpression paren = new CSharp_ParenthesizedExpression();
-		return paren.generateParentheses(expr, source);
+		return CSharp_ParenthesizedExpression.generateParentheses(expr, source);
 	}
 
 	@Override
 	public CSharp_Expression newRelationalExpression(Oper2Types types, CSharp_Expression left, RelationalEnum relOp,
 			CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_RelationalExpression relExp = new CSharp_RelationalExpression();
-		return relExp.generateRelational(types, left, relOp,
+		return CSharp_RelationalExpression.generateRelational(types, left, relOp,
 				right, source);
 	}
 
@@ -595,24 +561,21 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Expression newShiftExpression(CSharp_Expression left,
 			ShiftEnum shift, CSharp_Expression right, AbstractToken source)
 	{
-		CSharp_ShiftExpression shiftExpr = new CSharp_ShiftExpression();
-		return shiftExpr.generateShift(left, shift, right, source);
+		return CSharp_ShiftExpression.generateShift(left, shift, right, source);
 	}
 
 	@Override
 	public CSharp_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		CSharp_ClassCreationWithInitializers creat = new CSharp_ClassCreationWithInitializers();
-		return creat.generateArray(exprs, source);
+		return CSharp_ClassCreationWithInitializers.generateArray(exprs, source);
 	}
 
 	@Override
 	public CSharp_Expression newVariableExpression(String name, SubscriptEnum offset,
 			CSharp_Expression subscript, AbstractToken source)
 	{
-		CSharp_VariableExpression varExp = new CSharp_VariableExpression();
-		return varExp.generateVarExpr(name, offset, subscript, source);
+		return CSharp_VariableExpression.generateVarExpr(name, offset, subscript, source);
 	}
 
 	@Override
@@ -625,16 +588,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Expression newClassCreation(CSharp_Type type,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{
-		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
-		return creat.generateCreation(type, args, source);
+		return CSharp_ClassCreationExpression.generateCreation(type, args, source);
 	}
 
 	@Override
 	public CSharp_Expression newMethodInvocation(CSharp_Variable var,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{
-		CSharp_MethodInvocation creat = new CSharp_MethodInvocation();
-		return creat.generateInvocation(var, args, source);
+		return CSharp_MethodInvocation.generateInvocation(var, args, source);
 	}
 
 	@Override
@@ -648,22 +609,19 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	@Override
 	public CSharp_Expression newLengthFunction(CSharp_Expression expr, AbstractToken source)
 	{
-		CSharp_LengthMethod lenMeth = new CSharp_LengthMethod();
-		return lenMeth.generateLength(expr, source);
+		return CSharp_LengthMethod.generateLength(expr, source);
 	}
 
 	@Override
 	public CSharp_Expression newTrimFunction(CSharp_Expression expr, AbstractToken source)
 	{
-		CSharp_TrimMethod trimMeth = new CSharp_TrimMethod();
-		return trimMeth.generateTrim(expr, source);
+		return CSharp_TrimMethod.generateTrim(expr, source);
 	}
 
 	@Override
 	public CSharp_Expression newStringFunction(Oper1Types types, CSharp_Expression expr, AbstractToken source)
 	{
-		CSharp_ToStringMethod strMeth = new CSharp_ToStringMethod();
-		return strMeth.generateString(types, expr, source);
+		return CSharp_ToStringMethod.generateString(types, expr, source);
 	}
 
 	@Override
@@ -671,32 +629,29 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Expression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			CSharp_Expression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
-		return wrapExpression(CSharp_SubstringMethod.generateExpression(expr, sc,
-				whichSC, whichEC, ecOrnc, ncMightBeTooBig, source));
+		return CSharp_SubstringMethod.generateExpression(expr, sc,
+				whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
 	}
 
 	@Override
 	public AbstractExpression newEndsWithFunction(CSharp_Expression expr, CSharp_Expression patt,
 			AbstractToken source)
 	{
-		CSharp_EndsWithMethod endsMeth = new CSharp_EndsWithMethod();
-		return endsMeth.generateEndsWith(expr, patt, source);
+		return CSharp_EndsWithMethod.generateEndsWith(expr, patt, source);
 	}
 
 	@Override
 	public CSharp_Expression newStartsWithFunction(CSharp_Expression expr, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		CSharp_StartsWithMethod startsMeth = new CSharp_StartsWithMethod();
-		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
+		return CSharp_StartsWithMethod.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
 
 	@Override
 	public CSharp_Expression newIndexOfFunction(CSharp_Variable string, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		CSharp_IndexOfMethod indexMeth = new CSharp_IndexOfMethod();
-		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
+		return CSharp_IndexOfMethod.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
 	@Override
@@ -704,8 +659,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			AbstractToken source)
 	{
 		CSharp_Expression fmt = newLiteralExpression("{0," + length + "}", null);
-		CSharp_StringFormatFunc func = new CSharp_StringFormatFunc();
-		return func.generateStringFormat(expr, fmt, source);
+		return CSharp_StringFormatFunc.generateStringFormat(expr, fmt, source);
 	}
 
 	// ================ Terminals ================
@@ -713,22 +667,19 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	@Override
 	public CSharp_Number newNumber(String value, AbstractToken source)
 	{
-		CSharp_Number num = new CSharp_Number();
-		return num.generateNumber(value, source);
+		return CSharp_Number.generateNumber(value, source);
 	}
 
 	@Override
 	public CSharp_HexNumber newHexNumber(String value, AbstractToken source)
 	{
-		CSharp_HexNumber num = new CSharp_HexNumber();
-		return num.generateHexNumber(value, source);
+		return CSharp_HexNumber.generateHexNumber(value, source);
 	}
 
 	@Override
 	public CSharp_Literal newLiteral(String value, AbstractToken source)
 	{
-		CSharp_Literal lit = new CSharp_Literal();
-		return lit.generateLiteral(value, source);
+		return CSharp_Literal.generateLiteral(value, source);
 	}
 
 	@Override

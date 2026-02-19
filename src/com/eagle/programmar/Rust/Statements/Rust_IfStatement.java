@@ -102,49 +102,48 @@ public class Rust_IfStatement extends TokenSequence
 		return generator.newIfStatement(cond, ifTrue, ifFalse, this);
 	}
 
-	public Rust_Statement generateIfElse1(Rust_Expression cond,
+	public static Rust_Statement generateIfElseOne(Rust_Expression cond,
 			Rust_Statement thenStmt, Rust_Statement elseStmt, AbstractToken source)
 	{
+		Rust_IfStatement ifStmt = new Rust_IfStatement();
 		AbstractToken which = cond.getWhich();
 		if (which instanceof Rust_ParenthesizedExpression)
 		{
 			Rust_ParenthesizedExpression parensExpr = (Rust_ParenthesizedExpression) which;
 			// Remove redundant parens
-			this.condition = parensExpr.expressions.first();
+			ifStmt.condition = parensExpr.expressions.first();
 		}
 		else
 		{
-			this.condition = cond;
+			ifStmt.condition = cond;
 		}
 
-		this.thenStatement = thenStmt;
+		ifStmt.thenStatement = thenStmt;
 
 		if (elseStmt != null)
 		{
-			this.elseClause = new Rust_IfElseClause();
-			this.elseClause.setPresent(true);
-			this.elseClause.elseStatement = elseStmt;
-			this.elseClause.elseStatement.setPresent(true);
+			ifStmt.elseClause = new Rust_IfElseClause();
+			ifStmt.elseClause.setPresent(true);
+			ifStmt.elseClause.elseStatement = elseStmt;
+			ifStmt.elseClause.elseStatement.setPresent(true);
 		}
 
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapStatement(this);
+		ifStmt.setTransformationSource(source);
+		return Rust_Generator.wrapStatement(ifStmt);
 	}
 
-	public Rust_Statement generateIfElse(Rust_Expression cond,
+	public static Rust_Statement generateIfElseMany(Rust_Expression cond,
 			ArrayList<Rust_Statement> thenStatements,
 			ArrayList<Rust_Statement> elseStatements, AbstractToken source)
 	{
-		Rust_Block_Statement thenBlock = new Rust_Block_Statement();
-		Rust_Statement blockTrue = thenBlock.generateBlock(thenStatements, source);
+		Rust_Statement blockTrue = Rust_Block_Statement.generateBlock(thenStatements, source);
 
 		Rust_Statement blockElse = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			Rust_Block_Statement elseBlock = new Rust_Block_Statement();
-			blockElse = elseBlock.generateBlock(elseStatements, source);
+			blockElse = Rust_Block_Statement.generateBlock(elseStatements, source);
 		}
 
-		return generateIfElse1(cond, blockTrue, blockElse, source);
+		return generateIfElseOne(cond, blockTrue, blockElse, source);
 	}
 }

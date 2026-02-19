@@ -44,15 +44,16 @@ public class CSharp_EndsWithMethod extends PrecedenceOperator
 		return generator.newEndsWithFunction(theExpr, thePattern, this);
 	}
 
-	public CSharp_Expression generateEndsWith(CSharp_Expression expr, CSharp_Expression patt,
+	public static CSharp_Expression generateEndsWith(CSharp_Expression expr, CSharp_Expression patt,
 			AbstractToken source)
 	{
-		this.left = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattExpr = patt;
-		this.rightParen = new PunctuationRightParen();
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		CSharp_EndsWithMethod endsMeth = new CSharp_EndsWithMethod();
+		endsMeth.left = expr;
+		endsMeth.dot = new PunctuationPeriod();
+		endsMeth.leftParen = new PunctuationLeftParen();
+		endsMeth.pattExpr = patt;
+		endsMeth.rightParen = new PunctuationRightParen();
+		endsMeth.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(endsMeth);
 	}
 }

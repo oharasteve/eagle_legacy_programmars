@@ -51,23 +51,24 @@ public class CSharp_IndexOfMethod extends PrimaryOperator
 		}
 	}
 
-	public CSharp_Expression generateIndexOf(CSharp_Variable str, CSharp_Expression patt,
+	public static CSharp_Expression generateIndexOf(CSharp_Variable str, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		this.string = str;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattern = patt;
+		CSharp_IndexOfMethod indexMeth = new CSharp_IndexOfMethod();
+		indexMeth.string = str;
+		indexMeth.dot = new PunctuationPeriod();
+		indexMeth.leftParen = new PunctuationLeftParen();
+		indexMeth.pattern = patt;
 		if (sc != null)
 		{
-			this.scExpr = new CSharp_Index_SC();
-			this.scExpr.setPresent(true);
-			this.scExpr.comma = new PunctuationComma();
-			this.scExpr.start = sc;
+			indexMeth.scExpr = new CSharp_Index_SC();
+			indexMeth.scExpr.setPresent(true);
+			indexMeth.scExpr.comma = new PunctuationComma();
+			indexMeth.scExpr.start = sc;
 		}
-		this.rightParen = new PunctuationRightParen();
+		indexMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		indexMeth.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(indexMeth);
 	}
 }

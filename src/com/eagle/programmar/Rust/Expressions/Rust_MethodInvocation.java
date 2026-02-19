@@ -156,7 +156,7 @@ public class Rust_MethodInvocation extends PrimaryOperator
 		return generator.newVariableExpression(name, SubscriptEnum.FIRST_IS_ZERO, index, this);
 	}
 	
-	public Rust_Expression generateInvocation(Rust_Identifier_Reference clsName,
+	public static Rust_Expression generateInvocation(Rust_Identifier_Reference clsName,
 			Rust_Variable var, ArrayList<Rust_Expression> args, AbstractToken source)
 	{
 		Rust_MethodInvocation invoke = new Rust_MethodInvocation();

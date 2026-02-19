@@ -33,9 +33,10 @@ public class Python_BreakStatement extends TokenSequence
 		return generator.newBreakStatement(BREAK);
 	}
 
-	public Python_ComplexStatement generateBreak(AbstractToken source)
+	public static Python_ComplexStatement generateBreak(AbstractToken source)
 	{
-		this.setTransformationSource(source);
-		return Python_Generator.wrapStatement(this);
+		Python_BreakStatement brkStmt = new Python_BreakStatement();
+		brkStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(brkStmt);
 	}
 }

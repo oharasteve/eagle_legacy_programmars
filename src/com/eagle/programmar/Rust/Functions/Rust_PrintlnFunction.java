@@ -72,40 +72,40 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 		return generator.newPrintFunction(value, true, false, this);
 	}
 
-	public Rust_Expression generatePrintFunc(Rust_Expression line, boolean newLine,
+	public static Rust_Expression generatePrintFunc(Rust_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		leftParen = new PunctuationLeftParen();
-		rightParen = new PunctuationRightParen();
-		argList = new SeparatedList<Rust_Expression, PunctuationComma>();
+		Rust_PrintlnFunction print = new Rust_PrintlnFunction();
+		print.leftParen = new PunctuationLeftParen();
+		print.rightParen = new PunctuationRightParen();
+		print.argList = new SeparatedList<Rust_Expression, PunctuationComma>();
 		
 		// Simple case -> println!("str");
 		if (line.getWhich() instanceof Rust_Literal)
 		{
-			argList.addPrimaryElement(line);
+			print.argList.addPrimaryElement(line);
 		}
 		else
 		{
 			Rust_Expression braces = Rust_Literal.generateLiteralExpression("{}", null);
-			argList.addPrimaryElement(braces);
-			argList.addSecondaryElement(new PunctuationComma());
+			print.argList.addPrimaryElement(braces);
+			print.argList.addSecondaryElement(new PunctuationComma());
 	
-			Rust_MethodInvocation invoke = new Rust_MethodInvocation();
 			Rust_Identifier_Reference clsName = new Rust_Identifier_Reference();
 			clsName.setValue("String");
-			Rust_Variable fromVar = Rust_Variable.newVariable("from");
+			Rust_Variable fromVar = Rust_Variable.generateVariable("from");
 			ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
 			Rust_Expression blank = Rust_Literal.generateLiteralExpression("", null);
 			args.add(blank);
-			Rust_Expression invokeExpr = invoke.generateInvocation(clsName, fromVar, args, source);
+			Rust_Expression invokeExpr = Rust_MethodInvocation.generateInvocation(clsName, fromVar, args, source);
 			
-			Rust_AdditiveExpression plus = new Rust_AdditiveExpression();
 			Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
-			Rust_Expression plusExpr = plus.generateAdditive(types, invokeExpr, AdditiveEnum.PLUS, line, source);
-			argList.addPrimaryElement(plusExpr);
+			Rust_Expression plusExpr = Rust_AdditiveExpression.generateAdditive(types,
+					invokeExpr, AdditiveEnum.PLUS, line, source);
+			print.argList.addPrimaryElement(plusExpr);
 		}
 		
-		setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		print.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(print);
 	}
 }

@@ -38,10 +38,11 @@ public class CSharp_BreakStatement extends TokenSequence
 		return generator.newBreakStatement(this);
 	}
 
-	public CSharp_Statement generateBreak(AbstractToken source)
+	public static CSharp_Statement generateBreak(AbstractToken source)
 	{
-		this.semicolon = new PunctuationSemicolon();
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapStatement(this);
+		CSharp_BreakStatement brk = new CSharp_BreakStatement();
+		brk.semicolon = new PunctuationSemicolon();
+		brk.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(brk);
 	}
 }

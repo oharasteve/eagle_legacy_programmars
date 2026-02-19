@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -20,22 +20,31 @@ public class Rust_LogicalOrExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Rust_Punctuation orOperator = new Rust_Punctuation("||");
+	public @S(20) Rust_PunctuationChoice orOperator = new Rust_PunctuationChoice("||", "^");
 	public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		boolean leftValue = interpreter.getBoolValue(left);
-		if (leftValue)
+		switch (orOperator.toString())
 		{
-			// Short circuit, don't bother with RHS
-			interpreter.pushBool(true);
-		}
-		else
-		{
+		case "||":
+			if (leftValue)
+			{
+				// Short circuit, don't bother with RHS
+				interpreter.pushBool(true);
+			}
+			else
+			{
+				boolean rightValue = interpreter.getBoolValue(right);
+				interpreter.pushBool(rightValue);
+			}
+			break;
+		case "^":
 			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(rightValue);
+			interpreter.pushBool(leftValue ^ rightValue);
+			break;
 		}
 	}
 
@@ -47,20 +56,24 @@ public class Rust_LogicalOrExpression extends PrecedenceOperator
 		return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
 	}
 	
-	public Rust_Expression generateLogicalOr(Rust_Expression leftExpr,
+	public static Rust_Expression generateLogicalOr(Rust_Expression leftExpr,
 			LogicalOrEnum oper, Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Rust_LogicalOrExpression or = new Rust_LogicalOrExpression();
+		or.left = leftExpr;
+		or.right = rightExpr;
 		switch (oper)
 		{
 		case OR:
-			this.orOperator.setValue("||");
+			or.orOperator.setValue("||");
+			break;
+		case XOR:
+			or.orOperator.setValue("^");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		or.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(or);
 	}
 }

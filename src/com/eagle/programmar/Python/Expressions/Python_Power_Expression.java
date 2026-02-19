@@ -6,6 +6,7 @@ package com.eagle.programmar.Python.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -37,13 +38,13 @@ public class Python_Power_Expression extends PrecedenceOperator
 		return generator.newExponentExpression(leftExpr, rightExpr, this);
 	}
 
-	public static Python_Power_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr,
+	public static Python_Expression generateExpression(AbstractExpression leftExpr, AbstractExpression rightExpr,
 			AbstractToken source)
 	{
 		Python_Power_Expression expr = new Python_Power_Expression();
 		expr.left = (Python_Expression) leftExpr;
 		expr.right = (Python_Expression) rightExpr;
 		expr.setTransformationSource(source);
-		return expr;
+		return Python_Generator.wrapExpression(expr);
 	}
 }

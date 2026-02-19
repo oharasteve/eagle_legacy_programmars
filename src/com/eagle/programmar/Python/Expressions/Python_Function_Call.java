@@ -130,25 +130,26 @@ public class Python_Function_Call extends PrimaryOperator
 		return generator.newMethodInvocation(var, args, id);
 	}
 
-	public Python_Expression generateInvocation(Python_Variable var,
+	public static Python_Expression generateInvocation(Python_Variable var,
 			ArrayList<Python_Expression> args, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.leftParen.setPresent(true);
-		this.rightParen = new PunctuationRightParen();
-		this.rightParen.setPresent(true);
+		Python_Function_Call invoke = new Python_Function_Call();
+		invoke.leftParen = new PunctuationLeftParen();
+		invoke.leftParen.setPresent(true);
+		invoke.rightParen = new PunctuationRightParen();
+		invoke.rightParen.setPresent(true);
 		AbstractToken which = var.var.getWhich();
 		if (which instanceof Python_Identifier_Reference)
 		{
 			String id = ((Python_Identifier_Reference) which).getValue();
 			// if (id.indexOf('.') < 0) id = "self." + id;
-			this.fnName = Python_Variable.newVariable(id);
-			this.argList = Python_Argument_List.createArgumentList(args);
+			invoke.fnName = Python_Variable.newVariable(id);
+			invoke.argList = Python_Argument_List.createArgumentList(args);
 		}
 		else
 			throw new RuntimeException("Expected an Identifier, not " + which);
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		invoke.setTransformationSource(source);
+		return Python_Generator.wrapExpression(invoke);
 	}
 }

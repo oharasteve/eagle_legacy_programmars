@@ -42,21 +42,21 @@ public class Rust_Literal extends TerminalLiteralToken
 		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
 	}
 
-	public Rust_Literal generateLiteral(String value, AbstractToken source)
+	public static Rust_Literal generateLiteral(String value, AbstractToken source)
 	{
+		Rust_Literal lit = new Rust_Literal();
 		String val = value;
 		if (!val.startsWith("\""))
 		{
 			val = '"' + val + '"';
 		}
-		this.setValue(val);
-		this.setTransformationSource(source);
-		return this;
+		lit.setValue(val);
+		lit.setTransformationSource(source);
+		return lit;
 	}
 
 	public static Rust_Expression generateLiteralExpression(String value, AbstractToken source)
 	{
-		Rust_Literal lit = new Rust_Literal();
-		return Rust_Generator.wrapExpression(lit.generateLiteral(value, source));
+		return Rust_Generator.wrapExpression(generateLiteral(value, source));
 	}
 }

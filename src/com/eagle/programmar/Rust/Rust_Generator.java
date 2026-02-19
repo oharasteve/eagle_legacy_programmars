@@ -29,8 +29,10 @@ import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
+import com.eagle.programmar.Rust.Functions.Rust_PowMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Functions.Rust_StartsWithMethod;
+import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
@@ -242,15 +244,13 @@ public class Rust_Generator
 	public Rust_Statement newBlockStatement(
 			ArrayList<Rust_Statement> statements, AbstractToken source)
 	{
-		Rust_Block_Statement block = new Rust_Block_Statement();
-		return block.generateBlock(statements, source);
+		return Rust_Block_Statement.generateBlock(statements, source);
 	}
 
 	@Override
 	public Rust_Statement newBreakStatement(AbstractToken source)
 	{
-		Rust_BreakStatement brkStmt = new Rust_BreakStatement();
-		return brkStmt.generateBreak(source);
+		return Rust_BreakStatement.generateBreak(source);
 	}
 
 	@Override
@@ -308,8 +308,7 @@ public class Rust_Generator
 	public Rust_Statement newIfStatement1(Rust_Expression condition,
 			Rust_Statement ifTrue, Rust_Statement ifFalse, AbstractToken source)
 	{
-		Rust_IfStatement ifStmt = new Rust_IfStatement();
-		return ifStmt.generateIfElse1(condition, ifTrue, ifFalse, source);
+		return Rust_IfStatement.generateIfElseOne(condition, ifTrue, ifFalse, source);
 	}
 
 	@Override
@@ -317,8 +316,7 @@ public class Rust_Generator
 			ArrayList<Rust_Statement> ifTrue,
 			ArrayList<Rust_Statement> ifFalse, AbstractToken source)
 	{
-		Rust_IfStatement ifStmt = new Rust_IfStatement();
-		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
+		return Rust_IfStatement.generateIfElseMany(condition, ifTrue, ifFalse, source);
 	}
 
 	@Override
@@ -365,8 +363,7 @@ public class Rust_Generator
 	public Rust_Expression newPrintFunction(Rust_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		Rust_PrintlnFunction prtExpr = new Rust_PrintlnFunction();
-		return prtExpr.generatePrintFunc(line, newLine, toErr, source);
+		return Rust_PrintlnFunction.generatePrintFunc(line, newLine, toErr, source);
 	}
 
 	@Override
@@ -381,8 +378,7 @@ public class Rust_Generator
 	public Rust_Statement newReturnStatement(Rust_Expression ret,
 			AbstractToken source)
 	{
-		Rust_ReturnStatement retStmt = new Rust_ReturnStatement();
-		return retStmt.generateReturn(ret, source);
+		return Rust_ReturnStatement.generateReturn(ret, source);
 	}
 
 	@Override
@@ -399,17 +395,14 @@ public class Rust_Generator
 	public Rust_Statement newWhileStatement1(Rust_Expression condition,
 			Rust_Statement action, AbstractToken source)
 	{
-		Rust_WhileStatement whileStmt = new Rust_WhileStatement();
-		return whileStmt.generateWhile1(condition,
-				action, source);
+		return Rust_WhileStatement.generateWhileOne(condition, action, source);
 	}
 
 	@Override
 	public Rust_Statement newWhileStatement(Rust_Expression condition,
 			ArrayList<Rust_Statement> actions, AbstractToken source)
 	{
-		Rust_WhileStatement whileStmt = new Rust_WhileStatement();
-		return whileStmt.generateWhile(condition, actions, source);
+		return Rust_WhileStatement.generateWhileMany(condition, actions, source);
 	}
 
 	// ================ Expressions ================
@@ -418,25 +411,22 @@ public class Rust_Generator
 	public Rust_Expression newAdditiveExpression(Oper2Types types, Rust_Expression left,
 			AdditiveEnum oper, Rust_Expression right, AbstractToken source)
 	{
-		Rust_AdditiveExpression addExpr = new Rust_AdditiveExpression();
-		return addExpr.generateAdditive(types, left, oper, right, source);
+		return Rust_AdditiveExpression.generateAdditive(types, left, oper, right, source);
 	}
 
 	@Override
 	public Rust_Expression newAppendExpression(Oper2Types types,
 			Rust_Expression left, Rust_Expression right, AbstractToken source)
 	{
-		Rust_AdditiveExpression appendExp = new Rust_AdditiveExpression();
-		return appendExp.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
+		return Rust_AdditiveExpression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 
 	@Override
 	public Rust_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Rust_Expression subscript, AssignmentEnum oper, Rust_Expression expression, AbstractToken source)
 	{
-		Rust_Variable var = Rust_Variable.newVariable(name);
-		Rust_AssignmentExpression asgExpr = new Rust_AssignmentExpression();
-		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
+		Rust_Variable var = Rust_Variable.generateVariable(name);
+		return Rust_AssignmentExpression.generateAssignment(var, subscript, oper, expression, source);
 	}
 
 	@Override
@@ -456,9 +446,8 @@ public class Rust_Generator
 	public Rust_Expression newPostIncrementExpression(String name, SubscriptEnum offset,
 			Rust_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
-		Rust_Variable var = Rust_Variable.newVariable(name);
+		Rust_Variable var = Rust_Variable.generateVariable(name);
 		Rust_Expression one = newNumberExpression("1", null);
-		Rust_AssignmentExpression asgStmt = new Rust_AssignmentExpression();
 		
 		AssignmentEnum newOper;
 		switch (oper)
@@ -473,7 +462,7 @@ public class Rust_Generator
 			throw new RuntimeException("Unexpected operator: " + oper);
 		}
 
-		return asgStmt.generateAssignment(var, null, newOper, one, source);
+		return Rust_AssignmentExpression.generateAssignment(var, null, newOper, one, source);
 	}
 
 	@Override
@@ -487,62 +476,54 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		Rust_BuiltIn built = new Rust_BuiltIn();
-		return built.generateBuiltIn(builtin, source);
+		return wrapExpression(Rust_BuiltIn.generateBuiltIn(builtin, source));
 	}
 
 	@Override
 	public Rust_Expression newExponentExpression(Rust_Expression left, Rust_Expression right, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		return wrapExpression(Rust_MathPowFunc.generateExpression(left, right, source));
+		return Rust_PowMethod.generatePower(left, right, source);
 	}
 
 	@Override
 	public Rust_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
-		Rust_Literal lit = new Rust_Literal();
-		return wrapExpression(lit.generateLiteral(literal, source));
+		return Rust_Literal.generateLiteralExpression(literal, source);
 	}
 
 	@Override
 	public Rust_Expression newLogicalAndExpression(Rust_Expression left,
 			Rust_Expression right, AbstractToken source)
 	{
-		Rust_LogicalAndExpression andExpr = new Rust_LogicalAndExpression();
-		return andExpr.generateLogicalAnd(left, right, source);
+		return Rust_LogicalAndExpression.generateLogicalAnd(left, right, source);
 	}
 
 	@Override
 	public Rust_Expression newLogicalOrExpression(Rust_Expression left,
 			LogicalOrEnum oper, Rust_Expression right, AbstractToken source)
 	{
-		Rust_LogicalOrExpression orExpr = new Rust_LogicalOrExpression();
-		return orExpr.generateLogicalOr(left, oper, right, source);
+		return Rust_LogicalOrExpression.generateLogicalOr(left, oper, right, source);
 	}
 
 	@Override
 	public AbstractExpression newBitwiseExpression(Rust_Expression left,
 			BitwiseEnum oper, Rust_Expression right, AbstractToken source)
 	{
-		Rust_BitwiseExpression bitExpr = new Rust_BitwiseExpression();
-		return bitExpr.generateBitwise(left, oper, right, source);
+		return Rust_BitwiseExpression.generateBitwise(left, oper, right, source);
 	}
 
 	@Override
 	public AbstractExpression newBitwiseNotExpression(Rust_Expression expr,
 			AbstractToken source)
 	{
-		Rust_NotExpression bitExpr = new Rust_NotExpression();
-		return bitExpr.generateNot(expr, source);
+		return Rust_NotExpression.generateNot(expr, source);
 	}
 
 	@Override
 	public Rust_Expression newMultiplicativeExpression(Rust_Expression left,
 			MultiplicativeEnum oper, Rust_Expression right, AbstractToken source)
 	{
-		Rust_MultiplicativeExpression mulExp = new Rust_MultiplicativeExpression();
-		return mulExp.generateMultiplicative(left, oper,
+		return Rust_MultiplicativeExpression.generateMultiplicative(left, oper,
 				right, source);
 	}
 
@@ -550,8 +531,7 @@ public class Rust_Generator
 	public Rust_Expression newNegativeExpression(NegativeEnum sign,
 			Rust_Expression expr, AbstractToken source)
 	{
-		Rust_NegativeExpression negExpr = new Rust_NegativeExpression();
-		return negExpr.generateNegative(sign, expr, source);
+		return Rust_NegativeExpression.generateNegative(sign, expr, source);
 	}
 
 	@Override
@@ -563,38 +543,33 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newLogicalNotExpression(Rust_Expression expr, AbstractToken source)
 	{
-		Rust_NotExpression notExp = new Rust_NotExpression();
 		AbstractToken which = expr.getWhich();
 		if (which instanceof TerminalToken || which instanceof Rust_ParenthesizedExpression)
 		{
-			return notExp.generateNot(expr, source);
+			return Rust_NotExpression.generateNot(expr, source);
 		}
 
-		Rust_ParenthesizedExpression parens = new Rust_ParenthesizedExpression();
-		parens.generateParentheses(expr, source);
-		return notExp.generateNot(Rust_Generator.wrapExpression(parens), source);
+		Rust_Expression parens = Rust_ParenthesizedExpression.generateParentheses(expr, source);
+		return Rust_NotExpression.generateNot(parens, source);
 	}
 
 	@Override
 	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
 	{
-		Rust_BuiltIn builtin = new Rust_BuiltIn();
-		builtin.builtinConstant.setValue(bool ? "true" : "false");
-		return wrapExpression(builtin);
+		return wrapExpression(Rust_BuiltIn.generateBuiltIn(
+				(bool ? BuiltInEnum.TRUE : BuiltInEnum.FALSE), source));
 	}
 
 	@Override
 	public Rust_Expression newNumberExpression(String number, AbstractToken source)
 	{
-		Rust_Number num = new Rust_Number();
-		return wrapExpression(num.generateNumber(number, source));
+		return wrapExpression(Rust_Number.generateNumber(number, source));
 	}
 
 	@Override
 	public Rust_Expression newParenthesizedExpression(Rust_Expression expr, AbstractToken source)
 	{
-		Rust_ParenthesizedExpression paren = new Rust_ParenthesizedExpression();
-		return paren.generateParentheses(expr, source);
+		return Rust_ParenthesizedExpression.generateParentheses(expr, source);
 	}
 
 	@Override
@@ -604,11 +579,9 @@ public class Rust_Generator
 		switch(relOp)
 		{
 		case EQUALS, NOT_EQUALS:
-			Rust_EqualityExpression eqExp = new Rust_EqualityExpression();
-			return eqExp.generateEquality(types, left, relOp, right, source);
+			return Rust_EqualityExpression.generateEquality(types, left, relOp, right, source);
 		case LESS_THAN, LESS_EQUALS, GREATER_EQUALS, GREATER_THAN:
-			Rust_RelationalExpression relExp = new Rust_RelationalExpression();
-			return relExp.generateRelational(types, left, relOp, right, source);
+			return Rust_RelationalExpression.generateRelational(types, left, relOp, right, source);
 		}
 		throw new RuntimeException("Unexpected operator: " + relOp);
 	}
@@ -617,8 +590,7 @@ public class Rust_Generator
 	public Rust_Expression newShiftExpression(Rust_Expression left,
 			ShiftEnum shift, Rust_Expression right, AbstractToken source)
 	{
-		Rust_ShiftExpression shiftExpr = new Rust_ShiftExpression();
-		return shiftExpr.generateShift(left, shift, right, source);
+		return Rust_ShiftExpression.generateShift(left, shift, right, source);
 	}
 
 	@Override
@@ -634,15 +606,13 @@ public class Rust_Generator
 	public Rust_Expression newVariableExpression(String name, SubscriptEnum offset,
 			Rust_Expression subscript, AbstractToken source)
 	{
-		Rust_VariableExpression varExp = new Rust_VariableExpression();
-		return varExp.generateVarExpr(name, offset, subscript, source);
+		return Rust_VariableExpression.generateVariableExpression(name, offset, subscript, source);
 	}
 
 	@Override
 	public Rust_Variable newVariable(String name)
 	{
-		throw new RuntimeException("Need to implement");
-//		return Rust_Variable.newVariable(name);
+		return Rust_Variable.generateVariable(name);
 	}
 
 	@Override
@@ -658,8 +628,7 @@ public class Rust_Generator
 	public Rust_Expression newMethodInvocation(Rust_Variable var,
 			ArrayList<Rust_Expression> args, AbstractToken source)
 	{
-		Rust_MethodInvocation creat = new Rust_MethodInvocation();
-		return creat.generateInvocation(null, var, args, source);
+		return Rust_MethodInvocation.generateInvocation(null, var, args, source);
 	}
 
 	@Override
@@ -673,8 +642,7 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newLengthFunction(Rust_Expression expr, AbstractToken source)
 	{
-		Rust_LenMethod lenMeth = new Rust_LenMethod();
-		return lenMeth.generateLength(expr, source);
+		return Rust_LenMethod.generateLength(expr, source);
 	}
 
 	@Override
@@ -688,9 +656,7 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newStringFunction(Oper1Types types, Rust_Expression expr, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
-//		return strMeth.generateString(types, expr, source);
+		return Rust_ToStringMethod.generateString(expr, source);
 	}
 
 	@Override
@@ -698,8 +664,8 @@ public class Rust_Generator
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, Rust_Expression ecOrnc,
 			boolean ncMightBeTooBig, AbstractToken source)
 	{
-		return wrapExpression(Rust_SubscriptExpression.generateSubscriptExpression(expr, sc, whichSC,
-				whichEC, ecOrnc, ncMightBeTooBig, source));
+		return Rust_SubscriptExpression.generateSubscriptExpression(expr, sc, whichSC,
+				whichEC, ecOrnc, ncMightBeTooBig, source);
 	}
 
 	@Override
@@ -715,8 +681,7 @@ public class Rust_Generator
 	public Rust_Expression newStartsWithFunction(Rust_Expression expr, Rust_Expression patt,
 			Rust_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		Rust_StartsWithMethod startsMeth = new Rust_StartsWithMethod();
-		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
+		return Rust_StartsWithMethod.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
 
 	@Override
@@ -743,28 +708,24 @@ public class Rust_Generator
 	@Override
 	public Rust_Number newNumber(String value, AbstractToken source)
 	{
-		Rust_Number num = new Rust_Number();
-		return num.generateNumber(value, source);
+		return Rust_Number.generateNumber(value, source);
 	}
 
 	@Override
 	public Rust_HexNumber newHexNumber(String value, AbstractToken source)
 	{
-		Rust_HexNumber num = new Rust_HexNumber();
-		return num.generateHexNumber(value, source);
+		return Rust_HexNumber.generateHexNumber(value, source);
 	}
 
 	@Override
 	public Rust_Literal newLiteral(String value, AbstractToken source)
 	{
-		Rust_Literal lit = new Rust_Literal();
-		return lit.generateLiteral(value, source);
+		return Rust_Literal.generateLiteral(value, source);
 	}
 
 	@Override
 	public Rust_Character_Literal newCharLiteral(String value, AbstractToken source)
 	{
-		Rust_Character_Literal lit = new Rust_Character_Literal();
-		return lit.generateCharLiteral(value, source);
+		return Rust_Character_Literal.generateCharLiteral(value, source);
 	}
 }

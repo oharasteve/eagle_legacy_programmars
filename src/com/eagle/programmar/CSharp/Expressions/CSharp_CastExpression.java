@@ -32,8 +32,7 @@ public class CSharp_CastExpression extends PrimaryOperator
 		}
 		else
 		{
-			CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
-			cast.expr = parens.generateParentheses(expr, expr);
+			cast.expr = CSharp_ParenthesizedExpression.generateParentheses(expr, expr);
 		}
 
 		cast.setTransformationSource(source);

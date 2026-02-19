@@ -15,9 +15,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class Java_MultiplicativeExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -96,32 +96,33 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 		}
 	}
 
-	public Java_Expression generateMultiplicative(
+	public static Java_Expression generateMultiplicative(
 			Java_Expression leftExpr, MultiplicativeEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Java_MultiplicativeExpression mulExp = new Java_MultiplicativeExpression();
+		mulExp.left = leftExpr;
+		mulExp.right = rightExpr;
 		switch (oper)
 		{
 		case TIMES:
-			this.operator.setValue("*");
+			mulExp.operator.setValue("*");
 			break;
 		case DIVIDE_TRUNCATE:
-			this.operator.setValue("/");
+			mulExp.operator.setValue("/");
 			break;
 		case DIVIDE_NO_TRUNCATE:
-			this.operator.setValue("/");
+			mulExp.operator.setValue("/");
 			Java_Type type = Java_Type.newPrimitiveType("double");
-			this.right = Java_CastExpression.newCastExpression(type, rightExpr, source);
+			mulExp.right = Java_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
 		case REMAINDER:
-			this.operator.setValue("%");
+			mulExp.operator.setValue("%");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper.toString());
 		}
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		mulExp.setTransformationSource(source);
+		return Java_Generator.wrapExpression(mulExp);
 	}
 }

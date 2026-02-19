@@ -46,11 +46,12 @@ public class Rust_LogicalAndExpression extends PrecedenceOperator
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 
-	public Rust_Expression generateLogicalAnd(Rust_Expression leftExpr, Rust_Expression rightExpr, AbstractToken source)
+	public static Rust_Expression generateLogicalAnd(Rust_Expression leftExpr, Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		Rust_LogicalAndExpression and = new Rust_LogicalAndExpression();
+		and.left = leftExpr;
+		and.right = rightExpr;
+		and.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(and);
 	}
 }

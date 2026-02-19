@@ -67,26 +67,27 @@ public class CSharp_BitwiseExpression extends PrecedenceOperator
 		return generator.newBitwiseExpression(leftExpr, oper, rightExpr, this);
 	}
 
-	public CSharp_Expression generateBitwise(CSharp_Expression leftExpr,
+	public static CSharp_Expression generateBitwise(CSharp_Expression leftExpr,
 			BitwiseEnum oper, CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		CSharp_BitwiseExpression bitExpr = new CSharp_BitwiseExpression();
+		bitExpr.left = leftExpr;
+		bitExpr.right = rightExpr;
 		switch (oper)
 		{
 		case AND:
-			this.operator.setValue("&");
+			bitExpr.operator.setValue("&");
 			break;
 		case OR:
-			this.operator.setValue("|");
+			bitExpr.operator.setValue("|");
 			break;
 		case XOR:
-			this.operator.setValue("^");
+			bitExpr.operator.setValue("^");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		bitExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(bitExpr);
 	}
 }

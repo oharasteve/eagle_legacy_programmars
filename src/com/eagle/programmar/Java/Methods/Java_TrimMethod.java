@@ -30,14 +30,15 @@ public class Java_TrimMethod extends PrecedenceOperator
 		interpreter.pushStr(leftStr.trim());
 	}
 
-	public Java_Expression generateTrim(Java_Expression expr, AbstractToken source)
+	public static Java_Expression generateTrim(Java_Expression expr, AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
+		Java_TrimMethod trimMeth = new Java_TrimMethod();
+		trimMeth.expression = expr;
+		trimMeth.dot = new PunctuationPeriod();
+		trimMeth.leftParen = new PunctuationLeftParen();
+		trimMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		trimMeth.setTransformationSource(source);
+		return Java_Generator.wrapExpression(trimMeth);
 	}
 }

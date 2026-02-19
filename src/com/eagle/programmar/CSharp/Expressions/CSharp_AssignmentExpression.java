@@ -112,10 +112,12 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		return asgExpr;
 	}
 
-	public CSharp_Expression generateAssignment(CSharp_Variable variable,
+	public static CSharp_Expression generateAssignment(CSharp_Variable variable,
 			CSharp_Expression subscript, AssignmentEnum oper,
 			CSharp_Expression expression, AbstractToken source)
 	{
+		CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
+		
 		String punct;
 		switch (oper)
 		{
@@ -139,11 +141,11 @@ public class CSharp_AssignmentExpression extends PrecedenceOperator
 		}
 		CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) which;
 
-		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
-		this.var = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
-		this.operator.setValue(punct);
-		this.expr = expression;
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		asgExpr.var = CSharp_VariableExpression.generateVarExpr(id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscript, source);
+		asgExpr.operator.setValue(punct);
+		asgExpr.expr = expression;
+		asgExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(asgExpr);
 	}
 }

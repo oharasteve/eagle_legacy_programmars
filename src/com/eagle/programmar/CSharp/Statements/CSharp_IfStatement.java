@@ -105,53 +105,52 @@ public class CSharp_IfStatement extends TokenSequence
 		return generator.newIfStatement1(cond, thenPart, elsePart, this);
 	}
 
-	public CSharp_Statement generateIfElse1(CSharp_Expression cond,
+	public static CSharp_Statement generateIfElseOne(CSharp_Expression cond,
 			CSharp_Statement thenStmt,
 			CSharp_Statement elseStmt, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
+		CSharp_IfStatement ifStmt = new CSharp_IfStatement();
+		ifStmt.leftParen = new PunctuationLeftParen();
+		ifStmt.rightParen = new PunctuationRightParen();
 
 		AbstractToken which = cond.getWhich();
 		if (which instanceof CSharp_ParenthesizedExpression)
 		{
 			CSharp_ParenthesizedExpression parensExpr = (CSharp_ParenthesizedExpression) which;
 			// Remove redundant parens
-			this.condition = parensExpr.expression;
+			ifStmt.condition = parensExpr.expression;
 		}
 		else
 		{
-			this.condition = cond;
+			ifStmt.condition = cond;
 		}
 
-		this.thenStatement = thenStmt;
+		ifStmt.thenStatement = thenStmt;
 
 		if (elseStmt != null)
 		{
-			this.elseClause = new CSharp_IfElseClause();
-			this.elseClause.setPresent(true);
-			this.elseClause.elseStatement = elseStmt;
-			this.elseClause.elseStatement.setPresent(true);
+			ifStmt.elseClause = new CSharp_IfElseClause();
+			ifStmt.elseClause.setPresent(true);
+			ifStmt.elseClause.elseStatement = elseStmt;
+			ifStmt.elseClause.elseStatement.setPresent(true);
 		}
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapStatement(this);
+		ifStmt.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(ifStmt);
 	}
 
-	public CSharp_Statement generateIfElse(CSharp_Expression cond,
+	public static CSharp_Statement generateIfElseMany(CSharp_Expression cond,
 			ArrayList<CSharp_Statement> thenStatements,
 			ArrayList<CSharp_Statement> elseStatements, AbstractToken source)
 	{
-		CSharp_StatementBlock thenBlock = new CSharp_StatementBlock();
-		CSharp_Statement block1 = thenBlock.generateBlock(thenStatements, source);
+		CSharp_Statement blockThen = CSharp_StatementBlock.generateBlock(thenStatements, source);
 
-		CSharp_Statement block2 = null;
+		CSharp_Statement blockElse = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			CSharp_StatementBlock elseBlock = new CSharp_StatementBlock();
-			block2 = elseBlock.generateBlock(elseStatements, source);
+			blockElse = CSharp_StatementBlock.generateBlock(elseStatements, source);
 		}
 
-		return generateIfElse1(cond, block1, block2, source);
+		return generateIfElseOne(cond, blockThen, blockElse, source);
 	}
 }

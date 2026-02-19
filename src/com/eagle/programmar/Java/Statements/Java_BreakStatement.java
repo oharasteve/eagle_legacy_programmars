@@ -38,10 +38,11 @@ public class Java_BreakStatement extends TokenSequence
 		return generator.newBreakStatement(this);
 	}
 
-	public Java_Statement generateBreak(AbstractToken source)
+	public static Java_Statement generateBreak(AbstractToken source)
 	{
-		this.semicolon = new PunctuationSemicolon();
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		Java_BreakStatement brk = new Java_BreakStatement();
+		brk.semicolon = new PunctuationSemicolon();
+		brk.setTransformationSource(source);
+		return Java_Generator.wrapStatement(brk);
 	}
 }

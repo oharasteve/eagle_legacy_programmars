@@ -13,7 +13,6 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.CSharp_Statement;
-import com.eagle.programmar.CSharp.CSharp_StatementOrComment;
 import com.eagle.programmar.CSharp.CSharp_Syntax;
 import com.eagle.programmar.CSharp.CSharp_Type;
 import com.eagle.programmar.CSharp.CSharp_Variable;
@@ -30,15 +29,12 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -233,7 +229,7 @@ public class CSharp_ForStatement extends TokenSequence
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 
-	public CSharp_Statement generateForLoop1(CSharp_Expression initExpression,
+	public static CSharp_Statement generateForLoopOne(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			CSharp_Statement act, AbstractToken source)
 	{
@@ -261,17 +257,16 @@ public class CSharp_ForStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
 
-	public CSharp_Statement generateForLoop(CSharp_Expression initExpression,
+	public static CSharp_Statement generateForLoopMany(CSharp_Expression initExpression,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		CSharp_StatementBlock block = new CSharp_StatementBlock();
-		CSharp_Statement stmt = block.generateBlock(actions, source);
-		return generateForLoop1(initExpression, condExpression, incrExpression,
-				stmt, source);
+		CSharp_Statement block = CSharp_StatementBlock.generateBlock(actions, source);
+		return generateForLoopOne(initExpression, condExpression, incrExpression,
+				block, source);
 	}
 
-	public CSharp_Statement generateForRange1(CSharp_Variable var, TypeEnum type,
+	public static CSharp_Statement generateForRangeOne(CSharp_Variable var, TypeEnum type,
 			CSharp_Expression fromExpression, RelationalEnum relOp, CSharp_Expression toExpression,
 			CSharp_Expression delta, CSharp_Statement act, AbstractToken source)
 	{
@@ -293,9 +288,9 @@ public class CSharp_ForStatement extends TokenSequence
 		}
 		else
 		{
-			CSharp_AssignmentExpression asgExpr = new CSharp_AssignmentExpression();
-			asgExpr.generateAssignment(var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
-			forWhat.setWhich(CSharp_Generator.wrapExpression(asgExpr));
+			CSharp_Expression asgExpr = CSharp_AssignmentExpression.generateAssignment(
+					var, null, AssignmentEnum.EQUALS, fromExpression, fromExpression);
+			forWhat.setWhich(asgExpr);
 		}
 		initializer.addPrimaryElement(forWhat);
 
@@ -303,8 +298,8 @@ public class CSharp_ForStatement extends TokenSequence
 		CSharp_Expression loopIncr;
 		if (delta == null)
 		{
-			CSharp_PostIncrementExpression postExpr = new CSharp_PostIncrementExpression();
-			loopIncr = postExpr.generateIncrement(var, IncrementEnum.INCREMENT, source);
+			loopIncr = CSharp_PostIncrementExpression.generateIncrement(
+					var, IncrementEnum.INCREMENT, source);
 		}
 		else
 		{
@@ -314,8 +309,8 @@ public class CSharp_ForStatement extends TokenSequence
 				throw new RuntimeException("Can only handle simple loop increments: " + whichDelta);
 			}
 
-			CSharp_AssignmentExpression asgExp2 = new CSharp_AssignmentExpression();
-			loopIncr = asgExp2.generateAssignment(var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
+			loopIncr = CSharp_AssignmentExpression.generateAssignment(
+					var, null, AssignmentEnum.PLUS_EQUALS, delta, source);
 		}
 		loopIncrements.addPrimaryElement(loopIncr);
 
@@ -323,10 +318,8 @@ public class CSharp_ForStatement extends TokenSequence
 		tempVar.variable = var;
 		CSharp_Expression varExpr = CSharp_Generator.wrapExpression(tempVar);
 
-		CSharp_RelationalExpression relExpr = new CSharp_RelationalExpression();
-		relExpr.generateRelational(null, varExpr, relOp, toExpression, toExpression);
-		CSharp_Expression untilCondition = CSharp_Generator.wrapExpression(relExpr);
-		CSharp_Expression loopTest = untilCondition;
+		CSharp_Expression loopTest = CSharp_RelationalExpression.generateRelational(
+				null, varExpr, relOp, toExpression, toExpression);
 
 		CSharp_ForStatement forStmt = new CSharp_ForStatement();
 		forStmt.leftParen = new PunctuationLeftParen();
@@ -343,22 +336,12 @@ public class CSharp_ForStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
 
-	public CSharp_Statement generateForRange(CSharp_Variable var, TypeEnum type,
+	public static  CSharp_Statement generateForRangeMany(CSharp_Variable var, TypeEnum type,
 			CSharp_Expression fromExpression, RelationalEnum relOper, CSharp_Expression toExpression,
 			CSharp_Expression delta, ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		CSharp_StatementBlock block = new CSharp_StatementBlock();
-		block.leftBrace = new PunctuationLeftBrace();
-		block.rightBrace = new PunctuationRightBrace();
-		block.statements = new TokenList<CSharp_StatementOrComment>();
-		for (CSharp_Statement stmt : actions)
-		{
-			CSharp_StatementOrComment stmtOrComment = new CSharp_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			block.statements.addToken(stmtOrComment);
-		}
-
-		return generateForRange1(var, type, fromExpression, relOper, toExpression,
-				delta, CSharp_Generator.wrapStatement(block), source);
+		CSharp_Statement block = CSharp_StatementBlock.generateBlock(actions, source);
+		return generateForRangeOne(var, type, fromExpression, relOper, toExpression,
+				delta, block, source);
 	}
 }

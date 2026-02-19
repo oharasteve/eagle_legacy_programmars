@@ -16,29 +16,30 @@ public class Rust_ShiftExpression extends PrecedenceOperator
 	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice(">>>", "<<", ">>");
 	public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 
-	public Rust_Expression generateShift(Rust_Expression leftExpr, ShiftEnum shift,
+	public static Rust_Expression generateShift(Rust_Expression leftExpr, ShiftEnum oper,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
-		String oper;
-		switch (shift)
+		Rust_ShiftExpression shift = new Rust_ShiftExpression();
+		String op;
+		switch (oper)
 		{
 		case LEFT:
-			oper = "<<";
+			op = "<<";
 			break;
 		case RIGHT:
-			oper = ">>";
+			op = ">>";
 			break;
 		case RIGHTSIGNEXTEND:
-			oper = ">>>";
+			op = ">>>";
 			break;
 		default:
 			return null;
 		}
 
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.operator = new Rust_PunctuationChoice(oper);
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		shift.left = leftExpr;
+		shift.right = rightExpr;
+		shift.operator = new Rust_PunctuationChoice(op);
+		shift.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(shift);
 	}
 }

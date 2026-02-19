@@ -35,10 +35,11 @@ public class CSharp_BitwiseNotExpression extends PrimaryOperator
 		return generator.newBitwiseNotExpression(value, this);
 	}
 
-	public CSharp_Expression generateBitwiseNot(CSharp_Expression value, AbstractToken source)
+	public static CSharp_Expression generateBitwiseNot(CSharp_Expression value, AbstractToken source)
 	{
-		this.expr = value;
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		CSharp_BitwiseNotExpression notExpr = new CSharp_BitwiseNotExpression();
+		notExpr.expr = value;
+		notExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(notExpr);
 	}
 }

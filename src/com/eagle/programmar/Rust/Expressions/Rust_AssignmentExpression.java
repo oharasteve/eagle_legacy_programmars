@@ -93,9 +93,10 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 		return asgExpr;
 	}
 	
-	public Rust_Expression generateAssignment(Rust_Variable variable, Rust_Expression subscript,
+	public static Rust_Expression generateAssignment(Rust_Variable variable, Rust_Expression subscript,
 			AssignmentEnum oper, Rust_Expression expression, AbstractToken source)
 	{
+		Rust_AssignmentExpression asgExpr = new Rust_AssignmentExpression();
 		String punct;
 		switch (oper)
 		{
@@ -114,11 +115,11 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 
 		Rust_Identifier_Reference id = variable.var;
 		Rust_VariableExpression varExpr = new Rust_VariableExpression();
-		varExpr.variable = Rust_Variable.newVariable(id.getValue());
-		this.var = Rust_Generator.wrapExpression(varExpr);
-		this.operator.setValue(punct);
-		this.expr = expression;
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		varExpr.variable = Rust_Variable.generateVariable(id.getValue());
+		asgExpr.var = Rust_Generator.wrapExpression(varExpr);
+		asgExpr.operator.setValue(punct);
+		asgExpr.expr = expression;
+		asgExpr.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(asgExpr);
 	}
 }

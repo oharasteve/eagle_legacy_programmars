@@ -153,17 +153,21 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 		throw new RuntimeException("Can't handle: " + this);
 	}
 
-	public CSharp_Expression generateInvocation(CSharp_Variable var,
+	public static CSharp_Expression generateInvocation(CSharp_Variable var,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{
-		this.methodName = new CSharp_Variable();
-		this.methodName.firstId = var.firstId;
-		this.leftParen = new PunctuationLeftParen();
-		this.argList = CSharp_ArgumentList.createArgumentList(args);
-		if (this.argList != null) this.argList.setPresent(true);
-		this.rightParen = new PunctuationRightParen();
+		CSharp_MethodInvocation invok = new CSharp_MethodInvocation();
+		invok.methodName = new CSharp_Variable();
+		invok.methodName.firstId = var.firstId;
+		invok.leftParen = new PunctuationLeftParen();
+		invok.argList = CSharp_ArgumentList.createArgumentList(args);
+		if (invok.argList != null)
+		{
+			invok.argList.setPresent(true);
+		}
+		invok.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		invok.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(invok);
 	}
 }

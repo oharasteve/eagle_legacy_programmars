@@ -5,6 +5,8 @@ package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -57,12 +59,17 @@ public class Python_Literals extends PrimaryOperator
 			val = "'" + val + "'";
 		}
 
-		Python_Literal lit = new Python_Literal();
-		Python_Literal lit1 = lit.generateLiteral(val, source);
+		Python_Literal lit1 = Python_Literal.generateLiteral(val, source);
 		Python_Literals lits = new Python_Literals();
 		lits.literals = new TokenList<Python_Literal>();
 		lits.literals.addToken(lit1);
 		lits.setTransformationSource(source);
 		return lits;
+	}
+
+	public static Python_Expression generateLiteralsExpression(String txt, AbstractToken source)
+	{
+		Python_Literals lit = generateLiterals(txt, source);
+		return Python_Generator.wrapExpression(lit);
 	}
 }

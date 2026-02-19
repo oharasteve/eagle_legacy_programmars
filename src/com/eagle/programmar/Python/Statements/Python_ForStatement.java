@@ -254,17 +254,17 @@ public class Python_ForStatement extends TokenSequence
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 
-	public Python_ComplexStatement generateForLoop1(Python_Expression initExpression,
+	public static Python_ComplexStatement generateForLoopOne(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			Python_ComplexStatement action, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
-		return generateForLoop(initExpression, condExpression, incrExpression,
+		return generateForLoopMany(initExpression, condExpression, incrExpression,
 				actions, source);
 	}
 
-	public Python_ComplexStatement generateForLoop(Python_Expression initExpression,
+	public static Python_ComplexStatement generateForLoopMany(Python_Expression initExpression,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
@@ -407,29 +407,30 @@ public class Python_ForStatement extends TokenSequence
 		Python_Number numb = Python_Number.createNumber(delta);
 		Python_Expression deltaExp = new Python_Expression();
 		deltaExp.setWhich(numb);
-		return generateForRange(initVarExp.variable, init.right, relOper, cond.right, deltaExp, actions, source);
+		return generateForRangeMany(initVarExp.variable, init.right, relOper, cond.right, deltaExp, actions, source);
 	}
 
-	public Python_ComplexStatement generateForRange1(Python_Variable var, Python_Expression fromExpression,
+	public static Python_ComplexStatement generateForRangeOne(Python_Variable var, Python_Expression fromExpression,
 			RelationalEnum relOp, Python_Expression toExpression, Python_Expression delta,
 			Python_ComplexStatement action, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
-		return generateForRange(var, fromExpression, relOp, toExpression, delta, actions, source);
+		return generateForRangeMany(var, fromExpression, relOp, toExpression, delta, actions, source);
 	}
 
-	public Python_ComplexStatement generateForRange(Python_Variable var, Python_Expression fromExpression,
+	public static Python_ComplexStatement generateForRangeMany(Python_Variable var, Python_Expression fromExpression,
 			RelationalEnum relOper, Python_Expression toExpression, Python_Expression delta,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
-		this.colon = new PunctuationColon();
-		this.forBlock = new Python_StatementBlock();
+		Python_ForStatement forStmt = new Python_ForStatement();
+		forStmt.colon = new PunctuationColon();
+		forStmt.forBlock = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_ComplexStatement>();
-		this.forBlock.setWhich(multi);
+		forStmt.forBlock.setWhich(multi);
 
-		this.what = new Python_ForWhat();
+		forStmt.what = new Python_ForWhat();
 		Python_VariableList varList = new Python_VariableList();
 		varList.vars = new SeparatedList<Python_VariableOrList, PunctuationComma>();
 		Python_VariableOrList varOrList = new Python_VariableOrList();
@@ -440,7 +441,7 @@ public class Python_ForStatement extends TokenSequence
 		justVar.variable.addPrimaryElement(varAndSub);
 		varOrList.setWhich(justVar);
 		varList.vars.addPrimaryElement(varOrList);
-		this.what.setWhich(varList);
+		forStmt.what.setWhich(varList);
 
 		for (Python_ComplexStatement stmt : actions)
 		{
@@ -448,9 +449,9 @@ public class Python_ForStatement extends TokenSequence
 
 			// If the parent block gets the 'while' as the parent, line numbers in the
 			// side-by-side will pick up the 'while' instead of the first statement.
-			if (this.getTransformationSource() == null)
+			if (forStmt.getTransformationSource() == null)
 			{
-				this.setTransformationSource(stmt.getTransformationSource());
+				forStmt.setTransformationSource(stmt.getTransformationSource());
 			}
 		}
 
@@ -481,15 +482,11 @@ public class Python_ForStatement extends TokenSequence
 				}
 			}
 
-			Python_Number one = new Python_Number();
-			Python_Expression oneExpr = Python_Generator.wrapExpression(one.generateNumber("1", null));
-
-			Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
-			Python_Expression parenExpr = parens.generateParentheses(toExpression, null);
-
-			Python_Additive_Expression add = new Python_Additive_Expression();
+			Python_Expression oneExpr = Python_Number.generateNumberExpression("1", null);
+			Python_Expression parenExpr = Python_Parenthesized_Expression.generateParentheses(
+					toExpression, null);
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			high = add.generateAdditive(types, parenExpr, oper, oneExpr, null);
+			high = Python_Additive_Expression.generateAdditive(types, parenExpr, oper, oneExpr, null);
 			break;
 		default:
 			// No change needed for =, <>, <= or >=
@@ -512,11 +509,11 @@ public class Python_ForStatement extends TokenSequence
 		Python_Expression rangeExpr = new Python_Expression();
 		rangeExpr.setWhich(fnCall);
 
-		this.expressionList = new Python_ExpressionList();
-		this.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
-		this.expressionList.expressions.addPrimaryElement(rangeExpr);
+		forStmt.expressionList = new Python_ExpressionList();
+		forStmt.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
+		forStmt.expressionList.expressions.addPrimaryElement(rangeExpr);
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapStatement(this);
+		forStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(forStmt);
 	}
 }

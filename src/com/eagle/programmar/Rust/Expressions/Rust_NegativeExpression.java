@@ -62,9 +62,10 @@ public class Rust_NegativeExpression extends PrimaryOperator
 		}
 	}
 
-	public Rust_Expression generateNegative(NegativeEnum sign,
+	public static Rust_Expression generateNegative(NegativeEnum sign,
 			Rust_Expression theExpr, AbstractToken source)
 	{
+		Rust_NegativeExpression neg = new Rust_NegativeExpression();
 		String oper;
 		switch (sign)
 		{
@@ -75,9 +76,9 @@ public class Rust_NegativeExpression extends PrimaryOperator
 			return null;
 		}
 
-		this.expr = theExpr;
-		this.operator.setValue(oper);
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		neg.expr = theExpr;
+		neg.operator.setValue(oper);
+		neg.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(neg);
 	}
 }

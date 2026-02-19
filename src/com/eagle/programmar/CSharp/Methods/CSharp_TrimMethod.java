@@ -30,14 +30,15 @@ public class CSharp_TrimMethod extends PrecedenceOperator
 		interpreter.pushInt(leftStr.length());
 	}
 
-	public CSharp_Expression generateTrim(CSharp_Expression expr, AbstractToken source)
+	public static CSharp_Expression generateTrim(CSharp_Expression expr, AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
+		CSharp_TrimMethod trimMethod = new CSharp_TrimMethod();
+		trimMethod.expression = expr;
+		trimMethod.dot = new PunctuationPeriod();
+		trimMethod.leftParen = new PunctuationLeftParen();
+		trimMethod.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		trimMethod.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(trimMethod);
 	}
 }

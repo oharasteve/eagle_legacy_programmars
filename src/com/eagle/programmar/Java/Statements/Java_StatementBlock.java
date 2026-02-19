@@ -82,20 +82,21 @@ public class Java_StatementBlock extends TokenSequence
 		return generator.newBlockStatement(result, this);
 	}
 
-	public Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
+	public static Java_Statement generateBlock(ArrayList<Java_Statement> stmts,
 			AbstractToken source)
 	{
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.statements = new TokenList<Java_StatementOrComment>();
-		this.statements.setPresent(true);
+		Java_StatementBlock blk = new Java_StatementBlock();
+		blk.leftBrace = new PunctuationLeftBrace();
+		blk.rightBrace = new PunctuationRightBrace();
+		blk.statements = new TokenList<Java_StatementOrComment>();
+		blk.statements.setPresent(true);
 		for (Java_Statement stmt : stmts)
 		{
 			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
 			stmtOrComment.setWhich(stmt);
-			this.statements.addToken(stmtOrComment);
+			blk.statements.addToken(stmtOrComment);
 		}
-		return Java_Generator.wrapStatement(this);
+		return Java_Generator.wrapStatement(blk);
 	}
 
 	public static AbstractStatement collectStatements(EagleTransformer transformer,

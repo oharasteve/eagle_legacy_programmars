@@ -112,9 +112,10 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		return asgExpr;
 	}
 
-	public Java_Expression generateAssignment(Java_Variable variable, Java_Expression subscript,
+	public static Java_Expression generateAssignment(Java_Variable variable, Java_Expression subscript,
 			AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
+		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
 		String punct;
 		switch (oper)
 		{
@@ -138,11 +139,10 @@ public class Java_AssignmentExpression extends PrecedenceOperator
 		}
 		Java_Identifier_Reference id = (Java_Identifier_Reference) which;
 
-		Java_VariableExpression varExpr = new Java_VariableExpression();
-		this.var = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
-		this.operator.setValue(punct);
-		this.expr = expression;
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		asgExpr.var = Java_VariableExpression.generateVariableExpression(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
+		asgExpr.operator.setValue(punct);
+		asgExpr.expr = expression;
+		asgExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(asgExpr);
 	}
 }

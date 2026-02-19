@@ -37,24 +37,25 @@ public class Java_ToStringMethod extends PrecedenceOperator
 		interpreter.pushStr(val.toString());
 	}
 
-	public Java_Expression generateString(Oper1Types types, Java_Expression expr, AbstractToken source)
+	public static Java_Expression generateString(Oper1Types types, Java_Expression expr, AbstractToken source)
 	{
+		Java_ToStringMethod strMeth = new Java_ToStringMethod();
+
 		if (types != null && types._type1.equals(EagleInteger.INTEGER))
 		{
 			// Java does not like 'ok.toString()' where 'ok' is an int instead of an
 			// Integer.
 			Java_VariableExpression varExpr = new Java_VariableExpression();
 			varExpr.variable = Java_Variable.newVariable("Integer");
-			expression = Java_Generator.wrapExpression(varExpr);
-			dot = new PunctuationPeriod();
-			leftParen = new PunctuationLeftParen();
-			value = expr;
-			value.setPresent(true);
-			rightParen = new PunctuationRightParen();
-			return Java_Generator.wrapExpression(this);
+			strMeth.expression = Java_Generator.wrapExpression(varExpr);
+			strMeth.dot = new PunctuationPeriod();
+			strMeth.leftParen = new PunctuationLeftParen();
+			strMeth.value = expr;
+			strMeth.value.setPresent(true);
+			strMeth.rightParen = new PunctuationRightParen();
+			return Java_Generator.wrapExpression(strMeth);
 		}
 
-		Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
-		return parens.generateParentheses(expr, source);
+		return Java_ParenthesizedExpression.generateParentheses(expr, source);
 	}
 }

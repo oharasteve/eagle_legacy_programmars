@@ -72,22 +72,23 @@ public class Java_PreIncrementExpression extends PrimaryOperator
 				this);
 	}
 
-	public Java_Expression generateIncrement(Java_Variable varName,
+	public static Java_Expression generateIncrement(Java_Variable varName,
 			IncrementEnum oper, AbstractToken source)
 	{
-		this.var = varName;
+		Java_PreIncrementExpression incrExpr = new Java_PreIncrementExpression();
+		incrExpr.var = varName;
 		switch (oper)
 		{
 		case INCREMENT:
-			this.operator.setValue("++");
+			incrExpr.operator.setValue("++");
 			break;
 		case DECREMENT:
-			this.operator.setValue("--");
+			incrExpr.operator.setValue("--");
 			break;
 		default:
 			throw new RuntimeException("Unexpected operator: " + oper);
 		}
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		incrExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(incrExpr);
 	}
 }

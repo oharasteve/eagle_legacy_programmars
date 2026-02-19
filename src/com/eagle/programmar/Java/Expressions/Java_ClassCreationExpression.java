@@ -25,9 +25,9 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_ClassCreationExpression extends PrimaryOperator
 		implements EagleTransformableExpression
@@ -77,19 +77,20 @@ public class Java_ClassCreationExpression extends PrimaryOperator
 		throw new RuntimeException("Can't handle: " + this);
 	}
 
-	public Java_Expression generateCreation(Java_Type type,
+	public static Java_Expression generateCreation(Java_Type type,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{
-		this.jtype = type;
-		this.leftParen = new PunctuationLeftParen();
+		Java_ClassCreationExpression creat = new Java_ClassCreationExpression();
+		creat.jtype = type;
+		creat.leftParen = new PunctuationLeftParen();
 		if (args != null && args.size() > 0)
 		{
-			this.argList = Java_ArgumentList.createArgumentList(args);
-			this.argList.setPresent(true);
+			creat.argList = Java_ArgumentList.createArgumentList(args);
+			creat.argList.setPresent(true);
 		}
-		this.rightParen = new PunctuationRightParen();
+		creat.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		creat.setTransformationSource(source);
+		return Java_Generator.wrapExpression(creat);
 	}
 }

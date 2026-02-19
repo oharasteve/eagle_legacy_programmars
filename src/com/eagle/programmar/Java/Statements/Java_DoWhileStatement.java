@@ -47,46 +47,31 @@ public class Java_DoWhileStatement extends TokenSequence
 		return _scope;
 	}
 
-	public Java_Statement generateDoUntil1(Java_Expression cond,
+	public static Java_Statement generateDoUntilOne(Java_Expression cond,
 			Java_Statement action, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
-		this.semicolon = new PunctuationSemicolon();
+		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
+		doStmt.leftParen = new PunctuationLeftParen();
+		doStmt.rightParen = new PunctuationRightParen();
+		doStmt.semicolon = new PunctuationSemicolon();
 
 		Java_StatementBlock body = new Java_StatementBlock();
 		body.statements = new TokenList<Java_StatementOrComment>();
 		body.leftBrace = new PunctuationLeftBrace();
 		body.rightBrace = new PunctuationRightBrace();
 
-		this.doStatement = action;
+		doStmt.doStatement = action;
 
-		Java_LogicalNotExpression not = new Java_LogicalNotExpression();
-		Java_Expression notExpr = not.generateLogicalNot(cond, source);
-		this.condition = notExpr;
+		doStmt.condition = Java_LogicalNotExpression.generateLogicalNot(cond, source);
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		doStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(doStmt);
 	}
 
-	public Java_Statement generateDoUntil(Java_Expression cond,
+	public static Java_Statement generateDoUntilMany(Java_Expression cond,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_StatementBlock body = new Java_StatementBlock();
-		body.statements = new TokenList<Java_StatementOrComment>();
-		body.leftBrace = new PunctuationLeftBrace();
-		body.rightBrace = new PunctuationRightBrace();
-
-		Java_Statement javaStatement = new Java_Statement();
-		javaStatement.setWhich(body);
-
-		for (Java_Statement action : actions)
-		{
-			Java_StatementOrComment wrapper = new Java_StatementOrComment();
-			wrapper.setWhich(action);
-			body.statements.addToken(wrapper);
-		}
-
-		return generateDoUntil1(cond, Java_Generator.wrapStatement(javaStatement), source);
+		Java_Statement body = Java_StatementBlock.generateBlock(actions, source);
+		return generateDoUntilOne(cond, body, source);
 	}
 }

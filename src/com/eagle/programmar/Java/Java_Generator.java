@@ -268,15 +268,13 @@ public class Java_Generator
 	public Java_Statement newBlockStatement(
 			ArrayList<Java_Statement> statements, AbstractToken source)
 	{
-		Java_StatementBlock block = new Java_StatementBlock();
-		return block.generateBlock(statements, source);
+		return Java_StatementBlock.generateBlock(statements, source);
 	}
 
 	@Override
 	public Java_Statement newBreakStatement(AbstractToken source)
 	{
-		Java_BreakStatement brkStmt = new Java_BreakStatement();
-		return brkStmt.generateBreak(source);
+		return Java_BreakStatement.generateBreak(source);
 	}
 
 	@Override
@@ -290,29 +288,26 @@ public class Java_Generator
 	public Java_Statement newDoUntilStatement1(Java_Expression condition,
 			Java_Statement action, AbstractToken source)
 	{
-		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
-		return doStmt.generateDoUntil1(condition,
-				action, source);
+		return Java_DoWhileStatement.generateDoUntilOne(condition, action, source);
 	}
 
 	@Override
 	public Java_Statement newDoUntilStatement(Java_Expression condition,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_DoWhileStatement doStmt = new Java_DoWhileStatement();
-		return doStmt.generateDoUntil(condition, actions, source);
+		return Java_DoWhileStatement.generateDoUntilMany(condition, actions, source);
 	}
 
 	@Override
 	public Java_Statement newExitStatement(Java_Expression code, AbstractToken source)
 	{
-		return wrapStatement(Java_ExitStatement.newExitStatement(code, source));
+		return Java_ExitStatement.newExitStatement(code, source);
 	}
 
 	@Override
 	public Java_Statement newExpressionStatement(Java_Expression expr, AbstractToken source)
 	{
-		return wrapStatement(Java_ExpressionStatement.newExpressionStatement(expr, source));
+		return Java_ExpressionStatement.newExpressionStatement(expr, source);
 	}
 
 	@Override
@@ -325,8 +320,7 @@ public class Java_Generator
 	public Java_Statement newIfStatement1(Java_Expression condition,
 			Java_Statement ifTrue, Java_Statement ifFalse, AbstractToken source)
 	{
-		Java_IfStatement ifStmt = new Java_IfStatement();
-		return ifStmt.generateIfElse1(condition, ifTrue, ifFalse, source);
+		return Java_IfStatement.generateIfElseOne(condition, ifTrue, ifFalse, source);
 	}
 
 	@Override
@@ -334,8 +328,7 @@ public class Java_Generator
 			ArrayList<Java_Statement> ifTrue,
 			ArrayList<Java_Statement> ifFalse, AbstractToken source)
 	{
-		Java_IfStatement ifStmt = new Java_IfStatement();
-		return ifStmt.generateIfElse(condition, ifTrue, ifFalse, source);
+		return Java_IfStatement.generateIfElseMany(condition, ifTrue, ifFalse, source);
 	}
 
 	@Override
@@ -343,8 +336,7 @@ public class Java_Generator
 			Java_Expression term, Java_Expression incr, Java_Statement action,
 			AbstractToken source)
 	{
-		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForLoop1(init, term,
+		return Java_ForStatement.generateForLoopOne(init, term,
 				incr, action, source);
 	}
 
@@ -353,8 +345,7 @@ public class Java_Generator
 			Java_Expression term, Java_Expression incr,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForLoop(init, term, incr, actions, source);
+		return Java_ForStatement.generateForLoopMany(init, term, incr, actions, source);
 	}
 
 	@Override
@@ -362,8 +353,7 @@ public class Java_Generator
 			Java_Expression first, RelationalEnum relOp, Java_Expression last,
 			Java_Expression step, Java_Statement action, AbstractToken source)
 	{
-		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForRange1(var, type, first, relOp, last, step, action, source);
+		return Java_ForStatement.generateForRangeOne(var, type, first, relOp, last, step, action, source);
 	}
 
 	@Override
@@ -371,16 +361,14 @@ public class Java_Generator
 			Java_Expression first, RelationalEnum relOp, Java_Expression last,
 			Java_Expression step, ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_ForStatement forStmt = new Java_ForStatement();
-		return forStmt.generateForRange(var, type, first, relOp, last, step, actions, source);
+		return Java_ForStatement.generateForRangeMany(var, type, first, relOp, last, step, actions, source);
 	}
 
 	@Override
 	public Java_Expression newPrintFunction(Java_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		Java_PrintFunction prtFunc = new Java_PrintFunction();
-		return prtFunc.generatePrintFunc(line, newLine, toErr, source);
+		return Java_PrintFunction.generatePrintFunc(line, newLine, toErr, source);
 	}
 
 	@Override
@@ -395,8 +383,7 @@ public class Java_Generator
 	public Java_Statement newReturnStatement(Java_Expression ret,
 			AbstractToken source)
 	{
-		Java_ReturnStatement retStmt = new Java_ReturnStatement();
-		return retStmt.generateReturn(ret, source);
+		return Java_ReturnStatement.generateReturn(ret, source);
 	}
 
 	@Override
@@ -404,25 +391,21 @@ public class Java_Generator
 			ArrayList<Java_Expression> values, ArrayList<ArrayList<Java_Statement>> cases,
 			ArrayList<Java_Statement> defaultCase, AbstractToken source)
 	{
-		Java_SwitchStatement switchStmt = new Java_SwitchStatement();
-		return switchStmt.generateSwitch(expr, values, cases, defaultCase, source);
+		return Java_SwitchStatement.generateSwitch(expr, values, cases, defaultCase, source);
 	}
 
 	@Override
 	public Java_Statement newWhileStatement1(Java_Expression condition,
 			Java_Statement action, AbstractToken source)
 	{
-		Java_WhileStatement whileStmt = new Java_WhileStatement();
-		return whileStmt.generateWhile1(condition,
-				action, source);
+		return Java_WhileStatement.generateWhileOne(condition, action, source);
 	}
 
 	@Override
 	public Java_Statement newWhileStatement(Java_Expression condition,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_WhileStatement whileStmt = new Java_WhileStatement();
-		return whileStmt.generateWhile(condition, actions, source);
+		return Java_WhileStatement.generateWhileMany(condition, actions, source);
 	}
 
 	// ================ Expressions ================
@@ -431,16 +414,14 @@ public class Java_Generator
 	public Java_Expression newAdditiveExpression(Oper2Types types, Java_Expression left,
 			AdditiveEnum oper, Java_Expression right, AbstractToken source)
 	{
-		Java_AdditiveExpression addExpr = new Java_AdditiveExpression();
-		return addExpr.generateAdditive(types, left, oper, right, source);
+		return Java_AdditiveExpression.generateAdditive(types, left, oper, right, source);
 	}
 
 	@Override
 	public Java_Expression newAppendExpression(Oper2Types types,
 			Java_Expression left, Java_Expression right, AbstractToken source)
 	{
-		Java_AdditiveExpression appendExp = new Java_AdditiveExpression();
-		return appendExp.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
+		return Java_AdditiveExpression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 
 	@Override
@@ -448,20 +429,18 @@ public class Java_Generator
 			Java_Expression subscript, AssignmentEnum oper, Java_Expression expression, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
-		Java_AssignmentExpression asgExpr = new Java_AssignmentExpression();
-		return asgExpr.generateAssignment(var, subscript, oper, expression, source);
+		return Java_AssignmentExpression.generateAssignment(var, subscript, oper, expression, source);
 	}
 
 	@Override
 	public AbstractExpression newHashAssignment(String name, Java_Expression subscript,
 			Java_Expression expression, AbstractToken source)
 	{
-		Java_MethodInvocation invoke = new Java_MethodInvocation();
 		Java_Variable var = Java_Variable.newVariable(name + ".put");
 		ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
 		args.add(subscript);
 		args.add(expression);
-		return invoke.generateInvocation(var, args, source);
+		return Java_MethodInvocation.generateInvocation(var, args, source);
 	}
 
 	@Override
@@ -469,8 +448,7 @@ public class Java_Generator
 			Java_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
-		Java_PostIncrementExpression incrExpr = new Java_PostIncrementExpression();
-		return incrExpr.generateIncrement(var, oper, source);
+		return Java_PostIncrementExpression.generateIncrement(var, oper, source);
 	}
 
 	@Override
@@ -478,68 +456,60 @@ public class Java_Generator
 			Java_Expression subscript, IncrementEnum oper, AbstractToken source)
 	{
 		Java_Variable var = Java_Variable.newVariable(name);
-		Java_PreIncrementExpression incrExpr = new Java_PreIncrementExpression();
-		return incrExpr.generateIncrement(var, oper, source);
+		return Java_PreIncrementExpression.generateIncrement(var, oper, source);
 	}
 
 	@Override
 	public Java_Expression newBuiltInExpression(BuiltInEnum builtin, AbstractToken source)
 	{
-		Java_BuiltIn built = new Java_BuiltIn();
-		return built.generateBuiltIn(builtin, source);
+		return Java_BuiltIn.generateBuiltIn(builtin, source);
 	}
 
 	@Override
 	public Java_Expression newExponentExpression(Java_Expression left, Java_Expression right, AbstractToken source)
 	{
-		return wrapExpression(Java_MathPowFunc.generateExpression(left, right, source));
+		return Java_MathPowFunc.generateExpression(left, right, source);
 	}
 
 	@Override
 	public Java_Expression newLiteralExpression(String literal, AbstractToken source)
 	{
-		Java_Literal lit = new Java_Literal();
-		return wrapExpression(lit.generateLiteral(literal, source));
+		return Java_Literal.generateLiteralExpression(literal, source);
 	}
 
 	@Override
 	public Java_Expression newLogicalAndExpression(Java_Expression left,
 			Java_Expression right, AbstractToken source)
 	{
-		Java_LogicalAndExpression andExpr = new Java_LogicalAndExpression();
-		return andExpr.generateLogicalAnd(left, right, source);
+		return Java_LogicalAndExpression.generateLogicalAnd(left, right, source);
 	}
 
 	@Override
 	public Java_Expression newLogicalOrExpression(Java_Expression left,
 			LogicalOrEnum oper, Java_Expression right, AbstractToken source)
 	{
-		Java_LogicalOrExpression orExpr = new Java_LogicalOrExpression();
-		return orExpr.generateLogicalOr(left, oper, right, source);
+		return Java_LogicalOrExpression.generateLogicalOr(left, oper, right, source);
 	}
 
 	@Override
-	public AbstractExpression newBitwiseExpression(Java_Expression left,
+	public Java_Expression newBitwiseExpression(Java_Expression left,
 			BitwiseEnum oper, Java_Expression right, AbstractToken source)
 	{
-		Java_BitwiseExpression bitExpr = new Java_BitwiseExpression();
-		return bitExpr.generateBitwise(left, oper, right, source);
+		return Java_BitwiseExpression.generateBitwise(left, oper, right, source);
 	}
 
 	@Override
-	public AbstractExpression newBitwiseNotExpression(Java_Expression expr,
+	public Java_Expression newBitwiseNotExpression(Java_Expression expr,
 			AbstractToken source)
 	{
-		Java_BitwiseNotExpression bitExpr = new Java_BitwiseNotExpression();
-		return bitExpr.generateBitwiseNot(expr, source);
+		return Java_BitwiseNotExpression.generateBitwiseNot(expr, source);
 	}
 
 	@Override
 	public Java_Expression newMultiplicativeExpression(Java_Expression left,
 			MultiplicativeEnum oper, Java_Expression right, AbstractToken source)
 	{
-		Java_MultiplicativeExpression mulExp = new Java_MultiplicativeExpression();
-		return mulExp.generateMultiplicative(left, oper,
+		return Java_MultiplicativeExpression.generateMultiplicative(left, oper,
 				right, source);
 	}
 
@@ -547,8 +517,7 @@ public class Java_Generator
 	public Java_Expression newNegativeExpression(NegativeEnum sign,
 			Java_Expression expr, AbstractToken source)
 	{
-		Java_NegativeExpression negExpr = new Java_NegativeExpression();
-		return negExpr.generateNegative(sign, expr, source);
+		return Java_NegativeExpression.generateNegative(sign, expr, source);
 	}
 
 	@Override
@@ -561,70 +530,61 @@ public class Java_Generator
 	@Override
 	public Java_Expression newLogicalNotExpression(Java_Expression expr, AbstractToken source)
 	{
-		Java_LogicalNotExpression notExp = new Java_LogicalNotExpression();
 		AbstractToken which = expr.getWhich();
 		if (which instanceof TerminalToken || which instanceof Java_ParenthesizedExpression)
 		{
-			return notExp.generateLogicalNot(expr, source);
+			return Java_LogicalNotExpression.generateLogicalNot(expr, source);
 		}
 
-		Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
-		parens.generateParentheses(expr, source);
-		return notExp.generateLogicalNot(Java_Generator.wrapExpression(parens), source);
+		Java_Expression parens = Java_ParenthesizedExpression.generateParentheses(expr, source);
+		return Java_LogicalNotExpression.generateLogicalNot(parens, source);
 	}
 
 	@Override
 	public AbstractExpression newLogicalExpression(boolean bool, AbstractToken source)
 	{
-		Java_BuiltIn builtin = new Java_BuiltIn();
-		builtin.builtinConstant.setValue(bool ? "true" : "false");
-		return wrapExpression(builtin);
+		return Java_BuiltIn.generateBuiltIn(
+				(bool ? BuiltInEnum.TRUE : BuiltInEnum.FALSE), source);
 	}
 
 	@Override
 	public Java_Expression newNumberExpression(String number, AbstractToken source)
 	{
-		Java_Number num = new Java_Number();
-		return wrapExpression(num.generateNumber(number, source));
+		return Java_Number.generateNumberExpression(number, source);
 	}
 
 	@Override
 	public Java_Expression newParenthesizedExpression(Java_Expression expr, AbstractToken source)
 	{
-		Java_ParenthesizedExpression paren = new Java_ParenthesizedExpression();
-		return paren.generateParentheses(expr, source);
+		return Java_ParenthesizedExpression.generateParentheses(expr, source);
 	}
 
 	@Override
 	public Java_Expression newRelationalExpression(Oper2Types types, Java_Expression left, RelationalEnum relOp,
 			Java_Expression right, AbstractToken source)
 	{
-		Java_RelationalExpression relExp = new Java_RelationalExpression();
-		return relExp.generateRelational(types, left, relOp, right, source);
+		return Java_RelationalExpression.generateRelational(types, left, relOp, right, source);
 	}
 
 	@Override
 	public Java_Expression newShiftExpression(Java_Expression left,
 			ShiftEnum shift, Java_Expression right, AbstractToken source)
 	{
-		Java_ShiftExpression shiftExpr = new Java_ShiftExpression();
-		return shiftExpr.generateShift(left, shift, right, source);
+		return Java_ShiftExpression.generateShift(left, shift, right, source);
 	}
 
 	@Override
 	public Java_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		Java_ClassCreationWithInitializers creat = new Java_ClassCreationWithInitializers();
-		return creat.generateArray(exprs, source);
+		return Java_ClassCreationWithInitializers.generateArray(exprs, source);
 	}
 
 	@Override
 	public Java_Expression newVariableExpression(String name, SubscriptEnum offset,
 			Java_Expression subscript, AbstractToken source)
 	{
-		Java_VariableExpression varExp = new Java_VariableExpression();
-		return varExp.generateVarExpr(name, offset, subscript, source);
+		return Java_VariableExpression.generateVariableExpression(name, offset, subscript, source);
 	}
 
 	@Override
@@ -637,16 +597,14 @@ public class Java_Generator
 	public Java_Expression newClassCreation(Java_Type type,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{
-		Java_ClassCreationExpression creat = new Java_ClassCreationExpression();
-		return creat.generateCreation(type, args, source);
+		return Java_ClassCreationExpression.generateCreation(type, args, source);
 	}
 
 	@Override
 	public Java_Expression newMethodInvocation(Java_Variable var,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{
-		Java_MethodInvocation creat = new Java_MethodInvocation();
-		return creat.generateInvocation(var, args, source);
+		return Java_MethodInvocation.generateInvocation(var, args, source);
 	}
 
 	@Override
@@ -660,22 +618,19 @@ public class Java_Generator
 	@Override
 	public Java_Expression newLengthFunction(Java_Expression expr, AbstractToken source)
 	{
-		Java_LengthMethod lenMeth = new Java_LengthMethod();
-		return lenMeth.generateLength(expr, source);
+		return Java_LengthMethod.generateLength(expr, source);
 	}
 
 	@Override
 	public Java_Expression newTrimFunction(Java_Expression expr, AbstractToken source)
 	{
-		Java_TrimMethod trimMeth = new Java_TrimMethod();
-		return trimMeth.generateTrim(expr, source);
+		return Java_TrimMethod.generateTrim(expr, source);
 	}
 
 	@Override
 	public Java_Expression newStringFunction(Oper1Types types, Java_Expression expr, AbstractToken source)
 	{
-		Java_ToStringMethod strMeth = new Java_ToStringMethod();
-		return strMeth.generateString(types, expr, source);
+		return Java_ToStringMethod.generateString(types, expr, source);
 	}
 
 	@Override
@@ -683,32 +638,29 @@ public class Java_Generator
 			SubstringSCEnum whichSC, SubstringECEnum whichEC, Java_Expression ecOrnc,
 			boolean ncMightBeTooBig, AbstractToken source)
 	{
-		return wrapExpression(Java_SubstringMethod.generateExpression(expr, sc, whichSC,
-				whichEC, ecOrnc, ncMightBeTooBig, source));
+		return Java_SubstringMethod.generateExpression(expr, sc, whichSC,
+				whichEC, ecOrnc, ncMightBeTooBig, source);
 	}
 
 	@Override
 	public AbstractExpression newEndsWithFunction(Java_Expression expr, Java_Expression patt,
 			AbstractToken source)
 	{
-		Java_EndsWithMethod endsMeth = new Java_EndsWithMethod();
-		return endsMeth.generateEndsWith(expr, patt, source);
+		return Java_EndsWithMethod.generateEndsWith(expr, patt, source);
 	}
 
 	@Override
 	public Java_Expression newStartsWithFunction(Java_Expression expr, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		Java_StartsWithMethod startsMeth = new Java_StartsWithMethod();
-		return startsMeth.generateStartsWith(expr, patt, sc, whichSC, source);
+		return Java_StartsWithMethod.generateStartsWith(expr, patt, sc, whichSC, source);
 	}
 
 	@Override
 	public Java_Expression newIndexOfFunction(Java_Variable string, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		Java_IndexOfMethod indexMeth = new Java_IndexOfMethod();
-		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
+		return Java_IndexOfMethod.generateIndexOf(string, patt, sc, whichSC, source);
 	}
 
 	@Override
@@ -716,8 +668,7 @@ public class Java_Generator
 			AbstractToken source)
 	{
 		Java_Expression fmt = newLiteralExpression("%" + length + "d", null);
-		Java_StringFormatFunc func = new Java_StringFormatFunc();
-		return func.generateStringFormat(expr, fmt, source);
+		return Java_StringFormatFunc.generateStringFormat(expr, fmt, source);
 	}
 
 	// ================ Terminals ================
@@ -725,28 +676,24 @@ public class Java_Generator
 	@Override
 	public Java_Number newNumber(String value, AbstractToken source)
 	{
-		Java_Number num = new Java_Number();
-		return num.generateNumber(value, source);
+		return Java_Number.generateNumber(value, source);
 	}
 
 	@Override
 	public Java_HexNumber newHexNumber(String value, AbstractToken source)
 	{
-		Java_HexNumber num = new Java_HexNumber();
-		return num.generateHexNumber(value, source);
+		return Java_HexNumber.generateHexNumber(value, source);
 	}
 
 	@Override
 	public Java_Literal newLiteral(String value, AbstractToken source)
 	{
-		Java_Literal lit = new Java_Literal();
-		return lit.generateLiteral(value, source);
+		return Java_Literal.generateLiteral(value, source);
 	}
 
 	@Override
 	public Java_Character_Literal newCharLiteral(String value, AbstractToken source)
 	{
-		Java_Character_Literal lit = new Java_Character_Literal();
-		return lit.generateCharLiteral(value, source);
+		return Java_Character_Literal.generateCharLiteral(value, source);
 	}
 }

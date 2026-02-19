@@ -29,23 +29,23 @@ public class Python_Int_Function extends PrimaryOperator
 		interpreter.pushInt((int) x);
 	}
 
-	public Python_Expression generateInteger(Python_Expression expr, AbstractToken source)
+	public static Python_Expression generateInteger(Python_Expression expr, AbstractToken source)
 	{
-		Python_Int_Function integer = new Python_Int_Function();
-		integer.leftParen = new PunctuationLeftParen();
-		integer.rightParen = new PunctuationRightParen();
+		Python_Int_Function intFn = new Python_Int_Function();
+		intFn.leftParen = new PunctuationLeftParen();
+		intFn.rightParen = new PunctuationRightParen();
 		if (expr.getWhich() instanceof Python_Parenthesized_Expression)
 		{
 			// Don't create a second set of parens
 			Python_Parenthesized_Expression parens = (Python_Parenthesized_Expression) expr.getWhich();
-			integer.expression = parens.list.expr;
+			intFn.expression = parens.list.expr;
 		}
 		else
 		{
-			integer.expression = expr;
+			intFn.expression = expr;
 		}
 
-		integer.setTransformationSource(source);
-		return Python_Generator.wrapExpression(integer);
+		intFn.setTransformationSource(source);
+		return Python_Generator.wrapExpression(intFn);
 	}
 }

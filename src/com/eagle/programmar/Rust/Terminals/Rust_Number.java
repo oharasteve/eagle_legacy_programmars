@@ -35,10 +35,11 @@ public class Rust_Number extends TerminalNumberToken
 		return generator.newNumberExpression(_numberAsText, this);
 	}
 
-	public Rust_Number generateNumber(String value, AbstractToken source)
+	public static Rust_Number generateNumber(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Rust_Number num = new Rust_Number();
+		num.setValue(value);
+		num.setTransformationSource(source);
+		return num;
 	}
 }

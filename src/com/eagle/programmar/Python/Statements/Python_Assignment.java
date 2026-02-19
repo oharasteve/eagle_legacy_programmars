@@ -146,8 +146,8 @@ public class Python_Assignment extends TokenSequence
 		}
 
 		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
-		Python_VariableExpression varExpr = new Python_VariableExpression();
-		asgExpr.left = varExpr.generateVarExpr(name, offset, subscript, source);
+		asgExpr.left = Python_VariableExpression.generateVariableExpression(
+				name, offset, subscript, source);
 		asgExpr.operator = new Python_PunctuationChoice("=");
 		asgExpr.right = expression;
 

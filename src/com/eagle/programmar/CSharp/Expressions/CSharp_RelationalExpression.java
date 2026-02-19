@@ -117,34 +117,35 @@ public class CSharp_RelationalExpression extends PrecedenceOperator
 		throw new RuntimeException("Unexpected relational operator: " + operator);
 	}
 
-	public CSharp_Expression generateRelational(Oper2Types types, CSharp_Expression leftExpr,
+	public static CSharp_Expression generateRelational(Oper2Types types, CSharp_Expression leftExpr,
 			RelationalEnum relOp, CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		CSharp_RelationalExpression relExpr = new CSharp_RelationalExpression();
+		relExpr.left = leftExpr;
+		relExpr.right = rightExpr;
 
 		switch (relOp)
 		{
 		case EQUALS:
-			this.operator = new CSharp_PunctuationChoice("==");
+			relExpr.operator = new CSharp_PunctuationChoice("==");
 			break;
 		case NOT_EQUALS:
-			this.operator = new CSharp_PunctuationChoice("!=");
+			relExpr.operator = new CSharp_PunctuationChoice("!=");
 			break;
 		case LESS_THAN:
-			this.operator = new CSharp_PunctuationChoice("<");
+			relExpr.operator = new CSharp_PunctuationChoice("<");
 			break;
 		case LESS_EQUALS:
-			this.operator = new CSharp_PunctuationChoice("<=");
+			relExpr.operator = new CSharp_PunctuationChoice("<=");
 			break;
 		case GREATER_THAN:
-			this.operator = new CSharp_PunctuationChoice(">");
+			relExpr.operator = new CSharp_PunctuationChoice(">");
 			break;
 		case GREATER_EQUALS:
-			this.operator = new CSharp_PunctuationChoice(">=");
+			relExpr.operator = new CSharp_PunctuationChoice(">=");
 			break;
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		relExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(relExpr);
 	}
 }

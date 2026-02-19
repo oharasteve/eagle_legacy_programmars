@@ -147,7 +147,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		throw new RuntimeException("Unable to handle " + expr);
 	}
 	
-	public static Rust_SubscriptExpression generateSubscriptExpression(AbstractExpression theExpr,
+	public static Rust_Expression generateSubscriptExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
@@ -161,6 +161,6 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		subscr.subscrExpr = Rust_Generator.wrapExpression(range);
 
 		subscr.setTransformationSource(source);
-		return subscr;
+		return Rust_Generator.wrapExpression(subscr);
 	}
 }

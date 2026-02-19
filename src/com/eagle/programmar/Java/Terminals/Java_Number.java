@@ -5,6 +5,8 @@ package com.eagle.programmar.Java.Terminals;
 
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
@@ -33,10 +35,16 @@ public class Java_Number extends TerminalNumberToken
 		return generator.newNumberExpression(_numberAsText, this);
 	}
 
-	public Java_Number generateNumber(String value, AbstractToken source)
+	public static Java_Number generateNumber(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Java_Number num = new Java_Number();
+		num.setValue(value);
+		num.setTransformationSource(source);
+		return num;
+	}
+	
+	public static Java_Expression generateNumberExpression(String value, AbstractToken source)
+	{
+		return Java_Generator.wrapExpression(generateNumber(value, source));
 	}
 }

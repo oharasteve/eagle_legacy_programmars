@@ -37,13 +37,14 @@ public class CSharp_ParenthesizedExpression extends PrimaryOperator
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
 
-	public CSharp_Expression generateParentheses(CSharp_Expression theExpr,
+	public static CSharp_Expression generateParentheses(CSharp_Expression theExpr,
 			AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.expression = theExpr;
-		this.rightParen = new PunctuationRightParen();
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		CSharp_ParenthesizedExpression parExpr = new CSharp_ParenthesizedExpression();
+		parExpr.leftParen = new PunctuationLeftParen();
+		parExpr.expression = theExpr;
+		parExpr.rightParen = new PunctuationRightParen();
+		parExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(parExpr);
 	}
 }

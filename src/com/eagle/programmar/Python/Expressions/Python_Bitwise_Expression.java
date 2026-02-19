@@ -67,26 +67,27 @@ public class Python_Bitwise_Expression extends PrecedenceOperator
 		return generator.newBitwiseExpression(leftExpr, oper, rightExpr, this);
 	}
 
-	public Python_Expression generateBitwise(Python_Expression leftExpr,
+	public static Python_Expression generateBitwise(Python_Expression leftExpr,
 			BitwiseEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Python_Bitwise_Expression bitExpr = new Python_Bitwise_Expression();
+		bitExpr.left = leftExpr;
+		bitExpr.right = rightExpr;
 		switch (oper)
 		{
 		case AND:
-			this.operator.setValue("&");
+			bitExpr.operator.setValue("&");
 			break;
 		case OR:
-			this.operator.setValue("|");
+			bitExpr.operator.setValue("|");
 			break;
 		case XOR:
-			this.operator.setValue("^");
+			bitExpr.operator.setValue("^");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		bitExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(bitExpr);
 	}
 }

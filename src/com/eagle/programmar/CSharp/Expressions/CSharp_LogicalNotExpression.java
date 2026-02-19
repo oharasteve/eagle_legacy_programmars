@@ -37,11 +37,12 @@ public class CSharp_LogicalNotExpression extends PrimaryOperator
 		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
-	public CSharp_Expression generateLogicalNot(CSharp_Expression theExpr,
+	public static CSharp_Expression generateLogicalNot(CSharp_Expression theExpr,
 			AbstractToken source)
 	{
-		this.expr = theExpr;
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		CSharp_LogicalNotExpression notExpr = new CSharp_LogicalNotExpression();
+		notExpr.expr = theExpr;
+		notExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(notExpr);
 	}
 }

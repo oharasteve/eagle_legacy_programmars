@@ -104,21 +104,22 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 
-	public Java_Expression generateAdditive(Oper2Types types, Java_Expression leftExpr, AdditiveEnum oper,
+	public static Java_Expression generateAdditive(Oper2Types types, Java_Expression leftExpr, AdditiveEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Java_AdditiveExpression addExpr = new Java_AdditiveExpression();
+		addExpr.left = leftExpr;
+		addExpr.right = rightExpr;
 		switch (oper)
 		{
 		case PLUS:
-			this.operator.setValue("+");
+			addExpr.operator.setValue("+");
 			break;
 		case MINUS:
-			this.operator.setValue("-");
+			addExpr.operator.setValue("-");
 			break;
 		}
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		addExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(addExpr);
 	}
 }

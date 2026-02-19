@@ -68,12 +68,13 @@ public class Python_Negative_Expression extends PrimaryOperator
 		}
 	}
 
-	public Python_Expression generateNegative(NegativeEnum sign,
+	public static Python_Expression generateNegative(NegativeEnum sign,
 			Python_Expression theExpr, AbstractToken source)
 	{
-		this.expr = theExpr;
-		this.operator.setValue("-");
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		Python_Negative_Expression negExp = new Python_Negative_Expression();
+		negExp.expr = theExpr;
+		negExp.operator.setValue("-");
+		negExp.setTransformationSource(source);
+		return Python_Generator.wrapExpression(negExp);
 	}
 }

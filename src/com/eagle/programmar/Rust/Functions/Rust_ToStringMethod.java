@@ -42,17 +42,18 @@ public class Rust_ToStringMethod extends PrecedenceOperator
 		return theExpr;
 	}
 
-	public Rust_Expression generateString(Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generateString(Rust_Expression expr, AbstractToken source)
 	{
+		Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
 		// Rust likes '&ok.to_string()' where 'ok' is an i32
 		Rust_BorrowExpression borrow = new Rust_BorrowExpression();
 		borrow.expr = expr;
-		left = Rust_Generator.wrapExpression(borrow);
+		strMeth.left = Rust_Generator.wrapExpression(borrow);
 		
-		dot = new PunctuationPeriod();
-		TOSTRING.setValue("to_string");
-		leftParen = new PunctuationLeftParen();
-		rightParen = new PunctuationRightParen();
-		return Rust_Generator.wrapExpression(this);
+		strMeth.dot = new PunctuationPeriod();
+		strMeth.TOSTRING.setValue("to_string");
+		strMeth.leftParen = new PunctuationLeftParen();
+		strMeth.rightParen = new PunctuationRightParen();
+		return Rust_Generator.wrapExpression(strMeth);
 	}
 }

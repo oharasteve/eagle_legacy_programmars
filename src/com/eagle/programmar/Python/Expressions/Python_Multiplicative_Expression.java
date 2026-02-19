@@ -14,9 +14,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class Python_Multiplicative_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -83,29 +83,30 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		}
 	}
 
-	public Python_Expression generateMultiplicative(Python_Expression leftExpr,
+	public static Python_Expression generateMultiplicative(Python_Expression leftExpr,
 			MultiplicativeEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Python_Multiplicative_Expression multExp = new Python_Multiplicative_Expression();
+		multExp.left = leftExpr;
+		multExp.right = rightExpr;
 		switch (oper)
 		{
 		case TIMES:
-			this.operator.setValue("*");
+			multExp.operator.setValue("*");
 			break;
 		case DIVIDE_TRUNCATE:
-			this.operator.setValue("//");
+			multExp.operator.setValue("//");
 			break;
 		case DIVIDE_NO_TRUNCATE:
-			this.operator.setValue("/");
+			multExp.operator.setValue("/");
 			break;
 		case REMAINDER:
-			this.operator.setValue("%");
+			multExp.operator.setValue("%");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		multExp.setTransformationSource(source);
+		return Python_Generator.wrapExpression(multExp);
 	}
 }

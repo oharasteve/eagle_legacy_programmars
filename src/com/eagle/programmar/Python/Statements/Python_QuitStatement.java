@@ -5,7 +5,9 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
@@ -24,11 +26,11 @@ public class Python_QuitStatement extends TokenSequence implements AbstractState
 		return Eagle_Statement_Result.BREAK;
 	}
 
-	public static Python_QuitStatement newQuitStatement(AbstractExpression code, AbstractToken source)
+	public static Python_ComplexStatement newQuitStatement(AbstractExpression code, AbstractToken source)
 	{
 		Python_QuitStatement stmt = new Python_QuitStatement();
 		stmt.code = (Python_Expression) code;
 		stmt.setTransformationSource(source);
-		return stmt;
+		return Python_Generator.wrapStatement(stmt);
 	}
 }

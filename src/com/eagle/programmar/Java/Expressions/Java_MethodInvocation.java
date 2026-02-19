@@ -150,17 +150,21 @@ public class Java_MethodInvocation extends PrimaryOperator
 		throw new RuntimeException("Can't handle: " + this);
 	}
 
-	public Java_Expression generateInvocation(Java_Variable var,
+	public static Java_Expression generateInvocation(Java_Variable var,
 			ArrayList<Java_Expression> args, AbstractToken source)
 	{
-		this.methodName = new Java_Variable();
-		this.methodName.firstId = var.firstId;
-		this.leftParen = new PunctuationLeftParen();
-		this.argList = Java_ArgumentList.createArgumentList(args);
-		if (this.argList != null) this.argList.setPresent(true);
-		this.rightParen = new PunctuationRightParen();
+		Java_MethodInvocation invoke = new Java_MethodInvocation();
+		invoke.methodName = new Java_Variable();
+		invoke.methodName.firstId = var.firstId;
+		invoke.leftParen = new PunctuationLeftParen();
+		invoke.argList = Java_ArgumentList.createArgumentList(args);
+		if (invoke.argList != null)
+		{
+			invoke.argList.setPresent(true);
+		}
+		invoke.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		invoke.setTransformationSource(source);
+		return Java_Generator.wrapExpression(invoke);
 	}
 }

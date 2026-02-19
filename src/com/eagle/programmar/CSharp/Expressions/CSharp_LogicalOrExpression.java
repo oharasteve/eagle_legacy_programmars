@@ -12,9 +12,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class CSharp_LogicalOrExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -73,23 +73,24 @@ public class CSharp_LogicalOrExpression extends PrecedenceOperator
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
 
-	public CSharp_Expression generateLogicalOr(CSharp_Expression leftExpr,
+	public static CSharp_Expression generateLogicalOr(CSharp_Expression leftExpr,
 			LogicalOrEnum oper, CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		CSharp_LogicalOrExpression orExpr = new CSharp_LogicalOrExpression();
+		orExpr.left = leftExpr;
+		orExpr.right = rightExpr;
 		switch (oper)
 		{
 		case OR:
-			this.orOperator.setValue("||");
+			orExpr.orOperator.setValue("||");
 			break;
 		case XOR:
-			this.orOperator.setValue("^");
+			orExpr.orOperator.setValue("^");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		orExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(orExpr);
 	}
 }

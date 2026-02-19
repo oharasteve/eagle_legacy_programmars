@@ -42,10 +42,11 @@ public class Rust_NotExpression extends PrimaryOperator
 		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
-	public Rust_Expression generateNot(Rust_Expression theExpr, AbstractToken source)
+	public static Rust_Expression generateNot(Rust_Expression theExpr, AbstractToken source)
 	{
-		this.expr = theExpr;
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		Rust_NotExpression not = new Rust_NotExpression();
+		not.expr = theExpr;
+		not.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(not);
 	}
 }

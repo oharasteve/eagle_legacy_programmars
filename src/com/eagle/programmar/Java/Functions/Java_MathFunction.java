@@ -5,13 +5,20 @@ package com.eagle.programmar.Java.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
+public class Java_MathFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Keyword MATH = new Java_Keyword("Math");
 	public @S(20) @NOSPACE PunctuationPeriod dot;
@@ -26,19 +33,31 @@ public class Java_MathFunction extends PrimaryOperator implements EagleRunnable
 		public @CHOICE Java_MathMinMaxFunc XXmathMinMaxFunction;
 	}
 
-	public static Java_MathFunction wrapMathFunction(AbstractToken choice, AbstractToken source)
+	public static Java_Expression wrapMathFunction(AbstractToken choice, AbstractToken source)
 	{
 		Java_MathFunction func = new Java_MathFunction();
 		func.dot = new PunctuationPeriod();
 		func.choice = new Java_MathChoice();
 		func.choice.setWhich(choice);
 		func.setTransformationSource(source);
-		return func;
+		return Java_Generator.wrapExpression(func);
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		interpreter.tryToInterpret(choice);
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractToken which = choice.getWhich();
+		if (which instanceof EagleTransformableExpression)
+		{
+			EagleTransformableExpression transf = (EagleTransformableExpression) which;
+			return transf.transformExpression(transformer, generator);
+		}
+		throw new RuntimeException("Please make " + which + " transformable");
 	}
 }

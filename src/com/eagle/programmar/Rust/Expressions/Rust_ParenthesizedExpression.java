@@ -38,13 +38,14 @@ public class Rust_ParenthesizedExpression extends PrimaryOperator
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
 
-	public Rust_Expression generateParentheses(Rust_Expression theExpr, AbstractToken source)
+	public static Rust_Expression generateParentheses(Rust_Expression theExpr, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.expressions = new SeparatedList<Rust_Expression, PunctuationComma>();
-		this.expressions.addPrimaryElement(theExpr);
-		this.rightParen = new PunctuationRightParen();
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		Rust_ParenthesizedExpression par = new Rust_ParenthesizedExpression();
+		par.leftParen = new PunctuationLeftParen();
+		par.expressions = new SeparatedList<Rust_Expression, PunctuationComma>();
+		par.expressions.addPrimaryElement(theExpr);
+		par.rightParen = new PunctuationRightParen();
+		par.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(par);
 	}
 }

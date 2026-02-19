@@ -6,6 +6,8 @@ package com.eagle.programmar.Java.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.programmar.Java.Java_Expression;
+import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Java_Statement;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
@@ -33,7 +35,7 @@ public class Java_ExitStatement extends TokenSequence implements EagleRunnableWi
 		return Eagle_Statement_Result.BREAK;
 	}
 
-	public static Java_ExitStatement newExitStatement(AbstractExpression code, AbstractToken source)
+	public static Java_Statement newExitStatement(AbstractExpression code, AbstractToken source)
 	{
 		Java_ExitStatement stmt = new Java_ExitStatement();
 		stmt.dot = new PunctuationPeriod();
@@ -42,6 +44,6 @@ public class Java_ExitStatement extends TokenSequence implements EagleRunnableWi
 		stmt.rightParen = new PunctuationRightParen();
 		stmt.semicolon = new PunctuationSemicolon();
 		stmt.setTransformationSource(source);
-		return stmt;
+		return Java_Generator.wrapStatement(stmt);
 	}
 }

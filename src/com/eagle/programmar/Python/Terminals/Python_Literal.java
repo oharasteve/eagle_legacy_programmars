@@ -84,11 +84,12 @@ public class Python_Literal extends TerminalLiteralToken
 		return "python literal";
 	}
 
-	public Python_Literal generateLiteral(String value, AbstractToken source)
+	public static Python_Literal generateLiteral(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Python_Literal lit = new Python_Literal();
+		lit.setValue(value);
+		lit.setTransformationSource(source);
+		return lit;
 	}
 
 	public static Python_Expression generateLiteralExpression(String value, AbstractToken source)

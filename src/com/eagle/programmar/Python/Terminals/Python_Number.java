@@ -4,6 +4,8 @@
 package com.eagle.programmar.Python.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
+import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
@@ -26,14 +28,7 @@ public class Python_Number extends TerminalNumberToken
 	{
 		return super.genericDescription("Ee", "JjLl", true, false, '?');
 	}
-
-	public Python_Number generateNumber(String value, AbstractToken source)
-	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
-	}
-
+	
 	public static Python_Number createNumber(int value)
 	{
 		Python_Number num = new Python_Number();
@@ -45,5 +40,19 @@ public class Python_Number extends TerminalNumberToken
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		return generator.newNumberExpression(_numberAsText, this);
+	}
+
+	public static Python_Number generateNumber(String value, AbstractToken source)
+	{
+		Python_Number numExpr = new Python_Number();
+		numExpr.setValue(value);
+		numExpr.setTransformationSource(source);
+		return numExpr;
+	}
+
+	public static Python_Expression generateNumberExpression(String value, AbstractToken source)
+	{
+		Python_Number num = generateNumber(value, source);
+		return Python_Generator.wrapExpression(num);
 	}
 }

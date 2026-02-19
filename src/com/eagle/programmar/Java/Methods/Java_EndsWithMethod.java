@@ -44,16 +44,17 @@ public class Java_EndsWithMethod extends PrecedenceOperator
 		return generator.newEndsWithFunction(theExpr, thePattern, this);
 	}
 
-	public Java_Expression generateEndsWith(Java_Expression expr, Java_Expression patt,
+	public static Java_Expression generateEndsWith(Java_Expression expr, Java_Expression patt,
 			AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.patternExpr = patt;
-		this.rightParen = new PunctuationRightParen();
+		Java_EndsWithMethod endsMeth = new Java_EndsWithMethod();
+		endsMeth.expression = expr;
+		endsMeth.dot = new PunctuationPeriod();
+		endsMeth.leftParen = new PunctuationLeftParen();
+		endsMeth.patternExpr = patt;
+		endsMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		endsMeth.setTransformationSource(source);
+		return Java_Generator.wrapExpression(endsMeth);
 	}
 }

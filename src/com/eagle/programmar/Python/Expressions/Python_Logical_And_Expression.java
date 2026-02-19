@@ -50,12 +50,13 @@ public class Python_Logical_And_Expression extends PrecedenceOperator
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 
-	public Python_Expression generateLogicalAnd(Python_Expression leftExpr,
+	public static Python_Expression generateLogicalAnd(Python_Expression leftExpr,
 			Python_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		Python_Logical_And_Expression andExpr = new Python_Logical_And_Expression();
+		andExpr.left = leftExpr;
+		andExpr.right = rightExpr;
+		andExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(andExpr);
 	}
 }

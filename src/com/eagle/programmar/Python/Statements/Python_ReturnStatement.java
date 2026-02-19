@@ -70,16 +70,17 @@ public class Python_ReturnStatement extends TokenSequence
 		return generator.newReturnStatement(retExpr, this);
 	}
 
-	public Python_ComplexStatement generateReturn(Python_Expression ret, AbstractToken source)
+	public static Python_ComplexStatement generateReturn(Python_Expression ret, AbstractToken source)
 	{
+		Python_ReturnStatement retStmt = new Python_ReturnStatement();
 		if (ret != null)
 		{
-			this.expressionList = new Python_ExpressionList();
-			this.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
-			this.expressionList.expressions.addPrimaryElement(ret);
-			this.expressionList.setPresent(true);
+			retStmt.expressionList = new Python_ExpressionList();
+			retStmt.expressionList.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
+			retStmt.expressionList.expressions.addPrimaryElement(ret);
+			retStmt.expressionList.setPresent(true);
 		}
-		this.setTransformationSource(source);
-		return Python_Generator.wrapStatement(this);
+		retStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(retStmt);
 	}
 }

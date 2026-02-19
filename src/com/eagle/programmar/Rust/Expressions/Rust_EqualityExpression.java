@@ -120,11 +120,12 @@ public class Rust_EqualityExpression extends PrecedenceOperator
 			throw new RuntimeException("Unexpected relational operator: " + operator);
 		}
 	}
-	public Rust_Expression generateEquality(Oper2Types types, Rust_Expression leftExpr, RelationalEnum relOp,
+	public static Rust_Expression generateEquality(Oper2Types types, Rust_Expression leftExpr, RelationalEnum relOp,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Rust_EqualityExpression eqExpr = new Rust_EqualityExpression();
+		eqExpr.left = leftExpr;
+		eqExpr.right = rightExpr;
 		String oper;
 		switch (relOp)
 		{
@@ -137,8 +138,8 @@ public class Rust_EqualityExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unable to handle operator " + relOp);
 		}
-		this.operator.setValue(oper);
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		eqExpr.operator.setValue(oper);
+		eqExpr.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(eqExpr);
 	}
 }

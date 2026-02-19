@@ -76,30 +76,30 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 
-	public Rust_Expression generateAdditive(Oper2Types types, Rust_Expression leftExpr, AdditiveEnum oper,
+	public static Rust_Expression generateAdditive(Oper2Types types, Rust_Expression leftExpr, AdditiveEnum oper,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Rust_AdditiveExpression add = new Rust_AdditiveExpression();
+		add.left = leftExpr;
+		add.right = rightExpr;
 		if (types != null)
 		{
 			if (types._type1.equals(EagleString.STRING) && !types._type2.equals(EagleString.STRING))
 			{
-				Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
-				this.right = strMeth.generateString(rightExpr, rightExpr);
+				add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
 			}
 		}
 
 		switch (oper)
 		{
 		case PLUS:
-			this.operator.setValue("+");
+			add.operator.setValue("+");
 			break;
 		case MINUS:
-			this.operator.setValue("-");
+			add.operator.setValue("-");
 			break;
 		}
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		add.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(add);
 	}
 }

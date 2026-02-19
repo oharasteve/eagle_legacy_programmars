@@ -21,10 +21,11 @@ public class Java_Character_Literal extends TerminalLiteralToken
 		return super.genericDescription("'", true, '\\', false, false);
 	}
 
-	public Java_Character_Literal generateCharLiteral(String value, AbstractToken source)
+	public static Java_Character_Literal generateCharLiteral(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Java_Character_Literal lit = new Java_Character_Literal();
+		lit.setValue(value);
+		lit.setTransformationSource(source);
+		return lit;
 	}
 }

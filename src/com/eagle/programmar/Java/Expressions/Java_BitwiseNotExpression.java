@@ -35,10 +35,11 @@ public class Java_BitwiseNotExpression extends PrimaryOperator
 		return generator.newBitwiseNotExpression(value, this);
 	}
 
-	public Java_Expression generateBitwiseNot(Java_Expression value, AbstractToken source)
+	public static Java_Expression generateBitwiseNot(Java_Expression value, AbstractToken source)
 	{
-		this.expr = value;
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		Java_BitwiseNotExpression bitExpr = new Java_BitwiseNotExpression();
+		bitExpr.expr = value;
+		bitExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(bitExpr);
 	}
 }

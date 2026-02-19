@@ -56,10 +56,11 @@ public class CSharp_VariableExpression extends PrimaryOperator
 				SubscriptEnum.FIRST_IS_ZERO, subscript, this);
 	}
 
-	public CSharp_Expression generateVarExpr(String name, SubscriptEnum offset,
+	public static CSharp_Expression generateVarExpr(String name, SubscriptEnum offset,
 			CSharp_Expression subscrExpr, AbstractToken source)
 	{
-		this.variable = CSharp_Variable.newVariable(name);
+		CSharp_VariableExpression varExpr = new CSharp_VariableExpression();
+		varExpr.variable = CSharp_Variable.newVariable(name);
 
 		if (subscrExpr != null)
 		{
@@ -68,11 +69,10 @@ public class CSharp_VariableExpression extends PrimaryOperator
 
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
-				CSharp_Number num = new CSharp_Number();
-				CSharp_Expression one = CSharp_Generator.wrapExpression(num.generateNumber("1", source));
-				CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
+				CSharp_Expression one = CSharp_Generator.wrapExpression(
+						CSharp_Number.generateNumber("1", source));
 				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-				CSharp_Expression minusOne = addExp.generateAdditive(types, subscrExpr,
+				CSharp_Expression minusOne = CSharp_AdditiveExpression.generateAdditive(types, subscrExpr,
 						AdditiveEnum.MINUS, one, source);
 				subscript.expr = minusOne;
 			}
@@ -83,11 +83,11 @@ public class CSharp_VariableExpression extends PrimaryOperator
 			subscript.expr.setPresent(true);
 			subscript.rightBracket = new PunctuationRightBracket();
 
-			this.variable.subscript = new TokenList<CSharp_Subscript>();
-			this.variable.subscript.addToken(subscript);
+			varExpr.variable.subscript = new TokenList<CSharp_Subscript>();
+			varExpr.variable.subscript.addToken(subscript);
 		}
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		varExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(varExpr);
 	}
 }

@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Subscript;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -26,7 +27,7 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 		Python_Subscript.evaluateSubscript(interpreter, value, subscr.body);
 	}
 
-	public static Python_SubscriptExpression generateExpression(AbstractExpression theExpr,
+	public static Python_Expression generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
@@ -36,6 +37,6 @@ public class Python_SubscriptExpression extends PrecedenceOperator implements Ea
 		expr.expr = (Python_Expression) theExpr;
 		expr.subscr = Python_Subscript.generateExpression(sc, whichSC, whichEC, ecOrnc, source);
 		expr.setTransformationSource(source);
-		return expr;
+		return Python_Generator.wrapExpression(expr);
 	}
 }

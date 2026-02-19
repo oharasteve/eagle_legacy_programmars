@@ -78,32 +78,33 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 		}
 	}
 
-	public CSharp_Expression generateMultiplicative(
+	public static CSharp_Expression generateMultiplicative(
 			CSharp_Expression leftExpr, MultiplicativeEnum oper,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		CSharp_MultiplicativeExpression multExpr = new CSharp_MultiplicativeExpression();
+		multExpr.left = leftExpr;
+		multExpr.right = rightExpr;
 		switch (oper)
 		{
 		case TIMES:
-			this.operator.setValue("*");
+			multExpr.operator.setValue("*");
 			break;
 		case DIVIDE_TRUNCATE:
-			this.operator.setValue("/");
+			multExpr.operator.setValue("/");
 			break;
 		case DIVIDE_NO_TRUNCATE:
-			this.operator.setValue("/");
+			multExpr.operator.setValue("/");
 			CSharp_Type type = CSharp_Type.newPrimitiveType("double");
-			this.right = CSharp_CastExpression.newCastExpression(type, rightExpr, source);
+			multExpr.right = CSharp_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
 		case REMAINDER:
-			this.operator.setValue("%");
+			multExpr.operator.setValue("%");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		multExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(multExpr);
 	}
 }

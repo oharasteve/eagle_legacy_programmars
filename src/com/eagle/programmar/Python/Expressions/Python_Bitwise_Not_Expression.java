@@ -35,10 +35,11 @@ public class Python_Bitwise_Not_Expression extends PrecedenceOperator
 		return generator.newBitwiseNotExpression(value, this);
 	}
 
-	public Python_Expression generateBitwiseNot(Python_Expression value, AbstractToken source)
+	public static Python_Expression generateBitwiseNot(Python_Expression value, AbstractToken source)
 	{
-		this.expr = value;
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		Python_Bitwise_Not_Expression bitExpr = new Python_Bitwise_Not_Expression();
+		bitExpr.expr = value;
+		bitExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(bitExpr);
 	}
 }

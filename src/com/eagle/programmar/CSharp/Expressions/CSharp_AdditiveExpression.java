@@ -92,24 +92,25 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 		}
 	}
 
-	public CSharp_Expression generateAdditive(Oper2Types types,
+	public static CSharp_Expression generateAdditive(Oper2Types types,
 			CSharp_Expression leftExpr, AdditiveEnum oper,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		CSharp_AdditiveExpression addExpr = new CSharp_AdditiveExpression();
+		addExpr.left = leftExpr;
+		addExpr.right = rightExpr;
 		switch (oper)
 		{
 		case PLUS:
-			this.operator.setValue("+");
+			addExpr.operator.setValue("+");
 			break;
 		case MINUS:
-			this.operator.setValue("-");
+			addExpr.operator.setValue("-");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		addExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(addExpr);
 	}
 }

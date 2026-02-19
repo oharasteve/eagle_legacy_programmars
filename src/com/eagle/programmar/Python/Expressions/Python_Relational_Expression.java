@@ -140,11 +140,12 @@ public class Python_Relational_Expression extends PrecedenceOperator
 		throw new RuntimeException("Unexpected relational operator: " + operator.getWhich());
 	}
 
-	public Python_Expression generateRelational(Oper2Types types, Python_Expression leftExpr,
+	public static Python_Expression generateRelational(Oper2Types types, Python_Expression leftExpr,
 			RelationalEnum relOp, Python_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Python_Relational_Expression relExp = new Python_Relational_Expression();
+		relExp.left = leftExpr;
+		relExp.right = rightExpr;
 
 		Python_PunctuationChoice oper = null;
 		switch (relOp)
@@ -168,9 +169,9 @@ public class Python_Relational_Expression extends PrecedenceOperator
 			oper = new Python_PunctuationChoice(">=");
 			break;
 		}
-		this.operator = new Python_Relational_Operator();
-		this.operator.setWhich(oper);
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		relExp.operator = new Python_Relational_Operator();
+		relExp.operator.setWhich(oper);
+		relExp.setTransformationSource(source);
+		return Python_Generator.wrapExpression(relExp);
 	}
 }

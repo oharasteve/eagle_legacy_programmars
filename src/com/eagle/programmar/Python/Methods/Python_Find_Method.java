@@ -51,23 +51,24 @@ public class Python_Find_Method extends PrimaryOperator
 		}
 	}
 
-	public Python_Expression generateIndexOf(Python_Variable str, Python_Expression patt,
+	public static Python_Expression generateIndexOf(Python_Variable str, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		this.string = str;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattern = patt;
+		Python_Find_Method indexFn = new Python_Find_Method();
+		indexFn.string = str;
+		indexFn.dot = new PunctuationPeriod();
+		indexFn.leftParen = new PunctuationLeftParen();
+		indexFn.pattern = patt;
 		if (sc != null)
 		{
-			this.scExpr = new Python_Find_SC();
-			this.scExpr.setPresent(true);
-			this.scExpr.comma = new PunctuationComma();
-			this.scExpr.start = sc;
+			indexFn.scExpr = new Python_Find_SC();
+			indexFn.scExpr.setPresent(true);
+			indexFn.scExpr.comma = new PunctuationComma();
+			indexFn.scExpr.start = sc;
 		}
-		this.rightParen = new PunctuationRightParen();
+		indexFn.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		indexFn.setTransformationSource(source);
+		return Python_Generator.wrapExpression(indexFn);
 	}
 }

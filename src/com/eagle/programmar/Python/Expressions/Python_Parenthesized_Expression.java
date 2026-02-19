@@ -79,15 +79,16 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
 
-	public Python_Expression generateParentheses(Python_Expression theExpr,
+	public static Python_Expression generateParentheses(Python_Expression theExpr,
 			AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.list = new Python_List();
-		this.list.setPresent(true);
-		this.list.expr = theExpr;
-		this.rightParen = new PunctuationRightParen();
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		Python_Parenthesized_Expression parens = new Python_Parenthesized_Expression();
+		parens.leftParen = new PunctuationLeftParen();
+		parens.list = new Python_List();
+		parens.list.setPresent(true);
+		parens.list.expr = theExpr;
+		parens.rightParen = new PunctuationRightParen();
+		parens.setTransformationSource(source);
+		return Python_Generator.wrapExpression(parens);
 	}
 }

@@ -55,21 +55,22 @@ public class CSharp_Literal extends TerminalLiteralToken
 		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
 	}
 
-	public CSharp_Literal generateLiteral(String value, AbstractToken source)
+	public static CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
+		CSharp_Literal lit = new CSharp_Literal();
 		String val = value;
 		if (!val.startsWith("\""))
 		{
 			val = '"' + val + '"';
 		}
-		this.setValue(val);
-		this.setTransformationSource(source);
-		return this;
+		lit.setValue(val);
+		lit.setTransformationSource(source);
+		return lit;
 	}
 
 	public static CSharp_Expression generateLiteralExpression(String value, AbstractToken source)
 	{
-		CSharp_Literal lit = new CSharp_Literal();
-		return CSharp_Generator.wrapExpression(lit.generateLiteral(value, source));
+		CSharp_Literal lit = CSharp_Literal.generateLiteral(value, source);
+		return CSharp_Generator.wrapExpression(lit);
 	}
 }

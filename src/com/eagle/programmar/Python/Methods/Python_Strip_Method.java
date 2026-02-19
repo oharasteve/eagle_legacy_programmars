@@ -30,14 +30,15 @@ public class Python_Strip_Method extends PrecedenceOperator
 		interpreter.pushInt(line.length());
 	}
 
-	public Python_Expression generateTrim(Python_Expression expr, AbstractToken source)
+	public static Python_Expression generateTrim(Python_Expression expr, AbstractToken source)
 	{
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.expression = expr;
-		this.rightParen = new PunctuationRightParen();
+		Python_Strip_Method stripMeth = new Python_Strip_Method();
+		stripMeth.dot = new PunctuationPeriod();
+		stripMeth.leftParen = new PunctuationLeftParen();
+		stripMeth.expression = expr;
+		stripMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		stripMeth.setTransformationSource(source);
+		return Python_Generator.wrapExpression(stripMeth);
 	}
 }

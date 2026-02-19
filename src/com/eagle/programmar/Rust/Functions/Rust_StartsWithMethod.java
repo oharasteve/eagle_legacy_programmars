@@ -49,24 +49,24 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 
-	public Rust_Expression generateStartsWith(Rust_Expression expr, Rust_Expression patt,
+	public static Rust_Expression generateStartsWith(Rust_Expression expr, Rust_Expression patt,
 			Rust_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		this.left = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.arg = patt;
+		Rust_StartsWithMethod startsExpr = new Rust_StartsWithMethod();
+		startsExpr.left = expr;
+		startsExpr.dot = new PunctuationPeriod();
+		startsExpr.leftParen = new PunctuationLeftParen();
+		startsExpr.arg = patt;
 		if (sc != null)
 		{
 			// Rust does not support str.StartsWith("patt",sc)
 			// Have to use Substring instead
-			Rust_SubscriptExpression substr = Rust_SubscriptExpression.generateSubscriptExpression(
+			startsExpr.left = Rust_SubscriptExpression.generateSubscriptExpression(
 					expr, sc, whichSC, SubstringECEnum.GIVEN_NEITHER, null, false, source);
-			this.left = Rust_Generator.wrapExpression(substr);
 		}
-		this.rightParen = new PunctuationRightParen();
+		startsExpr.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		startsExpr.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(startsExpr);
 	}
 }

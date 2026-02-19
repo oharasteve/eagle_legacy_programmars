@@ -18,9 +18,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class Java_RelationalExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -109,9 +109,10 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		throw new RuntimeException("Unexpected relational operator: " + operator);
 	}
 
-	public Java_Expression generateRelational(Oper2Types types, Java_Expression leftExpr, RelationalEnum relOp,
+	public static Java_Expression generateRelational(Oper2Types types, Java_Expression leftExpr, RelationalEnum relOp,
 			Java_Expression rightExpr, AbstractToken source)
 	{
+		Java_RelationalExpression relExp = new Java_RelationalExpression();
 		boolean doStrings = false;
 		if (types != null)
 		{
@@ -131,8 +132,7 @@ public class Java_RelationalExpression extends PrecedenceOperator
 
 		if (doStrings)
 		{
-			Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
-			Java_Expression parenExpr = parens.generateParentheses(leftExpr, null);
+			Java_Expression parenExpr = Java_ParenthesizedExpression.generateParentheses(leftExpr, null);
 			Java_EqualsMethod equals = Java_EqualsMethod.newEqualsMethod(parenExpr, rightExpr);
 			equals.setTransformationSource(source);
 			Java_Expression equalsExpr = Java_Generator.wrapExpression(equals);
@@ -141,16 +141,14 @@ public class Java_RelationalExpression extends PrecedenceOperator
 			case EQUALS:
 				return equalsExpr;
 			case NOT_EQUALS:
-				Java_LogicalNotExpression notExpr = new Java_LogicalNotExpression();
-				Java_Expression not = notExpr.generateLogicalNot(equalsExpr, source);
-				return not;
+				return Java_LogicalNotExpression.generateLogicalNot(equalsExpr, source);
 			default:
 				throw new RuntimeException("Unable to handle " + relOp + " with strings");
 			}
 		}
 
-		this.left = leftExpr;
-		this.right = rightExpr;
+		relExp.left = leftExpr;
+		relExp.right = rightExpr;
 		String oper;
 		switch (relOp)
 		{
@@ -175,8 +173,8 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unable to handle operator " + relOp);
 		}
-		this.operator.setValue(oper);
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		relExp.operator.setValue(oper);
+		relExp.setTransformationSource(source);
+		return Java_Generator.wrapExpression(relExp);
 	}
 }

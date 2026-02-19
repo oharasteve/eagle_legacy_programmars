@@ -76,32 +76,33 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 		}
 	}
 
-	public Rust_Expression generateMultiplicative(
+	public static Rust_Expression generateMultiplicative(
 			Rust_Expression leftExpr, MultiplicativeEnum oper,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Rust_MultiplicativeExpression mul = new Rust_MultiplicativeExpression();
+		mul.left = leftExpr;
+		mul.right = rightExpr;
 		switch (oper)
 		{
 		case TIMES:
-			this.operator.setValue("*");
+			mul.operator.setValue("*");
 			break;
 		case DIVIDE_TRUNCATE:
-			this.operator.setValue("/");
+			mul.operator.setValue("/");
 			break;
 		case DIVIDE_NO_TRUNCATE:
-			this.operator.setValue("/");
-			this.left = Rust_CastExpression.newCastExpression("f64", leftExpr, source);
-			this.right = Rust_CastExpression.newCastExpression("f64", rightExpr, source);
+			mul.operator.setValue("/");
+			mul.left = Rust_CastExpression.newCastExpression("f64", leftExpr, source);
+			mul.right = Rust_CastExpression.newCastExpression("f64", rightExpr, source);
 			break;
 		case REMAINDER:
-			this.operator.setValue("%");
+			mul.operator.setValue("%");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper.toString());
 		}
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		mul.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(mul);
 	}
 }

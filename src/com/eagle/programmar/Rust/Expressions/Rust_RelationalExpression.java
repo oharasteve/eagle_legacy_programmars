@@ -86,11 +86,12 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 		}
 	}
 	
-	public Rust_Expression generateRelational(Oper2Types types, Rust_Expression leftExpr, RelationalEnum relOp,
+	public static Rust_Expression generateRelational(Oper2Types types, Rust_Expression leftExpr, RelationalEnum relOp,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Rust_RelationalExpression relExp = new Rust_RelationalExpression();
+		relExp.left = leftExpr;
+		relExp.right = rightExpr;
 		String oper;
 		switch (relOp)
 		{
@@ -109,8 +110,8 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unable to handle operator " + relOp);
 		}
-		this.operator.setValue(oper);
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		relExp.operator.setValue(oper);
+		relExp.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(relExp);
 	}
 }

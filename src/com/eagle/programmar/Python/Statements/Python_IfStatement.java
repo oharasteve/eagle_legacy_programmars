@@ -153,7 +153,7 @@ public class Python_IfStatement extends TokenSequence
 		return generator.newIfStatement(cond, thenParts, elseParts, this);
 	}
 
-	public Python_ComplexStatement generateIfElse1(Python_Expression cond,
+	public static Python_ComplexStatement generateIfElseOne(Python_Expression cond,
 			Python_ComplexStatement thenStmt, Python_ComplexStatement elseStmt, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> thens = new ArrayList<Python_ComplexStatement>();
@@ -166,19 +166,20 @@ public class Python_IfStatement extends TokenSequence
 			elses.add(elseStmt);
 		}
 
-		return generateIfElse(cond, thens, elses, source);
+		return generateIfElseMany(cond, thens, elses, source);
 	}
 
-	public Python_ComplexStatement generateIfElse(Python_Expression cond,
+	public static Python_ComplexStatement generateIfElseMany(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> thenStmts, ArrayList<Python_ComplexStatement> elseSmts,
 			AbstractToken source)
 	{
-		this.condition = cond;
-		this.colon = new PunctuationColon();
+		Python_IfStatement ifStmt = new Python_IfStatement();
+		ifStmt.condition = cond;
+		ifStmt.colon = new PunctuationColon();
 
-		this.ifThenStatements = new Python_StatementBlock();
+		ifStmt.ifThenStatements = new Python_StatementBlock();
 		Python_MultilineStatement thenMulti = new Python_MultilineStatement();
-		this.ifThenStatements.setWhich(thenMulti);
+		ifStmt.ifThenStatements.setWhich(thenMulti);
 		thenMulti.statements = new TokenList<Python_ComplexStatement>();
 		for (Python_ComplexStatement stmt : thenStmts)
 		{
@@ -187,12 +188,12 @@ public class Python_IfStatement extends TokenSequence
 
 		if (elseSmts != null && elseSmts.size() > 0)
 		{
-			this.ifElse = new Python_IfElse();
-			this.ifElse.setPresent(true);
-			this.ifElse.colon = new PunctuationColon();
-			this.ifElse.ifElseStatements = new Python_StatementBlock();
+			ifStmt.ifElse = new Python_IfElse();
+			ifStmt.ifElse.setPresent(true);
+			ifStmt.ifElse.colon = new PunctuationColon();
+			ifStmt.ifElse.ifElseStatements = new Python_StatementBlock();
 			Python_MultilineStatement elseMulti = new Python_MultilineStatement();
-			this.ifElse.ifElseStatements.setWhich(elseMulti);
+			ifStmt.ifElse.ifElseStatements.setWhich(elseMulti);
 			elseMulti.statements = new TokenList<Python_ComplexStatement>();
 			for (Python_ComplexStatement stmt : elseSmts)
 			{
@@ -200,7 +201,7 @@ public class Python_IfStatement extends TokenSequence
 			}
 		}
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapStatement(this);
+		ifStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(ifStmt);
 	}
 }

@@ -73,9 +73,10 @@ public class Python_StartsWith_Method extends PrimaryOperator
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 
-	public Python_Expression generateStartsWith(Python_Expression expr, Python_Expression patt,
+	public static Python_Expression generateStartsWith(Python_Expression expr, Python_Expression patt,
 			Python_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
+		Python_StartsWith_Method startsFunc = new Python_StartsWith_Method();
 		AbstractToken token = expr.getWhich();
 		if (!(token instanceof Python_VariableExpression))
 		{
@@ -83,20 +84,20 @@ public class Python_StartsWith_Method extends PrimaryOperator
 		}
 
 		Python_VariableExpression varExpr = (Python_VariableExpression) token;
-		this.string = varExpr.variable;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattern = patt;
+		startsFunc.string = varExpr.variable;
+		startsFunc.dot = new PunctuationPeriod();
+		startsFunc.leftParen = new PunctuationLeftParen();
+		startsFunc.pattern = patt;
 		if (sc != null)
 		{
-			this.scExpr = new Python_Index_SC();
-			this.scExpr.setPresent(true);
-			this.scExpr.comma = new PunctuationComma();
-			this.scExpr.start = sc;
+			startsFunc.scExpr = new Python_Index_SC();
+			startsFunc.scExpr.setPresent(true);
+			startsFunc.scExpr.comma = new PunctuationComma();
+			startsFunc.scExpr.start = sc;
 		}
-		this.rightParen = new PunctuationRightParen();
+		startsFunc.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		startsFunc.setTransformationSource(source);
+		return Python_Generator.wrapExpression(startsFunc);
 	}
 }

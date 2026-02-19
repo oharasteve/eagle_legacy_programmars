@@ -15,10 +15,11 @@ public class Python_HexNumber extends TerminalHexNumberToken
 		return genericHex(lines, "0x", "Ll");
 	}
 
-	public Python_HexNumber generateHexNumber(String value, AbstractToken source)
+	public static Python_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Python_HexNumber hex = new Python_HexNumber();
+		hex.setValue(value);
+		hex.setTransformationSource(source);
+		return hex;
 	}
 }

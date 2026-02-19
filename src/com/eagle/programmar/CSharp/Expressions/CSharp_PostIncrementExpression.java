@@ -72,22 +72,23 @@ public class CSharp_PostIncrementExpression extends PrimaryOperator
 				this);
 	}
 
-	public CSharp_Expression generateIncrement(CSharp_Variable variable,
+	public static CSharp_Expression generateIncrement(CSharp_Variable variable,
 			IncrementEnum oper, AbstractToken source)
 	{
-		this.var = variable;
+		CSharp_PostIncrementExpression postExpr = new CSharp_PostIncrementExpression();
+		postExpr.var = variable;
 		switch (oper)
 		{
 		case INCREMENT:
-			this.operator.setValue("++");
+			postExpr.operator.setValue("++");
 			break;
 		case DECREMENT:
-			this.operator.setValue("--");
+			postExpr.operator.setValue("--");
 			break;
 		default:
 			throw new RuntimeException("Unexpected operator: " + oper);
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		postExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(postExpr);
 	}
 }

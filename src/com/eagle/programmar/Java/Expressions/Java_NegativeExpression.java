@@ -14,9 +14,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.NegativeEnum;
 
 public class Java_NegativeExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -67,9 +67,10 @@ public class Java_NegativeExpression extends PrimaryOperator
 		}
 	}
 
-	public Java_Expression generateNegative(NegativeEnum sign,
+	public static Java_Expression generateNegative(NegativeEnum sign,
 			Java_Expression theExpr, AbstractToken source)
 	{
+		Java_NegativeExpression negExpr = new Java_NegativeExpression();
 		String oper;
 		switch (sign)
 		{
@@ -83,9 +84,9 @@ public class Java_NegativeExpression extends PrimaryOperator
 			return null;
 		}
 
-		this.expr = theExpr;
-		this.operator.setValue(oper);
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		negExpr.expr = theExpr;
+		negExpr.operator.setValue(oper);
+		negExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(negExpr);
 	}
 }

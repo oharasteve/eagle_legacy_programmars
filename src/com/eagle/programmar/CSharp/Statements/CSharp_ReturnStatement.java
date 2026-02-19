@@ -58,15 +58,16 @@ public class CSharp_ReturnStatement extends TokenSequence
 		return generator.newReturnStatement(expr, this);
 	}
 
-	public CSharp_Statement generateReturn(CSharp_Expression ret, AbstractToken source)
+	public static CSharp_Statement generateReturn(CSharp_Expression ret, AbstractToken source)
 	{
+		CSharp_ReturnStatement retStmt = new CSharp_ReturnStatement();
 		if (ret != null)
 		{
-			this.expression = ret;
-			this.expression.setPresent(true);
+			retStmt.expression = ret;
+			retStmt.expression.setPresent(true);
 		}
-		this.semicolon = new PunctuationSemicolon();
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapStatement(this);
+		retStmt.semicolon = new PunctuationSemicolon();
+		retStmt.setTransformationSource(source);
+		return CSharp_Generator.wrapStatement(retStmt);
 	}
 }

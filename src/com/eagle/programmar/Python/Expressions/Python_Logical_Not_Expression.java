@@ -36,11 +36,12 @@ public class Python_Logical_Not_Expression extends PrimaryOperator
 		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
-	public Python_Expression generateLogicalNot(Python_Expression theExpr,
+	public static Python_Expression generateLogicalNot(Python_Expression theExpr,
 			AbstractToken source)
 	{
-		this.expr = theExpr;
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		Python_Logical_Not_Expression notExp = new Python_Logical_Not_Expression();
+		notExp.expr = theExpr;
+		notExp.setTransformationSource(source);
+		return Python_Generator.wrapExpression(notExp);
 	}
 }

@@ -56,11 +56,9 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			range.lowExpression = (Rust_Expression) sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
-			Rust_Number num = new Rust_Number();
-			Rust_Expression one = Rust_Generator.wrapExpression(num.generateNumber("1", source));
-			Rust_AdditiveExpression addExpr = new Rust_AdditiveExpression();
+			Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			Rust_Expression scMinusOne = addExpr.generateAdditive(types,
+			Rust_Expression scMinusOne = Rust_AdditiveExpression.generateAdditive(types,
 					(Rust_Expression) sc, AdditiveEnum.MINUS, one, source);
 			range.lowExpression = scMinusOne;
 			break;
@@ -76,11 +74,9 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 				switch (whichSC)
 				{
 				case FIRST_CHAR_IS_ZERO:
-					Rust_Number num = new Rust_Number();
-					Rust_Expression one = Rust_Generator.wrapExpression(num.generateNumber("1", source));
-					Rust_AdditiveExpression addExpr = new Rust_AdditiveExpression();
+					Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
 					Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-					Rust_Expression ecPlusOne = addExpr.generateAdditive(types,
+					Rust_Expression ecPlusOne = Rust_AdditiveExpression.generateAdditive(types,
 							(Rust_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
 					range.highExpression = ecPlusOne;
 					break;
@@ -99,9 +95,8 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			}
 			break;
 		case GIVEN_NC:
-			Rust_AdditiveExpression addExpr = new Rust_AdditiveExpression();
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			Rust_Expression scPlusNc = addExpr.generateAdditive(types,
+			Rust_Expression scPlusNc = Rust_AdditiveExpression.generateAdditive(types,
 					range.lowExpression, AdditiveEnum.PLUS, (Rust_Expression) ecOrnc, source);
 			range.highExpression = scPlusNc;
 			range.highExpression.setPresent(true);

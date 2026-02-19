@@ -18,15 +18,16 @@ public class Python_GlobalStatement extends TokenSequence
 			new Python_KeywordChoice("global", "nonlocal");
 	public @S(20) SeparatedList<Python_Identifier_Reference, PunctuationComma> vars;
 	
-	public Python_ComplexStatement generateGlobal(String variableName, AbstractToken source)
+	public static Python_ComplexStatement generateGlobal(String variableName, AbstractToken source)
 	{
-		GLOBAL.setValue("global");
-		vars = new SeparatedList<Python_Identifier_Reference, PunctuationComma>();
+		Python_GlobalStatement globStmt = new Python_GlobalStatement();
+		globStmt.GLOBAL.setValue("global");
+		globStmt.vars = new SeparatedList<Python_Identifier_Reference, PunctuationComma>();
 		Python_Identifier_Reference id = new Python_Identifier_Reference();
 		id.setValue(variableName);
-		vars.addPrimaryElement(id);
+		globStmt.vars.addPrimaryElement(id);
 		
-		this.setTransformationSource(source);
-		return Python_Generator.wrapStatement(this);
+		globStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(globStmt);
 	}
 }

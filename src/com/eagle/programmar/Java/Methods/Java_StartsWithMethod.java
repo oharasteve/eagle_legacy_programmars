@@ -63,23 +63,24 @@ public class Java_StartsWithMethod extends PrecedenceOperator
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 
-	public Java_Expression generateStartsWith(Java_Expression expr, Java_Expression patt,
+	public static Java_Expression generateStartsWith(Java_Expression expr, Java_Expression patt,
 			Java_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		this.expression = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.patternExpr = patt;
+		Java_StartsWithMethod startsMeth = new Java_StartsWithMethod();
+		startsMeth.expression = expr;
+		startsMeth.dot = new PunctuationPeriod();
+		startsMeth.leftParen = new PunctuationLeftParen();
+		startsMeth.patternExpr = patt;
 		if (sc != null)
 		{
-			this.comma = new PunctuationComma();
-			this.comma.setPresent(true);
-			this.scExpr = sc;
-			this.scExpr.setPresent(true);
+			startsMeth.comma = new PunctuationComma();
+			startsMeth.comma.setPresent(true);
+			startsMeth.scExpr = sc;
+			startsMeth.scExpr.setPresent(true);
 		}
-		this.rightParen = new PunctuationRightParen();
+		startsMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		startsMeth.setTransformationSource(source);
+		return Java_Generator.wrapExpression(startsMeth);
 	}
 }

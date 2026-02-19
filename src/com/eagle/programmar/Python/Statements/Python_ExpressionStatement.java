@@ -5,7 +5,9 @@ package com.eagle.programmar.Python.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Type;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.tokens.AbstractToken;
@@ -36,12 +38,12 @@ public class Python_ExpressionStatement extends TokenSequence
 		interpreter.tryToInterpret(expression);
 	}
 
-	public static Python_ExpressionStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
+	public static Python_ComplexStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
 	{
 		Python_ExpressionStatement stmt = new Python_ExpressionStatement();
 		stmt.expression = (Python_Expression) expr;
 		stmt.setTransformationSource(source);
-		return stmt;
+		return Python_Generator.wrapStatement(stmt);
 	}
 
 	@Override

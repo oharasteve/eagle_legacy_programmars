@@ -67,20 +67,21 @@ public class CSharp_NegativeExpression extends PrimaryOperator
 		}
 	}
 
-	public CSharp_Expression generateNegative(NegativeEnum sign,
+	public static CSharp_Expression generateNegative(NegativeEnum sign,
 			CSharp_Expression theExpr, AbstractToken source)
 	{
-		this.expr = theExpr;
+		CSharp_NegativeExpression negExpr = new CSharp_NegativeExpression();
+		negExpr.expr = theExpr;
 		switch (sign)
 		{
 		case POSITIVE:
-			this.operator.setValue("+");
+			negExpr.operator.setValue("+");
 			break;
 		case NEGATIVE:
-			this.operator.setValue("-");
+			negExpr.operator.setValue("-");
 			break;
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		negExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(negExpr);
 	}
 }

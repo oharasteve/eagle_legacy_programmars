@@ -35,11 +35,12 @@ public class Rust_VariableExpression extends PrimaryOperator
 				SubscriptEnum.FIRST_IS_ZERO, null, this);
 	}
 
-	public Rust_Expression generateVarExpr(String name, SubscriptEnum offset,
+	public static Rust_Expression generateVariableExpression(String name, SubscriptEnum offset,
 			Rust_Expression subscrExpr, AbstractToken source)
 	{
-		this.variable = Rust_Variable.newVariable(name);
-		this.setTransformationSource(source);
+		Rust_VariableExpression var = new Rust_VariableExpression();
+		var.variable = Rust_Variable.generateVariable(name);
+		var.setTransformationSource(source);
 
 //		if (subscrExpr != null)
 //		{
@@ -76,6 +77,6 @@ public class Rust_VariableExpression extends PrimaryOperator
 //			this.variable.subscript.addToken(subscript);
 //		}
 
-		return Rust_Generator.wrapExpression(this);
+		return Rust_Generator.wrapExpression(var);
 	}
 }

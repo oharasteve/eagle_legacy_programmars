@@ -45,12 +45,13 @@ public class CSharp_LogicalAndExpression extends PrecedenceOperator
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 
-	public CSharp_Expression generateLogicalAnd(CSharp_Expression leftExpr,
+	public static CSharp_Expression generateLogicalAnd(CSharp_Expression leftExpr,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		CSharp_LogicalAndExpression andExpr = new CSharp_LogicalAndExpression();
+		andExpr.left = leftExpr;
+		andExpr.right = rightExpr;
+		andExpr.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(andExpr);
 	}
 }

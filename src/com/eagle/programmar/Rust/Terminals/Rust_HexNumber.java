@@ -15,10 +15,11 @@ public class Rust_HexNumber extends TerminalHexNumberToken
 		return genericHex(lines, "0x", "Ll", true);
 	}
 
-	public Rust_HexNumber generateHexNumber(String value, AbstractToken source)
+	public static Rust_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		Rust_HexNumber num = new Rust_HexNumber();
+		num.setValue(value);
+		num.setTransformationSource(source);
+		return num;
 	}
 }

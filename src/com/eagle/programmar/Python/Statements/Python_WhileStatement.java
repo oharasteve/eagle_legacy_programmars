@@ -120,15 +120,15 @@ public class Python_WhileStatement extends TokenSequence
 		return generator.newWhileStatement(cond, actions, this);
 	}
 
-	public Python_ComplexStatement generateDoUntil1(Python_Expression cond,
+	public static Python_ComplexStatement generateDoUntilOne(Python_Expression cond,
 			Python_ComplexStatement action, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
-		return generateDoUntil(cond, actions, source);
+		return generateDoUntilMany(cond, actions, source);
 	}
 
-	public Python_ComplexStatement generateDoUntil(Python_Expression cond,
+	public static Python_ComplexStatement generateDoUntilMany(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
 		String oddName = "_not_first_time_at_line_" + source.getStartLine() + "_";
@@ -178,27 +178,28 @@ public class Python_WhileStatement extends TokenSequence
 		{
 			copyActions.add((Python_ComplexStatement) act);
 		}
-		return generateWhile(whileCond, copyActions, source);
+		return generateWhileMany(whileCond, copyActions, source);
 	}
 
-	public Python_ComplexStatement generateWhile1(Python_Expression cond,
+	public static Python_ComplexStatement generateWhileOne(Python_Expression cond,
 			Python_ComplexStatement action, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
-		return generateWhile(cond, actions, source);
+		return generateWhileMany(cond, actions, source);
 	}
 
-	public Python_ComplexStatement generateWhile(Python_Expression cond,
+	public static Python_ComplexStatement generateWhileMany(Python_Expression cond,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
-		this.condition = cond;
-		this.colon = new PunctuationColon();
+		Python_WhileStatement doStmt = new Python_WhileStatement();
+		doStmt.condition = cond;
+		doStmt.colon = new PunctuationColon();
 
-		this.statements = new Python_StatementBlock();
+		doStmt.statements = new Python_StatementBlock();
 		Python_MultilineStatement multi = new Python_MultilineStatement();
 		multi.statements = new TokenList<Python_ComplexStatement>();
-		this.statements.setWhich(multi);
+		doStmt.statements.setWhich(multi);
 
 		for (Python_ComplexStatement stmt : actions)
 		{
@@ -206,13 +207,13 @@ public class Python_WhileStatement extends TokenSequence
 
 			// If the parent block gets the 'while' as the parent, line numbers in the
 			// side-by-side will pick up the 'while' instead of the first statement.
-			if (this.getTransformationSource() == null)
+			if (doStmt.getTransformationSource() == null)
 			{
-				this.setTransformationSource(stmt.getTransformationSource());
+				doStmt.setTransformationSource(stmt.getTransformationSource());
 			}
 		}
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapStatement(this);
+		doStmt.setTransformationSource(source);
+		return Python_Generator.wrapStatement(doStmt);
 	}
 }

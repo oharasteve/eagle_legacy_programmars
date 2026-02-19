@@ -64,24 +64,24 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, this);
 	}
 
-	public CSharp_Expression generateStartsWith(CSharp_Expression expr, CSharp_Expression patt,
+	public static CSharp_Expression generateStartsWith(CSharp_Expression expr, CSharp_Expression patt,
 			CSharp_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		this.left = expr;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattExpr = patt;
+		CSharp_StartsWithMethod startsMeth = new CSharp_StartsWithMethod();
+		startsMeth.left = expr;
+		startsMeth.dot = new PunctuationPeriod();
+		startsMeth.leftParen = new PunctuationLeftParen();
+		startsMeth.pattExpr = patt;
 		if (sc != null)
 		{
 			// C# does not support str.StartsWith("patt",sc)
 			// Have to use Substring instead
-			CSharp_SubstringMethod substr = CSharp_SubstringMethod.generateExpression(
+			startsMeth.left = CSharp_SubstringMethod.generateExpression(
 					expr, sc, whichSC, SubstringECEnum.GIVEN_NEITHER, null, false, source);
-			this.left = CSharp_Generator.wrapExpression(substr);
 		}
-		this.rightParen = new PunctuationRightParen();
+		startsMeth.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		startsMeth.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(startsMeth);
 	}
 }

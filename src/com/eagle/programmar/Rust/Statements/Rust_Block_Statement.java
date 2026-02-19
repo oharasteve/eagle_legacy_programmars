@@ -60,18 +60,19 @@ public class Rust_Block_Statement extends TokenSequence
 		return generator.newBlockStatement(result, this);
 	}
 
-	public Rust_Statement generateBlock(ArrayList<Rust_Statement> stmts,
+	public static Rust_Statement generateBlock(ArrayList<Rust_Statement> stmts,
 			AbstractToken source)
 	{
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.statements = new TokenList<Rust_Statement>();
-		this.statements.setPresent(true);
+		Rust_Block_Statement block = new Rust_Block_Statement();
+		block.leftBrace = new PunctuationLeftBrace();
+		block.rightBrace = new PunctuationRightBrace();
+		block.statements = new TokenList<Rust_Statement>();
+		block.statements.setPresent(true);
 		for (Rust_Statement stmt : stmts)
 		{
-			this.statements.addToken(stmt);
+			block.statements.addToken(stmt);
 		}
-		return Rust_Generator.wrapStatement(this);
+		return Rust_Generator.wrapStatement(block);
 	}
 	
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,

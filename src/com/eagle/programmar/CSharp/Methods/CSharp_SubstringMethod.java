@@ -74,7 +74,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 				given, nc, true, this);
 	}
 
-	public static CSharp_SubstringMethod generateExpression(AbstractExpression theExpr,
+	public static CSharp_Expression generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
@@ -90,12 +90,9 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			expr.scExpr = (CSharp_Expression) sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
-			CSharp_Number num = new CSharp_Number();
-			num.generateNumber("1", source);
-			CSharp_Expression one = CSharp_Generator.wrapExpression(num);
-			CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
+			CSharp_Expression one = CSharp_Number.generateNumberExpression("1", source);
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			CSharp_Expression scMinusOne = addExp.generateAdditive(types, (CSharp_Expression) sc,
+			CSharp_Expression scMinusOne = CSharp_AdditiveExpression.generateAdditive(types, (CSharp_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
 			break;
@@ -108,16 +105,13 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			{
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
-				CSharp_Number num = new CSharp_Number();
-				CSharp_Expression one = CSharp_Generator.wrapExpression(num.generateNumber("1", source));
-				CSharp_AdditiveExpression addExp1 = new CSharp_AdditiveExpression();
+				CSharp_Expression one = CSharp_Number.generateNumberExpression("1", source);
 				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-				CSharp_Expression ecPlusOne = addExp1.generateAdditive(types, (CSharp_Expression) ecOrnc,
-						AdditiveEnum.PLUS, one, source);
-				CSharp_AdditiveExpression addExp2 = new CSharp_AdditiveExpression();
-				CSharp_ParenthesizedExpression scParens = new CSharp_ParenthesizedExpression();
-				CSharp_Expression scParensExpr = scParens.generateParentheses((CSharp_Expression) sc, null);
-				CSharp_Expression ecMinusSc = addExp2.generateAdditive(types, ecPlusOne,
+				CSharp_Expression ecPlusOne = CSharp_AdditiveExpression.generateAdditive(
+						types, (CSharp_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
+				CSharp_Expression scParensExpr = CSharp_ParenthesizedExpression.generateParentheses(
+						(CSharp_Expression) sc, null);
+				CSharp_Expression ecMinusSc = CSharp_AdditiveExpression.generateAdditive(types, ecPlusOne,
 						AdditiveEnum.MINUS, scParensExpr, source);
 				CSharp_Expression ncExpr = ecMinusSc;
 				expr.ncExpr = ncExpr;
@@ -129,11 +123,10 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			{
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
-				CSharp_AdditiveExpression addExp = new CSharp_AdditiveExpression();
 				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-				CSharp_ParenthesizedExpression scParens = new CSharp_ParenthesizedExpression();
-				CSharp_Expression scParensExpr = scParens.generateParentheses((CSharp_Expression) sc, null);
-				CSharp_Expression ecMinusSc = addExp.generateAdditive(types, (CSharp_Expression) ecOrnc,
+				CSharp_Expression scParensExpr = CSharp_ParenthesizedExpression.generateParentheses(
+						(CSharp_Expression) sc, null);
+				CSharp_Expression ecMinusSc = CSharp_AdditiveExpression.generateAdditive(types, (CSharp_Expression) ecOrnc,
 						AdditiveEnum.MINUS, scParensExpr, source);
 				CSharp_Expression ncExpr = ecMinusSc;
 				expr.ncExpr = ncExpr;
@@ -154,24 +147,20 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			break;
 		}
 
-		// Need to handle ncMightBeTooBig. Can't let nc go past len(left) minus scS
+		// Need to handle ncMightBeTooBig. Can't let nc go past len(left) minus sc
 		if (ncMightBeTooBig && expr.ncExpr != null)
 		{
-			CSharp_LengthMethod lenFn = new CSharp_LengthMethod();
-			CSharp_Expression lenExp = lenFn.generateLength((CSharp_Expression) theExpr, source);
-
-			CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
-			CSharp_Expression parenExp = parens.generateParentheses(expr.scExpr, source);
-
-			CSharp_AdditiveExpression subtrExp = new CSharp_AdditiveExpression();
-			subtrExp.generateAdditive(null, lenExp, AdditiveEnum.MINUS, parenExp, source);
+			CSharp_Expression lenExp = CSharp_LengthMethod.generateLength((CSharp_Expression) theExpr, source);
+			CSharp_Expression parenExp = CSharp_ParenthesizedExpression.generateParentheses(expr.scExpr, source);
+			CSharp_Expression subtrExp = CSharp_AdditiveExpression.generateAdditive(
+					null, lenExp, AdditiveEnum.MINUS, parenExp, source);
 
 			CSharp_MathMinMaxFunc minFn = new CSharp_MathMinMaxFunc();
 			minFn.leftParen = new PunctuationLeftParen();
 			minFn.expressions = new SeparatedList<CSharp_Expression, PunctuationComma>();
 			minFn.expressions.addPrimaryElement(expr.ncExpr);
 			minFn.expressions.addSecondaryElement(new PunctuationComma());
-			minFn.expressions.addPrimaryElement(CSharp_Generator.wrapExpression(subtrExp));
+			minFn.expressions.addPrimaryElement(subtrExp);
 			minFn.rightParen = new PunctuationRightParen();
 
 			CSharp_MathFunction mathFn = CSharp_MathFunction.wrapFunction(minFn, source);
@@ -180,6 +169,6 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 		}
 
 		expr.setTransformationSource(source);
-		return expr;
+		return CSharp_Generator.wrapExpression(expr);
 	}
 }

@@ -35,10 +35,11 @@ public class Java_LogicalNotExpression extends PrimaryOperator
 		return generator.newLogicalNotExpression(theExpr, this);
 	}
 
-	public Java_Expression generateLogicalNot(Java_Expression theExpr, AbstractToken source)
+	public static Java_Expression generateLogicalNot(Java_Expression theExpr, AbstractToken source)
 	{
-		this.expr = theExpr;
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		Java_LogicalNotExpression notExp = new Java_LogicalNotExpression();
+		notExp.expr = theExpr;
+		notExp.setTransformationSource(source);
+		return Java_Generator.wrapExpression(notExp);
 	}
 }

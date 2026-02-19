@@ -50,11 +50,12 @@ public class Python_BracesColons extends PrimaryOperator
 		}
 	}
 
-	public Python_Expression generateDictionary(AbstractToken source)
+	public static Python_Expression generateDictionary(AbstractToken source)
 	{
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		Python_BracesColons braces = new Python_BracesColons();
+		braces.leftBrace = new PunctuationLeftBrace();
+		braces.rightBrace = new PunctuationRightBrace();
+		braces.setTransformationSource(source);
+		return Python_Generator.wrapExpression(braces);
 	}
 }

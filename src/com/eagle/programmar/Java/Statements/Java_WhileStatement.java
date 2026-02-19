@@ -13,17 +13,13 @@ import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Label;
 import com.eagle.programmar.Java.Java_Statement;
-import com.eagle.programmar.Java.Java_StatementOrComment;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
@@ -90,45 +86,23 @@ public class Java_WhileStatement extends TokenSequence
 		return generator.newWhileStatement(cond, action, this);
 	}
 
-	public Java_Statement generateWhile1(Java_Expression cond,
+	public static Java_Statement generateWhileOne(Java_Expression cond,
 			Java_Statement action, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
+		Java_WhileStatement whileStmt = new Java_WhileStatement();
+		whileStmt.leftParen = new PunctuationLeftParen();
+		whileStmt.rightParen = new PunctuationRightParen();
+		whileStmt.whileStatement = action;
+		whileStmt.condition = cond;
 
-		this.whileStatement = action;
-		this.condition = cond;
-
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		whileStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(whileStmt);
 	}
 
-	public Java_Statement generateWhile(Java_Expression cond,
+	public static Java_Statement generateWhileMany(Java_Expression cond,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		Java_StatementBlock body = new Java_StatementBlock();
-		body.statements = new TokenList<Java_StatementOrComment>();
-		body.leftBrace = new PunctuationLeftBrace();
-		body.rightBrace = new PunctuationRightBrace();
-
-//		Java_Statement javaStatement = new Java_Statement();
-
-		this.condition = cond;
-
-		for (Java_Statement stmt : actions)
-		{
-			Java_StatementOrComment stmtOrComment = new Java_StatementOrComment();
-			stmtOrComment.setWhich(stmt);
-			body.statements.addToken(stmtOrComment);
-
-//			// If the parent block gets the 'while' as the parent, line numbers in the
-//			// side-by-side report will pick up the 'while', not the first statement.
-//			if (javaStatement.getTransformationSource() == null)
-//			{
-//				javaStatement.setTransformationSource(stmt.getTransformationSource());
-//			}
-		}
-
-		return generateWhile1(condition, Java_Generator.wrapStatement(body), source);
+		Java_Statement body = Java_StatementBlock.generateBlock(actions, source);
+		return generateWhileOne(cond, body, source);
 	}
 }

@@ -15,10 +15,11 @@ public class CSharp_HexNumber extends TerminalHexNumberToken
 		return genericHex(lines, "0x", "LlUu");
 	}
 
-	public CSharp_HexNumber generateHexNumber(String value, AbstractToken source)
+	public static CSharp_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
-		this.setValue(value);
-		this.setTransformationSource(source);
-		return this;
+		CSharp_HexNumber hex = new CSharp_HexNumber();
+		hex.setValue(value);
+		hex.setTransformationSource(source);
+		return hex;
 	}
 }

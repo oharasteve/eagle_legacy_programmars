@@ -34,18 +34,18 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 		interpreter.pushStr(val.toString());
 	}
 
-	public CSharp_Expression generateString(Oper1Types types, CSharp_Expression expr, AbstractToken source)
+	public static CSharp_Expression generateString(Oper1Types types, CSharp_Expression expr, AbstractToken source)
 	{
+		CSharp_ToStringMethod strMeth = new CSharp_ToStringMethod();
 		if (types != null && types._type1.equals(EagleInteger.INTEGER))
 		{
-			expression = expr;
-			dot = new PunctuationPeriod();
-			leftParen = new PunctuationLeftParen();
-			rightParen = new PunctuationRightParen();
-			return CSharp_Generator.wrapExpression(this);
+			strMeth.expression = expr;
+			strMeth.dot = new PunctuationPeriod();
+			strMeth.leftParen = new PunctuationLeftParen();
+			strMeth.rightParen = new PunctuationRightParen();
+			return CSharp_Generator.wrapExpression(strMeth);
 		}
 
-		CSharp_ParenthesizedExpression parens = new CSharp_ParenthesizedExpression();
-		return parens.generateParentheses(expr, source);
+		return CSharp_ParenthesizedExpression.generateParentheses(expr, source);
 	}
 }

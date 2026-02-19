@@ -46,11 +46,12 @@ public class Java_LogicalAndExpression extends PrecedenceOperator
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
 	}
 
-	public Java_Expression generateLogicalAnd(Java_Expression leftExpr, Java_Expression rightExpr, AbstractToken source)
+	public static Java_Expression generateLogicalAnd(Java_Expression leftExpr, Java_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		Java_LogicalAndExpression andExpr = new Java_LogicalAndExpression();
+		andExpr.left = leftExpr;
+		andExpr.right = rightExpr;
+		andExpr.setTransformationSource(source);
+		return Java_Generator.wrapExpression(andExpr);
 	}
 }

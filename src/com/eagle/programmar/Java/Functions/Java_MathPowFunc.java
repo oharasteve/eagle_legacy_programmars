@@ -13,8 +13,12 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
+public class Java_MathPowFunc extends TokenSequence
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Java_Keyword POW = new Java_Keyword("pow");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -31,7 +35,15 @@ public class Java_MathPowFunc extends TokenSequence implements EagleRunnable
 		interpreter.pushDouble(Math.pow(num, pow));
 	}
 
-	public static Java_MathFunction generateExpression(AbstractExpression number, AbstractExpression power,
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	{
+		AbstractExpression numExpr = transformer.transformExpression(generator, number);
+		AbstractExpression powExpr = transformer.transformExpression(generator, power);
+		return generator.newExponentExpression(numExpr, powExpr, POW);
+	}
+
+	public static Java_Expression generateExpression(AbstractExpression number, AbstractExpression power,
 			AbstractToken source)
 	{
 		Java_MathPowFunc pow = new Java_MathPowFunc();

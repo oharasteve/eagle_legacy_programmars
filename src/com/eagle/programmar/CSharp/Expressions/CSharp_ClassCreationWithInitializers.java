@@ -93,24 +93,25 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
 		return generator.newArrayExpression(exprs, this);
 	}
 
-	public CSharp_Expression generateArray(ArrayList<AbstractExpression> exprs,
+	public static CSharp_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
+		CSharp_ClassCreationWithInitializers creat = new CSharp_ClassCreationWithInitializers();
 		// Want to end up with: new string[] {"abc", "def"}
-		this.cstype = CSharp_Type.newPrimitiveType("string");
+		creat.cstype = CSharp_Type.newPrimitiveType("string");
 
 		CSharp_ArrayType array = new CSharp_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
 
-		this.cstype.arrayTypes = new TokenList<CSharp_ArrayType>();
-		this.cstype.arrayTypes.setPresent(true);
-		this.cstype.arrayTypes.addToken(array);
+		creat.cstype.arrayTypes = new TokenList<CSharp_ArrayType>();
+		creat.cstype.arrayTypes.setPresent(true);
+		creat.cstype.arrayTypes.addToken(array);
 
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.valueList = new CSharp_ArgumentList();
-		this.valueList.setPresent(true);
+		creat.leftBrace = new PunctuationLeftBrace();
+		creat.rightBrace = new PunctuationRightBrace();
+		creat.valueList = new CSharp_ArgumentList();
+		creat.valueList.setPresent(true);
 
 		for (int i = 0; i < exprs.size(); i++)
 		{
@@ -121,24 +122,24 @@ public class CSharp_ClassCreationWithInitializers extends PrimaryOperator
 
 			if (i == 0)
 			{
-				this.valueList.arg = arg;
-				this.valueList.arg.setPresent(true);
+				creat.valueList.arg = arg;
+				creat.valueList.arg.setPresent(true);
 			}
 			else
 			{
-				if (this.valueList.moreArgs == null)
+				if (creat.valueList.moreArgs == null)
 				{
-					this.valueList.moreArgs = new TokenList<CSharp_MoreArguments>();
+					creat.valueList.moreArgs = new TokenList<CSharp_MoreArguments>();
 				}
 				CSharp_MoreArguments more = new CSharp_MoreArguments();
 				more.comma = new PunctuationComma();
 				more.arg = arg;
 				more.arg.setPresent(true);
-				this.valueList.moreArgs.addToken(more);
+				creat.valueList.moreArgs.addToken(more);
 			}
 		}
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		creat.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(creat);
 	}
 }

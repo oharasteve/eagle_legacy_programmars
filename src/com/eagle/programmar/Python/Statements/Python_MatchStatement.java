@@ -36,15 +36,16 @@ public class Python_MatchStatement extends TokenSequence
 		public @S(60) @PYDENT Python_StatementBlock statements;
 	}
 
-	public Python_ComplexStatement generateMatch(Python_Expression expr,
+	public static Python_ComplexStatement generateMatch(Python_Expression expr,
 			ArrayList<Python_Expression> values, ArrayList<ArrayList<Python_ComplexStatement>> cases,
 			ArrayList<Python_ComplexStatement> defaultCase, AbstractToken source)
 	{
-		this.colon = new PunctuationColon();
-		this.expression = expr;
+		Python_MatchStatement matchStmt = new Python_MatchStatement();
+		matchStmt.colon = new PunctuationColon();
+		matchStmt.expression = expr;
 
 		int numCases = values.size();
-		matchCases = new TokenList<Python_MatchCase>();
+		matchStmt.matchCases = new TokenList<Python_MatchCase>();
 		for (int i = 0; i < numCases; i++)
 		{
 			Python_MatchCase caseClause1 = new Python_MatchCase();
@@ -60,14 +61,14 @@ public class Python_MatchStatement extends TokenSequence
 				multi1.statements.addToken(stmt1);
 			}
 
-			matchCases.addToken(caseClause1);
+			matchStmt.matchCases.addToken(caseClause1);
 		}
 
 		if (defaultCase != null && defaultCase.size() > 0)
 		{
 			Python_MatchCase caseClause2 = new Python_MatchCase();
-			Python_VariableExpression varExp = new Python_VariableExpression();
-			caseClause2.value = varExp.generateVarExpr("_", SubscriptEnum.FIRST_IS_ZERO, null, this);
+			caseClause2.value = Python_VariableExpression.generateVariableExpression(
+					"_", SubscriptEnum.FIRST_IS_ZERO, null, matchStmt);
 			caseClause2.colon = new PunctuationColon();
 			caseClause2.statements = new Python_StatementBlock();
 
@@ -79,9 +80,9 @@ public class Python_MatchStatement extends TokenSequence
 				multi2.statements.addToken(stmt2);
 			}
 
-			matchCases.addToken(caseClause2);
+			matchStmt.matchCases.addToken(caseClause2);
 		}
 
-		return Python_Generator.wrapStatement(this);
+		return Python_Generator.wrapStatement(matchStmt);
 	}
 }

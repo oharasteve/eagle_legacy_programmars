@@ -34,9 +34,10 @@ public class Python_EndsWith_Method extends PrimaryOperator
 		interpreter.pushBool(str.endsWith(patt));
 	}
 
-	public Python_Expression generateEndsWith(Python_Expression expr, Python_Expression patt,
+	public static Python_Expression generateEndsWith(Python_Expression expr, Python_Expression patt,
 			AbstractToken source)
 	{
+		Python_EndsWith_Method endsFunc = new Python_EndsWith_Method();
 		AbstractToken token = expr.getWhich();
 		if (!(token instanceof Python_VariableExpression))
 		{
@@ -44,13 +45,13 @@ public class Python_EndsWith_Method extends PrimaryOperator
 		}
 
 		Python_VariableExpression varExpr = (Python_VariableExpression) token;
-		this.string = varExpr.variable;
-		this.dot = new PunctuationPeriod();
-		this.leftParen = new PunctuationLeftParen();
-		this.pattern = patt;
-		this.rightParen = new PunctuationRightParen();
+		endsFunc.string = varExpr.variable;
+		endsFunc.dot = new PunctuationPeriod();
+		endsFunc.leftParen = new PunctuationLeftParen();
+		endsFunc.pattern = patt;
+		endsFunc.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		endsFunc.setTransformationSource(source);
+		return Python_Generator.wrapExpression(endsFunc);
 	}
 }

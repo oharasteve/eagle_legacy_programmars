@@ -29,35 +29,36 @@ public class Python_Brackets extends PrimaryOperator
 	public @S(50) @OPT @NOSPACE @SYNTAX(Python_Multiline_Syntax.class) Python_List list;
 	public @S(60) @NOSPACE PunctuationRightBracket rightBracket;
 
-	public Python_Expression generateArray(ArrayList<AbstractExpression> exprs,
+	public static Python_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		this.leftBracket = new PunctuationLeftBracket();
-		this.rightBracket = new PunctuationRightBracket();
-		this.list = new Python_List();
-		this.list.setPresent(true);
+		Python_Brackets brack = new Python_Brackets();
+		brack.leftBracket = new PunctuationLeftBracket();
+		brack.rightBracket = new PunctuationRightBracket();
+		brack.list = new Python_List();
+		brack.list.setPresent(true);
 
 		for (int i = 0; i < exprs.size(); i++)
 		{
 			if (i == 0)
 			{
-				this.list.expr = (Python_Expression) exprs.get(0);
+				brack.list.expr = (Python_Expression) exprs.get(0);
 			}
 			else
 			{
-				if (this.list.moreItems == null)
+				if (brack.list.moreItems == null)
 				{
-					this.list.moreItems = new TokenList<Python_MoreListItem>();
-					this.list.moreItems.setPresent(true);
+					brack.list.moreItems = new TokenList<Python_MoreListItem>();
+					brack.list.moreItems.setPresent(true);
 				}
 				Python_MoreListItem more = new Python_MoreListItem();
 				more.comma = new PunctuationComma();
 				more.expr = (Python_Expression) exprs.get(i);
-				this.list.moreItems.addToken(more);
+				brack.list.moreItems.addToken(more);
 			}
 		}
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		brack.setTransformationSource(source);
+		return Python_Generator.wrapExpression(brack);
 	}
 }

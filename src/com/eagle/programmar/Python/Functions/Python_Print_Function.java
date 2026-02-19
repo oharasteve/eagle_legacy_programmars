@@ -99,26 +99,26 @@ public class Python_Print_Function extends PrimaryOperator
 		return generator.newPrintFunction(result, true, false, this);
 	}
 
-	public Python_Expression generatePrintFunc(Python_Expression line,
+	public static Python_Expression generatePrintFunc(Python_Expression line,
 			boolean newLine, AbstractToken source)
 	{
-		leftParen = new PunctuationLeftParen();
-		exprs = new SeparatedList<Python_Expression, PunctuationComma>();
-		exprs.addPrimaryElement(line);
+		Python_Print_Function prtFunc = new Python_Print_Function();
+		prtFunc.leftParen = new PunctuationLeftParen();
+		prtFunc.exprs = new SeparatedList<Python_Expression, PunctuationComma>();
+		prtFunc.exprs.addPrimaryElement(line);
 
 		if (!newLine)
 		{
-			exprs.addSecondaryElement(new PunctuationComma());
+			prtFunc.exprs.addSecondaryElement(new PunctuationComma());
 			Python_Expression emptyExpr1 = Python_Literal.generateLiteralExpression("", null);
 			Python_Variable end = Python_Variable.newVariable("end");
-			Python_Assignment_Expression asg1 = new Python_Assignment_Expression();
-			Python_Expression asgExpr1 = asg1.generateAssignment(end, null,
+			Python_Expression asgExpr1 = Python_Assignment_Expression.generateAssignment(end, null,
 					AssignmentEnum.EQUALS, emptyExpr1, source);
-			exprs.addPrimaryElement(asgExpr1);
+			prtFunc.exprs.addPrimaryElement(asgExpr1);
 		}
 
-		rightParen = new PunctuationRightParen();
-		setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		prtFunc.rightParen = new PunctuationRightParen();
+		prtFunc.setTransformationSource(source);
+		return Python_Generator.wrapExpression(prtFunc);
 	}
 }

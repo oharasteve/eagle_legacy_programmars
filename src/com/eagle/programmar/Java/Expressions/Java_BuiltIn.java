@@ -12,9 +12,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class Java_BuiltIn extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -58,20 +58,21 @@ public class Java_BuiltIn extends PrimaryOperator
 		}
 	}
 
-	public Java_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
+	public static Java_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
 	{
+		Java_BuiltIn built = new Java_BuiltIn();
 		switch (builtin)
 		{
 		case TRUE:
-			this.builtinConstant.setValue("true");
+			built.builtinConstant.setValue("true");
 			break;
 		case FALSE:
-			this.builtinConstant.setValue("false");
+			built.builtinConstant.setValue("false");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin);
 		}
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		built.setTransformationSource(source);
+		return Java_Generator.wrapExpression(built);
 	}
 }

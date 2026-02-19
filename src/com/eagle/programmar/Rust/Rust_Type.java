@@ -21,7 +21,11 @@ public class Rust_Type extends TokenChooser implements AbstractType
 	{
 		public @S(10) @OPT Rust_TypePrimitiveStatic typeStatic;
 		public @S(20) Rust_KeywordChoice PRIMITIVE = new Rust_KeywordChoice(
-				"bool", "i32", "isize", "str", "&str", "String", "usize", "u32");
+				"bool",
+				"f64",
+				"isize", "i32",
+				"str", "&str", "String",
+				"usize", "u32");
 
 		public static class Rust_TypePrimitiveStatic extends TokenSequence
 		{

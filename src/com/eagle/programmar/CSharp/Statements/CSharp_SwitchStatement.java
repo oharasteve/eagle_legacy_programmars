@@ -68,18 +68,19 @@ public class CSharp_SwitchStatement extends TokenSequence
 		return _scope;
 	}
 
-	public CSharp_Statement generateSwitch(CSharp_Expression expr,
+	public static CSharp_Statement generateSwitch(CSharp_Expression expr,
 			ArrayList<CSharp_Expression> values, ArrayList<ArrayList<CSharp_Statement>> cases,
 			ArrayList<CSharp_Statement> defaultCase, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.val = expr;
+		CSharp_SwitchStatement switchStmt = new CSharp_SwitchStatement();
+		switchStmt.leftParen = new PunctuationLeftParen();
+		switchStmt.rightParen = new PunctuationRightParen();
+		switchStmt.leftBrace = new PunctuationLeftBrace();
+		switchStmt.rightBrace = new PunctuationRightBrace();
+		switchStmt.val = expr;
 
 		int numCases = values.size();
-		caseClauses = new TokenList<CSharp_SwitchCase>();
+		switchStmt.caseClauses = new TokenList<CSharp_SwitchCase>();
 		for (int i = 0; i < numCases; i++)
 		{
 			CSharp_CaseClause caseClause = new CSharp_CaseClause();
@@ -96,14 +97,13 @@ public class CSharp_SwitchStatement extends TokenSequence
 				stmtComm1.setWhich(stmt1);
 				caseClause.statements.addToken(stmtComm1);
 			}
-			CSharp_BreakStatement brk1 = new CSharp_BreakStatement();
 			CSharp_StatementOrComment stmtComm1 = new CSharp_StatementOrComment();
-			stmtComm1.setWhich(brk1.generateBreak(this));
+			stmtComm1.setWhich(CSharp_BreakStatement.generateBreak(switchStmt));
 			caseClause.statements.addToken(stmtComm1);
 
 			CSharp_SwitchCase switchCase1 = new CSharp_SwitchCase();
 			switchCase1.setWhich(caseClause);
-			caseClauses.addToken(switchCase1);
+			switchStmt.caseClauses.addToken(switchCase1);
 		}
 
 		if (defaultCase != null && defaultCase.size() > 0)
@@ -119,16 +119,15 @@ public class CSharp_SwitchStatement extends TokenSequence
 				stmtComm2.setWhich(stmt2);
 				defaultClause.statements.addToken(stmtComm2);
 			}
-			CSharp_BreakStatement brk2 = new CSharp_BreakStatement();
 			CSharp_StatementOrComment stmtComm2 = new CSharp_StatementOrComment();
-			stmtComm2.setWhich(brk2.generateBreak(this));
+			stmtComm2.setWhich(CSharp_BreakStatement.generateBreak(switchStmt));
 			defaultClause.statements.addToken(stmtComm2);
 
 			CSharp_SwitchCase switchCase2 = new CSharp_SwitchCase();
 			switchCase2.setWhich(defaultClause);
-			caseClauses.addToken(switchCase2);
+			switchStmt.caseClauses.addToken(switchCase2);
 		}
 
-		return CSharp_Generator.wrapStatement(this);
+		return CSharp_Generator.wrapStatement(switchStmt);
 	}
 }

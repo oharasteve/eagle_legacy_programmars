@@ -82,49 +82,51 @@ public class Java_ClassCreationWithInitializers extends PrimaryOperator
 		return generator.newArrayExpression(exprs, this);
 	}
 
-	public Java_Expression generateArray(ArrayList<AbstractExpression> exprs,
+	public static Java_Expression generateArray(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
+		Java_ClassCreationWithInitializers creat = new Java_ClassCreationWithInitializers();
+
 		// Want to end up with: new String[] {"abc", "def"}
-		this.jtype = new Java_Type();
+		creat.jtype = new Java_Type();
 		Java_KeywordChoice str = new Java_KeywordChoice("String");
-		this.jtype.typeName = new Java_TypeName();
-		this.jtype.typeName.setWhich(str);
+		creat.jtype.typeName = new Java_TypeName();
+		creat.jtype.typeName.setWhich(str);
 
 		Java_ArrayType array = new Java_ArrayType();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
 
-		this.jtype.arrayTypes = new TokenList<Java_ArrayType>();
-		this.jtype.arrayTypes.setPresent(true);
-		this.jtype.arrayTypes.addToken(array);
+		creat.jtype.arrayTypes = new TokenList<Java_ArrayType>();
+		creat.jtype.arrayTypes.setPresent(true);
+		creat.jtype.arrayTypes.addToken(array);
 
-		this.leftBrace = new PunctuationLeftBrace();
-		this.rightBrace = new PunctuationRightBrace();
-		this.valueList = new Java_ArgumentList();
-		this.valueList.setPresent(true);
+		creat.leftBrace = new PunctuationLeftBrace();
+		creat.rightBrace = new PunctuationRightBrace();
+		creat.valueList = new Java_ArgumentList();
+		creat.valueList.setPresent(true);
 
 		for (int i = 0; i < exprs.size(); i++)
 		{
 			if (i == 0)
 			{
-				this.valueList.arg = (Java_Expression) exprs.get(0);
+				creat.valueList.arg = (Java_Expression) exprs.get(0);
 			}
 			else
 			{
-				if (this.valueList.moreArgs == null)
+				if (creat.valueList.moreArgs == null)
 				{
-					this.valueList.moreArgs = new TokenList<Java_MoreArguments>();
-					this.valueList.moreArgs.setPresent(true);
+					creat.valueList.moreArgs = new TokenList<Java_MoreArguments>();
+					creat.valueList.moreArgs.setPresent(true);
 				}
 				Java_MoreArguments more = new Java_MoreArguments();
 				more.comma = new PunctuationComma();
 				more.arg = (Java_Expression) exprs.get(i);
-				this.valueList.moreArgs.addToken(more);
+				creat.valueList.moreArgs.addToken(more);
 			}
 		}
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		creat.setTransformationSource(source);
+		return Java_Generator.wrapExpression(creat);
 	}
 }

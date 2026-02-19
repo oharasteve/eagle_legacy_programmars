@@ -59,15 +59,16 @@ public class Java_ReturnStatement extends TokenSequence
 		return generator.newReturnStatement(expr, this);
 	}
 
-	public Java_Statement generateReturn(Java_Expression ret, AbstractToken source)
+	public static Java_Statement generateReturn(Java_Expression ret, AbstractToken source)
 	{
+		Java_ReturnStatement retStmt = new Java_ReturnStatement();
 		if (ret != null)
 		{
-			this.expression = ret;
-			this.expression.setPresent(true);
+			retStmt.expression = ret;
+			retStmt.expression.setPresent(true);
 		}
-		this.semicolon = new PunctuationSemicolon();
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		retStmt.semicolon = new PunctuationSemicolon();
+		retStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(retStmt);
 	}
 }

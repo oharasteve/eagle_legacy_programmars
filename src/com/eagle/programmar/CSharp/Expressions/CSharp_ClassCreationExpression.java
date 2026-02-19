@@ -26,19 +26,20 @@ public class CSharp_ClassCreationExpression extends PrimaryOperator
 	public @S(50) @OPT @NOSPACE CSharp_ArgumentList argList;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
-	public CSharp_Expression generateCreation(CSharp_Type type,
+	public static CSharp_Expression generateCreation(CSharp_Type type,
 			ArrayList<CSharp_Expression> args, AbstractToken source)
 	{
-		this.cstype = type;
-		this.leftParen = new PunctuationLeftParen();
+		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
+		creat.cstype = type;
+		creat.leftParen = new PunctuationLeftParen();
 		if (args != null && args.size() > 0)
 		{
-			this.argList = CSharp_ArgumentList.createArgumentList(args);
-			this.argList.setPresent(true);
+			creat.argList = CSharp_ArgumentList.createArgumentList(args);
+			creat.argList.setPresent(true);
 		}
-		this.rightParen = new PunctuationRightParen();
+		creat.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		creat.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(creat);
 	}
 }

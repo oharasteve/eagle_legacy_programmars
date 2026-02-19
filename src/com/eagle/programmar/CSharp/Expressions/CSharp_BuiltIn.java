@@ -53,20 +53,22 @@ public class CSharp_BuiltIn extends PrimaryOperator
 		}
 	}
 
-	public CSharp_Expression generateBuiltIn(BuiltInEnum builtin, AbstractToken source)
+	public static CSharp_Expression generateBuiltIn(BuiltInEnum builtin,
+			AbstractToken source)
 	{
+		CSharp_BuiltIn built = new CSharp_BuiltIn();
 		switch (builtin)
 		{
 		case TRUE:
-			this.builtinConstant = new CSharp_KeywordChoice("true");
+			built.builtinConstant = new CSharp_KeywordChoice("true");
 			break;
 		case FALSE:
-			this.builtinConstant = new CSharp_KeywordChoice("false");
+			built.builtinConstant = new CSharp_KeywordChoice("false");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + builtin.toString());
 		}
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		built.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(built);
 	}
 }

@@ -18,38 +18,42 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_LenMethod extends PrecedenceOperator
+public class Rust_PowMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NOSPACE Rust_Keyword LEN = new Rust_Keyword("len");
+	public @S(30) @NOSPACE Rust_Keyword POW = new Rust_Keyword("pow");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) @NOSPACE Rust_Expression power;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String str = interpreter.getStrValue(left);
-		interpreter.pushInt(str.length());
+		int base = interpreter.getIntValue(left);
+		int pow = interpreter.getIntValue(power);
+		interpreter.pushDouble(Math.pow(base, pow));
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, left);
-		return generator.newLengthFunction(theExpr, this);
+		AbstractExpression baseExpr = transformer.transformExpression(generator, left);
+		AbstractExpression powerExpr = transformer.transformExpression(generator, power);
+		return generator.newExponentExpression(baseExpr, powerExpr, this);
 	}
 
-	public static Rust_Expression generateLength(Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generatePower(Rust_Expression baseExpr, Rust_Expression powerExpr, AbstractToken source)
 	{
-		Rust_LenMethod lenMeth = new Rust_LenMethod();
-		lenMeth.left = expr;
-		lenMeth.dot = new PunctuationPeriod();
-		lenMeth.leftParen = new PunctuationLeftParen();
-		lenMeth.rightParen = new PunctuationRightParen();
+		Rust_PowMethod pow = new Rust_PowMethod();
+		pow.left = baseExpr;
+		pow.dot = new PunctuationPeriod();
+		pow.leftParen = new PunctuationLeftParen();
+		pow.power = powerExpr;
+		pow.rightParen = new PunctuationRightParen();
 
-		lenMeth.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(lenMeth);
+		pow.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(pow);
 	}
 }

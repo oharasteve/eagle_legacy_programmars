@@ -36,12 +36,13 @@ public class Java_ParenthesizedExpression extends PrimaryOperator
 		return generator.newParenthesizedExpression(theExpr, this);
 	}
 
-	public Java_Expression generateParentheses(Java_Expression theExpr, AbstractToken source)
+	public static Java_Expression generateParentheses(Java_Expression theExpr, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.expression = theExpr;
-		this.rightParen = new PunctuationRightParen();
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
+		parens.leftParen = new PunctuationLeftParen();
+		parens.expression = theExpr;
+		parens.rightParen = new PunctuationRightParen();
+		parens.setTransformationSource(source);
+		return Java_Generator.wrapExpression(parens);
 	}
 }

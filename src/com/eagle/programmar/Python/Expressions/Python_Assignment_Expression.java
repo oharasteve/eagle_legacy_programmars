@@ -21,9 +21,10 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 	public @S(30) @OPT Python_Keyword AWAIT = new Python_Keyword("await");
 	public @S(40) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 
-	public Python_Expression generateAssignment(Python_Variable variable, Python_Expression subscript,
+	public static Python_Expression generateAssignment(Python_Variable variable, Python_Expression subscript,
 			AssignmentEnum oper, Python_Expression expression, AbstractToken source)
 	{
+		Python_Assignment_Expression asgExpr = new Python_Assignment_Expression();
 		String punct;
 		switch (oper)
 		{
@@ -47,11 +48,11 @@ public class Python_Assignment_Expression extends PrecedenceOperator
 		}
 		Python_Identifier_Reference id = (Python_Identifier_Reference) which;
 
-		Python_VariableExpression varExpr = new Python_VariableExpression();
-		this.left = varExpr.generateVarExpr(id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
-		this.operator.setValue(punct);
-		this.right = expression;
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		asgExpr.left = Python_VariableExpression.generateVariableExpression(
+				id.getValue(), SubscriptEnum.FIRST_IS_ZERO, subscript, source);
+		asgExpr.operator.setValue(punct);
+		asgExpr.right = expression;
+		asgExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(asgExpr);
 	}
 }

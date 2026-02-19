@@ -80,44 +80,45 @@ public class CSharp_PrintFunction extends PrimaryOperator
 		return generator.newPrintFunction(value, newLine, false, this);
 	}
 
-	public CSharp_Expression generatePrintFunc(CSharp_Expression line, boolean newLine,
+	public static CSharp_Expression generatePrintFunc(CSharp_Expression line, boolean newLine,
 			boolean toErr, AbstractToken source)
 	{
-		SYSTEM.setPresent(true);
-		dot1 = new PunctuationPeriod();
-		dot1.setPresent(true);
-		dot2 = new PunctuationPeriod();
-		dot2.setPresent(true);
+		CSharp_PrintFunction prtFn = new CSharp_PrintFunction();
+		prtFn.SYSTEM.setPresent(true);
+		prtFn.dot1 = new PunctuationPeriod();
+		prtFn.dot1.setPresent(true);
+		prtFn.dot2 = new PunctuationPeriod();
+		prtFn.dot2.setPresent(true);
 		if (toErr)
 		{
-			OUT = new CSharp_KeywordChoice("Error");
+			prtFn.OUT = new CSharp_KeywordChoice("Error");
 		}
 		else
 		{
-			OUT = new CSharp_KeywordChoice("Out");
+			prtFn.OUT = new CSharp_KeywordChoice("Out");
 		}
-		OUT.setPresent(true);
+		prtFn.OUT.setPresent(true);
 
 		if (newLine)
 		{
-			WRITE = new CSharp_KeywordChoice("WriteLine");
+			prtFn.WRITE = new CSharp_KeywordChoice("WriteLine");
 		}
 		else
 		{
-			WRITE = new CSharp_KeywordChoice("Write");
+			prtFn.WRITE = new CSharp_KeywordChoice("Write");
 		}
 
-		dot3 = new PunctuationPeriod();
-		dot3.setPresent(true);
-		args = new CSharp_ConsoleWriteArgs();
-		args.setPresent(true);
-		args.leftParen = new PunctuationLeftParen();
-		args.rightParen = new PunctuationRightParen();
+		prtFn.dot3 = new PunctuationPeriod();
+		prtFn.dot3.setPresent(true);
+		prtFn.args = new CSharp_ConsoleWriteArgs();
+		prtFn.args.setPresent(true);
+		prtFn.args.leftParen = new PunctuationLeftParen();
+		prtFn.args.rightParen = new PunctuationRightParen();
 
-		args.exprs = new SeparatedList<CSharp_Expression, PunctuationComma>();
-		args.exprs.addPrimaryElement(line);
+		prtFn.args.exprs = new SeparatedList<CSharp_Expression, PunctuationComma>();
+		prtFn.args.exprs.addPrimaryElement(line);
 
-		setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		prtFn.setTransformationSource(source);
+		return CSharp_Generator.wrapExpression(prtFn);
 	}
 }

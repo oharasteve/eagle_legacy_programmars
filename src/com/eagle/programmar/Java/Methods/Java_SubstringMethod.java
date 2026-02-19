@@ -54,7 +54,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 		}
 	}
 
-	public static Java_SubstringMethod generateExpression(AbstractExpression theExpr,
+	public static Java_Expression generateExpression(AbstractExpression theExpr,
 			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
@@ -70,11 +70,9 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			expr.scExpr = (Java_Expression) sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
-			Java_Number num = new Java_Number();
-			Java_Expression one = Java_Generator.wrapExpression(num.generateNumber("1", source));
-			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
+			Java_Expression one = Java_Number.generateNumberExpression("1", source);
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			Java_Expression scMinusOne = addExp.generateAdditive(types, (Java_Expression) sc,
+			Java_Expression scMinusOne = Java_AdditiveExpression.generateAdditive(types, (Java_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
 			break;
@@ -90,11 +88,9 @@ public class Java_SubstringMethod extends PrecedenceOperator
 				switch (whichSC)
 				{
 				case FIRST_CHAR_IS_ZERO:
-					Java_Number num = new Java_Number();
-					Java_Expression one = Java_Generator.wrapExpression(num.generateNumber("1", source));
-					Java_AdditiveExpression addExp = new Java_AdditiveExpression();
+					Java_Expression one = Java_Number.generateNumberExpression("1", source);
 					Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-					Java_Expression ecPlusOne = addExp.generateAdditive(types, (Java_Expression) ecOrnc,
+					Java_Expression ecPlusOne = Java_AdditiveExpression.generateAdditive(types, (Java_Expression) ecOrnc,
 							AdditiveEnum.PLUS, one, source);
 					expr.ecExpr = ecPlusOne;
 					break;
@@ -117,9 +113,8 @@ public class Java_SubstringMethod extends PrecedenceOperator
 		case GIVEN_NC:
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
-			Java_AdditiveExpression addExp = new Java_AdditiveExpression();
 			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
-			Java_Expression scPlusNc = addExp.generateAdditive(types, expr.scExpr,
+			Java_Expression scPlusNc = Java_AdditiveExpression.generateAdditive(types, expr.scExpr,
 					AdditiveEnum.PLUS, (Java_Expression) ecOrnc, source);
 			expr.ecExpr = scPlusNc;
 			expr.ecExpr.setPresent(true);
@@ -139,15 +134,14 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			minFn.expressions.addSecondaryElement(new PunctuationComma());
 			minFn.rightParen = new PunctuationRightParen();
 
-			Java_LengthMethod lenFn = new Java_LengthMethod();
-			minFn.expressions.addPrimaryElement(lenFn.generateLength((Java_Expression) theExpr, source));
+			Java_Expression len = Java_LengthMethod.generateLength((Java_Expression) theExpr, source);
+			minFn.expressions.addPrimaryElement(len);
 
-			Java_MathFunction mathFn = Java_MathFunction.wrapMathFunction(minFn, source);
-			expr.ecExpr = Java_Generator.wrapExpression(mathFn);
+			expr.ecExpr = Java_MathFunction.wrapMathFunction(minFn, source);
 			expr.ecExpr.setPresent(true);
 		}
 
 		expr.setTransformationSource(source);
-		return expr;
+		return Java_Generator.wrapExpression(expr);
 	}
 }

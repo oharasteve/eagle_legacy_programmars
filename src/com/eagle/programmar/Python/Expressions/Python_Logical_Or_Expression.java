@@ -16,9 +16,9 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class Python_Logical_Or_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -81,25 +81,25 @@ public class Python_Logical_Or_Expression extends PrecedenceOperator
 		return generator.newLogicalOrExpression(leftExpr, oper, rightExpr, this);
 	}
 
-	public Python_Expression generateLogicalOr(Python_Expression leftExpr,
+	public static Python_Expression generateLogicalOr(Python_Expression leftExpr,
 			LogicalOrEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
-		Python_Logical_Or_Expression expr = new Python_Logical_Or_Expression();
-		expr.left = leftExpr;
-		expr.right = rightExpr;
-		expr.operator = new Python_Or_Operation();
+		Python_Logical_Or_Expression orExpr = new Python_Logical_Or_Expression();
+		orExpr.left = leftExpr;
+		orExpr.right = rightExpr;
+		orExpr.operator = new Python_Or_Operation();
 		switch (oper)
 		{
 		case OR:
-			expr.operator.setWhich(expr.operator.XXOR);
+			orExpr.operator.setWhich(orExpr.operator.XXOR);
 			break;
 		case XOR:
-			expr.operator.setWhich(expr.operator.XXcaret);
+			orExpr.operator.setWhich(orExpr.operator.XXcaret);
 			break;
 		default:
 			throw new RuntimeException("Unable to handle: " + oper);
 		}
-		expr.setTransformationSource(source);
-		return Python_Generator.wrapExpression(expr);
+		orExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(orExpr);
 	}
 }

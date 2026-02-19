@@ -16,9 +16,10 @@ public class Python_Shift_Expression extends PrecedenceOperator
 	public @S(20) Python_PunctuationChoice operator = new Python_PunctuationChoice("<<", ">>");
 	public @S(30) Python_Expression right = new Python_Expression(this, AllowedPrecedence.HIGHER);
 
-	public Python_Expression generateShift(Python_Expression leftExpr, ShiftEnum shift,
+	public static Python_Expression generateShift(Python_Expression leftExpr, ShiftEnum shift,
 			Python_Expression rightExpr, AbstractToken source)
 	{
+		Python_Shift_Expression shiftExpr = new Python_Shift_Expression();
 		String oper;
 		switch (shift)
 		{
@@ -29,13 +30,13 @@ public class Python_Shift_Expression extends PrecedenceOperator
 			oper = ">>";
 			break;
 		default:
-			throw new RuntimeException("Unable to handle shift operator: " + operator);
+			throw new RuntimeException("Unable to handle shift operator: " + shift);
 		}
 
-		this.left = leftExpr;
-		this.right = rightExpr;
-		this.operator = new Python_PunctuationChoice(oper);
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		shiftExpr.left = leftExpr;
+		shiftExpr.right = rightExpr;
+		shiftExpr.operator = new Python_PunctuationChoice(oper);
+		shiftExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(shiftExpr);
 	}
 }

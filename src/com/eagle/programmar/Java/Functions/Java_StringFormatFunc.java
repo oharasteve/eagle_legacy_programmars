@@ -30,14 +30,15 @@ public class Java_StringFormatFunc extends TokenSequence implements EagleRunnabl
 		interpreter.pushStr(String.format(fmt, Integer.valueOf(num)));
 	}
 
-	public Java_Expression generateStringFormat(Java_Expression num, Java_Expression fmt,
+	public static Java_Expression generateStringFormat(Java_Expression num, Java_Expression fmt,
 			AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.number = num;
-		this.comma = new PunctuationComma();
-		this.format = fmt;
-		this.rightParen = new PunctuationRightParen();
-		return Java_StringFunction.wrapStringFunction(this, source);
+		Java_StringFormatFunc func = new Java_StringFormatFunc();
+		func.leftParen = new PunctuationLeftParen();
+		func.number = num;
+		func.comma = new PunctuationComma();
+		func.format = fmt;
+		func.rightParen = new PunctuationRightParen();
+		return Java_StringFunction.wrapStringFunction(func, source);
 	}
 }

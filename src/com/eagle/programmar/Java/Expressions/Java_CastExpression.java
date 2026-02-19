@@ -35,8 +35,7 @@ public class Java_CastExpression extends PrimaryOperator
 		}
 		else
 		{
-			Java_ParenthesizedExpression parens = new Java_ParenthesizedExpression();
-			cast.expr = parens.generateParentheses(expr, expr);
+			cast.expr = Java_ParenthesizedExpression.generateParentheses(expr, expr);
 		}
 
 		cast.setTransformationSource(source);

@@ -67,26 +67,27 @@ public class Rust_BitwiseExpression extends PrecedenceOperator
 		return generator.newBitwiseExpression(leftExpr, oper, rightExpr, this);
 	}
 	
-	public Rust_Expression generateBitwise(Rust_Expression leftExpr,
+	public static Rust_Expression generateBitwise(Rust_Expression leftExpr,
 			BitwiseEnum oper, Rust_Expression rightExpr, AbstractToken source)
 	{
-		this.left = leftExpr;
-		this.right = rightExpr;
+		Rust_BitwiseExpression bit = new Rust_BitwiseExpression();
+		bit.left = leftExpr;
+		bit.right = rightExpr;
 		switch (oper)
 		{
 		case AND:
-			this.operator.setValue("&");
+			bit.operator.setValue("&");
 			break;
 		case OR:
-			this.operator.setValue("|");
+			bit.operator.setValue("|");
 			break;
 		case XOR:
-			this.operator.setValue("^");
+			bit.operator.setValue("^");
 			break;
 		default:
 			throw new RuntimeException("Unable to handle " + oper);
 		}
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(this);
+		bit.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(bit);
 	}
 }

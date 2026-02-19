@@ -108,52 +108,51 @@ public class Java_IfStatement extends TokenSequence
 		return generator.newIfStatement1(cond, thenPart, elsePart, this);
 	}
 
-	public Java_Statement generateIfElse1(Java_Expression cond,
+	public static Java_Statement generateIfElseOne(Java_Expression cond,
 			Java_Statement thenStmt, Java_Statement elseStmt, AbstractToken source)
 	{
-		this.leftParen = new PunctuationLeftParen();
-		this.rightParen = new PunctuationRightParen();
+		Java_IfStatement ifStmt = new Java_IfStatement();
+		ifStmt.leftParen = new PunctuationLeftParen();
+		ifStmt.rightParen = new PunctuationRightParen();
 
 		AbstractToken which = cond.getWhich();
 		if (which instanceof Java_ParenthesizedExpression)
 		{
 			Java_ParenthesizedExpression parensExpr = (Java_ParenthesizedExpression) which;
 			// Remove redundant parens
-			this.condition = parensExpr.expression;
+			ifStmt.condition = parensExpr.expression;
 		}
 		else
 		{
-			this.condition = cond;
+			ifStmt.condition = cond;
 		}
 
-		this.thenStatement = thenStmt;
+		ifStmt.thenStatement = thenStmt;
 
 		if (elseStmt != null)
 		{
-			this.elseClause = new Java_IfElseClause();
-			this.elseClause.setPresent(true);
-			this.elseClause.elseStatement = elseStmt;
-			this.elseClause.elseStatement.setPresent(true);
+			ifStmt.elseClause = new Java_IfElseClause();
+			ifStmt.elseClause.setPresent(true);
+			ifStmt.elseClause.elseStatement = elseStmt;
+			ifStmt.elseClause.elseStatement.setPresent(true);
 		}
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapStatement(this);
+		ifStmt.setTransformationSource(source);
+		return Java_Generator.wrapStatement(ifStmt);
 	}
 
-	public Java_Statement generateIfElse(Java_Expression cond,
+	public static Java_Statement generateIfElseMany(Java_Expression cond,
 			ArrayList<Java_Statement> thenStatements,
 			ArrayList<Java_Statement> elseStatements, AbstractToken source)
 	{
-		Java_StatementBlock thenBlock = new Java_StatementBlock();
-		Java_Statement blockTrue = thenBlock.generateBlock(thenStatements, source);
+		Java_Statement thenBlock = Java_StatementBlock.generateBlock(thenStatements, source);
 
-		Java_Statement blockElse = null;
+		Java_Statement elseBlock = null;
 		if (elseStatements != null && elseStatements.size() > 0)
 		{
-			Java_StatementBlock elseBlock = new Java_StatementBlock();
-			blockElse = elseBlock.generateBlock(elseStatements, source);
+			elseBlock = Java_StatementBlock.generateBlock(elseStatements, source);
 		}
 
-		return generateIfElse1(cond, blockTrue, blockElse, source);
+		return generateIfElseOne(cond, thenBlock, elseBlock, source);
 	}
 }

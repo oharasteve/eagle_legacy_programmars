@@ -35,11 +35,12 @@ public class Rust_BreakStatement extends TokenSequence
 		return generator.newBreakStatement(BREAK);
 	}
 
-	public Rust_Statement generateBreak(AbstractToken source)
+	public static Rust_Statement generateBreak(AbstractToken source)
 	{
-		this.semicolon = new PunctuationSemicolon();
-		this.semicolon.setPresent(true);
-		this.setTransformationSource(source);
-		return Rust_Generator.wrapStatement(this);
+		Rust_BreakStatement brk = new Rust_BreakStatement();
+		brk.semicolon = new PunctuationSemicolon();
+		brk.semicolon.setPresent(true);
+		brk.setTransformationSource(source);
+		return Rust_Generator.wrapStatement(brk);
 	}
 }
