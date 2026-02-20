@@ -257,7 +257,7 @@ public class C_Function extends TokenSequence
 		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
-			System.err.println("*** Found C function " + fnName);
+			System.out.println("*** Found C function " + fnName);
 		}
 
 		if (isMain)
@@ -279,7 +279,7 @@ public class C_Function extends TokenSequence
 						// if firstName is null means the parameter list is just 'void'
 						if (VERBOSE)
 						{
-							System.err.println("****** First Parameter " + firstName);
+							System.out.println("****** First Parameter " + firstName);
 						}
 						TypeEnum argType1 = regParam1.ctype.findType();
 						AbstractType newArgType1 = generator.transformType(argType1, null, regParam1);
@@ -297,7 +297,7 @@ public class C_Function extends TokenSequence
 						C_FunctionRegularParameter regParam2 = (C_FunctionRegularParameter) which3;
 						if (VERBOSE)
 						{
-							System.err.println("******  Next Parameter " + regParam2.id.getValue());
+							System.out.println("******  Next Parameter " + regParam2.id.getValue());
 						}
 						TypeEnum argType2 = regParam2.ctype.findType();
 						AbstractType newArgType2 = generator.transformType(argType2, null, regParam2);

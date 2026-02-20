@@ -71,8 +71,8 @@ public class Rust_LetStatement extends TokenSequence
 
 		Rust_DataInit dataInit = (Rust_DataInit) init.getWhich();
 		// See if the Definition has some assignments in the metrics file
-		TypeEnum type = transformer.findAssignMetric(var);
-		AbstractType newType = generator.transformType(type, null, null);
+		TypeEnum typ = transformer.findAssignMetric(var);
+		AbstractType newType = generator.transformType(typ, null, null);
 
 		AbstractExpression initial = transformer.transformExpression(generator, dataInit.expr);
 

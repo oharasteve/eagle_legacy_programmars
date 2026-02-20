@@ -145,7 +145,7 @@ public class Perl_Function extends TokenSequence
 		generator.setMethodName(fnName);
 		if (VERBOSE)
 		{
-			System.out.println("** Found F# function " + fnName);
+			System.out.println("** Found Perl function " + fnName);
 		}
 
 		// Search metrics for arg types -- might not be any
