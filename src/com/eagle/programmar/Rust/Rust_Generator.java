@@ -28,11 +28,14 @@ import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
+import com.eagle.programmar.Rust.Functions.Rust_FindMethod;
+import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PowMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Functions.Rust_StartsWithMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
+import com.eagle.programmar.Rust.Functions.Rust_TrimMethod;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
@@ -51,6 +54,10 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightBrace;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 
 public class Rust_Generator
@@ -141,6 +148,8 @@ public class Rust_Generator
 			_currentFunction = new Rust_Function();
 			_currentFunction.id = new Rust_Function_Definition();
 			_currentFunction.id.setValue("main");
+			_currentFunction.leftParen = new PunctuationLeftParen();
+			_currentFunction.rightParen = new PunctuationRightParen();
 			
 			Rust_TopElement topElt = new Rust_TopElement();
 			topElt.setWhich(_currentFunction);
@@ -213,6 +222,8 @@ public class Rust_Generator
 		if (_currentFunction.block == null)
 		{
 			_currentFunction.block = new Rust_Block_Statement();
+			_currentFunction.block.leftBrace = new PunctuationLeftBrace();
+			_currentFunction.block.rightBrace = new PunctuationRightBrace();
 		}
 		if (_currentFunction.block.statements == null)
 		{
@@ -648,9 +659,7 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newTrimFunction(Rust_Expression expr, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_TrimMethod trimMeth = new Rust_TrimMethod();
-//		return trimMeth.generateTrim(expr, source);
+		return Rust_TrimMethod.generateTrim(expr, source);
 	}
 
 	@Override
@@ -688,19 +697,17 @@ public class Rust_Generator
 	public Rust_Expression newIndexOfFunction(Rust_Variable string, Rust_Expression patt,
 			Rust_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_IndexOfMethod indexMeth = new Rust_IndexOfMethod();
-//		return indexMeth.generateIndexOf(string, patt, sc, whichSC, source);
+		return Rust_FindMethod.generateFind(string, patt, sc, whichSC, source);
 	}
 
 	@Override
 	public Rust_Expression newFormatNumber(Rust_Expression expr, int length,
 			AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_Expression fmt = newLiteralExpression("%" + length + "d", null);
-//		Rust_StringFormatFunc func = new Rust_StringFormatFunc();
-//		return func.generateStringFormat(expr, fmt, source);
+		Rust_Expression fmt = newLiteralExpression("{}", null);
+		ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
+		args.add(expr);
+		return Rust_FormatFunction.generateFormat(fmt, args, source);
 	}
 
 	// ================ Terminals ================

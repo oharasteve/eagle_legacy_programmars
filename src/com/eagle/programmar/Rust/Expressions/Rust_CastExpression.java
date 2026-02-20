@@ -20,7 +20,7 @@ public class Rust_CastExpression extends PrimaryOperator
 {
 	public @S(10) Rust_KeywordChoice type = new Rust_KeywordChoice("i32", "f64");
 	public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
-	public @S(30) Rust_Keyword FROM = new Rust_Keyword("from");
+	public @S(30) @NOSPACE Rust_Keyword FROM = new Rust_Keyword("from");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Rust_Expression expression;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;

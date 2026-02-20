@@ -10,8 +10,10 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Format;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -50,5 +52,24 @@ public class Rust_FormatFunction extends PrimaryOperator
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(FORMAT);
 		return Rust_Format.transform(transformer, generator, argList, metrics);
+	}
+
+	public static Rust_Expression generateFormat(Rust_Expression fmt,
+			ArrayList<Rust_Expression> args, AbstractToken source)
+	{
+		Rust_FormatFunction func = new Rust_FormatFunction();
+		func.leftParen = new PunctuationLeftParen();
+		func.argList = new SeparatedList<Rust_Expression, PunctuationComma>();
+		func.argList.addPrimaryElement(fmt);
+		func.rightParen = new PunctuationRightParen();
+		
+		for (Rust_Expression arg : args)
+		{
+			func.argList.addSecondaryElement(new PunctuationComma());
+			func.argList.addPrimaryElement(arg);
+		}
+		
+		func.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(func);
 	}
 }
