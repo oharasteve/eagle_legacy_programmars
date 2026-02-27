@@ -70,13 +70,6 @@ public class Java_RelationalExpression extends PrecedenceOperator
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}
 
-	private static boolean isString(AbstractExpression expression)
-	{
-		Java_Expression expr = (Java_Expression) expression;
-		if (expr.getWhich() instanceof Java_Literal) return true;
-		return false;
-	}
-
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
@@ -107,6 +100,13 @@ public class Java_RelationalExpression extends PrecedenceOperator
 					RelationalEnum.GREATER_EQUALS, rightExpr, this);
 		}
 		throw new RuntimeException("Unexpected relational operator: " + operator);
+	}
+
+	private static boolean isString(AbstractExpression expression)
+	{
+		Java_Expression expr = (Java_Expression) expression;
+		if (expr.getWhich() instanceof Java_Literal) return true;
+		return false;
 	}
 
 	public static Java_Expression generateRelational(Oper2Types types, Java_Expression leftExpr, RelationalEnum relOp,
