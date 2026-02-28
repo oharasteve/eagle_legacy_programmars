@@ -5,9 +5,11 @@ package com.eagle.programmar.CMD;
 
 import com.eagle.programmar.CMD.Expressions.CMD_AdditiveExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_BangExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_DefinedExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_EqualityExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_MultiplicativeExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_NegativeExpression;
+import com.eagle.programmar.CMD.Expressions.CMD_NotExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_ParenthesizedExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_PercentExpression;
 import com.eagle.programmar.CMD.Expressions.CMD_RelationalExpression;
@@ -52,9 +54,11 @@ public class CMD_Expression extends PrecedenceChooser
 
 	public @P(100) CMD_ParenthesizedExpression parensExpression;
 	public @P(110) CMD_NegativeExpression negativeExpression;
-	public @P(120) CMD_VariableExpression variableExpression;
-	public @P(130) CMD_PercentExpression percentExpression;
-	public @P(140) CMD_BangExpression bangExpression;
+	public @P(120) CMD_NotExpression notExpression;
+	public @P(130) CMD_DefinedExpression definedExpression;
+	public @P(140) CMD_VariableExpression variableExpression;
+	public @P(150) CMD_PercentExpression percentExpression;
+	public @P(160) CMD_BangExpression bangExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions -- Missing in CMD_BasicExpression

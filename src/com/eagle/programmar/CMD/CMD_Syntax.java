@@ -22,11 +22,19 @@ public class CMD_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"::", "==", "&&", ">>", "||"
+				"::",
+				"==",
+				"&&",
+				">>",
+				"||"
 		};
 
 		addReservedWords(new String[] {
-				"else", "eof", "for"
+				"defined",
+				"else",
+				"eof",
+				"for",
+				"not"
 		});
 	}
 }
