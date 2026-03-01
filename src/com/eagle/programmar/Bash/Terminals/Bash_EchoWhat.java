@@ -55,10 +55,26 @@ public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String txt = _txt.replaceAll("\"", "");
+		String txt = _txt;
+		if (txt.startsWith("'"))
+		{
+			txt = txt.substring(1, txt.length()-1);
+			interpreter.pushStr(txt);
+			return;
+		}
+
+		if (txt.startsWith("\""))
+		{
+			txt = txt.substring(1, txt.length()-1);
+		}
+
+		// Change \" to "
+		txt = txt.replaceAll("\\\\", "\\");
+
 		if (txt.indexOf("$((") < 0)
 		{
 			interpreter.pushStr(txt);
+			return;
 		}
 
 		StringBuffer sb = new StringBuffer();

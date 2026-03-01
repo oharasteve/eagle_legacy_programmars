@@ -16,6 +16,7 @@ import com.eagle.programmar.Delphi.Expressions.Delphi_Parentheses;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Relational_Expression;
 import com.eagle.programmar.Delphi.Expressions.Delphi_UnarySign;
 import com.eagle.programmar.Delphi.Expressions.Delphi_Variable_Expression;
+import com.eagle.programmar.Delphi.Functions.Delphi_Abs_Function;
 import com.eagle.programmar.Delphi.Functions.Delphi_Copy_Function;
 import com.eagle.programmar.Delphi.Functions.Delphi_Format_Function;
 import com.eagle.programmar.Delphi.Functions.Delphi_Length_Function;
@@ -68,13 +69,14 @@ public class Delphi_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(140) Delphi_Format_Function formatFunction;
 	public @P(150) Delphi_Length_Function lengthFunction;
 	public @P(160) Delphi_Odd_Function oddFunction;
-	public @P(170) Delphi_Pred_Function predFunction;
-	public @P(180) Delphi_Succ_Function succFunction;
-	public @P(190) Delphi_Function_Call functionCall;
-	public @P(200) Delphi_Cast cast;
-	public @P(210) Delphi_Variable_Expression variableExpression;
-	public @P(220) Delphi_UnarySign unarySign;
-	public @P(230) Delphi_Not_Operator notOp;
+	public @P(170) Delphi_Abs_Function absFunction;
+	public @P(180) Delphi_Pred_Function predFunction;
+	public @P(190) Delphi_Succ_Function succFunction;
+	public @P(200) Delphi_Function_Call functionCall;
+	public @P(210) Delphi_Cast cast;
+	public @P(220) Delphi_Variable_Expression variableExpression;
+	public @P(230) Delphi_UnarySign unarySign;
+	public @P(240) Delphi_Not_Operator notOp;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

@@ -16,13 +16,13 @@ public class Fortran_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericLiteral(lines, "'", false, ' ', false, false);
+		return genericLiteral(lines, "'", false, ' ', true, false);
 	}
 
 	@Override
 	public String description()
 	{
-		return super.genericDescription("'", false, ' ', false, false);
+		return super.genericDescription("'", false, ' ', true, false);
 	}
 
 	@Override

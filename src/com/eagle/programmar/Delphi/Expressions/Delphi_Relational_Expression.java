@@ -64,6 +64,32 @@ public class Delphi_Relational_Expression extends PrecedenceOperator
 				return;
 			}
 		}
+		else if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "=":
+				interpreter.pushBool(leftDbl == rightDbl);
+				return;
+			case "<>":
+				interpreter.pushBool(leftDbl != rightDbl);
+				return;
+			case "<":
+				interpreter.pushBool(leftDbl < rightDbl);
+				return;
+			case "<=":
+				interpreter.pushBool(leftDbl <= rightDbl);
+				return;
+			case ">":
+				interpreter.pushBool(leftDbl > rightDbl);
+				return;
+			case ">=":
+				interpreter.pushBool(leftDbl >= rightDbl);
+				return;
+			}
+		}
 		else
 		{
 			int leftInt = leftValue.forceIntegerValue();

@@ -21,7 +21,7 @@ public class Ada_EqualityExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Ada_Expression left = new Ada_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Ada_PunctuationChoice operator = new Ada_PunctuationChoice("=", "/=");
+	public @S(20) Ada_PunctuationChoice operator = new Ada_PunctuationChoice("=", "/=", "!=");
 	public @S(30) Ada_Expression right = new Ada_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -48,7 +48,7 @@ public class Ada_EqualityExpression extends PrecedenceOperator
 			case "=":
 				interpreter.pushBool(leftString.equals(rightString));
 				return;
-			case "/=":
+			case "/=", "!=":
 				interpreter.pushBool(!leftString.equals(rightString));
 				return;
 			}
@@ -62,7 +62,7 @@ public class Ada_EqualityExpression extends PrecedenceOperator
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
-			case "/=":
+			case "/=", "!=":
 				interpreter.pushBool(leftInt != rightInt);
 				return;
 			}
@@ -81,7 +81,7 @@ public class Ada_EqualityExpression extends PrecedenceOperator
 		{
 		case "=":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
-		case "/=":
+		case "/=", "!=":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected relational operator: " + operator);

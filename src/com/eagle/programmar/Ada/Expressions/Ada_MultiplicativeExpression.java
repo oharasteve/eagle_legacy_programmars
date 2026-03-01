@@ -8,15 +8,15 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Ada.Ada_Expression;
-import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
+import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.programmar.Ada.Terminals.Ada_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class Ada_MultiplicativeExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -28,7 +28,7 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 	public static class Ada_MultOper extends TokenChooser
 	{
 		public @CHOICE Ada_PunctuationChoice XXoperator = new Ada_PunctuationChoice("*", "/");
-		public @CHOICE Ada_Keyword XXMOD = new Ada_Keyword("mod");
+		public @CHOICE Ada_KeywordChoice XXMOD = new Ada_KeywordChoice("mod", "rem");
 	}
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -56,7 +56,7 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			interpreter.pushInt(leftInt / rightInt);
 			return;
-		case "mod":
+		case "rem", "mod":
 			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
@@ -76,7 +76,7 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
-		case "mod":
+		case "rem", "mod":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);

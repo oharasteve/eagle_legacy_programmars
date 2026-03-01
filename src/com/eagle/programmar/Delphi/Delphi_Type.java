@@ -35,7 +35,11 @@ public class Delphi_Type extends TokenSequence
 	public static class Delphi_BaseType extends TokenChooser
 	{
 		public @CHOICE Delphi_KeywordChoice XXbase = new Delphi_KeywordChoice(
-				"Boolean", "Byte", "Integer", "LongInt", "Int64", "String", "Text");
+				"Boolean",
+				"Byte",
+				"Double",
+				"Integer", "LongInt", "Int64",
+				"String", "Text");
 
 		public @CHOICE Delphi_Identifier_Reference XXuserType;
 		public @CHOICE Delphi_Class XXclassDefinition;

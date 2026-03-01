@@ -35,7 +35,30 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 		Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter.getCurrentFunction();
 		if (func == null)
 		{
-			System.out.println(formatted);
+			boolean doNewLine = true;
+			if (options != null)
+			{
+				for (Bash_EchoOption opt : options._elements)
+				{
+					if (opt.getWhich() instanceof Bash_Keyword)
+					{
+						Bash_Keyword kw = (Bash_Keyword) opt.getWhich();
+						if (kw.getValue().equals("-n"))
+						{
+							doNewLine = false;
+						}
+					}
+				}
+			}
+
+			if (doNewLine)
+			{
+				System.out.println(formatted);
+			}
+			else
+			{
+				System.out.print(formatted);
+			}
 		}
 		else
 		{

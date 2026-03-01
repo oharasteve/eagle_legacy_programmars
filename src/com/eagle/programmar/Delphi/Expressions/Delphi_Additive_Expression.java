@@ -60,7 +60,22 @@ public class Delphi_Additive_Expression extends PrecedenceOperator
 			}
 		}
 
-		if (leftValue.isInteger() || rightValue.isInteger())
+		if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "+":
+				interpreter.pushDouble(leftDbl + rightDbl);
+				return;
+			case "-":
+				interpreter.pushDouble(leftDbl - rightDbl);
+				return;
+			}
+		}
+
+		if (leftValue.isInteger() && rightValue.isInteger())
 		{
 			int leftInt = leftValue.forceIntegerValue();
 			int rightInt = rightValue.forceIntegerValue();

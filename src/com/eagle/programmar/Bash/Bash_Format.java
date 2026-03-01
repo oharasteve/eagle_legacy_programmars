@@ -10,10 +10,24 @@ public class Bash_Format
 {
 	public static String format(EagleInterpreter interpreter, String fmt)
 	{
-		String txt = fmt.replaceAll("\"", "");
+		if (fmt.startsWith("'"))
+		{
+			return fmt;
+		}
+
+		String txt = fmt;
+		if (txt.startsWith("\""))
+		{
+			// Toss leading and trailing quotes, if present
+			txt = txt.substring(1, txt.length()-1);
+		}
+		
+		// Change \" to "
+		txt = txt.replaceAll("\\\\", "\\");
+		
 		if (txt.indexOf('$') < 0)
 		{
-			interpreter.pushStr(txt);
+			return txt;
 		}
 
 		StringBuffer sb = new StringBuffer();
