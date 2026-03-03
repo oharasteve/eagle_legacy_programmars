@@ -4,6 +4,7 @@
 package com.eagle.programmar.Rust;
 
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
@@ -109,5 +110,6 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1160) Rust_LogicalAndExpression conditionalAndExpression;
 	public @P(1170) Rust_LogicalOrExpression conditionalOrExpression;
 	public @P(1180) Rust_RangeExpression rangeExpression;
-	public @P(1190) Rust_AssignmentExpression asgExpression;
+	public @P(1190) Rust_AsExpression asExpression;
+	public @P(1200) Rust_AssignmentExpression asgExpression;
 }
