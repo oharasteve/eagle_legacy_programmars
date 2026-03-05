@@ -9,7 +9,6 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.programmar.Rust.Statements.Rust_LetStatement.Rust_AsType.Rust_AsOperator;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -47,12 +46,12 @@ public class Rust_LetStatement extends TokenSequence
 	{
 		public @S(10) Rust_AsOperator oper;
 		public @S(20) Rust_Type type;
-		
-		public static class Rust_AsOperator extends TokenChooser
-		{
-			public @CHOICE PunctuationColon XXcolon;
-			public @CHOICE Rust_Keyword AS = new Rust_Keyword("as");
-		}
+	}
+
+	public static class Rust_AsOperator extends TokenChooser
+	{
+		public @CHOICE PunctuationColon XXcolon;
+		public @CHOICE Rust_Keyword XXAS = new Rust_Keyword("as");
 	}
 
 	@Override
