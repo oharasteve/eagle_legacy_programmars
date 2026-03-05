@@ -59,6 +59,9 @@ public class Ada_Type extends TokenSequence
 			case "Unbounded_String":
 				newType = TypeEnum.STRING;
 				break;
+			case "Float":
+				newType = TypeEnum.DOUBLE;
+				break;
 			default:
 				throw new RuntimeException("Unable to convert type: " + kw1.getValue());
 			}
