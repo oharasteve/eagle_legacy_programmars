@@ -12,10 +12,9 @@ import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_Format
 {
-	public static String format(EagleInterpreter interpreter, String fmt)
+	public static String format(EagleInterpreter interpreter, String txt)
 	{
-		String txt = fmt.replaceAll("\"", "");
-		if (txt.indexOf('^') < 0)
+		if (txt.indexOf('^') < 0 && txt.indexOf('\\') < 0)
 		{
 			interpreter.pushStr(txt);
 		}
@@ -23,34 +22,43 @@ public class Eaglish_Format
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
 		int nc = txt.length();
+		char prev = ' ';
 		while (sc < nc)
 		{
-			// Pull in a text string
-			int first = txt.indexOf('^', sc);
-			if (first < 0)
-			{
-				sb.append(txt.substring(sc, nc));
-				break; // Done -- no more ^
-			}
-			if (first > sc)
-			{
-				sb.append(txt.substring(sc, first));
-			}
+			char ch = txt.charAt(sc);
 
-			// Extract a variable name (or expression) and value
-			int second = txt.indexOf('^', first + 1);
-			if (second < 0) throw new RuntimeException("Missing ^ in " + txt);
-			String var = txt.substring(first + 1, second);
-			Eaglish_Expression expr = new Eaglish_Expression();
-			if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
+			if (prev == '\\')
 			{
-				throw new RuntimeException("Unable to parse expression " + var);
+				sb.append(ch);	// This character, no matter what it is
 			}
-			String val = interpreter.getStrValue(expr);
-			sb.append(val);
-
-			// Look for the next piece
-			sc = second + 1;
+			else if (ch == '\\')
+			{
+				// Don't do anything with this, it escapes the next character
+			}
+			else if (ch == '^')
+			{
+				// Extract a variable name (or expression) and value
+				int second = txt.indexOf('^', sc + 1);
+				if (second < 0) throw new RuntimeException("Missing ^ in " + txt);
+				String var = txt.substring(sc + 1, second);
+				Eaglish_Expression expr = new Eaglish_Expression();
+				if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
+				{
+					throw new RuntimeException("Unable to parse expression " + var);
+				}
+				String val = interpreter.getStrValue(expr);
+				sb.append(val);
+	
+				// Get past the second ^
+				sc = second;
+			}
+			else
+			{
+				sb.append(ch);	// Just a plain old character, save it
+			}
+		
+			sc++;
+			prev = ch;
 		}
 		return sb.toString();
 	}
