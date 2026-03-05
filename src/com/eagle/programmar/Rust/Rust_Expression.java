@@ -103,13 +103,13 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1080) Rust_Subfield subfield;
 	public @P(1090) Rust_MultiplicativeExpression multiplicativeExpression;
 	public @P(1100) Rust_AdditiveExpression additiveExpression;
-	public @P(1120) Rust_ShiftExpression shiftExpression;
-	public @P(1130) Rust_RelationalExpression relationalExpression;
-	public @P(1140) Rust_EqualityExpression equalityExpression;
-	public @P(1150) Rust_BitwiseExpression bitwiseExpression;
-	public @P(1160) Rust_LogicalAndExpression conditionalAndExpression;
-	public @P(1170) Rust_LogicalOrExpression conditionalOrExpression;
-	public @P(1180) Rust_RangeExpression rangeExpression;
-	public @P(1190) Rust_AsExpression asExpression;
-	public @P(1200) Rust_AssignmentExpression asgExpression;
+	public @P(1110) Rust_ShiftExpression shiftExpression;
+	public @P(1120) Rust_RelationalExpression relationalExpression;
+	public @P(1130) Rust_EqualityExpression equalityExpression;
+	public @P(1140) Rust_BitwiseExpression bitwiseExpression;
+	public @P(1150) Rust_LogicalAndExpression conditionalAndExpression;
+	public @P(1160) Rust_LogicalOrExpression conditionalOrExpression;
+	public @P(1170) Rust_RangeExpression rangeExpression;
+	public @P(1180) Rust_AsExpression asExpression;
+	public @P(1190) Rust_AssignmentExpression asgExpression;
 }
