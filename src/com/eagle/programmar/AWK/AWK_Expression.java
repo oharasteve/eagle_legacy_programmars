@@ -18,6 +18,7 @@ import com.eagle.programmar.AWK.Expressions.AWK_NegativeExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_ParenthesizedExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_PatternExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_PostIncrementExpression;
+import com.eagle.programmar.AWK.Expressions.AWK_PowerExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_PreIncrementExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_RegularExpression;
 import com.eagle.programmar.AWK.Expressions.AWK_RelationalExpression;
@@ -84,13 +85,14 @@ public class AWK_Expression extends PrecedenceChooser
 	// Binary expressions
 
 	public @P(1000) AWK_SubscriptExpression subscriptExpression;
-	public @P(1010) AWK_MultiplicativeExpression multiplicativeExpression;
-	public @P(1020) AWK_AdditiveExpression additiveExpression;
-	public @P(1030) AWK_RelationalExpression relationalExpression;
-	public @P(1040) AWK_RegularExpression regularExpression;
-	public @P(1050) AWK_InExpression inExpression;
-	public @P(1060) AWK_LogicalAndExpression andExpression;
-	public @P(1070) AWK_LogicalOrExpression orExpression;
-	public @P(1080) AWK_TrueFalseExpression trueFalseExpression;
-	public @P(1090) AWK_AssignmentExpression assignmentExpression;
+	public @P(1010) AWK_PowerExpression powerExpression;
+	public @P(1020) AWK_MultiplicativeExpression multiplicativeExpression;
+	public @P(1030) AWK_AdditiveExpression additiveExpression;
+	public @P(1040) AWK_RelationalExpression relationalExpression;
+	public @P(1050) AWK_RegularExpression regularExpression;
+	public @P(1060) AWK_InExpression inExpression;
+	public @P(1070) AWK_LogicalAndExpression andExpression;
+	public @P(1080) AWK_LogicalOrExpression orExpression;
+	public @P(1090) AWK_TrueFalseExpression trueFalseExpression;
+	public @P(1100) AWK_AssignmentExpression assignmentExpression;
 }

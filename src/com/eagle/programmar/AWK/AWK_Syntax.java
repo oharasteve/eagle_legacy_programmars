@@ -21,7 +21,7 @@ public class AWK_Syntax extends EagleSyntax
 		_extraCharacters = "";
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"==", "!=", "<=", ">=", "++", "--", "+=", "!~"
+				"==", "!=", "<=", ">=", "++", "--", "+=", "!~", "**"
 		};
 
 		addReservedWords(AWK_Reserved_Words.RESERVED_WORDS);
