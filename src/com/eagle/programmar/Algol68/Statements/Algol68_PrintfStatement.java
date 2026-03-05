@@ -58,7 +58,8 @@ public class Algol68_PrintfStatement extends TokenSequence
 			EagleGenerator generator)
 	{
 		String fmt = format.getValue();
-		int width;
+		int width = 0;
+		int decimals = 0;
 		switch (fmt)
 		{
 		case "$d$":
@@ -73,11 +74,22 @@ public class Algol68_PrintfStatement extends TokenSequence
 		case "$dddd$":
 			width = 4;
 			break;
+		case "$d.1d$":
+			decimals = 1;
+			break;
 		default:
 			throw new RuntimeException("Unable to printf " + expr + " using " + fmt);
 		}
 		AbstractExpression numExpr = transformer.transformExpression(generator, expr);
-		AbstractExpression line = generator.newFormatNumber(numExpr, width, this);
+		AbstractExpression line;
+		if (decimals == 0)
+		{
+			line = generator.newFormatNumber(numExpr, width, this);
+		}
+		else
+		{
+			line = generator.newFormatDecimal(numExpr, decimals, this);
+		}
 		return generator.newPrintStatement(line, false, false, this);
 	}
 }
