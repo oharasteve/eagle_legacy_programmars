@@ -49,7 +49,7 @@ public class PLI_TrimFunction extends PrimaryOperator
 	{
 		Oper1Types types = transformer.findOperator1Metric(TRIM);
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		if (!types._type1.equals(EagleString.STRING))
+		if (types != null && !types._type1.equals(EagleString.STRING))
 		{
 			theExpr = generator.newStringFunction(types, theExpr, this);
 		}

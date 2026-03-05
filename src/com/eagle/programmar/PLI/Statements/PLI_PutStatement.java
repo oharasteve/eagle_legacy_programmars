@@ -189,10 +189,14 @@ public class PLI_PutStatement extends TokenSequence
 			{
 				result = piece;
 			}
-			else
+			else if (metrics != null)
 			{
 				types._type2 = metrics.get(i);
 				result = generator.newAppendExpression(types, result, piece, PUT);
+			}
+			else
+			{
+				result = generator.newAppendExpression(null, result, piece, PUT);
 			}
 		}
 
