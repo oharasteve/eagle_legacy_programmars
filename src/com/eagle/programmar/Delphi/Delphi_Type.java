@@ -130,6 +130,9 @@ public class Delphi_Type extends TokenSequence
 			case "string":
 				newType = TypeEnum.STRING;
 				break;
+			case "double":
+				newType = TypeEnum.DOUBLE;
+				break;
 			default:
 				throw new RuntimeException("Unable to convert type: " + kw.getValue());
 			}
