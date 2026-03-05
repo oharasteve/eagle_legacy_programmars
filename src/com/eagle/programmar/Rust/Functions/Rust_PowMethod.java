@@ -7,7 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -23,7 +23,7 @@ public class Rust_PowMethod extends PrecedenceOperator
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NOSPACE Rust_Keyword POW = new Rust_Keyword("pow");
+	public @S(30) @NOSPACE Rust_KeywordChoice POW = new Rust_KeywordChoice("pow", "powf");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Rust_Expression power;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;

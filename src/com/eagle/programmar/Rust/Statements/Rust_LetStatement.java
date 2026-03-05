@@ -9,7 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.programmar.Rust.Statements.Rust_LetStatement.Rust_DataInitialize.Rust_DataInit;
+import com.eagle.programmar.Rust.Statements.Rust_LetStatement.Rust_AsType.Rust_AsOperator;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -33,30 +33,35 @@ public class Rust_LetStatement extends TokenSequence
 			new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
 	public @S(30) Rust_Variable var;
-	public @S(40) Rust_DataInitialize init;
-	public @S(50) Rust_Type type;
+	public @S(40) @OPT Rust_DataInitialize init;
+	public @S(50) @OPT Rust_AsType asType;
 	public @S(60) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
-	public static class Rust_DataInitialize extends TokenChooser
+	public static class Rust_DataInitialize extends TokenSequence
 	{
-		public @CHOICE PunctuationColon XXcolon;
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Rust_Expression expr;
+	}
+
+	public static class Rust_AsType extends TokenSequence
+	{
+		public @S(10) Rust_AsOperator oper;
+		public @S(20) Rust_Type type;
 		
-		public @CHOICE static class Rust_DataInit extends TokenSequence
+		public static class Rust_AsOperator extends TokenChooser
 		{
-			public @S(10) PunctuationEquals equals;
-			public @S(20) Rust_Expression expr;
-			public @S(30) Rust_Keyword AS = new Rust_Keyword("as");
+			public @CHOICE PunctuationColon XXcolon;
+			public @CHOICE Rust_Keyword AS = new Rust_Keyword("as");
 		}
 	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (init.getWhich() instanceof Rust_DataInit)
+		if (init != null && init.isPresent())
 		{
-			Rust_DataInit dataInit = (Rust_DataInit) init.getWhich();
 			String id = var.var.getValue();
-			EagleValue val = interpreter.getEagleValue(dataInit.expr);
+			EagleValue val = interpreter.getEagleValue(init.expr);
 			interpreter.setSymbol(var, id, val);
 		}
 	}
@@ -64,27 +69,26 @@ public class Rust_LetStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
 	{
-		if (! (init.getWhich() instanceof Rust_DataInit))
+		if (init != null && init.isPresent())
 		{
-			return null;
+			// See if the Definition has some assignments in the metrics file
+			TypeEnum typ = transformer.findAssignMetric(var);
+			AbstractType newType = generator.transformType(typ, null, null);
+	
+			AbstractExpression initial = transformer.transformExpression(generator, init.expr);
+	
+			String name = var.var.getValue();
+			AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
+			return stmt;
 		}
-
-		Rust_DataInit dataInit = (Rust_DataInit) init.getWhich();
-		// See if the Definition has some assignments in the metrics file
-		TypeEnum typ = transformer.findAssignMetric(var);
-		AbstractType newType = generator.transformType(typ, null, null);
-
-		AbstractExpression initial = transformer.transformExpression(generator, dataInit.expr);
-
-		String name = var.var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
-		return stmt;
+		
+		return null;
 	}
 	
 	public static Rust_LetStatement newDataDeclaration(boolean isStatic, String name,
-			Rust_Expression size, Rust_Type type, Rust_Expression initial, AbstractToken source)
+			Rust_Expression size, Rust_Type typ, Rust_Expression initial, AbstractToken source)
 	{
-		if (type == null)
+		if (typ == null)
 		{
 			throw new RuntimeException("Can't create data without a type, for " + name);
 		}
@@ -104,21 +108,18 @@ public class Rust_LetStatement extends TokenSequence
 		letStmt.var = new Rust_Variable();
 		letStmt.var.var = new Rust_Identifier_Reference();
 		letStmt.var.var.setValue(name);
-		letStmt.type = type;
-		letStmt.init = new Rust_DataInitialize();
 		
-		if (initial == null)
+		if (initial != null)
 		{
-			PunctuationColon colon = new PunctuationColon();
-			letStmt.init.setWhich(colon);
+			letStmt.init = new Rust_DataInitialize();
+			letStmt.init.equals = new PunctuationEquals();
+			letStmt.init.expr = initial;
 		}
-		else
-		{
-			Rust_DataInit dataInit = new Rust_DataInit();
-			dataInit.equals = new PunctuationEquals();
-			dataInit.expr = initial;
-			letStmt.init.setWhich(dataInit);
-		}
+		
+		letStmt.asType = new Rust_AsType();
+		letStmt.asType.oper = new Rust_AsOperator();
+		letStmt.asType.oper.setWhich(new PunctuationColon());
+		letStmt.asType.type = typ;
 
 		letStmt.setTransformationSource(source);
 		return letStmt;
