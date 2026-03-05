@@ -42,6 +42,7 @@ public class JavaP_Commands
 			"dload_2",
 			"dload_3",
 			"dmul",
+			"drem",
 			"dreturn",
 			"dstore",
 			"dstore_2",
