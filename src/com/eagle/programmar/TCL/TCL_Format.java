@@ -23,55 +23,55 @@ public class TCL_Format
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
 		int nc = txt.length();
+		char prev = ' ';
 		while (sc < nc)
 		{
-			// Pull in a text string
-			int firstBracket = txt.indexOf('[', sc);
-			int firstDollar = txt.indexOf('$', sc);
-			String var = "";
+			char ch = txt.charAt(sc);
 
-			// Four cases:
-
-			// I: no more [] or $
-			if (firstBracket < 0 && firstDollar < 0)
+			// Check for an escape before the [] or $
+			if (prev != '\\')
 			{
-				sb.append(txt.substring(sc, nc));
-				break; // Done -- no more [
-			}
-
-			// II: just [] or IV: [] before $
-			if (firstDollar < 0 || (firstBracket >= 0 && firstBracket < firstDollar))
-			{
-				int secondBracket = txt.indexOf(']', firstBracket + 1);
-				if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + txt);
-				var = txt.substring(firstBracket, secondBracket + 1); // Leave in the brackets
-				if (firstBracket > sc) sb.append(txt.substring(sc, firstBracket));
-				sc = secondBracket + 1;
-			}
-
-			// III: just $ or IV: $ before []
-			if (firstBracket < 0 || (firstDollar >= 0 && firstDollar < firstBracket))
-			{
-				int endDollar = firstDollar + 1;
-				while (endDollar < nc)
+				String var = null;
+				
+				if (ch == '[')
 				{
-					// Stop on a space or comma or ....
-					if (" ,".indexOf(txt.charAt(endDollar)) >= 0) break;
-					endDollar++;
+					int secondBracket = txt.indexOf(']', sc + 1);
+					if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + txt);
+					var = txt.substring(sc, secondBracket + 1); // Leave in the brackets
+					sc = secondBracket;
 				}
-				var = txt.substring(firstDollar, endDollar);
-				if (firstDollar > sc) sb.append(txt.substring(sc, firstDollar));
-				sc = endDollar;
+				else if (ch == '$')
+				{
+					int endDollar = sc + 1;
+					while (endDollar < nc)
+					{
+						// Stop on a space or comma or ....
+						if (" ,)".indexOf(txt.charAt(endDollar)) >= 0) break;
+						endDollar++;
+					}
+					var = txt.substring(sc, endDollar);
+					sc = endDollar - 1;
+				}
+				else
+				{
+					sb.append(ch);
+				}
+	
+				// Extract a variable name (or expression) and value
+				if (var != null)
+				{
+					TCL_Expression expr = new TCL_Expression();
+					if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
+					{
+						throw new RuntimeException("Unable to parse expression " + var);
+					}
+					String val = interpreter.getStrValue(expr);
+					sb.append(val);
+				}
 			}
-
-			// Extract a variable name (or expression) and value
-			TCL_Expression expr = new TCL_Expression();
-			if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
-			{
-				throw new RuntimeException("Unable to parse expression " + var);
-			}
-			String val = interpreter.getStrValue(expr);
-			sb.append(val);
+			
+			sc++;
+			prev = ch;
 		}
 		return sb.toString();
 	}

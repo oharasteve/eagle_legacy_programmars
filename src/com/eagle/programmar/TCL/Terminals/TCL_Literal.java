@@ -19,13 +19,13 @@ public class TCL_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericLiteral(lines, "\"", false, '?', false, false);
+		return genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 
 	@Override
 	public String description()
 	{
-		return super.genericDescription("\"", false, '?', false, false);
+		return super.genericDescription("\"", true, '\\', false, false);
 	}
 
 	@Override
