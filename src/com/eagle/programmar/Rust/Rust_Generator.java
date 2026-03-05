@@ -710,6 +710,16 @@ public class Rust_Generator
 		return Rust_FormatFunction.generateFormat(fmt, args, source);
 	}
 
+	@Override
+	public Rust_Expression newFormatDecimal(Rust_Expression expr, int decimals,
+			AbstractToken source)
+	{
+		Rust_Expression fmt = newLiteralExpression("{:." + decimals + "}", null);
+		ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
+		args.add(expr);
+		return Rust_FormatFunction.generateFormat(fmt, args, source);
+	}
+
 	// ================ Terminals ================
 
 	@Override

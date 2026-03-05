@@ -671,6 +671,14 @@ public class Java_Generator
 		return Java_StringFormatFunc.generateStringFormat(expr, fmt, source);
 	}
 
+	@Override
+	public Java_Expression newFormatDecimal(Java_Expression expr, int decimals,
+			AbstractToken source)
+	{
+		Java_Expression fmt = newLiteralExpression("%." + decimals + "f", null);
+		return Java_StringFormatFunc.generateStringFormat(expr, fmt, source);
+	}
+
 	// ================ Terminals ================
 
 	@Override

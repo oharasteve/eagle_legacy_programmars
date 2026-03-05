@@ -661,6 +661,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 		CSharp_Expression fmt = newLiteralExpression("{0," + length + "}", null);
 		return CSharp_StringFormatFunc.generateStringFormat(expr, fmt, source);
 	}
+	
+	@Override
+	public CSharp_Expression newFormatDecimal(CSharp_Expression expr, int decimals,
+			AbstractToken source)
+	{
+		CSharp_Expression fmt = newLiteralExpression("{F" + decimals + "}", null);
+		return CSharp_StringFormatFunc.generateStringFormat(expr, fmt, source);
+	}
 
 	// ================ Terminals ================
 

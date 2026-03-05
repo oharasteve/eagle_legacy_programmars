@@ -655,6 +655,14 @@ public class Python_Generator
 		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, source);
 	}
 
+	@Override
+	public Python_Expression newFormatDecimal(Python_Expression expr, int decimals,
+			AbstractToken source)
+	{
+		Python_Expression fmt = newLiteralExpression("%." + decimals + "f", null);
+		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, source);
+	}
+
 	// ================ Terminals ================
 
 	@Override
