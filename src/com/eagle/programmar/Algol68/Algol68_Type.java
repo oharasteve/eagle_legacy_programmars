@@ -13,7 +13,7 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 public class Algol68_Type extends TokenChooser
 {
 	public @CHOICE Algol68_KeywordChoice XXprimitives = new Algol68_KeywordChoice(
-			"BOOL", "INT", "STRING", "VOID");
+			"BOOL", "INT", "DOUBLE", "STRING", "VOID");
 
 	public @CHOICE static class Algol68_ArrayType extends TokenSequence
 	{
@@ -36,6 +36,8 @@ public class Algol68_Type extends TokenChooser
 			return TypeEnum.BOOLEAN;
 		case "INT":
 			return TypeEnum.INTEGER;
+		case "DOUBLE":
+			return TypeEnum.DOUBLE;
 		case "STRING":
 			return TypeEnum.STRING;
 		case "VOID":
