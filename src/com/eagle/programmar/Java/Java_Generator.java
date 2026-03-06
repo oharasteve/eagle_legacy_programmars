@@ -32,6 +32,7 @@ import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_ShiftExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Functions.Java_MathAbsFunc;
 import com.eagle.programmar.Java.Functions.Java_MathPowFunc;
 import com.eagle.programmar.Java.Functions.Java_PrintFunction;
 import com.eagle.programmar.Java.Functions.Java_StringFormatFunc;
@@ -468,7 +469,13 @@ public class Java_Generator
 	@Override
 	public Java_Expression newExponentExpression(Java_Expression left, Java_Expression right, AbstractToken source)
 	{
-		return Java_MathPowFunc.generateExpression(left, right, source);
+		return Java_MathPowFunc.generatePowFunc(left, right, source);
+	}
+
+	@Override
+	public Java_Expression newAbsFunction(Java_Expression expr, AbstractToken source)
+	{
+		return Java_MathAbsFunc.generateAbsFunc(expr, source);
 	}
 
 	@Override

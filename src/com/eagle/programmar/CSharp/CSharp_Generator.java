@@ -30,6 +30,7 @@ import com.eagle.programmar.CSharp.Expressions.CSharp_PreIncrementExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_RelationalExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_ShiftExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_VariableExpression;
+import com.eagle.programmar.CSharp.Functions.CSharp_MathAbsFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_MathPowFunc;
 import com.eagle.programmar.CSharp.Functions.CSharp_PrintFunction;
 import com.eagle.programmar.CSharp.Functions.CSharp_StringFormatFunc;
@@ -605,6 +606,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	// ================ Functions ================
+
+	@Override
+	public CSharp_Expression newAbsFunction(CSharp_Expression expr, AbstractToken source)
+	{
+		return CSharp_MathAbsFunc.generateAbsFunc(expr, source);
+	}
 
 	@Override
 	public CSharp_Expression newLengthFunction(CSharp_Expression expr, AbstractToken source)

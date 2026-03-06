@@ -31,6 +31,7 @@ import com.eagle.programmar.Python.Expressions.Python_Relational_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Shift_Expression;
 import com.eagle.programmar.Python.Expressions.Python_SubscriptExpression;
 import com.eagle.programmar.Python.Expressions.Python_VariableExpression;
+import com.eagle.programmar.Python.Functions.Python_Abs_Function;
 import com.eagle.programmar.Python.Functions.Python_Int_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_Print_Function;
@@ -454,6 +455,12 @@ public class Python_Generator
 			AbstractToken source)
 	{
 		return Python_Power_Expression.generateExpression(left, right, source);
+	}
+
+	@Override
+	public Python_Expression newAbsFunction(Python_Expression expr, AbstractToken source)
+	{
+		return Python_Abs_Function.generateAbsFunc(expr, source);
 	}
 
 	@Override

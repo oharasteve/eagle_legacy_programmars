@@ -28,6 +28,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
+import com.eagle.programmar.Rust.Functions.Rust_AbsMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FindMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
@@ -494,6 +495,12 @@ public class Rust_Generator
 	public Rust_Expression newExponentExpression(Rust_Expression left, Rust_Expression right, AbstractToken source)
 	{
 		return Rust_PowMethod.generatePower(left, right, source);
+	}
+
+	@Override
+	public Rust_Expression newAbsFunction(Rust_Expression expr, AbstractToken source)
+	{
+		return Rust_AbsMethod.generateAbsFunc(expr, source);
 	}
 
 	@Override
