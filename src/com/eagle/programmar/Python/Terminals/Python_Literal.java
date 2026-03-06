@@ -87,7 +87,8 @@ public class Python_Literal extends TerminalLiteralToken
 	public static Python_Literal generateLiteral(String value, AbstractToken source)
 	{
 		Python_Literal lit = new Python_Literal();
-		lit.setValue(value);
+		String val = '\'' + value.replaceAll("'", "\\'") + '\'';
+		lit.setValue(val);
 		lit.setTransformationSource(source);
 		return lit;
 	}

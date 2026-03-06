@@ -80,70 +80,100 @@ public class TCL_Format
 	{
 		AbstractExpression result = null;
 
-		String txt = fmt.replaceAll("\"", "");
-		int nc = txt.length();
+		String txt = fmt;
+		int nc = fmt.length();
+		if (fmt.startsWith("\"") && fmt.endsWith("\"") && nc > 1)
+		{
+			// Strip quotes
+			txt = fmt.substring(1, nc-1);
+			nc -= 2;
+		}
 		if (nc == 0)
 		{
 			return generator.newLiteralExpression("", null);
 		}
 
-		if (txt.indexOf('[') >= 0)
-		{
-			throw new RuntimeException("Can't handle [] in TCL_Format.compile yet");
-		}
-
 		int sc = 0;
+		char prev = ' ';
+		StringBuffer piece = new StringBuffer();
 		while (sc < nc)
 		{
-			// Pull in a text string
-			int nextDollar = txt.indexOf('$', sc);
-			int ec = nextDollar;
-			if (nextDollar < 0)
+			char ch = txt.charAt(sc);
+			
+			// Check for an escape before the [] or $
+			String var = null;
+			if (prev != '\\')
 			{
-				ec = nc; // No more $, go all the way to the end
+				if (ch == '[')
+				{
+					int secondBracket = txt.indexOf(']', sc + 1);
+					if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + txt);
+					var = txt.substring(sc, secondBracket + 1); // Leave in the brackets
+					sc = secondBracket;
+				}
+				else if (ch == '$')
+				{
+					int endDollar = sc + 1;
+					while (endDollar < nc)
+					{
+						// Stop on a space or comma or ....
+						if (" ,)".indexOf(txt.charAt(endDollar)) >= 0) break;
+						endDollar++;
+					}
+					var = txt.substring(sc+1, endDollar);	// Skip the leading $
+					sc = endDollar - 1;
+				}
 			}
-
-			if (ec > sc)
+				
+			if (var != null)
 			{
-				// Grab next literal piece
-				AbstractExpression piece1 = generator.newLiteralExpression(txt.substring(sc, ec), null);
+				if (piece.length() > 0)
+				{
+					AbstractExpression litExpr = generator.newLiteralExpression(piece.toString(), null);
+					if (result == null)
+					{
+						result = litExpr;
+					}
+					else
+					{
+						result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, litExpr, null);
+					}
+					piece = new StringBuffer();		// Start over
+				}
+
+				AbstractExpression varExpr = generator.newVariableExpression(var,
+						SubscriptEnum.FIRST_IS_ZERO, null, null);
+				// Always wrap in a str() function for now
+				AbstractExpression strExpr = generator.newStringFunction(null, varExpr, null);
 				if (result == null)
 				{
-					result = piece1;
+					result = varExpr;
 				}
 				else
 				{
-					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, piece1, null);
+					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, strExpr, null);
 				}
 			}
-
-			if (nextDollar < 0)
+			else if (ch != '\\' || prev == '\\')
 			{
-				break; // Done -- no more $
+				piece.append(ch);
 			}
-
-			// Pick out the variable name, like $ok
-			int endDollar = nextDollar + 1;
-			while (endDollar < nc)
-			{
-				// Stop on a space or comma or what?
-				if (" ,.".indexOf(txt.charAt(endDollar)) >= 0) break;
-				endDollar++;
-			}
-			String var = txt.substring(nextDollar + 1, endDollar);
-			AbstractExpression varExpr = generator.newVariableExpression(var,
-					SubscriptEnum.FIRST_IS_ZERO, null, null);
-			// Always wrap in a str() function for now
-			AbstractExpression strExpr = generator.newStringFunction(null, varExpr, null);
+			
+			sc++;
+			prev = ch;
+		}
+		
+		if (piece.length() > 0)
+		{
+			AbstractExpression litExpr = generator.newLiteralExpression(piece.toString(), null);
 			if (result == null)
 			{
-				result = varExpr;
+				result = litExpr;
 			}
 			else
 			{
-				result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, strExpr, null);
+				result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, litExpr, null);
 			}
-			sc = endDollar;
 		}
 
 		return result;
