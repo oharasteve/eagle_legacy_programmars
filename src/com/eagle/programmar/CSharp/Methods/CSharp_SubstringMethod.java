@@ -163,8 +163,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			minFn.expressions.addPrimaryElement(subtrExp);
 			minFn.rightParen = new PunctuationRightParen();
 
-			CSharp_MathFunction mathFn = CSharp_MathFunction.wrapFunction(minFn, source);
-			expr.ncExpr = CSharp_Generator.wrapExpression(mathFn);
+			expr.ncExpr = CSharp_MathFunction.wrapMathFunction(minFn, source);
 			expr.ncExpr.setPresent(true);
 		}
 

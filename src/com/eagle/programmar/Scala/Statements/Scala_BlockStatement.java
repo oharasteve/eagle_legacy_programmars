@@ -27,7 +27,7 @@ public class Scala_BlockStatement extends TokenSequence
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
 	public @S(20) Scala_EOLN eoln1;
-	public @S(30) TokenList<Scala_Statement> statements;
+	public @S(30) @OPT TokenList<Scala_Statement> statements;
 	public @S(40) PunctuationRightBrace rightBrace;
 	public @S(50) @OPT Scala_EOLN eoln2;
 

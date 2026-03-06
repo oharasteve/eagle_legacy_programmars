@@ -42,6 +42,14 @@ public class Eaglish_Literal extends TerminalLiteralToken
 		{
 			return Eaglish_Format.compile(transformer, generator, _txt, this);
 		}
-		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
+
+		// Plain ol' literal
+		String val = _txt;
+		int nc = val.length();
+		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
+		{
+			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"");
+		}
+		return generator.newLiteralExpression(val, this);
 	}
 }

@@ -7,7 +7,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -21,7 +23,17 @@ public class Java_MathAbsFunc extends TokenSequence implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int num = interpreter.getIntValue(number);
-		interpreter.pushInt(Math.abs(num));
+		double num = interpreter.getDoubleValue(number);
+		interpreter.pushDouble(Math.abs(num));
+	}
+
+	public static Java_Expression generateAbsFunc(AbstractExpression number, AbstractToken source)
+	{
+		Java_MathAbsFunc abs = new Java_MathAbsFunc();
+		abs.leftParen = new PunctuationLeftParen();
+		abs.number = (Java_Expression) number;
+		abs.rightParen = new PunctuationRightParen();
+		abs.setTransformationSource(source);
+		return Java_MathFunction.wrapMathFunction(abs, source);
 	}
 }

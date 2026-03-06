@@ -43,7 +43,7 @@ public class Java_MathPowFunc extends TokenSequence
 		return generator.newExponentExpression(numExpr, powExpr, POW);
 	}
 
-	public static Java_Expression generateExpression(AbstractExpression number, AbstractExpression power,
+	public static Java_Expression generatePowFunc(AbstractExpression number, AbstractExpression power,
 			AbstractToken source)
 	{
 		Java_MathPowFunc pow = new Java_MathPowFunc();

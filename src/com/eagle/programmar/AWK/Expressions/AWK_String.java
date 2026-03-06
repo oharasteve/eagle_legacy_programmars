@@ -20,23 +20,13 @@ public class AWK_String extends PrimaryOperator
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String str = literal.getValue();
-		if (str.startsWith("\"") || str.startsWith("'"))
-		{
-			str = str.substring(1, str.length() - 1); // Remove quotes
-		}
-		interpreter.pushStr(str);
+		interpreter.tryToInterpret(literal);
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		String str = literal.getValue();
-		if (str.startsWith("\"") || str.startsWith("'"))
-		{
-			str = str.substring(1, str.length() - 1); // Remove quotes
-		}
-		return generator.newLiteralExpression(str, this);
+		return literal.transformExpression(transformer, generator);
 	}
 }

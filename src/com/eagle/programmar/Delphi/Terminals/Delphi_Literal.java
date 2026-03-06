@@ -29,11 +29,12 @@ public class Delphi_Literal extends TerminalLiteralToken
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		String txt = _txt;
-		if (txt.startsWith("'") && txt.endsWith("'"))
+		String val = _txt;
+		int nc = val.length();
+		if (val.startsWith("'") && val.endsWith("'") && nc > 1)
 		{
-			txt = txt.substring(1, txt.length() - 1);
+			val = val.substring(1, nc-1).replaceAll("\\\\'", "'");
 		}
-		return generator.newLiteralExpression(txt, this);
+		return generator.newLiteralExpression(val, this);
 	}
 }

@@ -71,8 +71,13 @@ public class Python_Literal extends TerminalLiteralToken
 		if (ok)
 		{
 			if (prefixLen == 1)
+			{
 				_txt = pre1 + _txt;
-			else if (prefixLen == 2) _txt = pre1 + pre2 + _txt;
+			}
+			else if (prefixLen == 2)
+			{
+				_txt = pre1 + pre2 + _txt;
+			}
 		}
 		_currentChar -= prefixLen;
 		return ok;

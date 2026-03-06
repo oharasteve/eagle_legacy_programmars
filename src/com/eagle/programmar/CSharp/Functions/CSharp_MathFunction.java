@@ -5,6 +5,8 @@ package com.eagle.programmar.CSharp.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.CSharp.CSharp_Expression;
+import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -21,11 +23,12 @@ public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnabl
 
 	public static class CSharp_MathChoice extends TokenChooser
 	{
+		public @CHOICE CSharp_MathAbsFunc XXmathAbsFunction;
 		public @CHOICE CSharp_MathPowFunc XXmathPowFunction;
 		public @CHOICE CSharp_MathMinMaxFunc XXmathMinMaxFunction;
 	}
 
-	public static CSharp_MathFunction wrapFunction(AbstractToken choice, AbstractToken source)
+	public static CSharp_Expression wrapMathFunction(AbstractToken choice, AbstractToken source)
 	{
 		CSharp_MathFunction func = new CSharp_MathFunction();
 		func.SYSTEM.setPresent(true);
@@ -35,7 +38,7 @@ public class CSharp_MathFunction extends PrimaryOperator implements EagleRunnabl
 		func.choice = new CSharp_MathChoice();
 		func.choice.setWhich(choice);
 		func.setTransformationSource(source);
-		return func;
+		return CSharp_Generator.wrapExpression(func);
 	}
 
 	@Override
