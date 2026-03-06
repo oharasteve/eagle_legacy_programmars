@@ -37,7 +37,7 @@ public class Java_Literal extends TerminalLiteralToken
 	public static Java_Literal generateLiteral(String value, AbstractToken source)
 	{
 		Java_Literal lit = new Java_Literal();
-		String val = '"' + value.replaceAll("\\\"", "\\\\\"") + '"';
+		String val = '"' + value.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + '"';
 		lit.setValue(val);
 		lit.setTransformationSource(source);
 		return lit;
