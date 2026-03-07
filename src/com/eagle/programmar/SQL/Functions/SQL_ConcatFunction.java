@@ -50,7 +50,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 			EagleValue val = interpreter.getEagleValue(expr);
 			String piece = val.forceStringValue();
 			argTypes.add(val.typeName());
-			result.append(piece.replaceAll("\\\\n", "\\n"));
+			result.append(piece.replaceAll("\\\\n", "\n"));	// Replace \\n with a newline)
 		}
 		interpreter.pushStr(result.toString());
 		_metrics.calledWith(argTypes);

@@ -40,7 +40,7 @@ public class Perl_Literal extends TerminalLiteralToken
 		int nc = val.length();
 		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
 		{
-			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"").replaceAll("\\\\n", "\n");
+			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"");
 		}
 		return generator.newLiteralExpression(val, this);
 	}

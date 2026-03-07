@@ -34,8 +34,8 @@ public class SQL_Literal extends TerminalLiteralToken
 		{
 			val = val.substring(1, nc-1)
 					.replaceAll("\\\\'", "'")
-					.replaceAll("''", "'")
-					.replaceAll("\\\\n", "\\\\n");
+					.replaceAll("''", "'");
+					// .replaceAll("\\\\n", "\\\\n");
 		}
 		return generator.newLiteralExpression(val, this);
 	}
