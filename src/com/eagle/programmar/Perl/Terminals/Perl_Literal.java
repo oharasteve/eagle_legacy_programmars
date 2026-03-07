@@ -24,13 +24,13 @@ public class Perl_Literal extends TerminalLiteralToken
 		if (multilineStopper(lines, rec, "<<<")) return true;
 		if (multilineStopper(lines, rec, "<<")) return true;
 
-		return genericLiteral(lines, "\"'`", true, '\\', false, true);
+		return super.genericLiteral(lines, "\"'`", true, '\\', false, true);
 	}
 
 	@Override
 	public String description()
 	{
-		return "perl literal depends on << and <<<";
+		return super.genericDescription("\"'`", true, '\\', false, true);
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class Perl_Literal extends TerminalLiteralToken
 	{
 		String val = _txt;
 		int nc = val.length();
-		if (val.startsWith("'") && val.endsWith("'") && nc > 1)
+		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
 		{
-			val = val.substring(1, nc-1).replaceAll("\\\\'", "'");
+			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"").replaceAll("\\\\n", "\n");
 		}
 		return generator.newLiteralExpression(val, this);
 	}

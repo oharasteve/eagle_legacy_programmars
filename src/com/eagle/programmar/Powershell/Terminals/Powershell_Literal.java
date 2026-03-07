@@ -30,9 +30,9 @@ public class Powershell_Literal extends TerminalLiteralToken
 	{
 		String val = _txt;
 		int nc = val.length();
-		if (val.startsWith("'") && val.endsWith("'") && nc > 1)
+		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
 		{
-			val = val.substring(1, nc-1).replaceAll("\\\\'", "'");
+			val = val.substring(1, nc-1).replaceAll("`", "");
 		}
 		return generator.newLiteralExpression(val, this);
 	}

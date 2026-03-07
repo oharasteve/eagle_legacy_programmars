@@ -18,7 +18,7 @@ public class AWK_Literal extends TerminalLiteralToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		return genericLiteral(lines, "'\"", true, '\\', false, false);
+		return super.genericLiteral(lines, "'\"", true, '\\', false, false);
 	}
 
 	@Override

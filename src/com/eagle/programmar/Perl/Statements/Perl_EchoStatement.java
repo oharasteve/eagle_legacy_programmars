@@ -3,15 +3,39 @@
 
 package com.eagle.programmar.Perl.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Perl.Perl_Expression;
 import com.eagle.programmar.Perl.Terminals.Perl_Keyword;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
-public class Perl_EchoStatement extends TokenSequence implements AbstractStatement
+public class Perl_EchoStatement extends TokenSequence
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
 {
 	public @S(10) Perl_Keyword ECHO = new Perl_Keyword("echo");
-	public @S(20) SeparatedList<Perl_Expression, PunctuationComma> exprs;
+	public @S(20) Perl_Expression expr;
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String item = interpreter.getStrValue(expr);
+		System.out.println(item);
+	}
+
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	{
+		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
+		AbstractExpression line = transformer.transformExpression(generator, expr);
+		AbstractStatement stmt = generator.newPrintStatement(line, false, false, this);
+		result.add(stmt);
+		return result;
+	}
 }

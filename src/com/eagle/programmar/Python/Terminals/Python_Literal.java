@@ -95,7 +95,8 @@ public class Python_Literal extends TerminalLiteralToken
 		String val = '\'' + value
 				.replaceAll("\\\\\"", "\"")
 				.replaceAll("\\\\", "\\\\\\\\")
-				.replaceAll("'", "\\\\'") + '\'';
+				.replaceAll("'", "\\\\'")
+				.replaceAll("\n", "\\n") + '\'';
 		lit.setValue(val);
 		lit.setTransformationSource(source);
 		return lit;

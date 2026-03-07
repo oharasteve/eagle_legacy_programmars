@@ -40,13 +40,13 @@ public class CSharp_Literal extends TerminalLiteralToken
 			return false;
 		}
 
-		return genericLiteral(lines, "\"", true, '\\', false, false);
+		return super.genericLiteral(lines, "\"", true, '\\', false, false);
 	}
 
 	@Override
 	public String description()
 	{
-		return "C# literals may have @ or $";
+		return super.genericDescription("\"", true, '\\', false, false);
 	}
 
 	@Override
@@ -64,7 +64,11 @@ public class CSharp_Literal extends TerminalLiteralToken
 	public static CSharp_Literal generateLiteral(String value, AbstractToken source)
 	{
 		CSharp_Literal lit = new CSharp_Literal();
-		String val = '"' + value.replaceAll("\\\\", "\\\\\\\\").replaceAll("\"", "\\\\\"") + '"';
+		String val = '"' + value
+				.replaceAll("\\\\", "\\\\\\\\")
+				.replaceAll("\"", "\\\\\"")
+				.replaceAll("\n", "\\n")
+				+ '"';
 		lit.setValue(val);
 		lit.setTransformationSource(source);
 		return lit;
