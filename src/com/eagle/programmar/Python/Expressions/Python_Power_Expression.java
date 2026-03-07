@@ -25,9 +25,9 @@ public class Python_Power_Expression extends PrecedenceOperator
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftValue = interpreter.getIntValue(left);
-		int rightValue = interpreter.getIntValue(right);
-		interpreter.pushInt((int) Math.round(Math.pow(leftValue, rightValue)));
+		double leftValue = interpreter.getDoubleValue(left);
+		double rightValue = interpreter.getDoubleValue(right);
+		interpreter.pushDouble(Math.pow(leftValue, rightValue));
 	}
 
 	@Override

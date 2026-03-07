@@ -14,7 +14,8 @@ public class Ruby_Format
 {
 	public static String format(EagleInterpreter interpreter, String fmt)
 	{
-		String txt = fmt.replaceAll("\"", "");
+		int nc = fmt.length();
+		String txt = fmt.substring(1, nc-1).replaceAll("\\\\\"", "\"");
 		if (txt.indexOf("#{") < 0)
 		{
 			interpreter.pushStr(txt);
@@ -22,7 +23,7 @@ public class Ruby_Format
 
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
-		int nc = txt.length();
+		nc = txt.length();
 		while (sc < nc)
 		{
 			// Pull in a text string
@@ -61,8 +62,9 @@ public class Ruby_Format
 	{
 		AbstractExpression result = null;
 
-		String txt = fmt.replaceAll("\"", "");
-		int nc = txt.length();
+		int nc = fmt.length();
+		String txt = fmt.substring(1, nc-1).replaceAll("\\\\\"", "\"");
+		nc = txt.length();
 		if (nc == 0)
 		{
 			return generator.newLiteralExpression("", null);

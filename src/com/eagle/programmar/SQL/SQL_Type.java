@@ -85,6 +85,10 @@ public class SQL_Type extends TokenChooser
 			case "VARCHAR":
 			case "VARCHAR2":
 				return TypeEnum.STRING;
+			case "FLOAT":
+			case "DOUBLE":
+			case "DECIMAL":
+				return TypeEnum.DOUBLE;
 			}
 		}
 

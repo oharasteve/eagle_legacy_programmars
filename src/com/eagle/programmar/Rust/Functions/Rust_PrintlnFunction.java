@@ -68,7 +68,7 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 			EagleGenerator generator)
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTLN);
-		AbstractExpression value = Rust_Format.transform(transformer, generator, argList, metrics);
+		AbstractExpression value = Rust_Format.compile(transformer, generator, argList, metrics);
 		return generator.newPrintFunction(value, true, false, this);
 	}
 

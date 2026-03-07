@@ -460,7 +460,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Expression newExponentExpression(CSharp_Expression left, CSharp_Expression right,
 			AbstractToken source)
 	{
-		return wrapExpression(CSharp_MathPowFunc.generateExpression(left, right, source));
+		return CSharp_MathPowFunc.generateExpression(left, right, source);
 	}
 
 	@Override

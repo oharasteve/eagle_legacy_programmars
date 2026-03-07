@@ -200,6 +200,9 @@ public class Java_Type extends TokenSequence implements AbstractType
 			case "int":
 				newType = TypeEnum.INTEGER;
 				break;
+			case "double":
+				newType = TypeEnum.DOUBLE;
+				break;
 			case "string":
 				newType = TypeEnum.STRING;
 				break;

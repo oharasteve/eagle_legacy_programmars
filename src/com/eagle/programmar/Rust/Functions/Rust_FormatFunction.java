@@ -51,7 +51,7 @@ public class Rust_FormatFunction extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(FORMAT);
-		return Rust_Format.transform(transformer, generator, argList, metrics);
+		return Rust_Format.compile(transformer, generator, argList, metrics);
 	}
 
 	public static Rust_Expression generateFormat(Rust_Expression fmt,

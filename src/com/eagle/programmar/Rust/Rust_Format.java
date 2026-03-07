@@ -65,7 +65,7 @@ public class Rust_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator generator,
+	public static AbstractExpression compile(EagleTransformer transformer, EagleGenerator generator,
 			SeparatedList<Rust_Expression, PunctuationComma> argList, ArrayList<String> metrics)
 	{
 		Oper2Types types = null;
@@ -84,7 +84,7 @@ public class Rust_Format
 		String fmt = lit.getValue();
 		if (fmt.startsWith("\""))
 		{
-			fmt = fmt.substring(1, fmt.length() - 1);
+			fmt = fmt.substring(1, fmt.length() - 1).replaceAll("\\\\\"", "\"");
 		}
 
 		int sc = fmt.indexOf("{}");

@@ -32,7 +32,10 @@ public class SQL_Literal extends TerminalLiteralToken
 		int nc = val.length();
 		if (val.startsWith("'") && val.endsWith("'") && nc > 1)
 		{
-			val = val.substring(1, nc-1).replaceAll("\\\\'", "'");
+			val = val.substring(1, nc-1)
+					.replaceAll("\\\\'", "'")
+					.replaceAll("''", "'")
+					.replaceAll("\\\\n", "\\\\n");
 		}
 		return generator.newLiteralExpression(val, this);
 	}
