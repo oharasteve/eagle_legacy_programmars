@@ -5,6 +5,9 @@ package com.eagle.programmar.Algol68.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleDouble;
+import com.eagle.math.EagleInteger;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Format;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
@@ -35,23 +38,41 @@ public class Algol68_PrintfStatement extends TokenSequence
 		// Note that Algol68_Format is a Literal with '$' instead of ' or "
 		// Hence dd instead of $dd$ below
 		String fmt = interpreter.getStrValue(format);
-		Integer val = Integer.valueOf(interpreter.getIntValue(expr));
-		switch (fmt)
+		EagleValue val = interpreter.getEagleValue(expr);
+
+		if (val instanceof EagleInteger)
 		{
-		case "d":
-			System.out.format("%1d", val);
-			break;
-		case "dd":
-			System.out.format("%2d", val);
-			break;
-		case "ddd":
-			System.out.format("%3d", val);
-			break;
-		case "dddd":
-			System.out.format("%4d", val);
-			break;
-		default:
-			throw new RuntimeException("Unable to printf " + val + " using $" + fmt + "$");
+			Integer ival = val.forceIntegerValue();
+			switch (fmt)
+			{
+			case "d":
+				System.out.format("%1d", ival);
+				break;
+			case "dd":
+				System.out.format("%2d", ival);
+				break;
+			case "ddd":
+				System.out.format("%3d", ival);
+				break;
+			case "dddd":
+				System.out.format("%4d", ival);
+				break;
+			default:
+				throw new RuntimeException("Unable to printf " + ival + " using $" + fmt + "$");
+			}
+		}
+
+		if (val instanceof EagleDouble)
+		{
+			Double dval = val.forceDoubleValue();
+			switch (fmt)
+			{
+			case "dd.d":
+				System.out.format("%4.1f", dval);
+				break;
+			default:
+				throw new RuntimeException("Unable to printf " + dval + " using $" + fmt + "$");
+			}
 		}
 	}
 
