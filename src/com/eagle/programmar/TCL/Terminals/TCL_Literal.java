@@ -32,6 +32,6 @@ public class TCL_Literal extends TerminalLiteralToken
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return TCL_Format.compile(generator, _txt, this);
+		return TCL_Format.compile(generator, removeQuotes(), this);
 	}
 }
