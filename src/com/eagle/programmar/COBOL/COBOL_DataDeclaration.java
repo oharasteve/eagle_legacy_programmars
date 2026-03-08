@@ -254,7 +254,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						if (picValue.getWhich() instanceof COBOL_Picture_Value_Literal)
 						{
 							COBOL_Picture_Value_Literal lit = (COBOL_Picture_Value_Literal) picValue.getWhich();
-							EagleString str = new EagleString(lit.literal.getValue());
+							EagleString str = new EagleString(lit.literal.removeQuotes());
 							// System.err.println("************** Adding " + str.toString());
 							array.addValue(str);
 						}

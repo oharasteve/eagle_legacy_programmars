@@ -13,10 +13,4 @@ public class CSS_Literal extends TerminalLiteralToken
 	{
 		return genericLiteral(lines, "\"'", true, '\\', false, false);
 	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("\"'", true, '\\', false, false);
-	}
 }

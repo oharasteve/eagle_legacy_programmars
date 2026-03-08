@@ -27,14 +27,14 @@ public class Python_Literals extends PrimaryOperator
 		if (literals._elements.size() == 1)
 		{
 			Python_Literal literal = literals._elements.get(0);
-			interpreter.pushStr(literal.getValue());
+			interpreter.pushStr(literal.removeQuotes());
 		}
 		else
 		{
 			StringBuffer sb = new StringBuffer();
 			for (Python_Literal literal : literals._elements)
 			{
-				sb.append(literal.getValue());
+				sb.append(literal.removeQuotes());
 			}
 			interpreter.pushStr(sb.toString());
 		}

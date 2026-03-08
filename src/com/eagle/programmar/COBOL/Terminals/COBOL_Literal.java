@@ -19,14 +19,8 @@ public class COBOL_Literal extends TerminalLiteralToken implements EagleTransfor
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("'\"", false, '?', true, false);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return generator.newLiteralExpression(_txt.replaceAll("[\"']", ""), this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 }

@@ -14,19 +14,18 @@ public class TCL_Format
 {
 	public static String format(EagleInterpreter interpreter, String fmt)
 	{
-		String txt = fmt.replaceAll("\"", "");
-		if (txt.indexOf('[') < 0 && txt.indexOf('$') < 0)
+		if (fmt.indexOf('[') < 0 && fmt.indexOf('$') < 0)
 		{
-			interpreter.pushStr(txt);
+			interpreter.pushStr(fmt);
 		}
 
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
-		int nc = txt.length();
+		int nc = fmt.length();
 		char prev = ' ';
 		while (sc < nc)
 		{
-			char ch = txt.charAt(sc);
+			char ch = fmt.charAt(sc);
 
 			// Check for an escape before the [] or $
 			if (prev != '\\')
@@ -35,9 +34,9 @@ public class TCL_Format
 				
 				if (ch == '[')
 				{
-					int secondBracket = txt.indexOf(']', sc + 1);
-					if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + txt);
-					var = txt.substring(sc, secondBracket + 1); // Leave in the brackets
+					int secondBracket = fmt.indexOf(']', sc + 1);
+					if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + fmt);
+					var = fmt.substring(sc, secondBracket + 1); // Leave in the brackets
 					sc = secondBracket;
 				}
 				else if (ch == '$')
@@ -46,10 +45,10 @@ public class TCL_Format
 					while (endDollar < nc)
 					{
 						// Stop on a space or comma or ....
-						if (" ,)".indexOf(txt.charAt(endDollar)) >= 0) break;
+						if (" ,)".indexOf(fmt.charAt(endDollar)) >= 0) break;
 						endDollar++;
 					}
-					var = txt.substring(sc, endDollar);
+					var = fmt.substring(sc, endDollar);
 					sc = endDollar - 1;
 				}
 				else
@@ -80,14 +79,7 @@ public class TCL_Format
 	{
 		AbstractExpression result = null;
 
-		String txt = fmt;
 		int nc = fmt.length();
-		if (fmt.startsWith("\"") && fmt.endsWith("\"") && nc > 1)
-		{
-			// Strip quotes
-			txt = fmt.substring(1, nc-1);
-			nc -= 2;
-		}
 		if (nc == 0)
 		{
 			return generator.newLiteralExpression("", null);
@@ -98,7 +90,7 @@ public class TCL_Format
 		StringBuffer piece = new StringBuffer();
 		while (sc < nc)
 		{
-			char ch = txt.charAt(sc);
+			char ch = fmt.charAt(sc);
 			
 			// Check for an escape before the [] or $
 			String var = null;
@@ -106,9 +98,9 @@ public class TCL_Format
 			{
 				if (ch == '[')
 				{
-					int secondBracket = txt.indexOf(']', sc + 1);
-					if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + txt);
-					var = txt.substring(sc, secondBracket + 1); // Leave in the brackets
+					int secondBracket = fmt.indexOf(']', sc + 1);
+					if (secondBracket < 0) throw new RuntimeException("Missing ] in: " + fmt);
+					var = fmt.substring(sc, secondBracket + 1); // Leave in the brackets
 					sc = secondBracket;
 				}
 				else if (ch == '$')
@@ -117,10 +109,10 @@ public class TCL_Format
 					while (endDollar < nc)
 					{
 						// Stop on a space or comma or ....
-						if (" ,)".indexOf(txt.charAt(endDollar)) >= 0) break;
+						if (" ,)".indexOf(fmt.charAt(endDollar)) >= 0) break;
 						endDollar++;
 					}
-					var = txt.substring(sc+1, endDollar);	// Skip the leading $
+					var = fmt.substring(sc+1, endDollar);	// Skip the leading $
 					sc = endDollar - 1;
 				}
 			}

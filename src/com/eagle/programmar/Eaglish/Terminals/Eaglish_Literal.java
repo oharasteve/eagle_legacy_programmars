@@ -23,15 +23,9 @@ public class Eaglish_Literal extends TerminalLiteralToken
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("\"", true, '\\', false, false);
-	}
-
-	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String result = Eaglish_Format.format(interpreter, _txt);
+		String result = Eaglish_Format.format(interpreter, removeQuotes());
 		interpreter.pushStr(result);
 	}
 
@@ -40,16 +34,10 @@ public class Eaglish_Literal extends TerminalLiteralToken
 	{
 		if (_txt.indexOf('^') >= 0)
 		{
-			return Eaglish_Format.compile(transformer, generator, _txt, this);
+			return Eaglish_Format.compile(transformer, generator, removeQuotes(), this);
 		}
 
 		// Plain ol' literal
-		String val = _txt;
-		int nc = val.length();
-		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
-		{
-			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"");
-		}
-		return generator.newLiteralExpression(val, this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 }

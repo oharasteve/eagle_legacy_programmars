@@ -22,31 +22,14 @@ public class AWK_Literal extends TerminalLiteralToken
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("'\"", true, '\\', false, false);
-	}
-
-	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String str = _txt;
-		if (str.startsWith("\"") || str.startsWith("'"))
-		{
-			str = str.substring(1, str.length() - 1); // Remove quotes
-		}
-		interpreter.pushStr(str);
+		interpreter.pushStr(removeQuotes());
 	}
 	
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		String val = _txt;
-		int nc = val.length();
-		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
-		{
-			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"");
-		}
-		return generator.newLiteralExpression(val, this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 }

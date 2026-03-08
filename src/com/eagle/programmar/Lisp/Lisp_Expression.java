@@ -126,7 +126,7 @@ public class Lisp_Expression extends TokenChooser
 				Lisp_List list = (Lisp_List) expr.getWhich();
 				for (Lisp_Expression item : list.exprs._elements)
 				{
-					String value = item.showText();
+					String value = interpreter.getStrValue(item);
 					array.addValue(new EagleString(value));
 				}
 

@@ -32,24 +32,26 @@ public class Algol68_PrintfStatement extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		// Note that Algol68_Format is a Literal with '$' instead of ' or "
+		// Hence dd instead of $dd$ below
 		String fmt = interpreter.getStrValue(format);
 		Integer val = Integer.valueOf(interpreter.getIntValue(expr));
 		switch (fmt)
 		{
-		case "$d$":
+		case "d":
 			System.out.format("%1d", val);
 			break;
-		case "$dd$":
+		case "dd":
 			System.out.format("%2d", val);
 			break;
-		case "$ddd$":
+		case "ddd":
 			System.out.format("%3d", val);
 			break;
-		case "$dddd$":
+		case "dddd":
 			System.out.format("%4d", val);
 			break;
 		default:
-			throw new RuntimeException("Unable to printf " + val + " using " + fmt);
+			throw new RuntimeException("Unable to printf " + val + " using $" + fmt + "$");
 		}
 	}
 

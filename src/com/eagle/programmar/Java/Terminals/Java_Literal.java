@@ -23,21 +23,9 @@ public class Java_Literal extends TerminalLiteralToken
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("\"", true, '\\', false, false);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		String val = _txt;
-		int nc = val.length();
-		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
-		{
-			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"");
-		}
-		return generator.newLiteralExpression(val, this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 
 	public static Java_Literal generateLiteral(String value, AbstractToken source)

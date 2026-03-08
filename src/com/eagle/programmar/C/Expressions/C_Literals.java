@@ -24,7 +24,7 @@ public class C_Literals extends PrimaryOperator
 		StringBuffer sb = new StringBuffer();
 		for (C_Literal lit : literals._elements)
 		{
-			sb.append(lit.toString());
+			sb.append(lit.removeQuotes());
 		}
 		interpreter.pushStr(sb.toString());
 	}

@@ -68,8 +68,7 @@ public class Eaglish_Format
 	{
 		AbstractExpression result = null;
 
-		String txt = fmt.replaceAll("\"", "");
-		int nc = txt.length();
+		int nc = fmt.length();
 		if (nc == 0)
 		{
 			return generator.newLiteralExpression("", null);
@@ -79,7 +78,7 @@ public class Eaglish_Format
 		while (sc < nc)
 		{
 			// Pull in a text string
-			int nextInsertion = txt.indexOf("^", sc);
+			int nextInsertion = fmt.indexOf("^", sc);
 			int ec = nextInsertion;
 			if (nextInsertion < 0)
 			{
@@ -89,7 +88,7 @@ public class Eaglish_Format
 			if (ec > sc)
 			{
 				// Grab next literal piece
-				AbstractExpression piece1 = generator.newLiteralExpression(txt.substring(sc, ec), null);
+				AbstractExpression piece1 = generator.newLiteralExpression(fmt.substring(sc, ec), null);
 				if (result == null)
 				{
 					result = piece1;
@@ -106,12 +105,12 @@ public class Eaglish_Format
 			}
 
 			// Pick out the variable name, like ^ok^
-			int endInsertion = txt.indexOf("^", nextInsertion + 1);
+			int endInsertion = fmt.indexOf("^", nextInsertion + 1);
 			if (endInsertion < 0)
 			{
 				throw new RuntimeException("Missing second ^ following ^");
 			}
-			String text = txt.substring(nextInsertion + 1, endInsertion);
+			String text = fmt.substring(nextInsertion + 1, endInsertion);
 			Eaglish_Expression expr = new Eaglish_Expression();
 			if (!generator._parser.parseLine(text, generator._parser._parser.getLanguage(), expr))
 			{

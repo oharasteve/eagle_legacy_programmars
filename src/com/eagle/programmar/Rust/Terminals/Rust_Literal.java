@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Rust.Rust_Expression;
@@ -25,27 +24,9 @@ public class Rust_Literal extends TerminalLiteralToken
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("\"", true, '\\', false, false);
-	}
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		interpreter.pushStr(_txt);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		String val = _txt;
-		int nc = val.length();
-		if (val.startsWith("\"") && val.endsWith("\"") && nc > 1)
-		{
-			val = val.substring(1, nc-1).replaceAll("\\\\\"", "\"");
-		}
-		return generator.newLiteralExpression(val, this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 
 	public static Rust_Literal generateLiteral(String value, AbstractToken source)

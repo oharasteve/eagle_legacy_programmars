@@ -19,56 +19,16 @@ public class PLI_Literal extends TerminalLiteralToken
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
-		int recLen = rec.length();
-		char ch = rec.charAt(_currentChar);
-		if (ch == '\'')
+		if (rec.endsWith("'B") || rec.endsWith("'X")) // Binary or Hex literals
 		{
-			int endChar = _currentChar;
-			while (true)
-			{
-				endChar++;
-				if (endChar >= recLen) break;
-				ch = rec.charAt(endChar);
-				if (ch == '\'')
-				{
-					if (endChar + 1 >= recLen) break;
-					if (rec.charAt(endChar + 1) != '\'')
-					{
-						break;
-					}
-					endChar++; // Doubled up single quotes
-				}
-			}
-
-			// Look for '0'B and '0a'X
-			if (endChar + 1 < recLen)
-			{
-				char nextChar = Character.toUpperCase(rec.charAt(endChar + 1));
-				if (nextChar == 'B' || nextChar == 'X') return false;
-			}
-
-			foundIt(_currentLine, endChar);
-			_txt = rec.substring(_currentChar + 1, endChar);
-			return true;
+			return false;
 		}
-		return false;
-	}
-
-	@Override
-	public String description()
-	{
-		return "PL/I literal";
+		return genericLiteral(lines, "'", false, '?', true, false);
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		String val = _txt;
-		int nc = val.length();
-		if (val.startsWith("'") && val.endsWith("'") && nc > 1)
-		{
-			val = val.substring(1, nc-1).replaceAll("\\\\'", "'");
-		}
-		return generator.newLiteralExpression(val, this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 }

@@ -23,15 +23,9 @@ public class TCL_Literal extends TerminalLiteralToken
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("\"", true, '\\', false, false);
-	}
-
-	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String result = TCL_Format.format(interpreter, _txt);
+		String result = TCL_Format.format(interpreter, removeQuotes());
 		interpreter.pushStr(result);
 	}
 

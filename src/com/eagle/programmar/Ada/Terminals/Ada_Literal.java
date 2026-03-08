@@ -20,14 +20,8 @@ public class Ada_Literal extends TerminalLiteralToken
 	}
 
 	@Override
-	public String description()
-	{
-		return super.genericDescription("\"", true, '\\', false, false);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		return generator.newLiteralExpression(_txt.replaceAll("\"", ""), this);
+		return generator.newLiteralExpression(removeQuotes(), this);
 	}
 }

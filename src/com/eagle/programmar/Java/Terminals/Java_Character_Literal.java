@@ -15,12 +15,6 @@ public class Java_Character_Literal extends TerminalLiteralToken
 		return genericLiteral(lines, "'", true, '\\', false, false);
 	}
 
-	@Override
-	public String description()
-	{
-		return super.genericDescription("'", true, '\\', false, false);
-	}
-
 	public static Java_Character_Literal generateCharLiteral(String value, AbstractToken source)
 	{
 		Java_Character_Literal lit = new Java_Character_Literal();

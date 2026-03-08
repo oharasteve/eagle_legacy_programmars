@@ -44,7 +44,7 @@ public class CMD_BasicExpression extends PrecedenceChooser
 	public @P(40) CMD_Filename filename;
 
 	///////////////////////////////////////////////
-	// Primary expressions -- Identical to CMD_Expression
+	// Primary expressions -- Subset from CMD_Expression
 
 	public @P(100) CMD_ParenthesizedExpression parensExpression;
 	public @P(110) CMD_NegativeExpression negativeExpression;
@@ -54,5 +54,4 @@ public class CMD_BasicExpression extends PrecedenceChooser
 
 	///////////////////////////////////////////////
 	// Binary expressions -- only in CMD_Expression
-
 }

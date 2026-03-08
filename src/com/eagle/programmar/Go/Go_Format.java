@@ -84,15 +84,12 @@ public class Go_Format
 		}
 		Go_Literal lit = (Go_Literal) fmtExpr.getWhich();
 		String fmt = lit.getValue();
-		if (fmt.startsWith("\""))
-		{
-			fmt = fmt.substring(1, fmt.length() - 1);
-		}
-		if (fmt.endsWith("\\n"))
-		{
-			fmt = fmt.substring(0, fmt.length() - 2);
-		}
 		int nc = fmt.length();
+		if (fmt.startsWith("\"") && fmt.endsWith("\"") && nc > 1)
+		{
+			fmt = fmt.substring(1, nc-1).replaceAll("\\\\\"", "\"");
+			nc = fmt.length();
+		}
 
 		int sc = fmt.indexOf("%");
 		int pctLen = check(fmt, sc, nc);
