@@ -33,7 +33,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Scala_Function extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-		EagleTransformableFunction
+				EagleTransformableFunction
 {
 	public @S(10) @OPT Scala_Keyword OVERRIDE = new Scala_Keyword("override");
 	public @S(20) @DOC("taste-methods.html") Scala_Keyword DEF = new Scala_Keyword("def");

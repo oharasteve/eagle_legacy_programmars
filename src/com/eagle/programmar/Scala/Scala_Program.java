@@ -84,6 +84,8 @@ public class Scala_Program extends AbstractLanguage
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
 	{
+		boolean needCallToMain = false;
+		
 		// First pass, transform all the function definitions
 		for (Scala_Element elt : elements._elements)
 		{
@@ -96,6 +98,18 @@ public class Scala_Program extends AbstractLanguage
 					{
 						EagleTransformableFunction transformable = (EagleTransformableFunction) stmt.getWhich();
 						transformable.transformFunction(transformer, generator);
+						
+						// Expressions and Statements need this for Python
+						// Romanamor does not. C# and Java do not.
+						// Not really sure when / why this is needed, but it works.
+						if (transformable instanceof Scala_Function)
+						{
+							Scala_Function func = (Scala_Function) transformable;
+							if (func.id.getValue().equals("main"))
+							{
+								needCallToMain = true;
+							}
+						}
 					}
 				}
 			}
@@ -121,8 +135,11 @@ public class Scala_Program extends AbstractLanguage
 			}
 		}
 
-		// Not needed for C# or Java, but Python needs this
-		generator.addCallToMain();
+		// Not needed for C# or Java, but Python needs this (unless there was an 'object' line)
+		if (needCallToMain)
+		{
+			generator.addCallToMain();
+		}
 
 		return generator.getTransfomedProgram();
 	}
