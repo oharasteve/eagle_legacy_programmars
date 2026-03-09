@@ -3,23 +3,21 @@
 
 package com.eagle.programmar.JavaP.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class JavaP_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public JavaP_HexNumber()
 	{
-		return genericHex(lines, "0x", "");
+		super("0x", "", false);
 	}
 
+	// Probably should go into its own class file
 	public static class JavaP_HexNoPrefix extends TerminalHexNumberToken
 	{
-		@Override
-		public boolean parse(EagleFileReader lines)
+		public JavaP_HexNoPrefix()
 		{
-			return genericHex(lines, "", "");
+			super("", "", false);
 		}
 	}
 }

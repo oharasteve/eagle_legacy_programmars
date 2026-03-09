@@ -3,16 +3,14 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Rust_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Rust_HexNumber()
 	{
-		return genericHex(lines, "0x", "Ll", true);
+		super("0x", "Ll", true);
 	}
 
 	public static Rust_HexNumber generateHexNumber(String value, AbstractToken source)

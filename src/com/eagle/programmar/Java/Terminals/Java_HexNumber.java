@@ -3,18 +3,16 @@
 
 package com.eagle.programmar.Java.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Java_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Java_HexNumber()
 	{
-		return genericHex(lines, "0x", "Ll", true);
+		super("0x", "Ll", true);
 	}
-
+	
 	public static Java_HexNumber generateHexNumber(String value, AbstractToken source)
 	{
 		Java_HexNumber hex = new Java_HexNumber();

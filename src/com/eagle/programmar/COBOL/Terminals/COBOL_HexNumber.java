@@ -9,6 +9,11 @@ import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class COBOL_HexNumber extends TerminalHexNumberToken
 {
+	public COBOL_HexNumber()
+	{
+		super("Xx", null, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

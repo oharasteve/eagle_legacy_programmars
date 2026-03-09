@@ -9,6 +9,11 @@ import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class PLI_HexNumber extends TerminalHexNumberToken
 {
+	public PLI_HexNumber()
+	{
+		super("", "Xx", false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

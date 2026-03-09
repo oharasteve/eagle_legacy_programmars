@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Java.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalBinaryNumberToken;
 
 public class Java_BinaryNumber extends TerminalBinaryNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Java_BinaryNumber()
 	{
-		return genericBinary(lines, "0b", true);
+		super("0b", true);
 	}
 }

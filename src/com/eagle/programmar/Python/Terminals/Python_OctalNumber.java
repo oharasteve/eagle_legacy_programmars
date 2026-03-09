@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalOctalNumberToken;
 
 public class Python_OctalNumber extends TerminalOctalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Python_OctalNumber()
 	{
-		return genericOctal(lines, "0o", "Ll");
+		super("0o", "Ll", false);
 	}
 }

@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Perl.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalOctalNumberToken;
 
 public class Perl_OctalNumber extends TerminalOctalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Perl_OctalNumber()
 	{
-		return genericOctal(lines, "0", null);
+		super("0", null, false);
 	}
 }

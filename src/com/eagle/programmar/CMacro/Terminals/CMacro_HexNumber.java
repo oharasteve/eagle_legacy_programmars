@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.CMacro.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class CMacro_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public CMacro_HexNumber()
 	{
-		return genericHex(lines, "0x", "UL");
+		super("0x", "UL", false);
 	}
 }

@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalBinaryNumberToken;
 
 public class Rust_BinaryNumber extends TerminalBinaryNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Rust_BinaryNumber()
 	{
-		return genericBinary(lines, "0b", true);
+		super("0b", true);
 	}
 }

@@ -3,14 +3,19 @@
 
 package com.eagle.programmar.MSSolution.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalIntegerToken;
 
 public class MSSolution_Integer extends TerminalIntegerToken
 {
 	@Override
-	public boolean parse(EagleFileReader lines)
+	public String showString()
 	{
-		return genericInteger(lines);
+		return "MS Solution integer";
+	}
+
+	@Override
+	public String description()
+	{
+		return "MS Solution integer";
 	}
 }

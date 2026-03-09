@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Delphi.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Delphi_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Delphi_HexNumber()
 	{
-		return genericHex(lines, "$", null);
+		super("$", null, false);
 	}
 }

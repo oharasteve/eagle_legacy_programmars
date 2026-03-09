@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Perl.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Perl_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Perl_HexNumber()
 	{
-		return genericHex(lines, "0x", null);
+		super("0x", null, false);
 	}
 }

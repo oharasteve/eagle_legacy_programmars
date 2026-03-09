@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Python.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalBinaryNumberToken;
 
 public class Python_BinaryNumber extends TerminalBinaryNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Python_BinaryNumber()
 	{
-		return genericBinary(lines, "0b");
+		super("0b", false);
 	}
 }

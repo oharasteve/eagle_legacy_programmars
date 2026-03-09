@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Javascript.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class Javascript_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Javascript_HexNumber()
 	{
-		return genericHex(lines, "0x", "Ll");
+		super("0x", "Ll", false);
 	}
 }

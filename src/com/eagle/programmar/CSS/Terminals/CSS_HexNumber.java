@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.CSS.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class CSS_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public CSS_HexNumber()
 	{
-		return genericHex(lines, "#", null);
+		super("#", null, false);
 	}
 }

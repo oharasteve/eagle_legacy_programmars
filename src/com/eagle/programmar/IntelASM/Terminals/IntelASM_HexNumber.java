@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.IntelASM.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalHexNumberToken;
 
 public class IntelASM_HexNumber extends TerminalHexNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public IntelASM_HexNumber()
 	{
-		return genericHex(lines, "0x", null, false);
+		super("0x", null, false);
 	}
 }
