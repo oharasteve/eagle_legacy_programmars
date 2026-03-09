@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.Javascript.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Javascript_TemplateLiteral extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Javascript_TemplateLiteral()
 	{
-		// backticks can span multiple lines, and can inject values with $(x) inside
-		return genericLiteral(lines, "`", true, '\\', false, true);
+		super("`", true, '\\', false, true);
 	}
 }

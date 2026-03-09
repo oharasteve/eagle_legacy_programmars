@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.CSS.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class CSS_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public CSS_Number()
 	{
-		return genericNumber(lines, null, null, true, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription(null, null, true, false, '?');
+		super(null, null, true, false, '?');
 	}
 }

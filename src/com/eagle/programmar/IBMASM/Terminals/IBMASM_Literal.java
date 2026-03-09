@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.IBMASM.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class IBMASM_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public IBMASM_Literal()
 	{
-		return genericLiteral(lines, "'", false, '?', false, false);
+		super("'", false, '?', false, false);
 	}
 }

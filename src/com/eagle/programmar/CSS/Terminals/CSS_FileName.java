@@ -11,6 +11,11 @@ public class CSS_FileName extends TerminalLiteralToken
 {
 	private static String ALLOWED = ":-/_.#?";
 
+	public CSS_FileName()
+	{
+		super("\"'", true, '\\', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -21,7 +26,7 @@ public class CSS_FileName extends TerminalLiteralToken
 		char ch = rec.charAt(_currentChar);
 		if (ch == '\'' || ch == '"')
 		{
-			return genericLiteral(lines, "\"'", true, '\\', false, false);
+			return super.parse(lines);
 		}
 
 		// Accept anything that looks like a filename

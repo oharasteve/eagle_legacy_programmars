@@ -15,6 +15,11 @@ public class Python_Literal extends TerminalLiteralToken
 {
 	private static final String PREFIXES = "bfru";
 
+	public Python_Literal()
+	{
+		super("\"'", true, '\\', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -56,11 +61,11 @@ public class Python_Literal extends TerminalLiteralToken
 			if (ch2 == ch1 && ch3 == ch1)
 			{
 				String triple = (ch1 == '"' ? "\"\"\"" : "'''"); // Either ''' or """
-				ok = genericLiteral3(lines, rec, triple, triple);
+				ok = parseLiteral3(lines, rec, triple, triple);
 			}
 			else
 			{
-				ok = genericLiteral(lines, "\"'", true, '\\', false, false);
+				ok = super.parse(lines);
 			}
 		}
 		else

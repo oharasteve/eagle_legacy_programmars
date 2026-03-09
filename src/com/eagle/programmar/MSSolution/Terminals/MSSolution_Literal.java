@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.MSSolution.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class MSSolution_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public MSSolution_Literal()
 	{
-		return genericLiteral(lines, "\"", false, ' ', false, false);
+		super("\"", false, ' ', false, false);
 	}
 }

@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.BNF.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class BNF_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public BNF_Literal()
 	{
-		return genericLiteral(lines, "'\"", true, '\\', false, false);
+		super("'\"", true, '\\', false, false);
 	}
 }

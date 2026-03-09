@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.HTML.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class HTML_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public HTML_Number()
 	{
-		return genericNumber(lines, null, "%", true, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription(null, "%", true, false, '?');
+		super(null, "%", true, false, '?');
 	}
 }

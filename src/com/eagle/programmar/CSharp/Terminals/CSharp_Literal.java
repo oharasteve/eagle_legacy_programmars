@@ -8,15 +8,15 @@ import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
-import com.eagle.transform.EagleTransformer;
 
 public class CSharp_Literal extends TerminalLiteralToken
-		implements EagleTransformableExpression
 {
+	public CSharp_Literal()
+	{
+		super("\"", true, '\\', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -26,7 +26,13 @@ public class CSharp_Literal extends TerminalLiteralToken
 		if (rec.charAt(_currentChar) == '@')
 		{
 			lines.setCurrentChar(_currentChar + 1);
-			if (genericLiteral(lines, "\"", false, '?', true, true)) return true;
+			super._hasEscape = false;	// Smash these temporarily
+			super._allowDoubled = true; // @"..." is an odd beast
+			super._allowMultiline = true;
+			if (super.parse(lines)) return true;
+			super._hasEscape = true;    // Restore these
+			super._allowDoubled = false;
+			super._allowMultiline = false;
 			lines.setCurrentChar(_currentChar);
 			return false;
 		}
@@ -35,18 +41,12 @@ public class CSharp_Literal extends TerminalLiteralToken
 		if (rec.charAt(_currentChar) == '$')
 		{
 			lines.setCurrentChar(_currentChar + 1);
-			if (genericLiteral(lines, "\"", true, '\\', false, false)) return true;
+			if (super.parse(lines)) return true;
 			lines.setCurrentChar(_currentChar);
 			return false;
 		}
 
-		return super.genericLiteral(lines, "\"", true, '\\', false, false);
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		return generator.newLiteralExpression(removeQuotes(), this);
+		return super.parse(lines);
 	}
 
 	public static CSharp_Literal generateLiteral(String value, AbstractToken source)

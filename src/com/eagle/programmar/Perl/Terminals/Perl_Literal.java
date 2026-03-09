@@ -5,15 +5,15 @@ package com.eagle.programmar.Perl.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
-import com.eagle.transform.EagleTransformer;
 
 public class Perl_Literal extends TerminalLiteralToken
-		implements EagleTransformableExpression
 {
+	public Perl_Literal()
+	{
+		super("\"'`", true, '\\', false, true);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -24,12 +24,6 @@ public class Perl_Literal extends TerminalLiteralToken
 		if (multilineStopper(lines, rec, "<<<")) return true;
 		if (multilineStopper(lines, rec, "<<")) return true;
 
-		return super.genericLiteral(lines, "\"'`", true, '\\', false, true);
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		return generator.newLiteralExpression(removeQuotes(), this);
+		return super.parse(lines);
 	}
 }

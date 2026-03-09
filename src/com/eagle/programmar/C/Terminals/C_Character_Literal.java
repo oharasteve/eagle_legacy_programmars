@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.C.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class C_Character_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public C_Character_Literal()
 	{
-		return genericLiteral(lines, "'", true, '\\', false, false);
+		super("'", true, '\\', false, false);
 	}
 }

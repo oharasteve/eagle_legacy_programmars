@@ -12,6 +12,11 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
 {
+	public Bash_EchoWhat()
+	{
+		super("'\"", true, '\\', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -47,61 +52,46 @@ public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
 	}
 
 	@Override
-	public String description()
-	{
-		return "rest of line";
-	}
-
-	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String txt = _txt;
-		if (txt.startsWith("'"))
+		String text = removeQuotes();
+		if (_txt.startsWith("'"))
 		{
-			txt = txt.substring(1, txt.length()-1);
-			interpreter.pushStr(txt);
+			interpreter.pushStr(text);
 			return;
 		}
 
-		if (txt.startsWith("\""))
+		if (text.indexOf("$((") < 0)
 		{
-			txt = txt.substring(1, txt.length()-1);
-		}
-
-		// Change \" to "
-		txt = txt.replaceAll("\\\\", "\\");
-
-		if (txt.indexOf("$((") < 0)
-		{
-			interpreter.pushStr(txt);
+			interpreter.pushStr(text);
 			return;
 		}
 
 		StringBuffer sb = new StringBuffer();
 		int sc = 0;
-		int nc = txt.length();
+		int nc = text.length();
 		while (sc < nc)
 		{
 			// Pull in a text string
-			int first = txt.indexOf("$((", sc);
+			int first = text.indexOf("$((", sc);
 			if (first < 0)
 			{
-				sb.append(txt.substring(sc, nc));
+				sb.append(text.substring(sc, nc));
 				break; // Done -- no more $((
 			}
 			if (first > sc)
 			{
-				sb.append(txt.substring(sc, first));
+				sb.append(text.substring(sc, first));
 			}
 
 			// Extract a variable name (or expression) and value
-			int second = txt.indexOf("))", first + 3);
-			while (second + 2 < nc && txt.charAt(second + 2) == ')')
+			int second = text.indexOf("))", first + 3);
+			while (second + 2 < nc && text.charAt(second + 2) == ')')
 			{
 				second++;
 			} // In case there is something like $(((1+2)))
-			if (second < 0) throw new RuntimeException("Missing )) in " + txt);
-			String var = txt.substring(first + 3, second);
+			if (second < 0) throw new RuntimeException("Missing )) in " + text);
+			String var = text.substring(first + 3, second);
 			Bash_Expression expr = new Bash_Expression();
 			if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
 			{

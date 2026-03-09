@@ -9,6 +9,11 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Python_BackQuote extends TerminalLiteralToken
 {
+	public Python_BackQuote()
+	{
+		super("`", false, '?', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -43,12 +48,18 @@ public class Python_BackQuote extends TerminalLiteralToken
 		boolean ok = false;
 		if (_currentChar < nc && rec.charAt(_currentChar) == '`')
 		{
-			ok = genericLiteral(lines, "`", false, '?', false, false);
+			ok = super.parse(lines);
 			if (ok)
 			{
-				if (prefixLen == 1)
+				switch (prefixLen)
+				{
+				case 1:
 					_txt = pre1 + _txt;
-				else if (prefixLen == 2) _txt = pre1 + pre2 + _txt;
+					break;
+				case 2:
+					_txt = pre1 + pre2 + _txt;
+					break;
+				}
 			}
 		}
 

@@ -3,36 +3,16 @@
 
 package com.eagle.programmar.Java.Terminals;
 
-import com.eagle.interpret.EagleRunnable;
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
-import com.eagle.transform.EagleTransformer;
 
 public class Java_Number extends TerminalNumberToken
-		implements EagleRunnable, EagleTransformableExpression
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Java_Number()
 	{
-		return genericNumber(lines, "Ee", "LlFfDd", true, true, '_');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("Ee", "LlFfDd", true, true, '_');
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		return generator.newNumberExpression(_numberAsText, this);
+		super("Ee", "LlFfDd", true, true, '_');
 	}
 
 	public static Java_Number generateNumber(String value, AbstractToken source)

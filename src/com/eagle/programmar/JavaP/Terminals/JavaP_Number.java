@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.JavaP.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class JavaP_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public JavaP_Number()
 	{
-		return genericNumber(lines, "E", "ld", false, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("E", "ld", false, false, '?');
+		super("E", "ld", false, false, '?');
 	}
 }

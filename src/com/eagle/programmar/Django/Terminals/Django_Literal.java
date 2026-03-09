@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Django.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Django_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Django_Literal()
 	{
-		return genericLiteral(lines, "'\"", true, '\\', false, false);
+		super("'\"", true, '\\', false, false);
 	}
 }

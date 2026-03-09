@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.Bash.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Bash_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Bash_Literal()
 	{
-		if (findStart(lines) == FOUND.EOF) return false;
-		return genericLiteral(lines, "'\"`", true, '\\', false, false);
+		super("'\"`", true, '\\', false, false);
 	}
 }

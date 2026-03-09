@@ -4,8 +4,6 @@
 package com.eagle.programmar.Eaglish.Terminals;
 
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.interpret.EagleRunnable;
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.programmar.Eaglish.Eaglish_Format;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
@@ -14,14 +12,13 @@ import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_Literal extends TerminalLiteralToken
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleTransformableExpression
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Eaglish_Literal()
 	{
-		return genericLiteral(lines, "\"", true, '\\', false, false);
+		super("\"", true, '\\', false, false);
 	}
-
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{

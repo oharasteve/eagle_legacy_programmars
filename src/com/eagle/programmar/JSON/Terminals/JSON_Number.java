@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.JSON.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class JSON_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public JSON_Number()
 	{
-		return genericNumber(lines, "e", null, true, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("e", null, true, false, '?');
+		super("e", null, true, false, '?');
 	}
 }

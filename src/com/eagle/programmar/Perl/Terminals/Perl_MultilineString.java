@@ -9,6 +9,11 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Perl_MultilineString extends TerminalLiteralToken
 {
+	public Perl_MultilineString()
+	{
+		super("\"'`", true, '\\', false, true);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -19,12 +24,6 @@ public class Perl_MultilineString extends TerminalLiteralToken
 		if (multilineStopper(lines, rec, "<<<")) return true;
 		if (multilineStopper(lines, rec, "<<")) return true;
 
-		return genericLiteral(lines, "\"'`", true, '\\', false, true);
-	}
-
-	@Override
-	public String description()
-	{
-		return "perl literal depends on << and <<<";
+		return super.parse(lines);
 	}
 }

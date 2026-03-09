@@ -3,14 +3,12 @@
 
 package com.eagle.programmar.Lisp.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Lisp_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Lisp_Literal()
 	{
-		return genericLiteral(lines, "\"", true, '\\', false, true);
+		super("\"", true, '\\', false, true);
 	}
 }

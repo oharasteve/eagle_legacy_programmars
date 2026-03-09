@@ -44,14 +44,21 @@ public class CPlus_Literal extends C_Literal
 			break;
 		}
 
-		boolean ok = genericLiteral(lines, "\"'", true, '\\', false, false);
+		boolean ok = super.parse(lines);
 		if (ok)
 		{
-			if (prefixLen == 1)
+			switch (prefixLen)
+			{
+			case 1:
 				_txt = pre1 + _txt;
-			else if (prefixLen == 2)
+				break;
+			case 2:
 				_txt = pre1 + pre2 + _txt;
-			else if (prefixLen == 3) _txt = pre1 + pre2 + pre3 + _txt;
+				break;
+			case 3:
+				_txt = pre1 + pre2 + pre3 + _txt;
+				break;
+			}
 		}
 		_currentChar -= prefixLen;
 		return ok;

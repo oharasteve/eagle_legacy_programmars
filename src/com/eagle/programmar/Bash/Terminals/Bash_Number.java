@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.Bash.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class Bash_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Bash_Number()
 	{
-		return genericNumber(lines, null, null, false, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription(null, null, false, false, '?');
+		super(null, null, false, false, '?');
 	}
 }

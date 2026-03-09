@@ -55,7 +55,7 @@ public class Basic_Variable extends TokenSequence implements EagleRunnable
 			}
 			else
 			{
-				throw new RuntimeException("Can only arrays and matrices");
+				throw new RuntimeException("Can only handle arrays and matrices");
 			}
 		}
 		else

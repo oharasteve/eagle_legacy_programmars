@@ -3,30 +3,12 @@
 
 package com.eagle.programmar.RPGFree.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.terminals.TerminalNumberToken;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
-import com.eagle.transform.EagleTransformer;
 
-public class RPGFree_Number extends TerminalNumberToken implements EagleTransformableExpression
+public class RPGFree_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public RPGFree_Number()
 	{
-		return genericNumber(lines, "Ee", null, true, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("Ee", null, true, false, '?');
-	}
-
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
-	{
-		return generator.newNumberExpression(_numberAsText, this);
+		super("Ee", null, true, false, '?');
 	}
 }

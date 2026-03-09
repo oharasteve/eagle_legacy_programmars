@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.BNF.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class BNF_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public BNF_Number()
 	{
-		return genericNumber(lines, "Ee", "Lf", true, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("Ee", "Lf", true, false, '?');
+		super("Ee", "Lf", true, false, '?');
 	}
 }

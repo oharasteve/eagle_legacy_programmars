@@ -13,6 +13,11 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMD_RawArgument extends TerminalLiteralToken implements EagleRunnable
 {
+	public CMD_RawArgument()
+	{
+		super("'\"", false, '?', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

@@ -9,7 +9,6 @@ import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class RPG_Number extends TerminalNumberToken
 {
-	private static final String DIGITS = "0123456789";
 	private int fixedSc, fixedEc;
 
 	// Used by XML Reader ...
@@ -20,6 +19,7 @@ public class RPG_Number extends TerminalNumberToken
 
 	public RPG_Number(int sc, int ec)
 	{
+		super("Ee", null, true, false, '?');
 		fixedSc = sc - 1;
 		fixedEc = ec;
 	}
@@ -66,11 +66,5 @@ public class RPG_Number extends TerminalNumberToken
 
 		foundIt(_currentLine, _endChar - 1);
 		return true;
-	}
-
-	@Override
-	public String description()
-	{
-		return "Number";
 	}
 }

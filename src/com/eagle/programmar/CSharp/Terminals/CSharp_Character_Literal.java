@@ -3,16 +3,14 @@
 
 package com.eagle.programmar.CSharp.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CSharp_Character_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public CSharp_Character_Literal()
 	{
-		return genericLiteral(lines, "'", true, '\\', false, false);
+		super("'", true, '\\', false, false);
 	}
 
 	public CSharp_Character_Literal generateCharLiteral(String value, AbstractToken source)

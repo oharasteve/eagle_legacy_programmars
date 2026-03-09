@@ -3,15 +3,12 @@
 
 package com.eagle.programmar.CMD.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMD_Literal extends TerminalLiteralToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public CMD_Literal()
 	{
-		if (findStart(lines) == FOUND.EOF) return false;
-		return genericLiteral(lines, "'\"", false, '?', false, false);
+		super("'\"", false, '?', false, false);
 	}
 }

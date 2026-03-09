@@ -9,6 +9,11 @@ import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class CMacro_Definition extends TerminalLiteralToken
 {
+	public CMacro_Definition()
+	{
+		super(null, true, '\\', false, false);
+	}
+	
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{

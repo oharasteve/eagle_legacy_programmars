@@ -3,20 +3,12 @@
 
 package com.eagle.programmar.Basic.Terminals;
 
-import com.eagle.parsers.EagleFileReader;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
 public class Basic_Number extends TerminalNumberToken
 {
-	@Override
-	public boolean parse(EagleFileReader lines)
+	public Basic_Number()
 	{
-		return genericNumber(lines, "Ee", null, true, false, '?');
-	}
-
-	@Override
-	public String description()
-	{
-		return super.genericDescription("Ee", null, true, false, '?');
+		super("Ee", null, true, false, '?');
 	}
 }
