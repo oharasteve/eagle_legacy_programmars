@@ -86,6 +86,7 @@ public class FSharp_Format
 		{
 			fmt = fmt.substring(0, fmt.length() - 2);
 		}
+		fmt = fmt.replaceAll("\\\\\"", "\\\"");
 		int nc = fmt.length();
 
 		int sc = fmt.indexOf("%");

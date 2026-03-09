@@ -87,9 +87,15 @@ public class Go_Format
 		int nc = fmt.length();
 		if (fmt.startsWith("\"") && fmt.endsWith("\"") && nc > 1)
 		{
-			fmt = fmt.substring(1, nc-1).replaceAll("\\\\\"", "\"");
+			fmt = fmt.substring(1, nc-1);
 			nc = fmt.length();
 		}
+		if (fmt.endsWith("\\n"))
+		{
+			fmt = fmt.substring(0, nc-2);
+		}
+		fmt = fmt.replaceAll("\\\\\"", "\"");
+		nc = fmt.length();
 
 		int sc = fmt.indexOf("%");
 		int pctLen = check(fmt, sc, nc);
