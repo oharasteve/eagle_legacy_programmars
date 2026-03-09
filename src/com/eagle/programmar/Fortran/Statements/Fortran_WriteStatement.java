@@ -68,7 +68,10 @@ public class Fortran_WriteStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(WRITE);
+		// Breaks in java. Creates Integer.toString(Integer.toString(ok))
+		// ArrayList<String> metrics = transformer.findArgumentsMetric(WRITE);
+		ArrayList<String> metrics = null;
+		
 		AbstractExpression line = Fortran_Format.transform(transformer, generator,
 				format.getValue(), parameters, metrics);
 		Oper1Types types = new Oper1Types();

@@ -199,7 +199,7 @@ public class Python_Function extends TokenSequence
 				throw new RuntimeException("Unable to handle " + paramVar1.getWhich());
 			}
 			Python_Variable_Definition varDef1 = (Python_Variable_Definition) paramVar1.getWhich();
-			System.err.println("****** paramType = " + paramType1 + " value = " + varDef1.getValue());
+			// System.err.println("****** paramType = " + paramType1 + " value = " + varDef1.getValue());
 			generator.addMethodParameter(paramType1, varDef1.getValue());
 
 			if (header.params.params.moreParams != null)
@@ -220,7 +220,7 @@ public class Python_Function extends TokenSequence
 						throw new RuntimeException("Unable to handle " + paramVar2.getWhich());
 					}
 					Python_Variable_Definition varDef2 = (Python_Variable_Definition) paramVar2.getWhich();
-					System.err.println("****** paramType = " + paramType2 + " value = " + varDef2.getValue());
+					// System.err.println("****** paramType = " + paramType2 + " value = " + varDef2.getValue());
 					generator.addMethodParameter(paramType2, varDef2.getValue());
 					i++;
 				}

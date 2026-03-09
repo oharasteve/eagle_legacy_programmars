@@ -48,7 +48,7 @@ public class Python_Literals extends PrimaryOperator
 			throw new RuntimeException("Cannot handle multiple literals yet");
 		}
 		Python_Literal literal = literals._elements.get(0);
-		return generator.newLiteralExpression(literal.getValue().replaceAll("['\"]", ""), this);
+		return literal.transformExpression(transformer, generator);
 	}
 
 	public static Python_Literals generateLiterals(String txt, AbstractToken source)

@@ -79,13 +79,13 @@ public class SQL_ConcatFunction extends PrimaryOperator
 			}
 
 			SQL_Expression piece = exprs.getPrimaryElement(i);
+			AbstractExpression next = transformer.transformExpression(generator, piece);
 			if (i == 0)
 			{
-				line = transformer.transformExpression(generator, piece);
+				line = next;
 			}
 			else
 			{
-				AbstractExpression next = transformer.transformExpression(generator, piece);
 				line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 			}
 		}
