@@ -12,6 +12,7 @@ import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
+import com.eagle.programmar.COBOL.Statements.COBOL_DisplayOptions.COBOL_DisplayWithNoAdvancing;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
@@ -22,9 +23,9 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 
 public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 		implements EagleRunnable, EagleTransformableStatement
@@ -108,6 +109,15 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 				types = new Oper2Types();
 			}
 
+			boolean newline = true;
+			for (COBOL_DisplayOptions opt : clause.options._elements)
+			{
+				if (opt.getWhich() instanceof COBOL_DisplayWithNoAdvancing)
+				{
+					newline = false;
+				}
+			}
+			
 			int numPieces = clause.what.exprs.getPrimaryCount();
 			for (int i = 0; i < numPieces; i++)
 			{
@@ -129,7 +139,7 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 				}
 			}
 
-			return generator.newPrintStatement(line, true, false, this);
+			return generator.newPrintStatement(line, newline, false, this);
 		}
 		throw new RuntimeException("Unable to handle DISPLAY: " + this);
 	}
