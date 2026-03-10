@@ -19,9 +19,9 @@ public class Java_Literal extends TerminalLiteralToken
 	{
 		Java_Literal lit = new Java_Literal();
 		String val = '"' + value
-				.replaceAll("\\\\", "\\\\\\\\")
+				.replaceAll("\\\\n", "\\\\n")
+//				.replaceAll("\\\\", "\\\\\\\\")
 				.replaceAll("\"", "\\\\\"")
-				.replaceAll("\n", "\\n")
 				+ '"';
 		lit.setValue(val);
 		lit.setTransformationSource(source);

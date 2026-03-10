@@ -53,9 +53,9 @@ public class CSharp_Literal extends TerminalLiteralToken
 	{
 		CSharp_Literal lit = new CSharp_Literal();
 		String val = '"' + value
-				.replaceAll("\\\\", "\\\\\\\\")
+				.replaceAll("\\\\n", "\\\\n")
+//				.replaceAll("\\\\", "\\\\\\\\")
 				.replaceAll("\"", "\\\\\"")
-				.replaceAll("\n", "\\n")
 				+ '"';
 		lit.setValue(val);
 		lit.setTransformationSource(source);

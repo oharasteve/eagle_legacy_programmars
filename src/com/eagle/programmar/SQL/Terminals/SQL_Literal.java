@@ -20,7 +20,7 @@ public class SQL_Literal extends TerminalLiteralToken
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
 	{
-		String text = this.removeQuotes().replaceAll("\\\\n", "XX\nXX");
+		String text = this.removeQuotes().replaceAll("\\\\n", "\\\\n");
 		return generator.newLiteralExpression(text, this);
 	}
 }
