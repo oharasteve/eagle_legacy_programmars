@@ -119,42 +119,5 @@ public class COBOL_Paragraph extends TokenSequence
 				}
 			}
 		}
-		
-//		// Find all the variables that areassigned values in this paragraph AND
-//		// are referenced inside another paragraph
-//		AbstractToken token = null;
-//		TypeEnum typ = transformer.findAssignMetric(token);
-//		if (typ != TypeEnum.VOID)
-//		{
-//			
-//		}
-		
-//		// Why isn't there a pointer up to the COBOL_Program at the top of the tree?
-//		AbstractToken parent = this.getParent();
-//		COBOL_Program_Complete prog = null;
-//		while (parent != null)
-//		{
-//			if (parent instanceof COBOL_Program_Complete)
-//			{
-//				prog = (COBOL_Program_Complete) parent;
-//				break;
-//			}
-//			parent = parent.getParent();
-//		}
-//		if (prog == null) return;
-//		
-//		// Are there any 'global' variables we need to declare?
-//		Collection<String> externals =  prog.getScope().allExternalReferences();
-//		if (externals != null && externals.size() > 0)
-//		{
-//			for (String varName : externals)
-//			{
-//				if (! generator.isKnownMethod(varName))
-//				{
-//					AbstractStatement newStmt = generator.newGlobalVariable(varName, null);
-//					generator.addStatement(newStmt, null);
-//				}
-//			}
-//		}
 	}
 }
