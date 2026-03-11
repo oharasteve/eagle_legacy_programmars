@@ -5,6 +5,7 @@ package com.eagle.programmar.Powershell.Statements;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -146,6 +147,8 @@ public class Powershell_Function extends TokenSequence
 			}
 		}
 
+		findGlobalVars(transformer, generator);
+		
 		addLocalVars(transformer, generator);
 
 		for (Powershell_Element stmt : stmts._elements)
@@ -182,6 +185,31 @@ public class Powershell_Function extends TokenSequence
 		return false;
 	}
 
+	// Anything to declare as 'global' in python?
+	// E.g., $script:emsg
+	private void findGlobalVars(EagleTransformer transformer, EagleGenerator generator)
+	{
+		HashSet<String> added = new HashSet<String>();
+		for (AssignMetrics var : transformer._metrics.findAllAssignments())
+		{
+			if (var._startingLine >= this._currentLine && var._startingLine <= this._endLine)
+			{
+				if (var._scopeStart == 0)
+				{
+					// Scope of this variable is outside the current function.
+					// I.e., it is a $script:emsg or similar 
+					String varName = var._symbolName;
+					if (! added.contains(varName))
+					{
+						AbstractStatement newStmt = generator.newGlobalVariable(varName, null);
+						generator.addStatement(newStmt, null);
+						added.add(varName);
+					}
+				}
+			}
+		}
+	}
+	
 	// Are there any local variables we need to declare?
 	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
 	{
