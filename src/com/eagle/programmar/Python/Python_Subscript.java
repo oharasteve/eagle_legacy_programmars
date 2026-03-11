@@ -35,15 +35,15 @@ public class Python_Subscript extends TokenSequence
 	public static class Python_SubscrExpr extends TokenSequence
 	{
 		public @S(10) @OPT Python_Expression subscr;
-		public @S(20) @OPT Python_ColonSubscript subscriptStop;
-		public @S(30) @OPT Python_ColonSubscript subscriptStep;
+		public @S(20) @OPT @NOSPACE Python_ColonSubscript subscriptStop;
+		public @S(30) @OPT @NOSPACE Python_ColonSubscript subscriptStep;
 	}
 
 	public static class Python_ColonSubscript extends TokenSequence
 	{
 		public @S(10) PunctuationColon colon;
 		public @S(20) @OPT Python_EndOfLine eoln;
-		public @S(30) @OPT Python_Expression expr;
+		public @S(30) @OPT @NOSPACE Python_Expression expr;
 	}
 
 	public static void evaluateSubscript(EagleInterpreter interpreter, EagleValue value, Python_SubscrExpr body)
