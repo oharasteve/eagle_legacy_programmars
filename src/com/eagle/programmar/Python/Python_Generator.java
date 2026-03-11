@@ -286,6 +286,10 @@ public class Python_Generator
 	@Override
 	public Python_ComplexStatement newGlobalVariable(String variableName, AbstractToken source)
 	{
+		if (_currentFunction == null)
+		{
+			return null;	// Don't add 'global' variables in Python at the top level
+		}
 		return Python_GlobalStatement.generateGlobal(variableName, source);
 	}
 
