@@ -42,7 +42,7 @@ public class Algol68_PrintfStatement extends TokenSequence
 
 		if (val instanceof EagleInteger)
 		{
-			Integer ival = val.forceIntegerValue();
+			Integer ival = Integer.valueOf(val.forceIntegerValue());
 			switch (fmt)
 			{
 			case "d":
@@ -64,11 +64,11 @@ public class Algol68_PrintfStatement extends TokenSequence
 
 		if (val instanceof EagleDouble)
 		{
-			Double dval = val.forceDoubleValue();
+			double dval = val.forceDoubleValue();
 			switch (fmt)
 			{
 			case "dd.d":
-				System.out.format("%4.1f", dval);
+				System.out.format("%4.1f", Double.valueOf(dval));
 				break;
 			default:
 				throw new RuntimeException("Unable to printf " + dval + " using $" + fmt + "$");

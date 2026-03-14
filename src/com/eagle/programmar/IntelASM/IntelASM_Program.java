@@ -113,7 +113,7 @@ public class IntelASM_Program extends AbstractLanguage
 		{
 			throw new RuntimeException("Unable to find start label: " + state._startLabel);
 		}
-		state._nextInstruction = state._labels.get(state._startLabel);
+		state._nextInstruction = state._labels.get(state._startLabel).intValue();
 
 		// Second pass to run logic
 		while (state._nextInstruction < numLines)

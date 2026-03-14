@@ -60,7 +60,7 @@ public class IntelASM_JMP extends TokenSequence implements EagleRunnable
 			String name = label.getValue().toUpperCase();
 
 			// And transfer control to the label
-			state._nextInstruction = state._labels.get(name);
+			state._nextInstruction = state._labels.get(name).intValue();
 
 			// Update metrics
 			IntelASM_Program lang = (IntelASM_Program) interpreter._lang;

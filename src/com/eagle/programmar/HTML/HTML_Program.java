@@ -58,8 +58,8 @@ public class HTML_Program extends AbstractLanguage implements EagleRunnable
 		public @CHOICE HTML_Table XXtable;
 		public @CHOICE HTML_Caption XXcaption;
 
-		// @FIRST for speed. Some Chromium HTML files have thousands of <span> tags all
-		// on one lien
+		// @FIRST for speed. Some Chromium HTML files have thousands of
+		// <span> tags all on one line
 		public @FIRST HTML_Span XXspan;
 
 		// PHP

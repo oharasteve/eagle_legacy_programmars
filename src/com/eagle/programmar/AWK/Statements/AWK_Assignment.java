@@ -43,8 +43,8 @@ public class AWK_Assignment extends TokenSequence
 				interpreter.setSymbol(variable, variable.id.getValue(), hash);
 			}
 			AWK_VarSubscript sub = variable.subscripts.first();
-			Integer key = interpreter.getIntValue(sub.expr);
-			hash.putValue(key, val);
+			int key = interpreter.getIntValue(sub.expr);
+			hash.putValue(Integer.valueOf(key), val);
 		}
 		else
 		{

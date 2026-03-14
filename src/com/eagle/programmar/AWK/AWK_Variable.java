@@ -46,8 +46,8 @@ public class AWK_Variable extends TokenSequence
 			{
 				EagleHash hash = (EagleHash) val;
 				AWK_VarSubscript sub = subscripts.first();
-				Integer key = interpreter.getIntValue(sub.expr);
-				interpreter.pushEagleValue(hash.getValue(key));
+				int key = interpreter.getIntValue(sub.expr);
+				interpreter.pushEagleValue(hash.getValue(Integer.valueOf(key)));
 			}
 			else
 			{

@@ -22,7 +22,7 @@ public class Rexx_Variable extends TokenSequence implements EagleRunnable
 		if (subscript != null && subscript.isPresent())
 		{
 			EagleHash hash = (EagleHash) val;
-			Integer key = interpreter.getIntValue(subscript.subscr);
+			Integer key = Integer.valueOf(interpreter.getIntValue(subscript.subscr));
 			interpreter.pushEagleValue(hash.getValue(key));
 		}
 		else

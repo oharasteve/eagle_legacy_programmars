@@ -22,7 +22,7 @@ public class IntelASM_NoArgs extends TokenSequence implements EagleRunnable
 		switch (CMD.toString().toUpperCase())
 		{
 		case "RET":
-			state._nextInstruction = state._calls.pop();
+			state._nextInstruction = state._calls.pop().intValue();
 			break;
 		default:
 			throw new RuntimeException("Unable to run command: " + CMD);
