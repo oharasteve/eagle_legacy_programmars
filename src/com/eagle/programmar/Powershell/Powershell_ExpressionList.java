@@ -13,7 +13,7 @@ public class Powershell_ExpressionList extends TokenSequence
 	public @S(10) @OPT Powershell_EndOfLine eoln1;
 	public @S(20) @OPT Powershell_Expression expr;
 	public @S(30) @OPT TokenList<Powershell_MoreExpression> more;
-	public @S(40) @OPT Powershell_Comment comment;
+	public @S(40) @OPT TokenList<Powershell_Comment> comments;
 	public @S(50) @OPT Powershell_EndOfLine eoln2;
 
 	public static class Powershell_MoreExpression extends TokenSequence
