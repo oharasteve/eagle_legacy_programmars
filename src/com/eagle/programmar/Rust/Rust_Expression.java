@@ -26,6 +26,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_Subfield;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_Underscore;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
+import com.eagle.programmar.Rust.Functions.Rust_AbsMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FindMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
@@ -79,15 +80,16 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
-	public @P(120) Rust_NotExpression notExpression;
-	public @P(130) Rust_BuiltIn builtIn;
-	public @P(140) Rust_VariableExpression variableExpression;
-	public @P(150) Rust_CastExpression castExpression;
-	public @P(160) Rust_FormatFunction builtinFunction;
-	public @P(170) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(180) Rust_ExpressionArray expressionArray;
-	public @P(190) Rust_BorrowExpression borrowExpression;
-	public @P(200) Rust_PrintlnFunction printlnStatement;
+	public @P(120) Rust_AbsMethod absMethod;
+	public @P(130) Rust_NotExpression notExpression;
+	public @P(140) Rust_BuiltIn builtIn;
+	public @P(150) Rust_VariableExpression variableExpression;
+	public @P(160) Rust_CastExpression castExpression;
+	public @P(170) Rust_FormatFunction builtinFunction;
+	public @P(180) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(190) Rust_ExpressionArray expressionArray;
+	public @P(200) Rust_BorrowExpression borrowExpression;
+	public @P(2010) Rust_PrintlnFunction printlnStatement;
 
 	///////////////////////////////////////////////
 	// Binary expressions
