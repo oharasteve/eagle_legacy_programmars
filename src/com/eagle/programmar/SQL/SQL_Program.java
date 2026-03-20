@@ -93,6 +93,11 @@ public class SQL_Program extends AbstractLanguage
 					EagleTransformableFunction transformable = (EagleTransformableFunction) stmt.getWhich();
 					transformable.transformFunction(transformer, generator);
 				}
+				else if (elt.getWhich() instanceof SQL_Comment)
+				{
+					SQL_Comment comm = (SQL_Comment) elt.getWhich();
+					generator.addComment(comm.getValue(), comm);
+				}
 			}
 		}
 
