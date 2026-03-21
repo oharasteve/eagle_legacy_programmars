@@ -30,7 +30,7 @@ public class Powershell_Reserved_Words
 			"finally",
 			"for",
 			"foreach",
-			"from",
+			// "from", // I removed
 			"function",
 			"hidden",
 			"if",
@@ -54,7 +54,7 @@ public class Powershell_Reserved_Words
 			"type",
 			"until",
 			"using",
-			"var",
+			// "var", // I removed
 			"where", // I added
 			"where-object", // I added
 			"while",
