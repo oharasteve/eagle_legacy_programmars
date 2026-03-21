@@ -28,9 +28,9 @@ import com.eagle.utils.EaglePath;
 public class Java_CSharp
 {
 	private final String JAVA_ROOT = EaglePath.combinePaths(
-			EagleEnvironment.TOPDIR + "/");
+			EagleEnvironment.GITHOME + "/");
 	private final String CS_ROOT = EaglePath.combinePaths(
-			EagleEnvironment.TOPDIR + "/");
+			EagleEnvironment.GITHOME + "/");
 	private final String XML_ROOT = EaglePath.combinePaths(
 			EagleEnvironment.ARTIFACTDIR, "Eagle", EagleEnvironment.PARSED + "/");
 	private final String HTML_ROOT = EaglePath.combinePaths(
