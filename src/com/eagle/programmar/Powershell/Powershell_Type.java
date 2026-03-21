@@ -21,7 +21,7 @@ public class Powershell_Type extends TokenSequence
 	{
 		public @CHOICE Powershell_KeywordChoice XXPRIMITIVE = new Powershell_KeywordChoice(
 				"Array", "Boolean", "Char", "DateTime", "Double", "Float", "Int", "Int32",
-				"Int64", "Long", "PSCredential", "SecureString", "String");
+				"Int64", "Long", "PSCredential", "SecureString", "String", "Xml");
 
 		public @CHOICE static class Powershell_SystemType extends TokenSequence
 		{

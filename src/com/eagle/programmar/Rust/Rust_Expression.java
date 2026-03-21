@@ -89,7 +89,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(180) Rust_ParenthesizedExpression parenthesizedExpression;
 	public @P(190) Rust_ExpressionArray expressionArray;
 	public @P(200) Rust_BorrowExpression borrowExpression;
-	public @P(2010) Rust_PrintlnFunction printlnStatement;
+	public @P(210) Rust_PrintlnFunction printlnStatement;
 
 	///////////////////////////////////////////////
 	// Binary expressions

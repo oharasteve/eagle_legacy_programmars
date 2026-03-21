@@ -10,6 +10,7 @@ import com.eagle.programmar.Django.Django_Control;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Django_Syntax;
 import com.eagle.programmar.HTML.HTML_Tag.HTML_EndTag;
+import com.eagle.programmar.HTML.Terminals.HTML_Code;
 import com.eagle.programmar.HTML.Terminals.HTML_Comment;
 import com.eagle.programmar.HTML.Terminals.HTML_ExtraEndAnchor;
 import com.eagle.programmar.HTML.Terminals.HTML_Pre;
@@ -42,7 +43,7 @@ public class HTML_Program extends AbstractLanguage implements EagleRunnable
 	{
 		public @CHOICE HTML_DocType XXdocType;
 
-		public @CHOICE HTML_Tag XXtag;
+		public @LAST HTML_Tag XXtag;
 		public @CHOICE HTML_EndTag XXendTag;
 		public @CHOICE HTML_Comment XXcomment;
 
@@ -52,6 +53,7 @@ public class HTML_Program extends AbstractLanguage implements EagleRunnable
 
 		// Custom tags that need to be processed separately
 		public @CHOICE HTML_Pre XXpre;
+		public @CHOICE HTML_Code XXcode;
 		public @CHOICE HTML_Style XXstyle;
 		public @CHOICE HTML_Script XXscript;
 		public @CHOICE HTML_Anchor XXanchor;
