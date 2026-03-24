@@ -39,12 +39,15 @@ import com.eagle.programmar.SQL.Statements.SQL_ValuesStatement;
 import com.eagle.programmar.SQL.Statements.SQL_VariableStatement;
 import com.eagle.programmar.SQL.Statements.SQL_WhileStatement;
 import com.eagle.programmar.SQL.Statements.SQL_WithStatement;
+import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class SQL_Statement extends TokenChooser
 {
+	public @FIRST SQL_Comment XXcomment;
+	
 	public @CHOICE SQL_AlterStatement XXalterStmt;
 	public @CHOICE SQL_AtAtStatement XXatAtStmt;
 	public @CHOICE SQL_BeginStatement XXbeginStmt;
