@@ -19,6 +19,9 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -59,7 +62,7 @@ public class Python_Parenthesized_Expression extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (list.moreItems != null && list.moreItems.isPresent() && list.moreItems._elements.size() > 0)
 		{

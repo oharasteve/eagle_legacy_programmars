@@ -11,6 +11,9 @@ import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -38,7 +41,7 @@ public class Scala_EqualsMethod extends PrecedenceOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression left = transformer.transformExpression(generator, leftExpr);
 		AbstractExpression right = transformer.transformExpression(generator, rightExpr);

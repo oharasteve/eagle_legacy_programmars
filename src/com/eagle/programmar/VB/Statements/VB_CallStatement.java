@@ -19,6 +19,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -102,7 +103,7 @@ public class VB_CallStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 		int argCount = callArguments.arguments.getPrimaryCount();

@@ -27,7 +27,10 @@ import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
@@ -75,7 +78,7 @@ public class Perl_Statement extends TokenChooser
 		}
 
 		@Override
-		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 		{
 			return transformer.transformStatement(generator, statement.getWhich());
 		}

@@ -15,8 +15,10 @@ import com.eagle.programmar.SQL.Statements.SQL_CreateProcedureStatement;
 import com.eagle.programmar.SQL.Terminals.SQL_Comment;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
@@ -80,7 +82,7 @@ public class SQL_Program extends AbstractLanguage
 	}
 
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// First pass, transform all the procedure definitions
 		for (SQL_StatementOrComment elt : statements._elements)

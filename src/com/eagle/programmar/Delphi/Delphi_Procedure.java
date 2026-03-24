@@ -20,7 +20,10 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -83,7 +86,7 @@ public class Delphi_Procedure extends TokenSequence
 		}
 	}
 
-	public void transformProcedure(EagleTransformer transformer, EagleGenerator generator)
+	public void transformProcedure(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String procName = this.forward.id.getValue();
 		generator.addMethod(null, procName, this);

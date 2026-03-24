@@ -15,6 +15,9 @@ import com.eagle.programmar.AWK.AWK_Format;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -55,7 +58,7 @@ public class AWK_SprintfFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<String> metrics = transformer.findArgumentsMetric(SPRINTF);
 		return AWK_Format.transform(transformer, generator, argList.expr, argList.more, metrics);

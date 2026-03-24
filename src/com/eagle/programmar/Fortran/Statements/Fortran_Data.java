@@ -15,8 +15,10 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
@@ -37,7 +39,7 @@ public class Fortran_Data extends TokenSequence
 	}
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = Fortran_Type.findType(generator, type);

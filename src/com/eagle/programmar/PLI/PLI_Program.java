@@ -16,8 +16,10 @@ import com.eagle.programmar.PLI.Terminals.PLI_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
@@ -89,7 +91,7 @@ public class PLI_Program extends AbstractLanguage
 	}
 
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// First pass, transform all the inner procedures
 		for (PLI_Element element : elements._elements)

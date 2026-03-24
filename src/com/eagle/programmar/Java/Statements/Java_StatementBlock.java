@@ -18,7 +18,10 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -60,7 +63,7 @@ public class Java_StatementBlock extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Java_StatementOrComment stmtOrComment : statements._elements)
@@ -100,7 +103,7 @@ public class Java_StatementBlock extends TokenSequence
 	}
 
 	public static AbstractStatement collectStatements(EagleTransformer transformer,
-			EagleGenerator generator, Java_Statement statement)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Java_Statement statement)
 	{
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 

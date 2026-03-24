@@ -18,6 +18,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
@@ -81,7 +82,7 @@ public class AWK_Program extends AbstractLanguage
 	}
 
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// First pass, transform all the Function definitions
 		for (AWK_Element elt : elements._elements)

@@ -26,6 +26,8 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -172,7 +174,7 @@ public class Javascript_ForStatement extends TokenSequence
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractToken which1 = forLoop.loopVar.getWhich();
 		Javascript_Variable forVar;

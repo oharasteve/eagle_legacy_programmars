@@ -12,6 +12,10 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
@@ -81,7 +85,7 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 		interpreter.tryToInterpret(sections.first());
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator generator)
+	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_Section section : sections._elements)
 		{

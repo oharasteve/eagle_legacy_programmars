@@ -7,8 +7,10 @@ import com.eagle.programmar.Delphi.Symbols.Delphi_Type_Definition;
 import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -27,7 +29,7 @@ public class Delphi_Types extends TokenSequence
 		public @S(40) PunctuationSemicolon semicolon;
 	}
 
-	public void transformTypes(EagleTransformer transformer, EagleGenerator generator)
+	public void transformTypes(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_MoreTypes typeEntry : this.moreTypes._elements)
 		{

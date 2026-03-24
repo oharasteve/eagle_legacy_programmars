@@ -6,7 +6,10 @@ package com.eagle.programmar.Scala;
 import com.eagle.programmar.Scala.Terminals.Scala_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
@@ -25,7 +28,7 @@ public class Scala_Type extends TokenChooser
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
-	public static AbstractType findType(EagleGenerator generator, Scala_Type type)
+	public static AbstractType findType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Scala_Type type)
 	{
 		TypeEnum newType;
 		if (type.getWhich() instanceof Scala_TypeArray)

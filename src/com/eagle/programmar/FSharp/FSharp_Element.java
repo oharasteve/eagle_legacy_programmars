@@ -24,7 +24,10 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -61,7 +64,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 
 			@Override
 			public AbstractStatement transformStatement(EagleTransformer transformer,
-					EagleGenerator generator)
+					EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 			{
 				return null; // Nothing to do
 			}
@@ -85,7 +88,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		}
 
 		@Override
-		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			for (int i = 0; i < statements.getPrimaryCount(); i++)
@@ -136,7 +139,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		}
 
 		@Override
-		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			for (FSharp_Element elt : elements._elements)
@@ -175,7 +178,7 @@ public class FSharp_Element extends TokenSequence implements AbstractStatement
 		}
 
 		@Override
-		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			for (int i = 0; i < statements.getPrimaryCount(); i++)

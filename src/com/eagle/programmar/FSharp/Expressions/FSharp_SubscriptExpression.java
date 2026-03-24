@@ -15,6 +15,9 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
@@ -109,7 +112,7 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractToken whichSubscr = subscr.getWhich();
 		if (whichSubscr instanceof FSharp_RangeJustOne)

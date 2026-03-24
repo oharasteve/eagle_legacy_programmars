@@ -15,6 +15,9 @@ import com.eagle.programmar.Powershell.Powershell_ExpressionList.Powershell_More
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -48,7 +51,7 @@ public class Powershell_List extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractExpression> values = new ArrayList<AbstractExpression>();
 		if (expressions != null && expressions.isPresent())

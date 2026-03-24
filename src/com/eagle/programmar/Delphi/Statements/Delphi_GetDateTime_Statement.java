@@ -8,13 +8,15 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
-import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Delphi_GetDateTime_Statement extends TokenSequence
 		implements AbstractStatement, EagleTransformableStatement
@@ -26,7 +28,7 @@ public class Delphi_GetDateTime_Statement extends TokenSequence
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String varName = var.var.getValue();
 		AbstractExpression getDateTime = generator.newCurrentDatetime();

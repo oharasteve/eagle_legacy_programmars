@@ -13,8 +13,10 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Ruby.Statements.Ruby_Function;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
@@ -60,7 +62,7 @@ public class Ruby_Program extends AbstractLanguage
 	}
 
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// First pass, transform all the Function definitions
 		for (Ruby_Statement stmt : elements._elements)

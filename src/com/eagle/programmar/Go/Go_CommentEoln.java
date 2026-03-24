@@ -8,7 +8,10 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Go.Terminals.Go_Comment;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -27,7 +30,7 @@ public class Go_CommentEoln extends TokenSequence
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		return null; // Might want to keep comment statements somehow.
 	}

@@ -6,6 +6,9 @@ package com.eagle.programmar.Perl.Terminals;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
@@ -33,7 +36,7 @@ public class Perl_Literal extends TerminalLiteralToken
 	}
 	
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String text = this.removeQuotes()
 				.replaceAll("\\\\n", "")

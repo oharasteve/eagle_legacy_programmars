@@ -12,6 +12,9 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.Expressions.C_Literals;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
@@ -63,7 +66,7 @@ public class C_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator generator,
+	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			SeparatedList<C_Expression, PunctuationComma> args, ArrayList<String> metrics)
 	{
 		Oper2Types types = null;

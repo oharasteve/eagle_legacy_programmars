@@ -26,6 +26,8 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -126,7 +128,7 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		CSharp_Variable variable = this.methodName;
 		if (variable.firstId.getWhich() instanceof CSharp_Identifier_Reference)

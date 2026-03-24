@@ -14,6 +14,8 @@ import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
@@ -50,7 +52,7 @@ public class FSharp_LetStatement extends TokenSequence
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression subscrExpr = null;
 		AbstractExpression value = transformer.transformExpression(generator, expression);

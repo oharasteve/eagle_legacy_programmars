@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.VB.Statements;
 
-import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.VB_Element;
+import com.eagle.programmar.VB.VB_Expression;
 import com.eagle.programmar.VB.Symbols.VB_Identifier_Reference;
 import com.eagle.programmar.VB.Terminals.VB_EndOfLine;
 import com.eagle.programmar.VB.Terminals.VB_Keyword;

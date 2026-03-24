@@ -22,6 +22,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
@@ -95,7 +96,7 @@ public class FSharp_Program extends AbstractLanguage
 	}
 
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// Are there any global variables we need to declare?
 		String scopeStr = this._currentLine + "-" + this._endLine;

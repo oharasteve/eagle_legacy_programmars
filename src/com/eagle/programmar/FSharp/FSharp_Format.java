@@ -12,6 +12,9 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Literal;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
 
@@ -61,7 +64,7 @@ public class FSharp_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator generator,
+	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			TokenList<FSharp_Expression> argList, ArrayList<String> metrics)
 	{
 		Oper2Types types = null;

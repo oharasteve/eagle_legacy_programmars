@@ -11,6 +11,8 @@ import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -35,7 +37,7 @@ public class Scala_PrintLnStatement extends PrimaryOperator
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
 		return generator.newPrintStatement(line, true, false, this);

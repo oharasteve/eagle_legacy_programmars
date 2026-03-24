@@ -8,6 +8,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_ParenthesizedExpression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -25,7 +28,7 @@ public class Javascript_Parenthesized_Expression extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator,
 				expression.expressions.first());

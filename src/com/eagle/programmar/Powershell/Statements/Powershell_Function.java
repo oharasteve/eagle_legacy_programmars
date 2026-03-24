@@ -29,8 +29,10 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -111,7 +113,7 @@ public class Powershell_Function extends TokenSequence
 	}
 
 	@Override
-	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
@@ -187,7 +189,7 @@ public class Powershell_Function extends TokenSequence
 
 	// Anything to declare as 'global' in python?
 	// E.g., $script:emsg
-	private void findGlobalVars(EagleTransformer transformer, EagleGenerator generator)
+	private void findGlobalVars(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		HashSet<String> added = new HashSet<String>();
 		for (AssignMetrics var : transformer._metrics.findAllAssignments())
@@ -211,7 +213,7 @@ public class Powershell_Function extends TokenSequence
 	}
 	
 	// Are there any local variables we need to declare?
-	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String scopeStr = this._currentLine + "-" + this._endLine;
 		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);

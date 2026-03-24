@@ -15,6 +15,9 @@ import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
@@ -87,7 +90,7 @@ public class Python_Subscript extends TokenSequence
 	}
 
 	public static AbstractExpression transformSubscript(EagleTransformer transformer,
-			EagleGenerator generator, Python_Variable var, Python_SubscrExpr body)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Python_Variable var, Python_SubscrExpr body)
 	{
 		String name = var.var.getWhich().toString();
 

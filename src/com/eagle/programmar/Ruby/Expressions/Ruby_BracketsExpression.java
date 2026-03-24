@@ -13,6 +13,9 @@ import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
@@ -43,7 +46,7 @@ public class Ruby_BracketsExpression extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();
 		int numElts = expressions.getPrimaryCount();

@@ -26,8 +26,10 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -92,7 +94,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 	}
 
 	@Override
-	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String newName = procName.getValue();
 		generator.addMethod(null, newName, this);
@@ -135,7 +137,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		generator.doneMethod();
 	}
 
-	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator generator)
+	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// Are there any 'global' variables we need to declare?
 		Collection<String> externals = this.getScope().allExternalReferences();

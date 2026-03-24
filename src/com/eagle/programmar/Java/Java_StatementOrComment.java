@@ -7,7 +7,10 @@ import java.util.ArrayList;
 
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
@@ -19,7 +22,7 @@ public class Java_StatementOrComment extends TokenChooser
 	public @CHOICE @NEWLINE Java_Statement XXstatement;
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (this.getWhich() instanceof Java_Statement)
 		{

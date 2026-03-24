@@ -5,7 +5,10 @@ package com.eagle.programmar.AWK.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.terminals.TerminalCommentToken;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
@@ -47,7 +50,7 @@ public class AWK_Comment extends TerminalCommentToken
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		return null; // Nothing to do here
 	}

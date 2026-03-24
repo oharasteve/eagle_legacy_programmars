@@ -15,7 +15,10 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
@@ -111,7 +114,7 @@ public class Delphi_Type extends TokenSequence
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
-	public AbstractType convertType(EagleGenerator generator)
+	public AbstractType convertType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		TypeEnum newType = null;
 		String userType = null;

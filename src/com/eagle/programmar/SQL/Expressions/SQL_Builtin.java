@@ -8,6 +8,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.Terminals.SQL_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleTransformableExpression;
@@ -35,7 +38,7 @@ public class SQL_Builtin extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		BuiltInEnum val;
 		switch (builtIn.toString().toUpperCase())

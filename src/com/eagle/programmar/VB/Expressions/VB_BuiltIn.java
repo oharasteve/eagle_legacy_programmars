@@ -8,10 +8,13 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.VB.Terminals.VB_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class VB_BuiltIn extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -36,7 +39,7 @@ public class VB_BuiltIn extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		BuiltInEnum builtIn;
 		switch (builtIns.toString())

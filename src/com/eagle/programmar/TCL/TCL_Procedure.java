@@ -22,14 +22,16 @@ import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class TCL_Procedure extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
@@ -76,7 +78,7 @@ public class TCL_Procedure extends TokenSequence
 	}
 
 	@Override
-	public void transformFunction(EagleTransformer transformer, EagleGenerator generator)
+	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
@@ -145,7 +147,7 @@ public class TCL_Procedure extends TokenSequence
 	}
 
 	// Are there any local variables we need to declare?
-	private void addLocalVars(EagleTransformer transformer, EagleGenerator generator)
+	private void addLocalVars(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String scopeStr = this._currentLine + "-" + this._endLine;
 		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);

@@ -12,11 +12,13 @@ import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableStatement;
-import com.eagle.transform.EagleTransformer;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class TCL_SetStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
@@ -33,7 +35,7 @@ public class TCL_SetStatement extends TokenSequence
 	}
 
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression subscrExpr = null;
 		AbstractExpression value = transformer.transformExpression(generator, expr);
@@ -43,7 +45,7 @@ public class TCL_SetStatement extends TokenSequence
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String name = var.id.getValue();
 		if (name.equalsIgnoreCase("true") || name.equalsIgnoreCase("false"))

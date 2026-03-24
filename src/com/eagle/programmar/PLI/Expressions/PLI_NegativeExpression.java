@@ -11,6 +11,9 @@ import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.Terminals.PLI_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.NegativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
@@ -51,7 +54,7 @@ public class PLI_NegativeExpression extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		switch (operator.toString())

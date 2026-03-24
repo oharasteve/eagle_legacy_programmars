@@ -14,7 +14,10 @@ import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.transform.EagleGenerator;
@@ -52,7 +55,7 @@ public class Scala_BlockStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Scala_Statement statement : statements._elements)
@@ -71,7 +74,7 @@ public class Scala_BlockStatement extends TokenSequence
 	}
 
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
-			EagleGenerator generator, Scala_Statement statement)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Scala_Statement statement)
 	{
 		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
 		ArrayList<AbstractStatement> newStmts;

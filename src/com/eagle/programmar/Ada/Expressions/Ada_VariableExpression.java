@@ -8,6 +8,9 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Ada.Ada_Variable;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableExpression;
@@ -26,7 +29,7 @@ public class Ada_VariableExpression extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		return generator.newVariableExpression(variable.vars.first().getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, null, this);

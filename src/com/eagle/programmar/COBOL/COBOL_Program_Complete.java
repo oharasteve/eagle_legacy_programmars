@@ -13,6 +13,10 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableProgram;
@@ -99,7 +103,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (dataDiv != null && dataDiv.isPresent())
 		{

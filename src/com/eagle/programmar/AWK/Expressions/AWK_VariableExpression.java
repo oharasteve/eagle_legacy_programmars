@@ -11,6 +11,9 @@ import com.eagle.programmar.AWK.Terminals.AWK_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
@@ -30,7 +33,7 @@ public class AWK_VariableExpression extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression subscrExpr = null;
 		if (variable.subscripts != null && variable.subscripts.size() == 1)

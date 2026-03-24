@@ -12,7 +12,10 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
@@ -182,7 +185,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		return newType;
 	}
 
-	public static AbstractType findType(EagleGenerator generator, Java_Type type)
+	public static AbstractType findType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Java_Type type)
 	{
 		TypeEnum newType;
 		if (type.arrayTypes != null && type.arrayTypes.size() > 0)

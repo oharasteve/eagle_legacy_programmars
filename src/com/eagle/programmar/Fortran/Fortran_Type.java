@@ -9,7 +9,10 @@ import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -48,7 +51,7 @@ public class Fortran_Type extends TokenSequence
 		public @S(50) PunctuationRightParen rightParen;
 	}
 
-	public static AbstractType findType(EagleGenerator generator, Fortran_Type type)
+	public static AbstractType findType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Fortran_Type type)
 	{
 		TypeEnum newType = TypeEnum.OTHER;
 

@@ -11,8 +11,10 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_Keyword;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -39,7 +41,7 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 		// Nothing to do here without initializers
 	}
 
-	public void transformVars(EagleTransformer transformer, EagleGenerator generator)
+	public void transformVars(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_Var var : this.vars._elements)
 		{

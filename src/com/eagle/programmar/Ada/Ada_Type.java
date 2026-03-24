@@ -8,7 +8,10 @@ import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -40,7 +43,7 @@ public class Ada_Type extends TokenSequence
 		public @S(60) Ada_Type baseType;
 	}
 
-	public AbstractType convertType(EagleGenerator generator)
+	public AbstractType convertType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		TypeEnum newType = null;
 		String userType = null;

@@ -16,6 +16,9 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
@@ -74,7 +77,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		Oper2Types types = null;
 
@@ -102,7 +105,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		return line;
 	}
 
-	private static AbstractExpression addPiece(EagleGenerator generator, ArrayList<String> metrics,
+	private static AbstractExpression addPiece(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, ArrayList<String> metrics,
 			Oper2Types types, int i, AWK_ConcatPiece piece)
 	{
 		if (metrics != null)

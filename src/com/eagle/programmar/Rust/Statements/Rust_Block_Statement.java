@@ -12,7 +12,10 @@ import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.transform.EagleGenerator;
@@ -42,7 +45,7 @@ public class Rust_Block_Statement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Rust_Statement statement : statements._elements)
@@ -76,7 +79,7 @@ public class Rust_Block_Statement extends TokenSequence
 	}
 	
 	public static ArrayList<AbstractStatement> collectStatements(EagleTransformer transformer,
-			EagleGenerator generator, Rust_Statement statement)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Rust_Statement statement)
 	{
 		// Lots of extra work here to avoid duplicated braces; {{stmts}} is not nice.
 		ArrayList<AbstractStatement> newStmts;

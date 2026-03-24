@@ -17,6 +17,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -83,7 +84,7 @@ public class CSharp_Data extends TokenSequence
 	}
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = CSharp_Type.findType(generator, dataBody.type);
@@ -111,7 +112,7 @@ public class CSharp_Data extends TokenSequence
 	}
 
 	// Called directly from CSharp_Program for static class-level data
-	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStaticData(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractType newType = CSharp_Type.findType(generator, dataBody.type);
 

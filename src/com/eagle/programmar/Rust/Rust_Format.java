@@ -13,6 +13,9 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
@@ -65,7 +68,7 @@ public class Rust_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression compile(EagleTransformer transformer, EagleGenerator generator,
+	public static AbstractExpression compile(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			SeparatedList<Rust_Expression, PunctuationComma> argList, ArrayList<String> metrics)
 	{
 		Oper2Types types = null;

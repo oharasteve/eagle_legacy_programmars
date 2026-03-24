@@ -13,6 +13,10 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -66,7 +70,7 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 		}
 	}
 
-	public void transformFull(EagleTransformer transformer, EagleGenerator generator)
+	public void transformFull(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_Header header : this.headers._elements)
 		{

@@ -8,10 +8,13 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 
 public class Delphi_Builtins extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -37,7 +40,7 @@ public class Delphi_Builtins extends PrimaryOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		switch (builtinConstant.toString().toLowerCase())
 		{

@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Powershell.Statements;
 
-import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Powershell_Element;
+import com.eagle.programmar.Powershell.Powershell_EndOfLine;
 import com.eagle.programmar.Powershell.Terminals.Powershell_KeywordChoice;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.tokens.TokenChooser;

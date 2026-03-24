@@ -12,13 +12,15 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class TCL_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
@@ -70,7 +72,7 @@ public class TCL_Program extends AbstractLanguage
 	}
 
 	@Override
-	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractLanguage transformProgram(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// First pass, transform all the Procedure definitions
 		for (TCL_Element element : statements._elements)

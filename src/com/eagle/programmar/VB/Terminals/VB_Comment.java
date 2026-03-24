@@ -5,7 +5,10 @@ package com.eagle.programmar.VB.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.terminals.TerminalCommentToken;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
@@ -46,7 +49,7 @@ public class VB_Comment extends TerminalCommentToken implements EagleTransformab
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		return null; // Might want to keep comment statements somehow.
 	}

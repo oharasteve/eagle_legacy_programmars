@@ -9,6 +9,10 @@ import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
@@ -35,7 +39,7 @@ public class Delphi_Header extends TokenChooser
 		public @S(30) PunctuationSemicolon semicolon;
 	}
 
-	public void processHeader(EagleTransformer transformer, EagleGenerator generator)
+	public void processHeader(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractToken which = this.getWhich();
 		if (which instanceof Delphi_Comment)

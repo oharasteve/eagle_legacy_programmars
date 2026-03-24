@@ -6,6 +6,9 @@ package com.eagle.programmar.Ruby;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
@@ -58,7 +61,7 @@ public class Ruby_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression compile(EagleGenerator generator, String fmt, AbstractToken source)
+	public static AbstractExpression compile(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, String fmt, AbstractToken source)
 	{
 		AbstractExpression result = null;
 

@@ -16,6 +16,9 @@ import com.eagle.programmar.AWK.Terminals.AWK_Literal;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
@@ -70,7 +73,7 @@ public class AWK_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator generator,
+	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			AWK_Expression fmtExpr, TokenList<AWK_MoreArguments> argList, ArrayList<String> metrics)
 	{
 		Oper2Types types = null;

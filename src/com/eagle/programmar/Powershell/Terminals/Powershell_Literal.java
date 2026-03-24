@@ -4,6 +4,9 @@
 package com.eagle.programmar.Powershell.Terminals;
 
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
@@ -19,7 +22,7 @@ public class Powershell_Literal extends TerminalLiteralToken
 	
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String str = removeQuotes().replaceAll("`", "");
 		return generator.newLiteralExpression(str, this);

@@ -10,10 +10,13 @@ import com.eagle.programmar.COBOL.COBOL_RelationalOperator;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.LogicalOrEnum;
 
 public class COBOL_LogicalOrCondition extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -37,7 +40,7 @@ public class COBOL_LogicalOrCondition extends PrecedenceOperator
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (relationalOperator != null && relationalOperator.isPresent())
 		{

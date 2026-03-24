@@ -3,8 +3,8 @@
 
 package com.eagle.programmar.Powershell.Expressions;
 
-import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Powershell_Element.Powershell_Statement;
+import com.eagle.programmar.Powershell.Powershell_Expression;
 import com.eagle.programmar.Powershell.Terminals.Powershell_Punctuation;
 import com.eagle.programmar.Powershell.Terminals.Powershell_RealEndOfLine;
 import com.eagle.tokens.PrecedenceOperator;

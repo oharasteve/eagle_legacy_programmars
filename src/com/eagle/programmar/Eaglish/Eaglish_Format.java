@@ -6,6 +6,9 @@ package com.eagle.programmar.Eaglish;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformer;
@@ -64,7 +67,7 @@ public class Eaglish_Format
 	}
 
 	public static AbstractExpression compile(EagleTransformer transformer,
-			EagleGenerator generator, String fmt, AbstractToken source)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, String fmt, AbstractToken source)
 	{
 		AbstractExpression result = null;
 

@@ -10,6 +10,10 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Number;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
@@ -33,7 +37,7 @@ public class COBOL_Section extends TokenSequence implements EagleRunnable
 		interpreter.tryToInterpret(paragraphs.first());
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator generator)
+	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_Paragraph para : paragraphs._elements)
 		{

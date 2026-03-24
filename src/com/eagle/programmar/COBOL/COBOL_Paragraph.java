@@ -18,7 +18,10 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
@@ -58,7 +61,7 @@ public class COBOL_Paragraph extends TokenSequence
 		}
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator generator)
+	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String paraName = "paragraph_with_no_name";
 		for (COBOL_ParagraphHeader header : paragraphHeaders._elements)
@@ -87,7 +90,7 @@ public class COBOL_Paragraph extends TokenSequence
 		}
 	}
 
-	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator generator)
+	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// Why isn't there a pointer up to the COBOL_Program at the top of the tree?
 		AbstractToken parent = this.getParent();

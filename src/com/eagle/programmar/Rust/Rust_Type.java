@@ -9,7 +9,10 @@ import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
@@ -45,7 +48,7 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		public @S(60) PunctuationRightBracket rightBracket;
 	}
 
-	public static AbstractType findType(EagleGenerator generator, String typeName)
+	public static AbstractType findType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, String typeName)
 	{
 		TypeEnum newType;
 		switch (typeName)

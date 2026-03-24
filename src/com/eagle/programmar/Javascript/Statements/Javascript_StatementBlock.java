@@ -12,7 +12,10 @@ import com.eagle.programmar.Javascript.Javascript_Element.Javascript_StatementOr
 import com.eagle.programmar.Javascript.Javascript_Statement;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
@@ -45,7 +48,7 @@ public class Javascript_StatementBlock extends TokenSequence
 	}
 
 	public static AbstractStatement collectStatements(EagleTransformer transformer,
-			EagleGenerator generator, Javascript_Statement statement)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, Javascript_Statement statement)
 	{
 		ArrayList<AbstractStatement> newStmts = new ArrayList<AbstractStatement>();
 
@@ -78,7 +81,7 @@ public class Javascript_StatementBlock extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (Javascript_StatementOrComment stmtOrComment : statements._elements)

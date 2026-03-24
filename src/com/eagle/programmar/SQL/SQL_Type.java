@@ -9,7 +9,10 @@ import com.eagle.programmar.SQL.Terminals.SQL_Number;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
@@ -95,7 +98,7 @@ public class SQL_Type extends TokenChooser
 		return TypeEnum.OTHER;
 	}
 
-	public static AbstractType findAbstractType(EagleGenerator generator, SQL_Type type)
+	public static AbstractType findAbstractType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, SQL_Type type)
 	{
 		TypeEnum newType = findTypeEnum(type);
 		return generator.transformType(newType, null, null);

@@ -13,7 +13,10 @@ import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
@@ -109,7 +112,7 @@ public class Java_Program extends AbstractLanguage
 
 	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
-			EagleGenerator generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// First (and only) pass, transform the main method
 		for (Java_ClassOrEnum elt1 : classOrEnumList._elements)
