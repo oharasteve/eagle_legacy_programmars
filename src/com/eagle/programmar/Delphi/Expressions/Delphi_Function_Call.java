@@ -28,6 +28,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -96,7 +97,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (argCount > 0)
 		{
 			Delphi_Parameter param = paramList.firstParam;
@@ -109,7 +110,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 				}
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.names.first().var.getValue(), val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 			}
 		}
 

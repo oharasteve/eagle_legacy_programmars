@@ -30,7 +30,7 @@ public class Basic_RelationalExpression extends PrecedenceOperator implements Ea
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		if (leftValue.isDouble() || rightValue.isDouble())
 		{

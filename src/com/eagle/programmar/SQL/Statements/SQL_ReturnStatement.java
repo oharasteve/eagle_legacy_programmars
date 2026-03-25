@@ -39,7 +39,7 @@ public class SQL_ReturnStatement extends TokenSequence
 				if (parent instanceof SQL_CreateFunctionStatement)
 				{
 					SQL_CreateFunctionStatement func = (SQL_CreateFunctionStatement) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

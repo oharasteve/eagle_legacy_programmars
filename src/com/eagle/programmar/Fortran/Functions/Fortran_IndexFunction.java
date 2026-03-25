@@ -5,7 +5,6 @@ package com.eagle.programmar.Fortran.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Fortran.Fortran_Expression;
 import com.eagle.programmar.Fortran.Fortran_Variable;
@@ -21,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -58,7 +58,7 @@ public class Fortran_IndexFunction extends PrimaryOperator
 		AbstractExpression indexFunc = generator.newIndexOfFunction(var, pattExpr, null,
 				SubstringSCEnum.FIRST_CHAR_IS_ONE, this);
 		AbstractExpression oneExpr = generator.newNumberExpression("1", null);
-		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 		return generator.newAdditiveExpression(types, indexFunc, AdditiveEnum.PLUS, oneExpr, this);
 	}
 }

@@ -42,7 +42,7 @@ public class Java_ReturnStatement extends TokenSequence
 				if (parent instanceof Java_Method)
 				{
 					Java_Method meth = (Java_Method) parent;
-					meth._returnMetrics.returned(val.typeName());
+					meth._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

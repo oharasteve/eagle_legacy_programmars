@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics;
+import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
@@ -20,6 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -53,7 +55,7 @@ public class Ada_PutStatement extends TokenSequence
 		if (expr != null && expr.isPresent())
 		{
 			EagleValue value = interpreter.getEagleValue(expr);
-			String argType = value.typeName();
+			TypeEnum argType = value.getType();
 			val = value.forceStringValue();
 			_metrics.operated(argType);
 		}
@@ -84,9 +86,14 @@ public class Ada_PutStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		// Oper1Types metric = transformer.findOperator1Metric(PUT);
+		Oper1Types metric = transformer.findOperator1Metric(PUT);
+		TypeEnum type = null;
+		if (metric != null)
+		{
+			type = metric._type1;
+		}
 		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
 		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
-		return generator.newPrintStatement(fullExpr, newLine, false, this);
+		return generator.newPrintStatement(fullExpr, type, newLine, false, this);
 	}
 }

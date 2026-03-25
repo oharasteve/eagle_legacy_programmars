@@ -296,7 +296,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						String redefWhat = redefClause.id.getValue();
 						AbstractExpression redef = generator.newVariableExpression(redefWhat,
 								SubscriptEnum.FIRST_IS_ONE, null, this);
-						newType = generator.transformType(TypeEnum.STRING_ARRAY, varName, this);
+						newType = generator.transformType(TypeEnum.ARRAY, varName, this);
 						AbstractStatement data = generator.newDataDeclaration(
 								false, varName, null, newType, redef, this);
 						generator.addStatement(data, this);
@@ -356,7 +356,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					}
 
 					AbstractExpression arrayExpr = generator.newArrayExpression(newValues, this);
-					newType = generator.transformType(TypeEnum.STRING_ARRAY, varName, this);
+					newType = generator.transformType(TypeEnum.ARRAY, varName, this);
 					AbstractStatement data = generator.newDataDeclaration(
 							false, varName, null, newType, arrayExpr, this);
 					generator.addStatement(data, this);

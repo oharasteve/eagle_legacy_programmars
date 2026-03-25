@@ -16,6 +16,7 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Lisp_List extends TokenSequence implements EagleRunnable
 {
@@ -47,7 +48,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (argCount > 0)
 		{
 			for (int i = 0; i < argCount; i++)
@@ -56,7 +57,7 @@ public class Lisp_List extends TokenSequence implements EagleRunnable
 				Lisp_ParamDef param = func.parameters._elements.get(i);
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.parameter.getValue(), val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 			}
 		}
 

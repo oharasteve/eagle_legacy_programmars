@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
@@ -33,6 +32,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -70,7 +70,7 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTLN);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTLN);
 		AbstractExpression value = Rust_Format.compile(transformer, generator, argList, metrics);
 		return generator.newPrintFunction(value, true, false, this);
 	}
@@ -102,7 +102,7 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 			args.add(blank);
 			Rust_Expression invokeExpr = Rust_MethodInvocation.generateInvocation(clsName, fromVar, args, source);
 			
-			Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
+			Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 			Rust_Expression plusExpr = Rust_AdditiveExpression.generateAdditive(types,
 					invokeExpr, AdditiveEnum.PLUS, line, source);
 			print.argList.addPrimaryElement(plusExpr);

@@ -5,7 +5,6 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleRange;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
@@ -18,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rust_RangeExpression extends PrecedenceOperator implements EagleRunnable
 {
@@ -57,7 +57,7 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Rust_Expression scMinusOne = Rust_AdditiveExpression.generateAdditive(types,
 					(Rust_Expression) sc, AdditiveEnum.MINUS, one, source);
 			range.lowExpression = scMinusOne;
@@ -75,7 +75,7 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 				{
 				case FIRST_CHAR_IS_ZERO:
 					Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
-					Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+					Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 					Rust_Expression ecPlusOne = Rust_AdditiveExpression.generateAdditive(types,
 							(Rust_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
 					range.highExpression = ecPlusOne;
@@ -95,7 +95,7 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			}
 			break;
 		case GIVEN_NC:
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Rust_Expression scPlusNc = Rust_AdditiveExpression.generateAdditive(types,
 					range.lowExpression, AdditiveEnum.PLUS, (Rust_Expression) ecOrnc, source);
 			range.highExpression = scPlusNc;

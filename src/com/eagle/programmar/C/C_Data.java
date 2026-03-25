@@ -80,7 +80,7 @@ public class C_Data extends TokenChooser
 				else if (argType2 == TypeEnum.STRING)
 				{
 					// If we have char *xx[] then it is a string array
-					argType2 = TypeEnum.STRING_ARRAY;
+					argType2 = TypeEnum.ARRAY;
 				}
 			}
 

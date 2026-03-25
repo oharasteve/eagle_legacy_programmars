@@ -38,7 +38,7 @@ public class Rexx_ReturnStatement extends TokenSequence
 				if (parent instanceof Rexx_Function)
 				{
 					Rexx_Function func = (Rexx_Function) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

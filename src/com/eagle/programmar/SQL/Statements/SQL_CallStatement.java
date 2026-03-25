@@ -28,6 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -74,7 +75,7 @@ public class SQL_CallStatement extends TokenSequence
 		interpreter.callingFunction(name, proc);
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (argCount > 0)
 		{
 			for (int i = 0; i < argCount; i++)
@@ -82,7 +83,7 @@ public class SQL_CallStatement extends TokenSequence
 				SQL_ProcedureParameter param = proc.params.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(args.getPrimaryElement(i));
 				interpreter.setSymbol(param.param, param.param.getValue(), val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 			}
 		}
 

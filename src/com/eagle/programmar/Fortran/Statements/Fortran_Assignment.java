@@ -42,7 +42,7 @@ public class Fortran_Assignment extends TokenSequence
 		{
 			// Return value from a function
 			Fortran_Function func = (Fortran_Function) abstractFunc;
-			func._returnMetrics.returned(val.typeName());
+			func._returnMetrics.returned(val.getType());
 		}
 		
 		interpreter.setSymbol(variable, varName, val);

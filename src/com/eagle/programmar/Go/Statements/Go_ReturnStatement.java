@@ -40,7 +40,7 @@ public class Go_ReturnStatement extends TokenSequence
 				if (parent instanceof Go_Function)
 				{
 					Go_Function func = (Go_Function) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

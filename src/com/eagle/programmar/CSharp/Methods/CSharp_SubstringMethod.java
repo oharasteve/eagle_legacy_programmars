@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
@@ -30,6 +29,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -94,7 +94,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			break;
 		case FIRST_CHAR_IS_ONE:
 			CSharp_Expression one = CSharp_Number.generateNumberExpression("1", source);
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			CSharp_Expression scMinusOne = CSharp_AdditiveExpression.generateAdditive(types, (CSharp_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
@@ -109,7 +109,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
 				CSharp_Expression one = CSharp_Number.generateNumberExpression("1", source);
-				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 				CSharp_Expression ecPlusOne = CSharp_AdditiveExpression.generateAdditive(
 						types, (CSharp_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
 				CSharp_Expression scParensExpr = CSharp_ParenthesizedExpression.generateParentheses(
@@ -126,7 +126,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 			{
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
-				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 				CSharp_Expression scParensExpr = CSharp_ParenthesizedExpression.generateParentheses(
 						(CSharp_Expression) sc, null);
 				CSharp_Expression ecMinusSc = CSharp_AdditiveExpression.generateAdditive(types, (CSharp_Expression) ecOrnc,

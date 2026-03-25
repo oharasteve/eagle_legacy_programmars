@@ -37,7 +37,7 @@ public class Perl_Type extends TokenChooser
 			switch (typeName.getValue())
 			{
 			case "array":
-				return TypeEnum.STRING_ARRAY;
+				return TypeEnum.ARRAY;
 			case "bool":
 				return TypeEnum.BOOLEAN;
 			case "int":

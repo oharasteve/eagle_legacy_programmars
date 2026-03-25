@@ -5,7 +5,6 @@ package com.eagle.programmar.Java.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
@@ -25,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_SubstringMethod extends PrecedenceOperator
 		implements EagleRunnable
@@ -71,7 +71,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Java_Expression one = Java_Number.generateNumberExpression("1", source);
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Java_Expression scMinusOne = Java_AdditiveExpression.generateAdditive(types, (Java_Expression) sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
@@ -89,7 +89,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 				{
 				case FIRST_CHAR_IS_ZERO:
 					Java_Expression one = Java_Number.generateNumberExpression("1", source);
-					Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+					Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 					Java_Expression ecPlusOne = Java_AdditiveExpression.generateAdditive(types, (Java_Expression) ecOrnc,
 							AdditiveEnum.PLUS, one, source);
 					expr.ecExpr = ecPlusOne;
@@ -113,7 +113,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 		case GIVEN_NC:
 			expr.comma = new PunctuationComma();
 			expr.comma.setPresent(true);
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Java_Expression scPlusNc = Java_AdditiveExpression.generateAdditive(types, expr.scExpr,
 					AdditiveEnum.PLUS, (Java_Expression) ecOrnc, source);
 			expr.ecExpr = scPlusNc;

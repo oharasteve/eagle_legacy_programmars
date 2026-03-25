@@ -6,7 +6,6 @@ package com.eagle.programmar.Ruby.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
@@ -22,6 +21,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -44,7 +44,7 @@ public class Ruby_SubscriptExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, this, leftBracket.getValue());
 		}
-		_metrics.operated(value.typeName());
+		_metrics.operated(value.getType());
 
 		if (value.isArray())
 		{
@@ -74,7 +74,7 @@ public class Ruby_SubscriptExpression extends PrecedenceOperator
 	{
 		Oper1Types type = transformer.findOperator1Metric(this);
 		if (type != null &&
-				type._type1.equals(EagleString.STRING) &&
+				type._type1 == TypeEnum.STRING &&
 				subscript.getWhich() instanceof Ruby_RangeExpression)
 		{
 			Ruby_RangeExpression range = (Ruby_RangeExpression) subscript.getWhich();

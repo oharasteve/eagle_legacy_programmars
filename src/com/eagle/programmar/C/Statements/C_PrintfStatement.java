@@ -22,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -43,7 +44,7 @@ public class C_PrintfStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTF.getValue(), PRINTF);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		String formatted = C_Format.format(interpreter, args, argTypes);
 		_metrics.calledWith(argTypes);
@@ -54,7 +55,7 @@ public class C_PrintfStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTF);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTF);
 		AbstractExpression line = C_Format.transform(transformer, generator, args, metrics);
 		return generator.newPrintStatement(line, true, false, this);
 	}

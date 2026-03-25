@@ -5,7 +5,6 @@ package com.eagle.programmar.Rust.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -21,6 +20,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -44,7 +44,7 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
@@ -87,7 +87,7 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		add.right = rightExpr;
 		if (types != null)
 		{
-			if (types._type1.equals(EagleString.STRING) && !types._type2.equals(EagleString.STRING))
+			if (types._type1 == TypeEnum.STRING && types._type2 != TypeEnum.STRING)
 			{
 				add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
 			}

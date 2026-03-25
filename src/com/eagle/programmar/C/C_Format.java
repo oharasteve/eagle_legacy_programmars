@@ -6,7 +6,6 @@ package com.eagle.programmar.C;
 import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.Expressions.C_Literals;
@@ -17,6 +16,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class C_Format
@@ -24,7 +24,7 @@ public class C_Format
 	// Handle %d and %s. Super simple ones only for now
 	public static String format(EagleInterpreter interpreter,
 			SeparatedList<C_Expression, PunctuationComma> args,
-			ArrayList<String> argTypes)
+			ArrayList<TypeEnum> argTypes)
 	{
 		String fmt = interpreter.getStrValue(args.first());
 		fmt = fmt.replaceAll("\\\\n", "");
@@ -56,7 +56,7 @@ public class C_Format
 				C_Expression expr = args.getPrimaryElement(index);
 				EagleValue val = interpreter.getEagleValue(expr);
 				String piece = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				sb.append(piece);
 			}
 
@@ -67,13 +67,13 @@ public class C_Format
 	}
 
 	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
-			SeparatedList<C_Expression, PunctuationComma> args, ArrayList<String> metrics)
+			SeparatedList<C_Expression, PunctuationComma> args, ArrayList<TypeEnum> metrics)
 	{
 		Oper2Types types = null;
 		if (metrics != null)
 		{
 			types = new Oper2Types();
-			types._type1 = EagleString.STRING;
+			types._type1 = TypeEnum.STRING;
 		}
 
 		C_Expression fmtExpr = args.first();
@@ -117,7 +117,7 @@ public class C_Format
 			{
 				if (metrics != null)
 				{
-					types._type2 = EagleString.STRING;
+					types._type2 = TypeEnum.STRING;
 				}
 
 				AbstractExpression nextExpr = generator.newLiteralExpression(nextString, null);

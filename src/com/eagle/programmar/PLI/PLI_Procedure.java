@@ -11,7 +11,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
 import com.eagle.programmar.PLI.Symbols.PLI_Procedure_Definition;
@@ -194,7 +193,7 @@ public class PLI_Procedure extends TokenSequence
 		}
 
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(id1);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id1);
 
 		if (params != null && params.isPresent())
 		{
@@ -205,8 +204,7 @@ public class PLI_Procedure extends TokenSequence
 
 				if (argTypes != null && i < argTypes.size())
 				{
-					String metricArgType = argTypes.get(i);
-					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					TypeEnum metricArg = argTypes.get(i);
 					paramType = generator.transformType(metricArg, null, paramVar);
 				}
 

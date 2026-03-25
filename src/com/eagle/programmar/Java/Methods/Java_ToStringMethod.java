@@ -5,7 +5,6 @@ package com.eagle.programmar.Java.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Java.Java_Expression;
@@ -19,6 +18,7 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_ToStringMethod extends PrecedenceOperator
 		implements EagleRunnable
@@ -41,7 +41,7 @@ public class Java_ToStringMethod extends PrecedenceOperator
 	{
 		Java_ToStringMethod strMeth = new Java_ToStringMethod();
 
-		if (types != null && types._type1.equals(EagleInteger.INTEGER))
+		if (types != null && types._type1 == TypeEnum.INTEGER)
 		{
 			// Java does not like 'ok.toString()' where 'ok' is an int instead of an
 			// Integer.

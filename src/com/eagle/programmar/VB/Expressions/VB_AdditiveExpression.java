@@ -41,7 +41,7 @@ public class VB_AdditiveExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();

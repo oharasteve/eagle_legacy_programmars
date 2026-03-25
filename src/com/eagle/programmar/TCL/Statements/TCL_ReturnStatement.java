@@ -37,7 +37,7 @@ public class TCL_ReturnStatement extends TokenSequence
 			if (parent instanceof TCL_Procedure)
 			{
 				TCL_Procedure proc = (TCL_Procedure) parent;
-				proc._returnMetrics.returned(val.typeName());
+				proc._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

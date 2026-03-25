@@ -28,6 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -76,7 +77,7 @@ public class Powershell_FunctionCall extends PrimaryOperator
 
 		interpreter.callingFunction(name, func);
 
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		// Now assign all the parameters
 		for (int i = 0; i < argCount; i++)
@@ -85,7 +86,7 @@ public class Powershell_FunctionCall extends PrimaryOperator
 			Powershell_FunctionParam param = func.params.params.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.var.id.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the method

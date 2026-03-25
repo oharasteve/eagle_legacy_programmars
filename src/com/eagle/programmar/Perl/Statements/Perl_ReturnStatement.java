@@ -40,7 +40,7 @@ public class Perl_ReturnStatement extends TokenSequence
 				if (parent instanceof Perl_Function)
 				{
 					Perl_Function func = (Perl_Function) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

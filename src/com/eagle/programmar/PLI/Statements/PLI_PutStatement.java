@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -31,6 +30,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -156,7 +156,7 @@ public class PLI_PutStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PUT.getValue(), PUT);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		if (values.isPresent())
 		{
@@ -164,7 +164,7 @@ public class PLI_PutStatement extends TokenSequence
 			for (int i = 0; i < values.exprs.getPrimaryCount(); i++)
 			{
 				EagleValue piece = interpreter.getEagleValue(values.exprs.getPrimaryElement(i));
-				argTypes.add(piece.typeName());
+				argTypes.add(piece.getType());
 				sb.append(piece.forceStringValue());
 			}
 
@@ -176,9 +176,9 @@ public class PLI_PutStatement extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PUT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PUT);
 		Oper2Types types = new Oper2Types();
-		types._type1 = EagleString.STRING;
+		types._type1 = TypeEnum.STRING;
 
 		int numExpr = values.exprs.getPrimaryCount();
 		AbstractExpression result = null;

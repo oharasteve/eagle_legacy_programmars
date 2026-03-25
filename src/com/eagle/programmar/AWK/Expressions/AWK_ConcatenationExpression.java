@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -22,6 +21,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -47,18 +47,18 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, "CONCAT", this);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		StringBuffer sb = new StringBuffer();
 
 		EagleValue val1 = interpreter.getEagleValue(piece1.getWhich());
 		String str1 = val1.forceStringValue();
-		argTypes.add(val1.typeName());
+		argTypes.add(val1.getType());
 		sb.append(str1);
 
 		EagleValue val2 = interpreter.getEagleValue(piece2.getWhich());
 		String str2 = val2.forceStringValue();
-		argTypes.add(val2.typeName());
+		argTypes.add(val2.getType());
 		sb.append(str2);
 
 		if (pieces != null && pieces.isPresent())
@@ -67,7 +67,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 			{
 				EagleValue val = interpreter.getEagleValue(piece.getWhich());
 				String str = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				sb.append(str);
 			}
 		}
@@ -82,7 +82,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		Oper2Types types = null;
 
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(this);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(this);
 		if (metrics != null)
 		{
 			types = new Oper2Types();
@@ -105,12 +105,13 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		return line;
 	}
 
-	private static AbstractExpression addPiece(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, ArrayList<String> metrics,
-			Oper2Types types, int i, AWK_ConcatPiece piece)
+	private static AbstractExpression addPiece(
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+			ArrayList<TypeEnum> metrics, Oper2Types types, int i, AWK_ConcatPiece piece)
 	{
 		if (metrics != null)
 		{
-			types._type1 = EagleString.STRING;
+			types._type1 = TypeEnum.STRING;
 			types._type2 = metrics.get(i);
 		}
 

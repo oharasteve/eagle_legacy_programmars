@@ -5,7 +5,6 @@ package com.eagle.programmar.Python;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleArray;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
@@ -26,6 +25,7 @@ import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Subscript extends TokenSequence
@@ -168,7 +168,7 @@ public class Python_Subscript extends TokenSequence
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Python_Expression one = Python_Number.generateNumberExpression("1", source);
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Python_Expression scMinusOne = Python_Additive_Expression.generateAdditive(types,
 					(Python_Expression) sc, AdditiveEnum.MINUS, one, source);
 			subscr.body.subscr = scMinusOne;
@@ -188,7 +188,7 @@ public class Python_Subscript extends TokenSequence
 				{
 				case FIRST_CHAR_IS_ZERO:
 					Python_Expression one = Python_Number.generateNumberExpression("1", source);
-					Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+					Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 					Python_Expression ecPlusOne = Python_Additive_Expression.generateAdditive(types,
 							(Python_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
 					subscr.body.subscriptStop.expr = ecPlusOne;
@@ -208,7 +208,7 @@ public class Python_Subscript extends TokenSequence
 			}
 			break;
 		case GIVEN_NC:
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Python_Expression scPlusNc = Python_Additive_Expression.generateAdditive(types,
 					subscr.body.subscr, AdditiveEnum.PLUS, (Python_Expression) ecOrnc, source);
 			subscr.body.subscriptStop.expr = scPlusNc;

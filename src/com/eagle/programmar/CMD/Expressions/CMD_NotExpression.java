@@ -35,7 +35,7 @@ public class CMD_NotExpression extends PrimaryOperator
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, NOT, NOT.toString());
 		}
-		_metrics.operated(value.typeName());
+		_metrics.operated(value.getType());
 
 		boolean val = value.forceBooleanValue();
 		interpreter.pushBool(! val);

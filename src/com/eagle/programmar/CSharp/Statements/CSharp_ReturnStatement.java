@@ -42,7 +42,7 @@ public class CSharp_ReturnStatement extends TokenSequence
 			if (parent instanceof CSharp_Method)
 			{
 				CSharp_Method meth = (CSharp_Method) parent;
-				meth._returnMetrics.returned(val.typeName());
+				meth._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

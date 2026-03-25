@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
@@ -25,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -74,7 +74,7 @@ public class CSharp_VariableExpression extends PrimaryOperator
 			{
 				CSharp_Expression one = CSharp_Generator.wrapExpression(
 						CSharp_Number.generateNumber("1", source));
-				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 				CSharp_Expression minusOne = CSharp_AdditiveExpression.generateAdditive(types, subscrExpr,
 						AdditiveEnum.MINUS, one, source);
 				subscript.expr = minusOne;

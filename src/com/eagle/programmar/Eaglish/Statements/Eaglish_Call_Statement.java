@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -63,7 +64,7 @@ public class Eaglish_Call_Statement extends TokenSequence
 		}
 
 		// Assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < actual; i++)
 		{
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
@@ -71,7 +72,7 @@ public class Eaglish_Call_Statement extends TokenSequence
 			// interpreter.tryToInterpret(arg);
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter.setSymbol(param, param.param.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Evaluate the function

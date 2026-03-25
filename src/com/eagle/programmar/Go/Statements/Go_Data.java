@@ -45,7 +45,7 @@ public class Go_Data extends TokenSequence
 	{
 		if (initValue.getWhich() instanceof Go_BracesExpression)
 		{
-			AbstractType dataType = generator.transformType(TypeEnum.STRING_ARRAY, null, this);
+			AbstractType dataType = generator.transformType(TypeEnum.ARRAY, null, this);
 			AbstractExpression value = transformer.transformExpression(generator, initValue);
 			AbstractStatement dataStmt = generator.newDataDeclaration(false, id.getValue(), null,
 					dataType, value, this);

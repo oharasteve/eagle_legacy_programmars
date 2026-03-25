@@ -50,7 +50,7 @@ public class Algol68_RelationalExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		if (leftValue.isString() || rightValue.isString())
 		{

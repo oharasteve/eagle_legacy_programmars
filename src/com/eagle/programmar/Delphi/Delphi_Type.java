@@ -154,7 +154,7 @@ public class Delphi_Type extends TokenSequence
 				Delphi_KeywordChoice kw2 = (Delphi_KeywordChoice) which2;
 				if (kw2.getValue().toLowerCase().equals("string"))
 				{
-					newType = TypeEnum.STRING_ARRAY;
+					newType = TypeEnum.ARRAY;
 				}
 			}
 		}

@@ -487,7 +487,7 @@ public class Python_ForStatement extends TokenSequence
 			Python_Expression oneExpr = Python_Number.generateNumberExpression("1", null);
 			Python_Expression parenExpr = Python_Parenthesized_Expression.generateParentheses(
 					toExpression, null);
-			Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			high = Python_Additive_Expression.generateAdditive(types, parenExpr, oper, oneExpr, null);
 			break;
 		default:

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -29,6 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -49,7 +49,7 @@ public class Python_Print_Function extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINT.getValue(), PRINT);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		int numExpr = exprs.getPrimaryCount();
 		StringBuffer sb = new StringBuffer();
@@ -60,7 +60,7 @@ public class Python_Print_Function extends PrimaryOperator
 				sb.append(' ');
 			}
 			EagleValue piece = interpreter.getEagleValue(exprs.getPrimaryElement(i));
-			argTypes.add(piece.typeName());
+			argTypes.add(piece.getType());
 			sb.append(piece.forceStringValue());
 		}
 
@@ -71,9 +71,9 @@ public class Python_Print_Function extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINT);
 		Oper2Types types = new Oper2Types();
-		types._type1 = EagleString.STRING;
+		types._type1 = TypeEnum.STRING;
 
 		int numExpr = exprs.getPrimaryCount();
 		AbstractExpression space = null;
@@ -92,7 +92,7 @@ public class Python_Print_Function extends PrimaryOperator
 			}
 			else
 			{
-				types._type2 = EagleString.STRING;
+				types._type2 = TypeEnum.STRING;
 				result = generator.newAppendExpression(types, result, space, PRINT);
 				types._type2 = metrics.get(i);
 				result = generator.newAppendExpression(types, result, piece, PRINT);

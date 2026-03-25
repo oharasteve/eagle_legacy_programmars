@@ -26,6 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -77,7 +78,7 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, DISPLAY.getValue(), DISPLAY);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		for (COBOL_DisplayClause clause : clauses._elements)
 		{
@@ -87,7 +88,7 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 				COBOL_Expression expr = clause.what.exprs.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(expr);
 				String result = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				sb.append(result);
 			}
 			_metrics.calledWith(argTypes);
@@ -105,7 +106,7 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 			Oper2Types types = null;
 
 			// Pick up metrics, if known
-			ArrayList<String> metrics = transformer.findArgumentsMetric(DISPLAY);
+			ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(DISPLAY);
 			if (metrics != null)
 			{
 				types = new Oper2Types();

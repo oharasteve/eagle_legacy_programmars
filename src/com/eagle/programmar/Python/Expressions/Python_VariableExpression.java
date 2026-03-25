@@ -5,7 +5,6 @@ package com.eagle.programmar.Python.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Expression;
@@ -25,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -77,7 +77,7 @@ public class Python_VariableExpression extends PrimaryOperator
 			if (offset == SubscriptEnum.FIRST_IS_ONE)
 			{
 				Python_Expression one = Python_Number.generateNumberExpression("1", source);
-				Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+				Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 				Python_Expression minusOne = Python_Additive_Expression.generateAdditive(types, subscrExpr,
 						AdditiveEnum.MINUS, one, source);
 				varExp.subscript.body.subscr = minusOne;

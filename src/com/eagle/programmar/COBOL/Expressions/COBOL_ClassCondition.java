@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.COBOL.Expressions;
 
-import com.eagle.math.EagleInteger;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
@@ -15,6 +14,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -73,7 +73,7 @@ public class COBOL_ClassCondition extends PrecedenceOperator
 			}
 		}
 		AbstractExpression zero = generator.newNumberExpression("0", null);
-		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 		return generator.newRelationalExpression(types, theExpr, newOper, zero, this);
 	}
 }

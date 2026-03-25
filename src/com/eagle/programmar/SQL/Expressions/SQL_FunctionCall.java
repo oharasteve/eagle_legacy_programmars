@@ -26,6 +26,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -61,7 +62,7 @@ public class SQL_FunctionCall extends PrimaryOperator
 		interpreter.callingFunction(name, func);
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (argCount > 0)
 		{
 			for (int i = 0; i < argCount; i++)
@@ -75,7 +76,7 @@ public class SQL_FunctionCall extends PrimaryOperator
 				SQL_FunctionParameter param = func.params.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param.id, param.id.getValue(), val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 			}
 		}
 

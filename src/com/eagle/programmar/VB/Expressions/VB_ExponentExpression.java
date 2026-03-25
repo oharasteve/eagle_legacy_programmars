@@ -39,7 +39,7 @@ public class VB_ExponentExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		double leftDbl = leftValue.forceDoubleValue();
 		int rightInt = rightValue.forceIntegerValue();

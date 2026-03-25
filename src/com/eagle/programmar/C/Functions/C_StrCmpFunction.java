@@ -5,7 +5,6 @@ package com.eagle.programmar.C.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.C_Expression;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -21,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -70,7 +70,7 @@ public class C_StrCmpFunction extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
+		Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 		AbstractExpression newStr1 = transformer.transformExpression(generator, str1);
 		AbstractExpression newStr2 = transformer.transformExpression(generator, str2);
 

@@ -5,7 +5,6 @@ package com.eagle.programmar.Scala.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Scala.Scala_Expression;
 import com.eagle.programmar.Scala.Terminals.Scala_Keyword;
@@ -19,6 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -45,9 +45,7 @@ public class Scala_EqualsMethod extends PrecedenceOperator
 	{
 		AbstractExpression left = transformer.transformExpression(generator, leftExpr);
 		AbstractExpression right = transformer.transformExpression(generator, rightExpr);
-		Oper2Types types = new Oper2Types();
-		types._type1 = EagleString.STRING;
-		types._type2 = EagleString.STRING;
+		Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 		return generator.newRelationalExpression(types, left, RelationalEnum.EQUALS, right, this);
 	}
 }

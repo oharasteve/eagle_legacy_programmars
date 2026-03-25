@@ -100,7 +100,7 @@ public class Java_Generator
 	@Override
 	public void addMainArgs()
 	{
-		Java_Type paramType = transformType(TypeEnum.STRING_ARRAY, null, null);
+		Java_Type paramType = transformType(TypeEnum.ARRAY, null, null);
 		addMethodParameter(paramType, "args");
 	}
 
@@ -373,8 +373,8 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Statement newPrintStatement(Java_Expression line, boolean newLine,
-			boolean toErr, AbstractToken source)
+	public Java_Statement newPrintStatement(Java_Expression line, TypeEnum type,
+			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		Java_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);

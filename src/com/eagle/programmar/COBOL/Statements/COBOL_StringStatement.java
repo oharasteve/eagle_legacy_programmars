@@ -32,6 +32,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -102,7 +103,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, STRING.getValue(), STRING);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		if (pieces.size() != 1)
 		{
@@ -127,7 +128,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 
 			EagleValue val = interpreter.getEagleValue(what.expr);
 			String piece = val.forceStringValue();
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 			result.append(piece);
 		}
 		_metrics.calledWith(argTypes);
@@ -152,7 +153,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 		}
 
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(STRING);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(STRING);
 		if (metrics != null)
 		{
 			// System.err.println("***************** FOUND METRICS");

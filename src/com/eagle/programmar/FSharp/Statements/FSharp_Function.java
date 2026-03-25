@@ -11,7 +11,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.FSharp.FSharp_Element;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement;
@@ -127,7 +126,7 @@ public class FSharp_Function extends TokenSequence
 		}
 
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
 
 		if (params != null && params.isPresent())
 		{
@@ -138,8 +137,7 @@ public class FSharp_Function extends TokenSequence
 
 				if (argTypes != null && i < argTypes.size())
 				{
-					String metricArgType = argTypes.get(i);
-					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					TypeEnum metricArg = argTypes.get(i);
 					paramType = generator.transformType(metricArg, null, param);
 				}
 

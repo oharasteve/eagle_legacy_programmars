@@ -6,9 +6,7 @@ package com.eagle.programmar.Rust.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleRange;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -26,6 +24,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -71,7 +70,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 			_metrics = new Operator2Metrics(interpreter._metrics,
 					leftBracket, leftBracket.toString());
 		}
-		_metrics.operated(value.typeName(), EagleInteger.INTEGER);
+		_metrics.operated(value.getType(), TypeEnum.INTEGER);
 
 		EagleValue low = interpreter.getEagleValue(subscrExpr);
 		if (low.isRange())
@@ -113,7 +112,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
 		Oper2Types types = transformer.findOperator2Metric(leftBracket);
 
-		if (types._type1.equals(EagleString.STRING))
+		if (types._type1 == TypeEnum.STRING)
 		{
 			if (subscrExpr.getWhich() instanceof Rust_RangeExpression)
 			{

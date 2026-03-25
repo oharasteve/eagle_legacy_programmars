@@ -60,7 +60,7 @@ public class Fortran_Type extends TokenSequence
 		{
 			if (type.dimension != null && type.dimension.isPresent())
 			{
-				newType = TypeEnum.STRING_ARRAY;
+				newType = TypeEnum.ARRAY;
 			}
 			else
 			{

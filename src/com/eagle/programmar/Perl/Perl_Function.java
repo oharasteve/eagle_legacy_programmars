@@ -11,7 +11,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Perl.Statements.Perl_StatementBlock;
 import com.eagle.programmar.Perl.Symbols.Perl_Function_Definition;
@@ -151,7 +150,7 @@ public class Perl_Function extends TokenSequence
 		}
 
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
 
 		if (params != null && params.isPresent())
 		{
@@ -165,8 +164,7 @@ public class Perl_Function extends TokenSequence
 					paramVar = (Perl_FunctionVariable) param.getWhich();
 					if (argTypes != null && i < argTypes.size())
 					{
-						String metricArgType = argTypes.get(i);
-						type = EagleMetrics.convertType(metricArgType);
+						type = argTypes.get(i);
 					}
 				}
 				else

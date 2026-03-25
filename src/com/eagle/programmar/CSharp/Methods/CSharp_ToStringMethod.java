@@ -5,7 +5,6 @@ package com.eagle.programmar.CSharp.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -17,6 +16,7 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_ToStringMethod extends PrecedenceOperator
 		implements EagleRunnable
@@ -37,7 +37,7 @@ public class CSharp_ToStringMethod extends PrecedenceOperator
 	public static CSharp_Expression generateString(Oper1Types types, CSharp_Expression expr, AbstractToken source)
 	{
 		CSharp_ToStringMethod strMeth = new CSharp_ToStringMethod();
-		if (types != null && types._type1.equals(EagleInteger.INTEGER))
+		if (types != null && types._type1 == TypeEnum.INTEGER)
 		{
 			strMeth.expression = expr;
 			strMeth.dot = new PunctuationPeriod();

@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -62,7 +63,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, WRITELN.getValue(), WRITELN);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		for (int i = 0; i < something.pieces.getPrimaryCount(); i++)
 		{
@@ -73,7 +74,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			}
 			EagleValue val = interpreter.getEagleValue(piece.expr);
 			String result = val.forceStringValue();
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 			System.out.print(result);
 		}
 		_metrics.calledWith(argTypes);
@@ -89,7 +90,7 @@ public class Delphi_Writeln_Statement extends TokenSequence
 		if (something != null && something.isPresent())
 		{
 			// Pick up metrics, if known
-			ArrayList<String> metrics = transformer.findArgumentsMetric(WRITELN);
+			ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(WRITELN);
 			if (metrics != null)
 			{
 				types = new Oper2Types();

@@ -23,6 +23,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -57,7 +58,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < argCount; i++)
 		{
 			TCL_Expression expr = callArguments._elements.get(i);
@@ -71,7 +72,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 			interpreter.setSymbol(param, param.getValue(), val);
 			interpreter._symbolTable.setScope(saveScope);
 
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the method

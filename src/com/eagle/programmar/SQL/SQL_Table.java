@@ -71,9 +71,9 @@ public class SQL_Table extends EagleValue
 	}
 
 	@Override
-	public String typeName()
+	public TypeEnum getType()
 	{
-		return "Table";
+		return TypeEnum.TABLE;
 	}
 
 	@Override

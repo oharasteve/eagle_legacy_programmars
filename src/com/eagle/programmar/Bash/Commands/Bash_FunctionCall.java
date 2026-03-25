@@ -20,6 +20,7 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 {
@@ -62,7 +63,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 
 			int argCount = args.size();
 
-			ArrayList<String> argTypes = new ArrayList<String>();
+			ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 			// Now assign all the parameters
 			for (int i = 0; i < argCount; i++)
@@ -71,7 +72,7 @@ public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 				String paramName = "$" + (i + 1);
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter.setSymbol(this, paramName, val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 			}
 
 			// Prepare to evaluate the function

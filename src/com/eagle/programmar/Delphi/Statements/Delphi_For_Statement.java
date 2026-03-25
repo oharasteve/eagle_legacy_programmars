@@ -27,6 +27,7 @@ import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.IncrementEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -123,7 +124,7 @@ public class Delphi_For_Statement extends TokenSequence
 		String toDownto = this.TO_DOWNTO.getValue();
 		AbstractExpression delta;
 		AbstractExpression term;
-		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 		switch (this.TO_DOWNTO.getValue().toLowerCase())
 		{
 		case "to":

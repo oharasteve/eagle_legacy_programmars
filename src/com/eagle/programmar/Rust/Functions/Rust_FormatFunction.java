@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -53,7 +54,7 @@ public class Rust_FormatFunction extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(FORMAT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(FORMAT);
 		return Rust_Format.compile(transformer, generator, argList, metrics);
 	}
 

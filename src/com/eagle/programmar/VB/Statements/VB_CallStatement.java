@@ -25,6 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -71,7 +72,7 @@ public class VB_CallStatement extends TokenSequence
 		interpreter.callingFunction(name, subr);
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < argCount; i++)
 		{
 			VB_Expression expr = callArguments.arguments.getPrimaryElement(i);
@@ -79,7 +80,7 @@ public class VB_CallStatement extends TokenSequence
 
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the method

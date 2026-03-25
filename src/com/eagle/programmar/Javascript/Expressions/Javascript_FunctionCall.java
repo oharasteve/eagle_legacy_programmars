@@ -27,6 +27,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -76,7 +77,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (argCount > 0)
 		{
 			Javascript_FunctionParameter param = parameters.param;
@@ -93,7 +94,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 				{
 					Javascript_Variable_Definition id = (Javascript_Variable_Definition) which;
 					interpreter.setSymbol(param, id.getValue(), val);
-					argTypes.add(val.typeName());
+					argTypes.add(val.getType());
 				}
 			}
 		}

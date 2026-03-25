@@ -33,7 +33,7 @@ public class Scala_Type extends TokenChooser
 		TypeEnum newType;
 		if (type.getWhich() instanceof Scala_TypeArray)
 		{
-			newType = TypeEnum.STRING_ARRAY;
+			newType = TypeEnum.ARRAY;
 		}
 		else
 		{

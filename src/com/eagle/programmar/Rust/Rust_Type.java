@@ -105,9 +105,9 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		case CHAR:
 		case STRING:
 			return newPrimitiveType("&str");
-		case STRING_ARRAY:
+		case ARRAY:
 			return transformTypeArray(TypeEnum.STRING);
-//		case STRING_HASH:
+//		case HASH:
 //			return transformTypeHash(TypeEnum.STRING);
 		case VOID:
 			return null;

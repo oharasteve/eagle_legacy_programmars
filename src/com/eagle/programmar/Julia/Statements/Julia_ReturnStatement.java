@@ -38,7 +38,7 @@ public class Julia_ReturnStatement extends TokenSequence
 			if (parent instanceof Julia_Function)
 			{
 				Julia_Function func = (Julia_Function) parent;
-				func._returnMetrics.returned(val.typeName());
+				func._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

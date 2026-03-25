@@ -19,6 +19,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -38,7 +39,7 @@ public class FSharp_PrintfnStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTFN.getValue(), PRINTFN);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		String formatted = FSharp_Format.format(interpreter, arguments, argTypes);
 		_metrics.calledWith(argTypes);
@@ -49,7 +50,7 @@ public class FSharp_PrintfnStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINTFN);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTFN);
 		AbstractExpression fullExpr = FSharp_Format.transform(transformer, generator, arguments, metrics);
 		return generator.newPrintStatement(fullExpr, true, false, this);
 	}

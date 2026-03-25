@@ -43,7 +43,7 @@ public class VB_AssignmentStatement extends TokenSequence
 				VB_Function func = (VB_Function) parent;
 				if (var.var.getValue().equals(func.id.getValue()))
 				{
-					func._returnMetrics.returned(value.typeName());
+					func._returnMetrics.returned(value.getType());
 				}
 				break;
 			}

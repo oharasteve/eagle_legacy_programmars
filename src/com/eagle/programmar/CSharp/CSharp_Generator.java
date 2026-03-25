@@ -97,7 +97,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	@Override
 	public void addMainArgs()
 	{
-		CSharp_Type paramType = transformType(TypeEnum.STRING_ARRAY, null, null);
+		CSharp_Type paramType = transformType(TypeEnum.ARRAY, null, null);
 		addMethodParameter(paramType, "args");
 	}
 
@@ -365,7 +365,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
-	public CSharp_Statement newPrintStatement(CSharp_Expression line,
+	public CSharp_Statement newPrintStatement(CSharp_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		CSharp_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);

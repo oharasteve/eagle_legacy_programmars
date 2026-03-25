@@ -25,6 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -62,14 +63,14 @@ public class Eaglish_FunctionCall extends PrimaryOperator
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Eaglish_Expression arg = arguments.getPrimaryElement(i);
 			Eaglish_Parameter_Statement param = func.parameterStatements._elements.get(i);
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter.setSymbol(param, param.param.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the function

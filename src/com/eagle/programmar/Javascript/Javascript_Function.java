@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Javascript.Javascript_Element.Javascript_StatementOrComment;
 import com.eagle.programmar.Javascript.Javascript_FunctionParameters.Javascript_FunctionParameter;
@@ -113,7 +112,7 @@ public class Javascript_Function extends TokenSequence
 		generator.setMethodName(newName);
 
 		// Pick up metrics, if known
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(implementation.id);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(implementation.id);
 
 		Javascript_FunctionParameter param1 = implementation.params.param;
 		AbstractToken which1 = param1.paramName.getWhich();
@@ -122,7 +121,7 @@ public class Javascript_Function extends TokenSequence
 		{
 			if (argTypes != null)
 			{
-				TypeEnum argType = EagleMetrics.convertType(argTypes.get(0));
+				TypeEnum argType = argTypes.get(0);
 				type = generator.transformType(argType, null, which1);
 			}
 			Javascript_Variable_Definition varDef1 = (Javascript_Variable_Definition) which1;
@@ -138,7 +137,7 @@ public class Javascript_Function extends TokenSequence
 			{
 				if (argTypes != null)
 				{
-					TypeEnum argType = EagleMetrics.convertType(argTypes.get(argNumber));
+					TypeEnum argType = argTypes.get(argNumber);
 					type = generator.transformType(argType, null, which1);
 				}
 				Javascript_Variable_Definition varDef2 = (Javascript_Variable_Definition) which2;

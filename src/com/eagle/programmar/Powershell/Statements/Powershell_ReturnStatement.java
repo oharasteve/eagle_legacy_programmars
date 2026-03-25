@@ -39,7 +39,7 @@ public class Powershell_ReturnStatement extends TokenSequence
 				if (parent instanceof Powershell_Function)
 				{
 					Powershell_Function func = (Powershell_Function) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

@@ -6,7 +6,6 @@ package com.eagle.programmar.Fortran;
 import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
@@ -18,20 +17,21 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Fortran_Format
 {
 	public static String format(EagleInterpreter interpreter, String format,
 			SeparatedList<Fortran_Variable_Reference, PunctuationComma> parameters,
-			ArrayList<String> argTypes)
+			ArrayList<TypeEnum> argTypes)
 	{
 		StringBuffer sb = new StringBuffer();
 		if (format.equals("'(I5)'"))
 		{
 			Fortran_Variable_Reference var = parameters.first();
 			EagleValue val = interpreter.findSymbol(var.getValue());
-			argTypes.add(EagleInteger.INTEGER);
+			argTypes.add(TypeEnum.INTEGER);
 			int num = val.forceIntegerValue();
 			sb.append(String.format("%5d", Integer.valueOf(num))); // Boxing stinks in Java
 		}
@@ -42,8 +42,10 @@ public class Fortran_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
-			String format, SeparatedList<Fortran_Variable_Reference, PunctuationComma> args, ArrayList<String> metrics)
+	public static AbstractExpression transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+			String format, SeparatedList<Fortran_Variable_Reference, PunctuationComma> args,
+			ArrayList<TypeEnum> metrics)
 	{
 		if (!format.equals("'(I5)'"))
 		{

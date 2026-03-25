@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
@@ -339,7 +338,7 @@ public class Java_ForStatement extends TokenSequence
 		tempVar.variable = var;
 		Java_Expression varExpr = Java_Generator.wrapExpression(tempVar);
 
-		Oper2Types types = new Oper2Types(EagleInteger.INTEGER, EagleInteger.INTEGER);
+		Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 		Java_Expression loopTest = Java_RelationalExpression.generateRelational(
 				types, varExpr, relOp, toExpression, toExpression);
 

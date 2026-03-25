@@ -33,6 +33,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -106,7 +107,7 @@ public class Powershell_Command extends TokenSequence
 			interpreter.callingFunction(name, func);
 
 			// Now assign all the parameters
-			ArrayList<String> argTypes = new ArrayList<String>();
+			ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 			for (int i = 0; i < argCount; i++)
 			{
 				Powershell_CommandArg arg = argList._elements.get(i);
@@ -117,7 +118,7 @@ public class Powershell_Command extends TokenSequence
 					Powershell_Expression expr = (Powershell_Expression) arg.arg.getWhich();
 					EagleValue val = interpreter.getEagleValue(expr);
 					interpreter.setSymbol(param, param.var.id.getValue(), val);
-					argTypes.add(val.typeName());
+					argTypes.add(val.getType());
 				}
 			}
 

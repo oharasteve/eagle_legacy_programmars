@@ -6,7 +6,6 @@ package com.eagle.programmar.Rust;
 import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -18,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Rust_Format
@@ -34,7 +34,7 @@ public class Rust_Format
 		int nc = fmt.length();
 		int index = 0;
 		int numArgs = argList.getPrimaryCount();
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		while (sc < nc)
 		{
 			// Pull in a text string
@@ -56,7 +56,7 @@ public class Rust_Format
 				Rust_Expression expr = argList.getPrimaryElement(index);
 				EagleValue val = interpreter.getEagleValue(expr);
 				String piece = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				sb.append(piece);
 			}
 
@@ -69,13 +69,13 @@ public class Rust_Format
 	}
 
 	public static AbstractExpression compile(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
-			SeparatedList<Rust_Expression, PunctuationComma> argList, ArrayList<String> metrics)
+			SeparatedList<Rust_Expression, PunctuationComma> argList, ArrayList<TypeEnum> metrics)
 	{
 		Oper2Types types = null;
 		if (metrics != null)
 		{
 			types = new Oper2Types();
-			types._type1 = EagleString.STRING;
+			types._type1 = TypeEnum.STRING;
 		}
 
 		Rust_Expression fmtExpr = argList.first();
@@ -107,7 +107,7 @@ public class Rust_Format
 			{
 				if (metrics != null)
 				{
-					types._type2 = EagleString.STRING;
+					types._type2 = TypeEnum.STRING;
 				}
 
 				AbstractExpression nextExpr = generator.newLiteralExpression(nextString, null);

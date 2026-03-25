@@ -25,6 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -60,7 +61,7 @@ public class Algol68_PrintStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINT.getValue(), PRINT);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		for (int i = 0; i < pieces.getPrimaryCount(); i++)
 		{
@@ -69,7 +70,7 @@ public class Algol68_PrintStatement extends TokenSequence
 			{
 				EagleValue val = interpreter.getEagleValue(piece);
 				String result = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				System.out.print(result);
 			}
 			else if (piece instanceof Algol68_PrintNewLine)
@@ -92,7 +93,7 @@ public class Algol68_PrintStatement extends TokenSequence
 		AbstractExpression line = null;
 		Oper2Types types = null;
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINT);
 		if (metrics != null)
 		{
 			types = new Oper2Types();

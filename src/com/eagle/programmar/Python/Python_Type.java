@@ -115,9 +115,9 @@ public class Python_Type extends TokenChooser implements AbstractType
 		case CHAR:
 		case STRING:
 			return newPrimitiveType("str");
-		case STRING_ARRAY:
+		case ARRAY:
 			return newPrimitiveType("list"); // actually list[str]
-		case STRING_HASH:
+		case HASH:
 			return newPrimitiveType("dict"); // actually dict[str]
 		case VOID:
 			return newPrimitiveType("None");

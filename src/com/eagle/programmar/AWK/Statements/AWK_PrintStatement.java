@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -25,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -61,7 +61,7 @@ public class AWK_PrintStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINT.getValue(), PRINT);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		AWK_ArgumentList args;
 		if (params.getWhich() instanceof AWK_Print_WithParens)
@@ -79,7 +79,7 @@ public class AWK_PrintStatement extends TokenSequence
 
 		EagleValue val = interpreter.getEagleValue(args.expr);
 		String result = val.forceStringValue();
-		argTypes.add(val.typeName());
+		argTypes.add(val.getType());
 		System.out.print(result);
 
 		if (args.more != null)
@@ -88,7 +88,7 @@ public class AWK_PrintStatement extends TokenSequence
 			{
 				val = interpreter.getEagleValue(nxt.expr);
 				result = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				System.out.print(result);
 			}
 		}
@@ -104,7 +104,7 @@ public class AWK_PrintStatement extends TokenSequence
 		AbstractExpression line = null;
 		Oper2Types types = null;
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(PRINT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINT);
 		if (metrics != null)
 		{
 			types = new Oper2Types();
@@ -134,7 +134,7 @@ public class AWK_PrintStatement extends TokenSequence
 			i++;
 			if (metrics != null && i < metrics.size())
 			{
-				types._type1 = EagleString.STRING;
+				types._type1 = TypeEnum.STRING;
 				types._type2 = metrics.get(i);
 			}
 

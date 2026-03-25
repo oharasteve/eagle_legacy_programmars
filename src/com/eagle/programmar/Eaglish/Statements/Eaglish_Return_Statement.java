@@ -38,7 +38,7 @@ public class Eaglish_Return_Statement extends TokenSequence
 			if (parent instanceof Eaglish_Function)
 			{
 				Eaglish_Function func = (Eaglish_Function) parent;
-				func._returnMetrics.returned(val.typeName());
+				func._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

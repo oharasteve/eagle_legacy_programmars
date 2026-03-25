@@ -23,6 +23,7 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CMD_Call_Statement extends TokenSequence implements AbstractStatement, EagleRunnable
 {
@@ -65,7 +66,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 
 		// Now assign all the parameters (%1 %2 etc)
 		int argCount = 0;
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (args != null && args.isPresent())
 		{
 			for (CMD_Call_Argument arg : args._elements)
@@ -76,7 +77,7 @@ public class CMD_Call_Statement extends TokenSequence implements AbstractStateme
 					argCount++;
 					EagleValue val = interpreter.getEagleValue(argComma.arg);
 					interpreter.setSymbol(arg, "%~" + argCount, val);
-					argTypes.add(val.typeName());
+					argTypes.add(val.getType());
 				}
 			}
 		}

@@ -38,7 +38,7 @@ public class Javascript_ReturnStatement extends TokenSequence
 			if (parent instanceof Javascript_Function)
 			{
 				Javascript_Function func = (Javascript_Function) parent;
-				func._returnMetrics.returned(val.typeName());
+				func._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

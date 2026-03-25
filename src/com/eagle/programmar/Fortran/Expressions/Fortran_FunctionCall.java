@@ -27,6 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -72,14 +73,14 @@ public class Fortran_FunctionCall extends PrimaryOperator
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Fortran_Expression expr = argList.getPrimaryElement(i);
 			Fortran_Variable_Reference param = func.parameters.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the procedure or function

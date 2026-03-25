@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
@@ -30,6 +29,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -55,7 +55,7 @@ public class Fortran_WriteStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, WRITE.getValue(), WRITE);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		// Example: WRITE(numStr, '(I5)') numb
 		// puts the number 'numb' into the string 'numStr' with format I5
@@ -72,12 +72,12 @@ public class Fortran_WriteStatement extends TokenSequence
 	{
 		// Breaks in java. Creates Integer.toString(Integer.toString(ok))
 		// ArrayList<String> metrics = transformer.findArgumentsMetric(WRITE);
-		ArrayList<String> metrics = null;
+		ArrayList<TypeEnum> metrics = null;
 		
 		AbstractExpression line = Fortran_Format.transform(transformer, generator,
 				format.getValue(), parameters, metrics);
 		Oper1Types types = new Oper1Types();
-		types._type1 = EagleInteger.INTEGER;
+		types._type1 = TypeEnum.INTEGER;
 		AbstractExpression expr = generator.newStringFunction(types, line, WRITE);
 		AbstractExpression newValue = generator.newAssignmentExpression(var.var.getValue(),
 				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, expr, WRITE);

@@ -39,7 +39,7 @@ public class Perl_DotExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, dot, oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		String leftStr = leftValue.forceStringValue();
 		String rightStr = rightValue.forceStringValue();

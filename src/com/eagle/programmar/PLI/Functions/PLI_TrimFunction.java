@@ -5,7 +5,6 @@ package com.eagle.programmar.PLI.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator1Metrics;
 import com.eagle.metrics.Operator1Metrics.Oper1Types;
@@ -19,6 +18,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -41,7 +41,7 @@ public class PLI_TrimFunction extends PrimaryOperator
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, TRIM, TRIM.getValue());
 		}
-		_metrics.operated(value.typeName());
+		_metrics.operated(value.getType());
 
 		String str = value.forceStringValue();
 		interpreter.pushStr(str.trim());
@@ -52,7 +52,7 @@ public class PLI_TrimFunction extends PrimaryOperator
 	{
 		Oper1Types types = transformer.findOperator1Metric(TRIM);
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		if (types != null && !types._type1.equals(EagleString.STRING))
+		if (types != null && types._type1 != TypeEnum.STRING)
 		{
 			theExpr = generator.newStringFunction(types, theExpr, this);
 		}

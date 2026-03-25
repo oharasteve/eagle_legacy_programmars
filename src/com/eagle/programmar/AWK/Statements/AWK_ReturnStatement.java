@@ -39,7 +39,7 @@ public class AWK_ReturnStatement extends TokenSequence
 				if (parent instanceof AWK_Function)
 				{
 					AWK_Function func = (AWK_Function) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

@@ -39,7 +39,7 @@ public class PLI_ReturnStatement extends TokenSequence
 			if (parent instanceof PLI_Procedure)
 			{
 				PLI_Procedure proc = (PLI_Procedure) parent;
-				proc._returnMetrics.returned(val.typeName());
+				proc._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

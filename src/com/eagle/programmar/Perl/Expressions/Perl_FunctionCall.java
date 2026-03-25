@@ -28,6 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -93,7 +94,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		Perl_Expression arg = argument;
 		for (int i = 0; i < argCount; i++)
 		{
@@ -114,7 +115,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 			}
 			EagleValue val = interpreter.getEagleValue(arg);
 			interpreter.setSymbol(param, fnVar.param.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the method

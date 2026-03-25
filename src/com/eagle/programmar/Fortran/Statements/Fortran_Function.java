@@ -11,7 +11,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Fortran.Fortran_Statement;
 import com.eagle.programmar.Fortran.Fortran_Syntax;
@@ -107,7 +106,7 @@ public class Fortran_Function extends TokenSequence
 		}
 
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
 
 		if (parameters != null && parameters.isPresent())
 		{
@@ -118,8 +117,7 @@ public class Fortran_Function extends TokenSequence
 
 				if (argTypes != null && i < argTypes.size())
 				{
-					String metricArgType = argTypes.get(i);
-					TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+					TypeEnum metricArg = argTypes.get(i);
 					paramType = generator.transformType(metricArg, null, param);
 				}
 

@@ -25,6 +25,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -52,7 +53,7 @@ public class AWK_CallFunction extends PrimaryOperator
 		interpreter.tryToInterpret(func);
 
 		// Make sure the function args match up
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		int argCount = 0;
 		if (argList != null && argList.isPresent())
 		{
@@ -74,7 +75,7 @@ public class AWK_CallFunction extends PrimaryOperator
 				AWK_Parameter_Definition param = func.parameters.params.getPrimaryElement(i);
 				EagleValue val = interpreter.getEagleValue(arg);
 				interpreter.setSymbol(param, param.getValue(), val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				if (i < argCount - 1)
 				{
 					arg = argList.more._elements.get(i).expr;

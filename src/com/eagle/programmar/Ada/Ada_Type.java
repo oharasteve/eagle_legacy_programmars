@@ -77,7 +77,7 @@ public class Ada_Type extends TokenSequence
 				Ada_KeywordChoice kw2 = (Ada_KeywordChoice) array.baseType.which.getWhich();
 				if (kw2.getValue().equals("Unbounded_String"))
 				{
-					newType = TypeEnum.STRING_ARRAY;
+					newType = TypeEnum.ARRAY;
 				}
 			}
 		}

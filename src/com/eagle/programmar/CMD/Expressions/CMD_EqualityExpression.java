@@ -49,7 +49,7 @@ public class CMD_EqualityExpression extends PrecedenceOperator
 		{
 			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
 		}
-		_metrics.operated(leftValue.typeName(), rightValue.typeName());
+		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		String leftStr = leftValue.forceStringValue();
 		String leftVal = CMD_Format.format(interpreter, leftStr);

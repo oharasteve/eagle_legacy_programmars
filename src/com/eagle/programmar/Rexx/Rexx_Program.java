@@ -94,7 +94,7 @@ public class Rexx_Program extends AbstractLanguage
 				AbstractType abstrType = generator.transformType(typE, null, this);
 
 				AbstractExpression initExpr = null;
-				if (typE == TypeEnum.STRING_HASH)
+				if (typE == TypeEnum.HASH)
 				{
 					// Need to create an empty hashmap
 					initExpr = generator.newClassCreation(abstrType, null, this);

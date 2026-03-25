@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -24,6 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -44,7 +44,7 @@ public class Julia_StringFunction extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, STRING.getValue(), STRING);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		StringBuffer buff = new StringBuffer();
 		for (int i = 0; i < argList.getPrimaryCount(); i++)
@@ -52,7 +52,7 @@ public class Julia_StringFunction extends PrimaryOperator
 			Julia_Expression expr = argList.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			String piece = val.forceStringValue();
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 			buff.append(piece);
 		}
 		interpreter.pushStr(buff.toString());
@@ -67,7 +67,7 @@ public class Julia_StringFunction extends PrimaryOperator
 		Oper2Types types = null;
 
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(STRING);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(STRING);
 		if (metrics != null)
 		{
 			types = new Oper2Types();
@@ -78,7 +78,7 @@ public class Julia_StringFunction extends PrimaryOperator
 		{
 			if (metrics != null)
 			{
-				types._type1 = EagleString.STRING;
+				types._type1 = TypeEnum.STRING;
 				types._type2 = metrics.get(i);
 			}
 

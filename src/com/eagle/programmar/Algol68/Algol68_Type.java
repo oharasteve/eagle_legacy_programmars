@@ -26,7 +26,7 @@ public class Algol68_Type extends TokenChooser
 	{
 		if (type.getWhich() instanceof Algol68_ArrayType)
 		{
-			return TypeEnum.STRING_ARRAY;
+			return TypeEnum.ARRAY;
 		}
 
 		Algol68_KeywordChoice typeName = (Algol68_KeywordChoice) type.getWhich();

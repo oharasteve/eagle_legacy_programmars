@@ -25,6 +25,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -72,7 +73,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 			interpreter.callingFunction(name, proc);
 
 			// Assign all the parameters
-			ArrayList<String> argTypes = new ArrayList<String>();
+			ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 			for (int i = 0; i < argCount; i++)
 			{
 				PLI_Identifier_Reference param = proc.params.params.getPrimaryElement(i);
@@ -80,7 +81,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 				PLI_Expression expr = (PLI_Expression) arg.getWhich();
 				EagleValue val = interpreter.getEagleValue(expr);
 				interpreter.setSymbol(param, param.getValue(), val);
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 			}
 
 			// Evaluate the function

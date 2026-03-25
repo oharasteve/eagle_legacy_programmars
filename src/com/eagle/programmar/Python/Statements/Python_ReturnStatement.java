@@ -45,7 +45,7 @@ public class Python_ReturnStatement extends TokenSequence
 			if (parent instanceof Python_Function)
 			{
 				Python_Function func = (Python_Function) parent;
-				func._returnMetrics.returned(val.typeName());
+				func._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();

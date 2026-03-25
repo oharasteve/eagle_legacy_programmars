@@ -379,8 +379,8 @@ public class Rust_Generator
 	}
 
 	@Override
-	public Rust_Statement newPrintStatement(Rust_Expression line, boolean newLine,
-			boolean toErr, AbstractToken source)
+	public Rust_Statement newPrintStatement(Rust_Expression line, TypeEnum type,
+			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		Rust_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);

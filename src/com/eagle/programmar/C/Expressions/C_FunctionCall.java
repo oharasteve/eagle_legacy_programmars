@@ -31,6 +31,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -95,7 +96,7 @@ public class C_FunctionCall extends PrimaryOperator
 			interpreter.callingFunction(fnName, func);
 
 			// Assign all the parameters
-			ArrayList<String> argTypes = new ArrayList<String>();
+			ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 			if (argList != null)
 			{
 				AbstractToken arg = argList.arg.getWhich();
@@ -110,7 +111,7 @@ public class C_FunctionCall extends PrimaryOperator
 
 					EagleValue val = interpreter.getEagleValue(arg);
 					interpreter.setSymbol(param.id, param.id.getValue(), val);
-					argTypes.add(val.typeName());
+					argTypes.add(val.getType());
 				}
 			}
 

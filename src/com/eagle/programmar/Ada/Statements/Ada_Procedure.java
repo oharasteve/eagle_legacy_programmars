@@ -10,7 +10,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.programmar.Ada.Ada_Statement;
 import com.eagle.programmar.Ada.Ada_Syntax;
 import com.eagle.programmar.Ada.Statements.Ada_Function.Ada_FunctionParams;
@@ -113,7 +112,7 @@ public class Ada_Procedure extends TokenSequence
 		}
 
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
 
 		if (procParamDefs != null && procParamDefs.isPresent())
 		{
@@ -126,8 +125,7 @@ public class Ada_Procedure extends TokenSequence
 
 					if (argTypes != null && i < argTypes.size())
 					{
-						String metricArgType = argTypes.get(i);
-						TypeEnum metricArg = EagleMetrics.convertType(metricArgType);
+						TypeEnum metricArg = argTypes.get(i);
 						paramType = generator.transformType(metricArg, null, param);
 					}
 

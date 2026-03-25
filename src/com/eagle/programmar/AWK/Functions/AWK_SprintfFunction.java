@@ -21,6 +21,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -41,7 +42,7 @@ public class AWK_SprintfFunction extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, SPRINTF.getValue(), SPRINTF);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		StringBuffer sb = new StringBuffer();
 		// sb.append(interpreter.getStrValue(argList.expr)); // Skip the format for now
@@ -49,7 +50,7 @@ public class AWK_SprintfFunction extends PrimaryOperator
 		{
 			EagleValue val = interpreter.getEagleValue(more.expr);
 			String result = val.forceStringValue();
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 			sb.append(result);
 		}
 		interpreter.pushStr(sb.toString());
@@ -60,7 +61,7 @@ public class AWK_SprintfFunction extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<String> metrics = transformer.findArgumentsMetric(SPRINTF);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(SPRINTF);
 		return AWK_Format.transform(transformer, generator, argList.expr, argList.more, metrics);
 	}
 }

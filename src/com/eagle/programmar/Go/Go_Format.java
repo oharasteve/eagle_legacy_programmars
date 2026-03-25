@@ -6,7 +6,6 @@ package com.eagle.programmar.Go;
 import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -18,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Go_Format
@@ -36,7 +36,7 @@ public class Go_Format
 		int sc = 0;
 		int nc = fmt.length();
 		int index = 1;
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		while (sc < nc)
 		{
 			// Pull in a text string
@@ -57,7 +57,7 @@ public class Go_Format
 				Go_Expression expr = arguments.getPrimaryElement(index);
 				EagleValue val = interpreter.getEagleValue(expr);
 				String piece = val.forceStringValue();
-				argTypes.add(val.typeName());
+				argTypes.add(val.getType());
 				sb.append(piece);
 			}
 			index++;
@@ -71,13 +71,13 @@ public class Go_Format
 	}
 
 	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
-			SeparatedList<Go_Expression, PunctuationComma> argList, ArrayList<String> metrics)
+			SeparatedList<Go_Expression, PunctuationComma> argList, ArrayList<TypeEnum> metrics)
 	{
 		Oper2Types types = null;
 		if (metrics != null)
 		{
 			types = new Oper2Types();
-			types._type1 = EagleString.STRING;
+			types._type1 = TypeEnum.STRING;
 		}
 
 		Go_Expression fmtExpr = argList.first();
@@ -118,7 +118,7 @@ public class Go_Format
 			{
 				if (metrics != null)
 				{
-					types._type2 = EagleString.STRING;
+					types._type2 = TypeEnum.STRING;
 				}
 
 				AbstractExpression nextExpr = generator.newLiteralExpression(nextString, null);

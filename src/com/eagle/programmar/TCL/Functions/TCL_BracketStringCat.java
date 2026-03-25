@@ -21,6 +21,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -42,14 +43,14 @@ public class TCL_BracketStringCat extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, CAT.getValue(), CAT);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		StringBuffer sb = new StringBuffer();
 		for (TCL_Expression expr : strings._elements)
 		{
 			EagleValue val = interpreter.getEagleValue(expr);
 			String str = val.forceStringValue();
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 			sb.append(str);
 		}
 		_metrics.calledWith(argTypes);
@@ -62,7 +63,7 @@ public class TCL_BracketStringCat extends PrimaryOperator
 		Oper2Types types = null;
 
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(CAT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(CAT);
 		if (metrics != null)
 		{
 			types = new Oper2Types();

@@ -6,6 +6,8 @@ package com.eagle.programmar.Ada.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator1Metrics;
+import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Ada.Ada_Expression;
 import com.eagle.programmar.Ada.Terminals.Ada_Keyword;
 import com.eagle.programmar.Ada.Terminals.Ada_KeywordChoice;
@@ -21,6 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -39,19 +42,30 @@ public class Ada_PutIntegerStatement extends TokenSequence
 	public @S(100) PunctuationRightParen rightParen;
 	public @S(110) PunctuationSemicolon semicolon;
 
+	private @SKIP Operator1Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new Operator1Metrics(interpreter._metrics, PUT, PUT.getValue());
+		}
+
 		EagleValue result = interpreter.getEagleValue(expr);
-		System.out.print(result.toString());
+		TypeEnum argType = result.getType();
+		String val = result.forceStringValue();
+		_metrics.operated(argType);
+		System.out.print(val);
 	}
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		Oper1Types type = transformer.findOperator1Metric(PUT);
 		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
 		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
-		return generator.newPrintStatement(fullExpr, newLine, false, this);
+		return generator.newPrintStatement(fullExpr, type._type1, newLine, false, this);
 	}
 }

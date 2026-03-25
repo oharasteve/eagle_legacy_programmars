@@ -8,6 +8,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleDouble;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.Operator1Metrics;
+import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Algol68.Algol68_Expression;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Format;
 import com.eagle.programmar.Algol68.Terminals.Algol68_Keyword;
@@ -20,6 +22,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -34,9 +37,16 @@ public class Algol68_PrintfStatement extends TokenSequence
 	public @S(60) Algol68_Punctuation doubleRightParen = new Algol68_Punctuation("))");
 	public @S(70) @OPT PunctuationSemicolon semicolon;
 
+	private @SKIP Operator1Metrics _metrics = null;
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		if (_metrics == null)
+		{
+			_metrics = new Operator1Metrics(interpreter._metrics, PRINTF, PRINTF.getValue());
+		}
+
 		// Note that Algol68_Format is a Literal with '$' instead of ' or "
 		// Hence dd instead of $dd$ below
 		String fmt = interpreter.getStrValue(format);
@@ -82,6 +92,13 @@ public class Algol68_PrintfStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		Oper1Types metric = transformer.findOperator1Metric(PRINTF);
+		TypeEnum type = null;
+		if (metric != null)
+		{
+			type = metric._type1;
+		}
+
 		String fmt = format.getValue();
 		int width = 0;
 		int decimals = 0;
@@ -115,6 +132,6 @@ public class Algol68_PrintfStatement extends TokenSequence
 		{
 			line = generator.newFormatDecimal(numExpr, decimals, this);
 		}
-		return generator.newPrintStatement(line, false, false, this);
+		return generator.newPrintStatement(line, type, false, false, this);
 	}
 }

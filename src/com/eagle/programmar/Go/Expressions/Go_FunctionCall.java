@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -65,14 +66,14 @@ public class Go_FunctionCall extends PrimaryOperator
 		interpreter.callingFunction(fnName, func);
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < argCount; i++)
 		{
 			Go_Expression expr = arguments.getPrimaryElement(i);
 			Go_FunctionParameter param = func.funcParamDefs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			interpreter.setSymbol(param, param.var.getValue(), val);
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the function

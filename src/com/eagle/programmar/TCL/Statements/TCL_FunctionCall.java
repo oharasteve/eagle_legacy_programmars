@@ -21,6 +21,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -53,7 +54,7 @@ public class TCL_FunctionCall extends TokenSequence
 		}
 
 		// Now assign all the parameters
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		for (int i = 0; i < argCount; i++)
 		{
 			TCL_Expression expr = callArguments._elements.get(i);
@@ -66,7 +67,7 @@ public class TCL_FunctionCall extends TokenSequence
 			interpreter.setSymbol(param, param.getValue(), val);
 			interpreter._symbolTable.setScope(saveScope);
 
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 		}
 
 		// Prepare to evaluate the method

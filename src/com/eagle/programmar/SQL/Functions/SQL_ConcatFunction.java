@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -24,6 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -44,7 +44,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, CONCAT.getValue(), CONCAT);
 		}
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < exprs.getPrimaryCount(); i++)
@@ -52,7 +52,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 			SQL_Expression expr = exprs.getPrimaryElement(i);
 			EagleValue val = interpreter.getEagleValue(expr);
 			String piece = val.forceStringValue();
-			argTypes.add(val.typeName());
+			argTypes.add(val.getType());
 			result.append(piece.replaceAll("\\\\n", "\n"));	// Replace \\n with a newline)
 		}
 		interpreter.pushStr(result.toString());
@@ -60,13 +60,14 @@ public class SQL_ConcatFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = null;
 		Oper2Types types = null;
 
 		// Pick up metrics, if known
-		ArrayList<String> metrics = transformer.findArgumentsMetric(CONCAT);
+		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(CONCAT);
 		if (metrics != null)
 		{
 			types = new Oper2Types();
@@ -77,7 +78,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 		{
 			if (metrics != null)
 			{
-				types._type1 = EagleString.STRING;
+				types._type1 = TypeEnum.STRING;
 				types._type2 = metrics.get(i);
 			}
 

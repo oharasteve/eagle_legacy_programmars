@@ -41,7 +41,7 @@ public class C_ReturnStatement extends TokenSequence
 				if (parent instanceof C_Function)
 				{
 					C_Function func = (C_Function) parent;
-					func._returnMetrics.returned(val.typeName());
+					func._returnMetrics.returned(val.getType());
 					break;
 				}
 				parent = parent.getParent();

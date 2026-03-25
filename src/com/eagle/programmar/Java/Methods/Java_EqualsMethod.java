@@ -5,7 +5,6 @@ package com.eagle.programmar.Java.Methods;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleString;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -19,6 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -57,7 +57,7 @@ public class Java_EqualsMethod extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, expr);
-		Oper2Types types = new Oper2Types(EagleString.STRING, EagleString.STRING);
+		Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 		return generator.newRelationalExpression(types, leftExpr,
 				RelationalEnum.EQUALS, rightExpr, this);
 	}

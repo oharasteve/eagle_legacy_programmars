@@ -135,9 +135,9 @@ public class Java_Type extends TokenSequence implements AbstractType
 		case CHAR:
 		case STRING:
 			return newPrimitiveType("String");
-		case STRING_ARRAY:
+		case ARRAY:
 			return transformTypeArray(TypeEnum.STRING);
-		case STRING_HASH:
+		case HASH:
 			return transformTypeHash(TypeEnum.STRING);
 		case VOID:
 			return newPrimitiveType("void");
@@ -190,7 +190,7 @@ public class Java_Type extends TokenSequence implements AbstractType
 		TypeEnum newType;
 		if (type.arrayTypes != null && type.arrayTypes.size() > 0)
 		{
-			newType = TypeEnum.STRING_ARRAY;
+			newType = TypeEnum.ARRAY;
 		}
 		else
 		{

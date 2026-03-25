@@ -64,7 +64,7 @@ public class Eaglish_Array_Data extends TokenSequence
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractType newType = generator.transformType(TypeEnum.STRING_ARRAY, null, ARRAY);
+		AbstractType newType = generator.transformType(TypeEnum.ARRAY, null, ARRAY);
 		String name = var.getValue();
 		AbstractExpression initial = null;
 		if (init != null && init.isPresent())

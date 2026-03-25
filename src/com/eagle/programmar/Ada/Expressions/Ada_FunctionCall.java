@@ -37,6 +37,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -132,7 +133,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
 
-		ArrayList<String> argTypes = new ArrayList<String>();
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 		if (argCount > 0)
 		{
 			// Now assign all the parameters
@@ -146,7 +147,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 					Ada_Expression expr = (Ada_Expression) which;
 					EagleValue val = interpreter.getEagleValue(expr);
 					interpreter.setSymbol(param, param.param.getValue(), val);
-					argTypes.add(val.typeName());
+					argTypes.add(val.getType());
 				}
 			}
 		}

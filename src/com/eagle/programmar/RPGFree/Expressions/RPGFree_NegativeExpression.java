@@ -36,7 +36,7 @@ public class RPGFree_NegativeExpression extends PrimaryOperator implements Eagle
 		{
 			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
 		}
-		_metrics.operated(value.typeName());
+		_metrics.operated(value.getType());
 
 		int val = value.forceIntegerValue();
 		switch (oper)

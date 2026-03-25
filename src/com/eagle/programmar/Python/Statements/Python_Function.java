@@ -10,7 +10,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Decorators;
@@ -185,7 +184,7 @@ public class Python_Function extends TokenSequence
 		}
 
 		// Search metrics for arg types -- might not be any
-		ArrayList<String> argTypes = transformer.findArgumentsMetric(id);
+		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(id);
 
 		if (header.params != null && header.params.isPresent())
 		{
@@ -193,8 +192,7 @@ public class Python_Function extends TokenSequence
 			AbstractType paramType1 = null;
 			if (argTypes != null && 0 < argTypes.size())
 			{
-				String metricArgType1 = argTypes.get(0);
-				TypeEnum metricArg1 = EagleMetrics.convertType(metricArgType1);
+				TypeEnum metricArg1 = argTypes.get(0);
 				paramType1 = generator.transformType(metricArg1, null, paramVar1);
 			}
 			if (!(paramVar1.getWhich() instanceof Python_Variable_Definition))
@@ -214,8 +212,7 @@ public class Python_Function extends TokenSequence
 					AbstractType paramType2 = null;
 					if (argTypes != null && 0 < argTypes.size())
 					{
-						String metricArgType2 = argTypes.get(i);
-						TypeEnum metricArg2 = EagleMetrics.convertType(metricArgType2);
+						TypeEnum metricArg2 = argTypes.get(i);
 						paramType2 = generator.transformType(metricArg2, null, paramVar2);
 					}
 					if (!(paramVar2.getWhich() instanceof Python_Variable_Definition))
