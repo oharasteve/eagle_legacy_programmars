@@ -31,12 +31,12 @@ public class Rust_CastExpression extends PrimaryOperator
 		switch (type.getValue())
 		{
 		case "i32":
-			double x = interpreter.getDoubleValue(expression);
-			interpreter.pushInt((int) x);
+			int inum = interpreter.getIntValue(expression);
+			interpreter.pushInt(inum);
 			break;
 		case "f64":
-			int y = interpreter.getIntValue(expression);
-			interpreter.pushDouble(y);	// Don't need a cast from int to double
+			double dnum = interpreter.getDoubleValue(expression);
+			interpreter.pushDouble(dnum);
 			break;
 		default:
 			throw new RuntimeException("Unexpected cast function: " + type.getValue());
