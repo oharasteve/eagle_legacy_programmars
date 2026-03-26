@@ -30,13 +30,19 @@ public class Rust_AsExpression extends PrecedenceOperator
 			switch (prim)
 			{
 			case "i32":
+			case "usize":
 				int inum = interpreter.getIntValue(expression);
-				interpreter.pushDouble(inum);
-				break;
+				interpreter.pushInt(inum);
+				return;
 			case "f64":
 				double dnum = interpreter.getIntValue(expression);
 				interpreter.pushDouble(dnum);
-				break;
+				return;
+			case "String":
+			case "&str":
+				String str = interpreter.getStrValue(expression);
+				interpreter.pushStr(str);
+				return;
 			}
 			throw new RuntimeException("Unable to cast to " + prim);
 		}

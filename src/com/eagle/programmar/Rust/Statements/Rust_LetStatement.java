@@ -11,7 +11,6 @@ import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -32,7 +31,7 @@ public class Rust_LetStatement extends TokenSequence
 			new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
 	public @S(30) Rust_Variable var;
-	public @S(40) @OPT Rust_AsType asType;
+	public @S(40) @OPT Rust_ColonType colonType;
 	public @S(50) @OPT Rust_DataInitialize init;
 	public @S(60) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
@@ -42,16 +41,10 @@ public class Rust_LetStatement extends TokenSequence
 		public @S(20) Rust_Expression expr;
 	}
 
-	public static class Rust_AsType extends TokenSequence
+	public static class Rust_ColonType extends TokenSequence
 	{
-		public @S(10) Rust_AsOperator oper;
+		public @S(10) PunctuationColon colon;
 		public @S(20) Rust_Type type;
-	}
-
-	public static class Rust_AsOperator extends TokenChooser
-	{
-		public @CHOICE PunctuationColon XXcolon;
-		public @CHOICE Rust_Keyword XXAS = new Rust_Keyword("as");
 	}
 
 	@Override
@@ -106,11 +99,10 @@ public class Rust_LetStatement extends TokenSequence
 		// Set data name, value and type
 		letStmt.var = Rust_Variable.generateVariable(name);
 		
-		letStmt.asType = new Rust_AsType();
-		letStmt.asType.oper = new Rust_AsOperator();
-		letStmt.asType.oper.setWhich(new PunctuationColon());
-		letStmt.asType.type = typ;
-		letStmt.asType.setPresent(true);
+		letStmt.colonType = new Rust_ColonType();
+		letStmt.colonType.colon = new PunctuationColon();
+		letStmt.colonType.type = typ;
+		letStmt.colonType.setPresent(true);
 
 		if (initial != null)
 		{
