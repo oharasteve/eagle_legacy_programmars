@@ -9,7 +9,6 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -33,8 +32,8 @@ public class Rust_LetStatement extends TokenSequence
 			new Rust_Keyword("let");
 	public @S(20) @OPT Rust_Keyword MUT = new Rust_Keyword("mut");
 	public @S(30) Rust_Variable var;
-	public @S(40) @OPT Rust_DataInitialize init;
-	public @S(50) @OPT Rust_AsType asType;
+	public @S(40) @OPT Rust_AsType asType;
+	public @S(50) @OPT Rust_DataInitialize init;
 	public @S(60) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
 	public static class Rust_DataInitialize extends TokenSequence
@@ -105,21 +104,21 @@ public class Rust_LetStatement extends TokenSequence
 		letStmt.semicolon.setPresent(true);
 
 		// Set data name, value and type
-		letStmt.var = new Rust_Variable();
-		letStmt.var.var = new Rust_Identifier_Reference();
-		letStmt.var.var.setValue(name);
-		
-		if (initial != null)
-		{
-			letStmt.init = new Rust_DataInitialize();
-			letStmt.init.equals = new PunctuationEquals();
-			letStmt.init.expr = initial;
-		}
+		letStmt.var = Rust_Variable.generateVariable(name);
 		
 		letStmt.asType = new Rust_AsType();
 		letStmt.asType.oper = new Rust_AsOperator();
 		letStmt.asType.oper.setWhich(new PunctuationColon());
 		letStmt.asType.type = typ;
+		letStmt.asType.setPresent(true);
+
+		if (initial != null)
+		{
+			letStmt.init = new Rust_DataInitialize();
+			letStmt.init.equals = new PunctuationEquals();
+			letStmt.init.expr = initial;
+			letStmt.init.setPresent(true);
+		}
 
 		letStmt.setTransformationSource(source);
 		return letStmt;

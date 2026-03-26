@@ -142,7 +142,7 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 				}
 			}
 
-			return generator.newPrintStatement(line, newline, false, this);
+			return generator.newPrintStatement(line, TypeEnum.STRING, newline, false, this);
 		}
 		throw new RuntimeException("Unable to handle DISPLAY: " + this);
 	}

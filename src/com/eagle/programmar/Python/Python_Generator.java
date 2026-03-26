@@ -343,17 +343,17 @@ public class Python_Generator
 	}
 
 	@Override
-	public Python_Expression newPrintFunction(Python_Expression line, boolean newLine,
-			boolean toErr, AbstractToken source)
+	public Python_Expression newPrintFunction(Python_Expression line, TypeEnum type,
+			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		return Python_Print_Function.generatePrintFunc(line, newLine, source);
+		return Python_Print_Function.generatePrintFunc(line, type, newLine, source);
 	}
 
 	@Override
 	public Python_ComplexStatement newPrintStatement(Python_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		Python_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
+		Python_Expression prtExpr = newPrintFunction(line, type, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);
 	}
 

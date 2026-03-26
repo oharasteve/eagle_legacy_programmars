@@ -7,6 +7,8 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Rust_Type;
+import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -48,11 +50,16 @@ public class Rust_LenMethod extends PrecedenceOperator
 	{
 		Rust_LenMethod lenMeth = new Rust_LenMethod();
 		lenMeth.left = expr;
+		
 		lenMeth.dot = new PunctuationPeriod();
 		lenMeth.leftParen = new PunctuationLeftParen();
 		lenMeth.rightParen = new PunctuationRightParen();
 
-		lenMeth.setTransformationSource(source);
-		return Rust_Generator.wrapExpression(lenMeth);
+		Rust_AsExpression asExpr = Rust_AsExpression.generateAsExpr(
+				Rust_Generator.wrapExpression(lenMeth),
+				Rust_Type.newPrimitiveType("i32"), source);
+		
+		asExpr.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(asExpr);
 	}
 }

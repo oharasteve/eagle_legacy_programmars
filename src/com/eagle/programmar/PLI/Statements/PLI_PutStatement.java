@@ -202,6 +202,6 @@ public class PLI_PutStatement extends TokenSequence
 			}
 		}
 
-		return generator.newPrintStatement(result, true, false, this);
+		return generator.newPrintStatement(result, TypeEnum.STRING, true, false, this);
 	}
 }

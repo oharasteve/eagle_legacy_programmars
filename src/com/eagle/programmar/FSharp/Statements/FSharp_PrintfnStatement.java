@@ -52,6 +52,6 @@ public class FSharp_PrintfnStatement extends TokenSequence
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTFN);
 		AbstractExpression fullExpr = FSharp_Format.transform(transformer, generator, arguments, metrics);
-		return generator.newPrintStatement(fullExpr, true, false, this);
+		return generator.newPrintStatement(fullExpr, TypeEnum.STRING,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              true, false, this);
 	}
 }

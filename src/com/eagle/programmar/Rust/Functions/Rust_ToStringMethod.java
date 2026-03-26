@@ -49,9 +49,7 @@ public class Rust_ToStringMethod extends PrecedenceOperator
 	{
 		Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
 		// Rust likes '&ok.to_string()' where 'ok' is an i32
-		Rust_BorrowExpression borrow = new Rust_BorrowExpression();
-		borrow.expr = expr;
-		strMeth.left = Rust_Generator.wrapExpression(borrow);
+		strMeth.left = Rust_BorrowExpression.generateBorrow(expr, source);
 		
 		strMeth.dot = new PunctuationPeriod();
 		strMeth.TOSTRING.setValue("to_string");

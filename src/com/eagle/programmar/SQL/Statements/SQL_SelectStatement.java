@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_SelectStatement extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatementList
@@ -106,7 +107,7 @@ public class SQL_SelectStatement extends TokenSequence
 		{
 			SQL_SelectWhat what = selectStatement.what.getPrimaryElement(i);
 			AbstractExpression line = transformer.transformExpression(generator, what.expr);
-			result.add(generator.newPrintStatement(line, false, false, this));
+			result.add(generator.newPrintStatement(line, TypeEnum.STRING, false, false, this));
 		}
 		return result;
 	}

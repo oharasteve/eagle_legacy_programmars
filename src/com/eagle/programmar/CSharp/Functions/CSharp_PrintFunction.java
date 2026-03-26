@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_PrintFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -80,7 +81,7 @@ public class CSharp_PrintFunction extends PrimaryOperator
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, args.exprs.first());
-		return generator.newPrintFunction(value, newLine, false, this);
+		return generator.newPrintFunction(value, TypeEnum.STRING, newLine, false, this);
 	}
 
 	public static CSharp_Expression generatePrintFunc(CSharp_Expression line, boolean newLine,

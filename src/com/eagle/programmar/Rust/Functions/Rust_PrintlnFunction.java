@@ -16,7 +16,7 @@ import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
-import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractToken;
@@ -46,7 +46,7 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_PrintlnFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Rust_Keyword PRINTLN = new Rust_Keyword("println");
+	public @S(10) Rust_KeywordChoice PRINTLN = new Rust_KeywordChoice("print", "println");
 	public @S(20) @NOSPACE Rust_Punctuation bang = new Rust_Punctuation("!");
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> argList;
@@ -72,16 +72,18 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTLN);
 		AbstractExpression value = Rust_Format.compile(transformer, generator, argList, metrics);
-		return generator.newPrintFunction(value, true, false, this);
+		return generator.newPrintFunction(value, TypeEnum.STRING, true, false, this);
 	}
 
-	public static Rust_Expression generatePrintFunc(Rust_Expression line, boolean newLine,
-			boolean toErr, AbstractToken source)
+	public static Rust_Expression generatePrintFunc(Rust_Expression line, TypeEnum type,
+			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		Rust_PrintlnFunction print = new Rust_PrintlnFunction();
 		print.leftParen = new PunctuationLeftParen();
 		print.rightParen = new PunctuationRightParen();
 		print.argList = new SeparatedList<Rust_Expression, PunctuationComma>();
+		
+		print.PRINTLN.setValue(newLine ? "println" : "print");
 		
 		// Simple case -> println!("str");
 		if (line.getWhich() instanceof Rust_Literal)
@@ -102,7 +104,7 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 			args.add(blank);
 			Rust_Expression invokeExpr = Rust_MethodInvocation.generateInvocation(clsName, fromVar, args, source);
 			
-			Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
+			Oper2Types types = new Oper2Types(TypeEnum.STRING, type);
 			Rust_Expression plusExpr = Rust_AdditiveExpression.generateAdditive(types,
 					invokeExpr, AdditiveEnum.PLUS, line, source);
 			print.argList.addPrimaryElement(plusExpr);

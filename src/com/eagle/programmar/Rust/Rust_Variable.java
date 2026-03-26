@@ -42,7 +42,15 @@ public class Rust_Variable extends TokenSequence implements AbstractVariable, Ea
 	{
 		Rust_Variable var = new Rust_Variable();
 		var.var = new Rust_Identifier_Reference();
-		var.var.setValue(name);
+		if (name.length() == 1)
+		{
+			// Rust does not allow single letter variable names
+			var.var.setValue(name + name);
+		}
+		else
+		{
+			var.var.setValue(name);
+		}
 		return var;
 	}
 }

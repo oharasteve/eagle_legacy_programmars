@@ -135,6 +135,6 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			throw new RuntimeException("Unexpected write command: " + WRITELN.getValue());
 		}
 
-		return generator.newPrintStatement(line, newLine, false, this);
+		return generator.newPrintStatement(line, TypeEnum.STRING, newLine, false, this);
 	}
 }

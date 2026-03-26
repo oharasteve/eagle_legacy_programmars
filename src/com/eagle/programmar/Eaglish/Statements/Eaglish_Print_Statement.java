@@ -17,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Eaglish_Print_Statement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
@@ -37,6 +38,6 @@ public class Eaglish_Print_Statement extends TokenSequence
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(line, true, false, this);
+		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
 	}
 }

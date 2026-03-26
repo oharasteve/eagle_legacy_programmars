@@ -17,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Perl_EchoStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
@@ -36,7 +37,7 @@ public class Perl_EchoStatement extends TokenSequence
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		AbstractStatement stmt = generator.newPrintStatement(line, true, false, this);
+		AbstractStatement stmt = generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
 		result.add(stmt);
 		return result;
 	}

@@ -358,7 +358,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
-	public CSharp_Expression newPrintFunction(CSharp_Expression line,
+	public CSharp_Expression newPrintFunction(CSharp_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		return CSharp_PrintFunction.generatePrintFunc(line, newLine, toErr, source);
@@ -368,7 +368,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Statement newPrintStatement(CSharp_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		CSharp_Expression prtExpr = newPrintFunction(line, newLine, toErr, source);
+		CSharp_Expression prtExpr = newPrintFunction(line, type, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);
 	}
 

@@ -99,10 +99,10 @@ public class Python_Print_Function extends PrimaryOperator
 			}
 		}
 
-		return generator.newPrintFunction(result, true, false, this);
+		return generator.newPrintFunction(result, TypeEnum.STRING, true, false, this);
 	}
 
-	public static Python_Expression generatePrintFunc(Python_Expression line,
+	public static Python_Expression generatePrintFunc(Python_Expression line, TypeEnum type,
 			boolean newLine, AbstractToken source)
 	{
 		Python_Print_Function prtFunc = new Python_Print_Function();

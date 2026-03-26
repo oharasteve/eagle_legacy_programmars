@@ -21,6 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -73,11 +74,11 @@ public class Java_PrintFunction extends PrimaryOperator
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintFunction(value, newLine, false, this);
+		return generator.newPrintFunction(value, TypeEnum.STRING, newLine, false, this);
 	}
 
-	public static Java_Expression generatePrintFunc(Java_Expression line, boolean newLine,
-			boolean toErr, AbstractToken source)
+	public static Java_Expression generatePrintFunc(Java_Expression line, TypeEnum type,
+			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		Java_PrintFunction prtFn = new Java_PrintFunction();
 		prtFn.dot1 = new PunctuationPeriod();

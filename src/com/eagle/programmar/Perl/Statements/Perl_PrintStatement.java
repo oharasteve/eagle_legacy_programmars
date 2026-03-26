@@ -22,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Perl_PrintStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
@@ -73,7 +74,7 @@ public class Perl_PrintStatement extends TokenSequence
 			{
 				Perl_Expression expr = prt.strings.getPrimaryElement(i);
 				AbstractExpression line = transformer.transformExpression(generator, expr);
-				AbstractStatement stmt = generator.newPrintStatement(line, false, false, this);
+				AbstractStatement stmt = generator.newPrintStatement(line, TypeEnum.STRING, false, false, this);
 				result.add(stmt);
 			}
 		}

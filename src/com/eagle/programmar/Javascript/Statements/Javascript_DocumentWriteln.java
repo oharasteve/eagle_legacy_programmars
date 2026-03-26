@@ -20,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Javascript_DocumentWriteln extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableStatement
@@ -79,6 +80,6 @@ public class Javascript_DocumentWriteln extends PrimaryOperator
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(value, newLine, false, this);
+		return generator.newPrintStatement(value, TypeEnum.STRING, newLine, false, this);
 	}
 }

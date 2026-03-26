@@ -63,9 +63,15 @@ public class Ada_PutIntegerStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		Oper1Types type = transformer.findOperator1Metric(PUT);
+		Oper1Types metric = transformer.findOperator1Metric(PUT);
+		TypeEnum type = null;
+		if (metric != null)
+		{
+			type = metric._type1;
+		}
+		
 		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
 		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
-		return generator.newPrintStatement(fullExpr, type._type1, newLine, false, this);
+		return generator.newPrintStatement(fullExpr, type, newLine, false, this);
 	}
 }

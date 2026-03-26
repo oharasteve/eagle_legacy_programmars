@@ -154,7 +154,7 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		Rust_SubscriptExpression subscr = new Rust_SubscriptExpression();
-		subscr.expr = (Rust_Expression) theExpr;
+		subscr.expr = Rust_BorrowExpression.generateBorrow((Rust_Expression) theExpr, source);
 		subscr.leftBracket = new PunctuationLeftBracket();
 		subscr.rightBracket = new PunctuationRightBracket();
 

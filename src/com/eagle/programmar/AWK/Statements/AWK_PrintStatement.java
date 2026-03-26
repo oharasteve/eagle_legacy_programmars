@@ -141,6 +141,6 @@ public class AWK_PrintStatement extends TokenSequence
 			AbstractExpression next = transformer.transformExpression(generator, more.expr);
 			line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, this);
 		}
-		return generator.newPrintStatement(line, true, false, this);
+		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
 	}
 }

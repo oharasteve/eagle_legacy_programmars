@@ -22,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Powershell_WriteStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
@@ -61,7 +62,7 @@ public class Powershell_WriteStatement extends TokenSequence
 		{
 			Powershell_Expression expr = exprs.getPrimaryElement(i);
 			AbstractExpression line = transformer.transformExpression(generator, expr);
-			result.add(generator.newPrintStatement(line, true, false, this));
+			result.add(generator.newPrintStatement(line, TypeEnum.STRING, true, false, this));
 		}
 		return result;
 	}
