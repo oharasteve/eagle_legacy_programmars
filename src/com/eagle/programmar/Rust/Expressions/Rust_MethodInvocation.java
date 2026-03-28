@@ -183,18 +183,21 @@ public class Rust_MethodInvocation extends PrimaryOperator
 		invoke.rightParen = new PunctuationRightParen();
 		
 		boolean first = true;
-		for (Rust_Expression arg : args)
+		if (args != null)
 		{
-			if (first)
+			for (Rust_Expression arg : args)
 			{
-				first = false;
+				if (first)
+				{
+					first = false;
+				}
+				else
+				{
+					invoke.argList.addSecondaryElement(new PunctuationComma());
+				}
+				
+				invoke.argList.addPrimaryElement(arg);
 			}
-			else
-			{
-				invoke.argList.addSecondaryElement(new PunctuationComma());
-			}
-			
-			invoke.argList.addPrimaryElement(arg);
 		}
 		
 		return Rust_Generator.wrapExpression(invoke);

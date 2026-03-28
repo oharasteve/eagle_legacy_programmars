@@ -10,6 +10,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -59,5 +61,28 @@ public class Rust_ExpressionArray extends PrimaryOperator
 			exprs.add(newExpr);
 		}
 		return generator.newArrayExpression(exprs, this);
+	}
+
+	public static Rust_Expression generateArray(ArrayList<AbstractExpression> exprs,
+			AbstractToken source)
+	{
+		Rust_ExpressionArray brack = new Rust_ExpressionArray();
+		brack.ampersand = new PunctuationAmpersand();
+		brack.leftBracket = new PunctuationLeftBracket();
+		brack.rightBracket = new PunctuationRightBracket();
+		brack.values = new SeparatedList<Rust_Expression, PunctuationComma>();
+		brack.values.setPresent(true);
+
+		for (int i = 0; i < exprs.size(); i++)
+		{
+			if (i > 0)
+			{
+				brack.values.addSecondaryElement(new PunctuationComma());
+			}
+			brack.values.addPrimaryElement((Rust_Expression) exprs.get(i));
+		}
+
+		brack.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(brack);
 	}
 }

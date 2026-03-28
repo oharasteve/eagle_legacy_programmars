@@ -28,7 +28,8 @@ public class Rust_Type extends TokenChooser implements AbstractType
 				"f64",
 				"isize", "i32",
 				"str", "&str", "String",
-				"usize", "u32");
+				"usize", "u32",
+				"HashMap");
 
 		public static class Rust_TypePrimitiveStatic extends TokenSequence
 		{
@@ -47,6 +48,20 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		public @S(50) Rust_Type subType;
 		public @S(60) PunctuationRightBracket rightBracket;
 	}
+
+//	public static class Rust_GenericType extends TokenSequence
+//	{
+//		public @S(10) Rust_Punctuation lessThan = new Rust_Punctuation('<');
+//		public @S(20) @OPT @NOSPACE Rust_Type subType1;
+//		public @S(30) @OPT TokenList<Rust_MoreTypes> moreType;
+//		public @S(40) @NOSPACE Rust_Punctuation greaterThan = new Rust_Punctuation('>');
+//	}
+//
+//	public static class Rust_MoreTypes extends TokenSequence
+//	{
+//		public @S(10) PunctuationComma comma;
+//		public @S(20) Rust_Type subType2;
+//	}
 
 	public static AbstractType findType(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, String typeName)
 	{
@@ -68,6 +83,9 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		case "str":
 		case "String":
 			newType = TypeEnum.STRING;
+			break;
+		case "HashMap":
+			newType = TypeEnum.HASH;
 			break;
 		default:
 			newType = TypeEnum.OTHER;
@@ -107,8 +125,8 @@ public class Rust_Type extends TokenChooser implements AbstractType
 			return newPrimitiveType("&str");
 		case ARRAY:
 			return transformTypeArray(TypeEnum.STRING);
-//		case HASH:
-//			return transformTypeHash(TypeEnum.STRING);
+		case HASH:
+			return newPrimitiveType("HashMap");
 		case VOID:
 			return null;
 		default:

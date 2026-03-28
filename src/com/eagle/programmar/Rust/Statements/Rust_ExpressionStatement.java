@@ -6,6 +6,8 @@ package com.eagle.programmar.Rust.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -29,19 +31,21 @@ public class Rust_ExpressionStatement extends TokenSequence
 		interpreter.tryToInterpret(expression);
 	}
 
-	public static Rust_ExpressionStatement newExpressionStatement(AbstractExpression expr, AbstractToken source)
+	public static Rust_Statement newExpressionStatement(AbstractExpression expr,
+			AbstractToken source)
 	{
 		Rust_ExpressionStatement stmt = new Rust_ExpressionStatement();
 		stmt.expression = (Rust_Expression) expr;
 		stmt.semicolon = new PunctuationSemicolon();
 		stmt.semicolon.setPresent(true);
 		stmt.setTransformationSource(source);
-		return stmt;
+		return Rust_Generator.wrapStatement(stmt);
 	}
 
 	@Override
 	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable,
+			AbstractType> generator)
 	{
 		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
 		return generator.newExpressionStatement(newExpr, this);

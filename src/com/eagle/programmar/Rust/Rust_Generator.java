@@ -17,6 +17,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
@@ -40,9 +41,12 @@ import com.eagle.programmar.Rust.Functions.Rust_TrimMethod;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
+import com.eagle.programmar.Rust.Statements.Rust_ExitStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExpressionStatement;
+import com.eagle.programmar.Rust.Statements.Rust_ForStatement;
 import com.eagle.programmar.Rust.Statements.Rust_IfStatement;
 import com.eagle.programmar.Rust.Statements.Rust_LetStatement;
+import com.eagle.programmar.Rust.Statements.Rust_MatchStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ReturnStatement;
 import com.eagle.programmar.Rust.Statements.Rust_WhileStatement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
@@ -300,14 +304,13 @@ public class Rust_Generator
 	@Override
 	public Rust_Statement newExitStatement(Rust_Expression code, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		return wrapStatement(Rust_ExitStatement.newExitStatement(code, source));
+		return Rust_ExitStatement.newExitStatement(code, source);
 	}
 
 	@Override
 	public Rust_Statement newExpressionStatement(Rust_Expression expr, AbstractToken source)
 	{
-		return wrapStatement(Rust_ExpressionStatement.newExpressionStatement(expr, source));
+		return Rust_ExpressionStatement.newExpressionStatement(expr, source);
 	}
 
 	@Override
@@ -336,9 +339,8 @@ public class Rust_Generator
 			Rust_Expression term, Rust_Expression incr, Rust_Statement action,
 			AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ForStatement forStmt = new Rust_ForStatement();
-//		return forStmt.generateForLoop1(init, term, incr, action, source);
+		return Rust_ForStatement.generateForLoopOne(init, term,
+				incr, action, source);
 	}
 
 	@Override
@@ -346,9 +348,8 @@ public class Rust_Generator
 			Rust_Expression term, Rust_Expression incr,
 			ArrayList<Rust_Statement> actions, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ForStatement forStmt = new Rust_ForStatement();
-//		return forStmt.generateForLoop(init, term, incr, actions, source);
+		return Rust_ForStatement.generateForLoopMany(init, term,
+				incr, actions, source);
 	}
 
 	@Override
@@ -356,9 +357,7 @@ public class Rust_Generator
 			Rust_Expression first, RelationalEnum relOp, Rust_Expression last,
 			Rust_Expression step, Rust_Statement action, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ForStatement forStmt = new Rust_ForStatement();
-//		return forStmt.generateForRange1(var, type, first, relOp, last, step, action, source);
+		return Rust_ForStatement.generateForRangeOne(var, type, first, relOp, last, step, action, source);
 	}
 
 	@Override
@@ -366,9 +365,7 @@ public class Rust_Generator
 			Rust_Expression first, RelationalEnum relOp, Rust_Expression last,
 			Rust_Expression step, ArrayList<Rust_Statement> actions, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ForStatement forStmt = new Rust_ForStatement();
-//		return forStmt.generateForRange(var, type, first, relOp, last, step, actions, source);
+		return Rust_ForStatement.generateForRangeMany(var, type, first, relOp, last, step, actions, source);
 	}
 
 	@Override
@@ -398,9 +395,7 @@ public class Rust_Generator
 			ArrayList<Rust_Expression> values, ArrayList<ArrayList<Rust_Statement>> cases,
 			ArrayList<Rust_Statement> defaultCase, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_SwitchStatement switchStmt = new Rust_SwitchStatement();
-//		return switchStmt.generateSwitch(expr, values, cases, defaultCase, source);
+		return Rust_MatchStatement.generateMatch(expr, values, cases, defaultCase, source);
 	}
 
 	@Override
@@ -615,9 +610,7 @@ public class Rust_Generator
 	public Rust_Expression newArrayExpression(ArrayList<AbstractExpression> exprs,
 			AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ClassCreationWithInitializers creat = new Rust_ClassCreationWithInitializers();
-//		return creat.generateArray(exprs, source);
+		return Rust_ExpressionArray.generateArray(exprs, source);
 	}
 
 	@Override

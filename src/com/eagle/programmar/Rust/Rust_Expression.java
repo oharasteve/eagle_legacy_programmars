@@ -24,6 +24,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_Subfield;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_TypeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_Underscore;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_AbsMethod;
@@ -90,6 +91,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(190) Rust_ExpressionArray expressionArray;
 	public @P(200) Rust_BorrowExpression borrowExpression;
 	public @P(210) Rust_PrintlnFunction printlnStatement;
+	public @P(220) Rust_TypeExpression typeExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions

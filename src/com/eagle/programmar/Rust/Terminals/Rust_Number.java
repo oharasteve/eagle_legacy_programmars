@@ -13,6 +13,11 @@ public class Rust_Number extends TerminalNumberToken
 		super("Ee", "LlFfDd", true, true, '_');
 	}
 
+	public static Rust_Number createNumber(int value)
+	{
+		return generateNumber(Integer.toString(value), null);
+	}
+
 	public static Rust_Number generateNumber(String value, AbstractToken source)
 	{
 		Rust_Number num = new Rust_Number();
