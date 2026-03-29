@@ -1,0 +1,71 @@
+﻿// ====================================================================================================
+// Produced by the Free Edition of Java to C# Converter.
+// Purchase a Premium Edition license at:
+// https://www.tangiblesoftwaresolutions.com/order/order-java-to-csharp.html
+// ====================================================================================================
+
+using System;
+
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Feb 19, 2026
+
+namespace com.eagle.programmar.Rust.Functions
+{
+	using EagleInterpreter = com.eagle.interpret.EagleInterpreter;
+	using EagleRunnable = com.eagle.interpret.EagleRunnable;
+	using Rust_Expression = com.eagle.programmar.Rust.Rust_Expression;
+	using Rust_Generator = com.eagle.programmar.Rust.Rust_Generator;
+	using Rust_Variable = com.eagle.programmar.Rust.Rust_Variable;
+	using Rust_Keyword = com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+	using AbstractToken = com.eagle.tokens.AbstractToken;
+	using PrimaryOperator = com.eagle.tokens.PrimaryOperator;
+	using PunctuationLeftParen = com.eagle.tokens.punctuation.PunctuationLeftParen;
+	using PunctuationPeriod = com.eagle.tokens.punctuation.PunctuationPeriod;
+	using PunctuationRightParen = com.eagle.tokens.punctuation.PunctuationRightParen;
+	using SubstringSCEnum = com.eagle.transform.EagleGenerator.SubstringSCEnum;
+
+	public class Rust_FindMethod : PrimaryOperator, EagleRunnable
+	{
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(10) com.eagle.programmar.Rust.Rust_Variable string;
+		public Rust_Variable @string;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(20) @NOSPACE PunctuationPeriod dot;
+		public  NOSPACE;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(30) @NOSPACE Rust_Keyword FIND = new com.eagle.programmar.Rust.Terminals.Rust_Keyword("find");
+		public  NOSPACE;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(40) @NOSPACE PunctuationLeftParen leftParen;
+		public  NOSPACE;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(50) @NOSPACE Rust_Expression pattern;
+		public  NOSPACE;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(60) @NOSPACE PunctuationRightParen rightParen;
+		public  NOSPACE;
+
+		public override void interpret(EagleInterpreter interpreter)
+		{
+			string str = interpreter.getStrValue(@string);
+			string patt = interpreter.getStrValue(pattern);
+			interpreter.pushInt(str.IndexOf(patt, StringComparison.Ordinal));
+		}
+
+		public static Rust_Expression generateFind(Rust_Variable str, Rust_Expression patt, Rust_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
+		{
+			Rust_FindMethod indexMeth = new Rust_FindMethod();
+
+			indexMeth.@string = str;
+
+			indexMeth.dot = new PunctuationPeriod();
+			indexMeth.leftParen = new PunctuationLeftParen();
+			indexMeth.pattern = patt;
+			indexMeth.rightParen = new PunctuationRightParen();
+
+			indexMeth.setTransformationSource(source);
+			return Rust_Generator.wrapExpression(indexMeth);
+		}
+	}
+
+}

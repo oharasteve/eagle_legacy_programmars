@@ -1,0 +1,17 @@
+﻿// ====================================================================================================
+// Produced by the Free Edition of Java to C# Converter.
+// Purchase a Premium Edition license at:
+// https://www.tangiblesoftwaresolutions.com/order/order-java-to-csharp.html
+// ====================================================================================================
+
+// Copyright Eagle Legacy Modernization LLC, 2010-date
+// Original author: Steven A. O'Hara, Jul 21, 2024
+
+namespace com.eagle.programmar.JavaP
+{
+	public class JavaP_Commands
+	{
+		public static readonly string[] COMMANDS = new string[] {"aaload", "aastore", "aconst_null", "aload", "aload_0", "aload_1", "aload_2", "aload_3", "anewarray", "areturn", "arraylength", "astore", "astore_0", "astore_1", "astore_2", "astore_3", "athrow", "baload", "bastore", "bipush", "caload", "checkcast", "d2i", "d2l", "dadd", "dcmpg", "dcmpl", "dconst_0", "dconst_1", "ddiv", "dload", "dload_0", "dload_1", "dload_2", "dload_3", "dmul", "dneg", "drem", "dreturn", "dstore", "dstore_1", "dstore_2", "dstore_3", "dsub", "dup", "dup_x1", "getfield", "getstatic", "goto", "i2b", "i2c", "i2d", "i2l", "i2s", "iadd", "iaload", "iand", "iastore", "iconst_0", "iconst_1", "iconst_2", "iconst_3", "iconst_4", "iconst_5", "iconst_m1", "idiv", "if_acmpeq", "if_acmpne", "if_icmpeq", "if_icmpge", "if_icmpgt", "if_icmple", "if_icmplt", "if_icmpne", "ifeq", "ifge", "ifgt", "ifle", "iflt", "ifne", "ifnonnull", "ifnull", "iinc", "iload", "iload_0", "iload_1", "iload_2", "iload_3", "imul", "ineg", "instanceof", "invokedynamic", "invokeinterface", "invokespecial", "invokestatic", "invokevirtual", "ior", "irem", "ireturn", "ishl", "ishr", "istore", "istore_0", "istore_1", "istore_2", "istore_3", "isub", "ixor", "l2d", "l2i", "ladd", "lcmp", "lconst_0", "lconst_1", "ldc", "ldc2_w", "ldc_w", "ldiv", "lload", "lload_0", "lload_1", "lload_2", "lload_3", "lmul", "lookupswitch", "lrem", "lreturn", "lstore", "lstore_2", "lstore_3", "lsub", "monitorenter", "monitorexit", "new", "newarray", "pop", "putfield", "putstatic", "return", "saload", "sipush", "sastore", "swap", "tableswitch"};
+	}
+
+}

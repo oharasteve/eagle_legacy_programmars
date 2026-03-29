@@ -1,0 +1,106 @@
+﻿// ====================================================================================================
+// Produced by the Free Edition of Java to C# Converter.
+// Purchase a Premium Edition license at:
+// https://www.tangiblesoftwaresolutions.com/order/order-java-to-csharp.html
+// ====================================================================================================
+
+using System;
+
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Mar 31, 2024
+
+namespace com.eagle.programmar.Java.Expressions
+{
+	using EagleInterpreter = com.eagle.interpret.EagleInterpreter;
+	using EagleRunnable = com.eagle.interpret.EagleRunnable;
+	using EagleInteger = com.eagle.math.EagleInteger;
+	using EagleValue = com.eagle.math.EagleValue;
+	using Java_Expression = com.eagle.programmar.Java.Java_Expression;
+	using Java_Generator = com.eagle.programmar.Java.Java_Generator;
+	using Java_Variable = com.eagle.programmar.Java.Java_Variable;
+	using Java_Identifier_Reference = com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
+	using Java_PunctuationChoice = com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
+	using AbstractToken = com.eagle.tokens.AbstractToken;
+	using PrimaryOperator = com.eagle.tokens.PrimaryOperator;
+	using AbstractExpression = com.eagle.tokens.interfaces.AbstractExpression;
+	using AbstractStatement = com.eagle.tokens.interfaces.AbstractStatement;
+	using AbstractType = com.eagle.tokens.interfaces.AbstractType;
+	using AbstractVariable = com.eagle.tokens.interfaces.AbstractVariable;
+	using EagleGenerator = com.eagle.transform.EagleGenerator;
+	using IncrementEnum = com.eagle.transform.EagleGenerator.IncrementEnum;
+	using SubscriptEnum = com.eagle.transform.EagleGenerator.SubscriptEnum;
+	using EagleTransformableExpression = com.eagle.transform.EagleTransformableExpression;
+	using EagleTransformer = com.eagle.transform.EagleTransformer;
+
+	public class Java_PreIncrementExpression : PrimaryOperator, EagleRunnable, EagleTransformableExpression
+	{
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(10) com.eagle.programmar.Java.Terminals.Java_PunctuationChoice operator = new com.eagle.programmar.Java.Terminals.Java_PunctuationChoice("++", "--");
+		public Java_PunctuationChoice @operator = new Java_PunctuationChoice("++", "--");
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(20) @NOSPACE Java_Variable var;
+		public  NOSPACE;
+
+		public override void interpret(EagleInterpreter interpreter)
+		{
+			if (var.firstId.getWhich() is Java_Identifier_Reference)
+			{
+				Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
+				EagleValue val = interpreter.findSymbol(id.getValue());
+				int prev = val.forceIntegerValue();
+				int curr;
+				switch (@operator.getValue())
+				{
+				case "++":
+					curr = prev + 1;
+					break;
+				case "--":
+					curr = prev - 1;
+					break;
+				default:
+					throw new Exception("Unexpected operator: " + @operator);
+				}
+				interpreter.setSymbol(var, id.getValue(), new EagleInteger(curr));
+				interpreter.pushInt(curr);
+			}
+		}
+
+		public override AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+		{
+			EagleGenerator.IncrementEnum whichDirection;
+			switch (@operator.getValue())
+			{
+			case "++":
+				whichDirection = EagleGenerator.IncrementEnum.INCREMENT;
+				break;
+			case "--":
+				whichDirection = EagleGenerator.IncrementEnum.DECREMENT;
+				break;
+			default:
+				throw new Exception("Unexpected operator: " + @operator);
+			}
+			Java_Identifier_Reference id = (Java_Identifier_Reference) var.firstId.getWhich();
+			return generator.newPostIncrementExpression(id.getValue(), EagleGenerator.SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
+		}
+
+		public static Java_Expression generateIncrement(Java_Variable varName, EagleGenerator.IncrementEnum oper, AbstractToken source)
+		{
+			Java_PreIncrementExpression incrExpr = new Java_PreIncrementExpression();
+			incrExpr.var = varName;
+			switch (oper)
+			{
+			case INCREMENT:
+				incrExpr.@operator.setValue("++");
+				break;
+			case DECREMENT:
+				incrExpr.@operator.setValue("--");
+				break;
+			default:
+				throw new Exception("Unexpected operator: " + oper);
+			}
+			incrExpr.setTransformationSource(source);
+			return Java_Generator.wrapExpression(incrExpr);
+		}
+	}
+
+}

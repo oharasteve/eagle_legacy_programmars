@@ -1,0 +1,42 @@
+﻿// ====================================================================================================
+// Produced by the Free Edition of Java to C# Converter.
+// Purchase a Premium Edition license at:
+// https://www.tangiblesoftwaresolutions.com/order/order-java-to-csharp.html
+// ====================================================================================================
+
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, Jul 20, 2024
+
+namespace com.eagle.programmar.C.Expressions
+{
+	using C_Expression = com.eagle.programmar.C.C_Expression;
+	using C_Type = com.eagle.programmar.C.C_Type;
+	using C_Keyword = com.eagle.programmar.C.Terminals.C_Keyword;
+	using PrimaryOperator = com.eagle.tokens.PrimaryOperator;
+	using PunctuationComma = com.eagle.tokens.punctuation.PunctuationComma;
+	using PunctuationLeftParen = com.eagle.tokens.punctuation.PunctuationLeftParen;
+	using PunctuationRightParen = com.eagle.tokens.punctuation.PunctuationRightParen;
+
+	public class C_VaArgExpr : PrimaryOperator
+	{
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(10) com.eagle.programmar.C.Terminals.C_Keyword VA_ARG = new com.eagle.programmar.C.Terminals.C_Keyword("va_arg");
+		public C_Keyword VA_ARG = new C_Keyword("va_arg");
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(20) com.eagle.tokens.punctuation.PunctuationLeftParen leftParen;
+		public PunctuationLeftParen leftParen;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(30) com.eagle.programmar.C.C_Expression expr;
+		public C_Expression expr;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(40) com.eagle.tokens.punctuation.PunctuationComma comma;
+		public PunctuationComma comma;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(50) com.eagle.programmar.C.C_Type ctype;
+		public C_Type ctype;
+// JAVA TO C# CONVERTER TASK: Most Java annotations will not have direct .NET equivalent attributes:
+// ORIGINAL LINE: public @S(60) com.eagle.tokens.punctuation.PunctuationRightParen rightParen;
+		public PunctuationRightParen rightParen;
+	}
+
+}
