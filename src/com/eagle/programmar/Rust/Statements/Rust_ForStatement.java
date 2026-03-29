@@ -229,11 +229,29 @@ public class Rust_ForStatement extends TokenSequence
 
 		// Let's just deal with easy case: for (i=0; i<10; i++) etc.
 		if (!(initExpression.getWhich() instanceof Rust_AssignmentExpression) ||
-				!(condition.getWhich() instanceof Rust_RelationalExpression) ||
 				!(incrExpression.getWhich() instanceof Rust_AssignmentExpression))
 		{
-			throw new RuntimeException("Need to implement");
+			throw new RuntimeException("For loops init and incr must be assignments");
 		}
+		
+		AbstractToken whichCond = condition.getWhich();
+		if (whichCond instanceof Rust_NotExpression)
+		{
+			Rust_NotExpression notExpr = (Rust_NotExpression) whichCond;
+			whichCond = notExpr.expr.getWhich();
+		}
+		
+		if (whichCond instanceof Rust_ParenthesizedExpression)
+		{
+			Rust_ParenthesizedExpression parenExpr = (Rust_ParenthesizedExpression) whichCond;
+			whichCond = parenExpr.expressions.first().getWhich();
+		}
+
+		if (!(whichCond instanceof Rust_RelationalExpression))
+		{
+			throw new RuntimeException("For loop test must be a relational expression");
+		}
+		Rust_RelationalExpression cond = (Rust_RelationalExpression) whichCond;
 
 		Rust_AssignmentExpression init = (Rust_AssignmentExpression) initExpression.getWhich();
 		if (!init.operator.getValue().equals("=") ||
@@ -262,7 +280,6 @@ public class Rust_ForStatement extends TokenSequence
 			throw new RuntimeException("Unexpected operator: " + incrOper);
 		}
 
-		Rust_RelationalExpression cond = (Rust_RelationalExpression) condition.getWhich();
 		if (!(cond.left.getWhich() instanceof Rust_VariableExpression))
 		{
 			throw new RuntimeException("Condition part too complicated for now.");

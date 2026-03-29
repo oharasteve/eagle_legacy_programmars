@@ -16,7 +16,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ClassCreationExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
@@ -50,6 +50,7 @@ import com.eagle.programmar.Rust.Statements.Rust_MatchStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ReturnStatement;
 import com.eagle.programmar.Rust.Statements.Rust_WhileStatement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
+import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Character_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
 import com.eagle.programmar.Rust.Terminals.Rust_HexNumber;
@@ -440,13 +441,12 @@ public class Rust_Generator
 	public AbstractExpression newHashAssignment(String name, Rust_Expression subscript,
 			Rust_Expression expression, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_MethodInvocation invoke = new Rust_MethodInvocation();
-//		Rust_Variable var = Rust_Variable.newVariable(name + ".put");
-//		ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
-//		args.add(subscript);
-//		args.add(expression);
-//		return invoke.generateInvocation(var, args, source);
+		Rust_Variable var = Rust_Variable.generateVariable(name + ".insert");
+		ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
+		args.add(subscript);
+		args.add(expression);
+		Rust_Identifier_Reference className = null;
+		return Rust_MethodInvocation.generateInvocation(className, var, args, source);
 	}
 
 	@Override
@@ -589,14 +589,7 @@ public class Rust_Generator
 	public Rust_Expression newRelationalExpression(Oper2Types types, Rust_Expression left, RelationalEnum relOp,
 			Rust_Expression right, AbstractToken source)
 	{
-		switch(relOp)
-		{
-		case EQUALS, NOT_EQUALS:
-			return Rust_EqualityExpression.generateEquality(types, left, relOp, right, source);
-		case LESS_THAN, LESS_EQUALS, GREATER_EQUALS, GREATER_THAN:
-			return Rust_RelationalExpression.generateRelational(types, left, relOp, right, source);
-		}
-		throw new RuntimeException("Unexpected operator: " + relOp);
+		return Rust_RelationalExpression.generateRelational(types, left, relOp, right, source);
 	}
 
 	@Override
@@ -630,9 +623,7 @@ public class Rust_Generator
 	public Rust_Expression newClassCreation(Rust_Type type,
 			ArrayList<Rust_Expression> args, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_ClassCreationExpression creat = new Rust_ClassCreationExpression();
-//		return creat.generateCreation(type, args, source);
+		return Rust_ClassCreationExpression.generateCreation(type, args, source);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("<", ">", "<=", ">=");
+	public @S(20) Rust_PunctuationChoice operator = new Rust_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 	public @S(30) Rust_Expression right = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -44,12 +44,60 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.getType(), rightValue.getType());
 
+		if (leftValue.isString() || rightValue.isString())
+		{
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "!=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			}
+		}
+
+		if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftDbl == rightDbl);
+				return;
+			case "!=":
+				interpreter.pushBool(leftDbl != rightDbl);
+				return;
+			case "<":
+				interpreter.pushBool(leftDbl < rightDbl);
+				return;
+			case "<=":
+				interpreter.pushBool(leftDbl <= rightDbl);
+				return;
+			case ">":
+				interpreter.pushBool(leftDbl > rightDbl);
+				return;
+			case ">=":
+				interpreter.pushBool(leftDbl >= rightDbl);
+				return;
+			}
+		}
+
 		if (leftValue.isInteger() || rightValue.isInteger())
 		{
 			int leftInt = interpreter.getIntValue(left);
 			int rightInt = interpreter.getIntValue(right);
 			switch (oper)
 			{
+			case "==":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "!=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
 			case "<":
 				interpreter.pushBool(leftInt < rightInt);
 				return;
@@ -64,6 +112,22 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 				return;
 			}
 		}
+
+		if (leftValue.isBoolean() && rightValue.isBoolean())
+		{
+			boolean leftBool = leftValue.forceBooleanValue();
+			boolean rightBool = rightValue.forceBooleanValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftBool == rightBool);
+				return;
+			case "!=":
+				interpreter.pushBool(leftBool != rightBool);
+				return;
+			}
+		}
+
 		throw new RuntimeException("Unable to handle " + oper);
 	}
 
@@ -76,6 +140,10 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 
 		switch (operator.toString())
 		{
+		case "==":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
+		case "!=":
+			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
 		case "<":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);
 		case "<=":
@@ -98,6 +166,12 @@ public class Rust_RelationalExpression extends PrecedenceOperator
 		String oper;
 		switch (relOp)
 		{
+		case EQUALS:
+			oper = "==";
+			break;
+		case NOT_EQUALS:
+			oper = "!=";
+			break;
 		case LESS_THAN:
 			oper = "<";
 			break;

@@ -10,7 +10,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_EqualityExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ClassCreationExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
@@ -92,7 +92,8 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(200) Rust_BorrowExpression borrowExpression;
 	public @P(210) Rust_PrintlnFunction printlnStatement;
 	public @P(220) Rust_TypeExpression typeExpression;
-
+	public @P(230) Rust_ClassCreationExpression createExpression;
+	
 	///////////////////////////////////////////////
 	// Binary expressions
 
@@ -109,11 +110,10 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1100) Rust_AdditiveExpression additiveExpression;
 	public @P(1110) Rust_ShiftExpression shiftExpression;
 	public @P(1120) Rust_RelationalExpression relationalExpression;
-	public @P(1130) Rust_EqualityExpression equalityExpression;
-	public @P(1140) Rust_BitwiseExpression bitwiseExpression;
-	public @P(1150) Rust_LogicalAndExpression conditionalAndExpression;
-	public @P(1160) Rust_LogicalOrExpression conditionalOrExpression;
-	public @P(1170) Rust_RangeExpression rangeExpression;
-	public @P(1180) Rust_AsExpression asExpression;
-	public @P(1190) Rust_AssignmentExpression asgExpression;
+	public @P(1130) Rust_BitwiseExpression bitwiseExpression;
+	public @P(1140) Rust_LogicalAndExpression conditionalAndExpression;
+	public @P(1150) Rust_LogicalOrExpression conditionalOrExpression;
+	public @P(1160) Rust_RangeExpression rangeExpression;
+	public @P(1170) Rust_AsExpression asExpression;
+	public @P(1180) Rust_AssignmentExpression asgExpression;
 }
