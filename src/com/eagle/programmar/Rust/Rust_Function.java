@@ -200,6 +200,7 @@ public class Rust_Function extends TokenSequence
 		Rust_Parameter param = new Rust_Parameter();
 		param.var = new Rust_Variable_Definition();
 		param.var.setValue(name);
+		param.colon = new PunctuationColon();
 		param.type = (Rust_Type) type;
 		
 		if (funcParamDefs == null)

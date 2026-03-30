@@ -9,18 +9,11 @@ import com.eagle.math.EagleRange;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
@@ -31,30 +24,6 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 	public @S(10) Rust_Expression lowExpression = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE Rust_PunctuationChoice dots = new Rust_PunctuationChoice("..", "..=");
 	public @S(30) @OPT @NOSPACE Rust_Expression highExpression = new Rust_Expression(this, AllowedPrecedence.HIGHER);
-	public @S(40) @OPT @NOSPACE TokenList<Rust_RangeModifier> modifiers;
-	
-	public static class Rust_RangeModifier extends TokenChooser
-	{
-		public @CHOICE Rust_RangeReverse XXrev;
-		public @CHOICE Rust_RangeStepBy XXstep;
-	}
-
-	public static class Rust_RangeReverse extends TokenSequence
-	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) @NOSPACE Rust_Keyword REV = new Rust_Keyword("rev");
-		public @S(30) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(40) @NOSPACE PunctuationRightParen rightParen;
-	}
-	
-	public static class Rust_RangeStepBy extends TokenSequence
-	{
-		public @S(10) PunctuationPeriod dot;
-		public @S(20) @NOSPACE Rust_Keyword STEPBY = new Rust_Keyword("step_by");
-		public @S(30) @NOSPACE PunctuationLeftParen leftParen;
-		public @S(40) @NOSPACE Rust_Expression step;
-		public @S(50) @NOSPACE PunctuationRightParen rightParen;
-	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -62,34 +31,6 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 		int lowValue = interpreter.getIntValue(lowExpression);
 		int highValue = 0;
 		boolean hasHigh = false;
-		
-		boolean reverse = false;
-		int step = 1;
-		if (modifiers != null && modifiers.size() > 0)
-		{
-			for (Rust_RangeModifier mod : modifiers._elements)
-			{
-				AbstractToken which = mod.getWhich();
-				if (which instanceof Rust_RangeReverse)
-				{
-					reverse = ! reverse;
-				}
-				else if (which instanceof Rust_RangeStepBy)
-				{
-					Rust_RangeStepBy stepBy = (Rust_RangeStepBy) which;
-					int by = interpreter.getIntValue(stepBy.step);
-					step = step * by;
-				}
-			}
-		}
-		
-		if (reverse)
-		{
-			int temp = highValue;
-			highValue = lowValue;
-			lowValue = temp;
-			step = -step;
-		}
 		
 		if (highExpression != null && highExpression.isPresent())
 		{
@@ -101,7 +42,7 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 				highValue++;	// Inclusive, 1..5 is 1 to 4; 1..=5 is 1 to 5
 			}
 		}
-		EagleRange range = new EagleRange(lowValue, highValue, hasHigh, step);
+		EagleRange range = new EagleRange(lowValue, highValue, hasHigh, 1);
 		interpreter.pushEagleValue(range);
 	}
 	

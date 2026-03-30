@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Rust;
 
+import com.eagle.programmar.Rust.Rust_Type.Rust_TypePrimitive.Rust_TypePrimitiveStatic;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
@@ -34,19 +35,19 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		public static class Rust_TypePrimitiveStatic extends TokenSequence
 		{
 			public @S(10) Rust_Punctuation ampersand = new Rust_Punctuation("&");
-			public @S(20) Rust_Punctuation quote = new Rust_Punctuation("'");
-			public @S(30) Rust_Keyword STATIC = new Rust_Keyword("static");
+			public @S(20) @NOSPACE Rust_Punctuation quote = new Rust_Punctuation("'");
+			public @S(30) @NOSPACE Rust_Keyword STATIC = new Rust_Keyword("static");
 		}
 	}
 
 	public @CHOICE static class Rust_TypeArray extends TokenSequence
 	{
 		public @S(10) Rust_Punctuation ampersand = new Rust_Punctuation("&");
-		public @S(20) Rust_Punctuation quote = new Rust_Punctuation("'");
-		public @S(30) Rust_Keyword STATIC = new Rust_Keyword("static");
+		public @S(20) @NOSPACE Rust_Punctuation quote = new Rust_Punctuation("'");
+		public @S(30) @NOSPACE Rust_Keyword STATIC = new Rust_Keyword("static");
 		public @S(40) PunctuationLeftBracket leftBracket;
-		public @S(50) Rust_Type subType;
-		public @S(60) PunctuationRightBracket rightBracket;
+		public @S(50) @NOSPACE Rust_Type subType;
+		public @S(60) @NOSPACE PunctuationRightBracket rightBracket;
 	}
 
 //	public static class Rust_GenericType extends TokenSequence
@@ -139,6 +140,14 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		Rust_TypeArray array = new Rust_TypeArray();
 		array.leftBracket = new PunctuationLeftBracket();
 		array.rightBracket = new PunctuationRightBracket();
+		
+		Rust_TypePrimitive prim = new Rust_TypePrimitive();
+		prim.typeStatic = new Rust_TypePrimitiveStatic();
+		prim.typeStatic.setPresent(true);
+		prim.PRIMITIVE.setValue("str");
+		prim.setPresent(true);
+		array.subType = new Rust_Type();
+		array.subType.setWhich(prim);
 
 		Rust_Type newType = new Rust_Type();
 		newType.setWhich(array);

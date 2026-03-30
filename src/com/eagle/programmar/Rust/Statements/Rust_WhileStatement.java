@@ -27,8 +27,9 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_WhileStatement extends TokenSequence implements
 		AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
 {
-	public @S(10) @DOC("expressions/loop-expr.html#predicate-loops") Rust_Keyword WHILE = new Rust_Keyword("while");
-	public @S(20) @NOSPACE Rust_Expression condition;
+	public @S(10) @DOC("expressions/loop-expr.html#predicate-loops") @NEWLINE Rust_Keyword WHILE =
+			new Rust_Keyword("while");
+	public @S(20) Rust_Expression condition;
 	public @S(30) @OPT Rust_Comment comment;
 	public @S(40) Rust_Statement whileStatement;
 

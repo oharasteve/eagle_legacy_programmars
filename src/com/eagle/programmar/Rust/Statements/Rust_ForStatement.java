@@ -19,26 +19,20 @@ import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression.Rust_RangeModifier;
-import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression.Rust_RangeReverse;
-import com.eagle.programmar.Rust.Expressions.Rust_RangeExpression.Rust_RangeStepBy;
 import com.eagle.programmar.Rust.Expressions.Rust_RelationalExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_RevMethod;
+import com.eagle.programmar.Rust.Functions.Rust_StepByMethod;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.tokens.punctuation.PunctuationLeftParen;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
@@ -350,10 +344,30 @@ public class Rust_ForStatement extends TokenSequence
 		forStmt.variable = var;
 
 		Rust_RangeExpression range = new Rust_RangeExpression();
-		range.lowExpression = fromExpression;
-		range.highExpression = toExpression;
-		range.dots.setValue("..");
 		
+		AbstractToken which1 = fromExpression.getWhich();
+		if ((which1 instanceof Rust_Number) || (which1 instanceof Rust_VariableExpression))
+		{
+			range.lowExpression = fromExpression;
+		}
+		else
+		{
+			range.lowExpression = Rust_ParenthesizedExpression.generateParentheses(fromExpression, null);
+		}
+		
+		range.dots.setValue("..=");
+
+		AbstractToken which2 = toExpression.getWhich();
+		if ((which2 instanceof Rust_Number) || (which2 instanceof Rust_VariableExpression))
+		{
+			range.highExpression = toExpression;
+		}
+		else
+		{
+			range.highExpression = Rust_ParenthesizedExpression.generateParentheses(toExpression, null);
+		}
+		range.highExpression.setPresent(true);
+
 		int incr = 1;
 		if (delta != null)
 		{
@@ -366,61 +380,31 @@ public class Rust_ForStatement extends TokenSequence
 		}
 		
 		// range.rev().stepby(n) and range.stepby(n).rev() can be different
-		// For now, we don't allow both modifiers
-		
-		if (incr != 1)
-		{
-			range.modifiers = new TokenList<Rust_RangeModifier>();
-		}
+		// Hence, we don't support negative step right now.
 
+		Rust_Expression rangeExpr = Rust_Generator.wrapExpression(range);
 		if (incr == -1)
 		{
-			Rust_RangeReverse rev = new Rust_RangeReverse();
-			rev.dot = new PunctuationPeriod();
-			rev.leftParen = new PunctuationLeftParen();
-			rev.rightParen = new PunctuationRightParen();
-
-			Rust_RangeModifier revmod = new Rust_RangeModifier();
-			revmod.setWhich(rev);
-			
-			range.modifiers.addToken(revmod);
+			// Ada, e.g., switched them already, so we have to switch them back.
+			Rust_Expression tempExpr = range.highExpression;
+			range.highExpression = range.lowExpression;
+			range.lowExpression = tempExpr;
+			range.highExpression.setPresent(true);	// Again :(
+			Rust_Expression parenRev = Rust_ParenthesizedExpression.generateParentheses(rangeExpr, null);
+			rangeExpr = Rust_RevMethod.generateRev(parenRev);
 		}
 		else if (incr > 1)
 		{
-			Rust_RangeStepBy step = new Rust_RangeStepBy();
-			step.dot = new PunctuationPeriod();
-			step.leftParen = new PunctuationLeftParen();
-			step.step = delta;
-			step.rightParen = new PunctuationRightParen();
-
-			Rust_RangeModifier stepmod = new Rust_RangeModifier();
-			stepmod.setWhich(step);
-			
-			range.modifiers.addToken(stepmod);
+			Rust_Expression parenStep = Rust_ParenthesizedExpression.generateParentheses(rangeExpr, null);
+			rangeExpr = Rust_StepByMethod.generateStepBy(parenStep, delta);
 		}
 		else if (incr != 1)
 		{
 			throw new RuntimeException("Cannot handle negative steps other than -1");
 		}
 
-		forStmt.values = Rust_Generator.wrapExpression(range);
-		
-		Rust_Block_Statement block = new Rust_Block_Statement();
-		block.statements = new TokenList<Rust_Statement>();
-		for (Rust_Statement stmt : actions)
-		{
-			block.statements.addToken(stmt);
-
-			// If the parent block gets the 'while' as the parent, line numbers in the
-			// side-by-side will pick up the 'while' instead of the first statement.
-			if (forStmt.getTransformationSource() == null)
-			{
-				forStmt.setTransformationSource(stmt.getTransformationSource());
-			}
-		}
-		forStmt.statement = Rust_Generator.wrapStatement(block);
-
-		forStmt.setTransformationSource(source);
+		forStmt.values = rangeExpr;
+		forStmt.statement = Rust_Block_Statement.generateBlock(actions, source);
 		return Rust_Generator.wrapStatement(forStmt);
 	}
 }

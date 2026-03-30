@@ -30,9 +30,9 @@ public class Rust_ExpressionArray extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationAmpersand ampersand;
-	public @S(20) PunctuationLeftBracket leftBracket;
-	public @S(30) SeparatedList<Rust_Expression, PunctuationComma> values;
-	public @S(40) PunctuationRightBracket rightBracket;
+	public @S(20) @NOSPACE PunctuationLeftBracket leftBracket;
+	public @S(30) @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> values;
+	public @S(40) @NOSPACE PunctuationRightBracket rightBracket;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

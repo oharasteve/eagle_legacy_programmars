@@ -1,5 +1,5 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Jun 22, 2024
+// Original author: Steven A. O'Hara, JMar 29, 2026
 
 package com.eagle.programmar.Rust.Functions;
 
@@ -14,28 +14,31 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Rust_RevMethod extends PrecedenceOperator implements EagleRunnable
+public class Rust_StepByMethod extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NOSPACE Rust_Keyword REV = new Rust_Keyword("rev");
+	public @S(30) @NOSPACE Rust_Keyword STEPBY = new Rust_Keyword("step_by");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) @NOSPACE Rust_Expression stepExpr;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleRange range = interpreter.getRangeValue(left);
-		interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, true, -range._step));
+		int step = interpreter.getIntValue(stepExpr);
+		interpreter.pushEagleValue(new EagleRange(range._lowValue, range._highValue, true, step));
 	}
-	
-	public static Rust_Expression generateRev(Rust_Expression range)
+		
+	public static Rust_Expression generateStepBy(Rust_Expression range, Rust_Expression expr)
 	{
-		Rust_RevMethod rev = new Rust_RevMethod();
-		rev.left = range;
-		rev.dot = new PunctuationPeriod();
-		rev.leftParen = new PunctuationLeftParen();
-		rev.rightParen = new PunctuationRightParen();
-		return Rust_Generator.wrapExpression(rev);
+		Rust_StepByMethod step = new Rust_StepByMethod();
+		step.left = range;
+		step.dot = new PunctuationPeriod();
+		step.leftParen = new PunctuationLeftParen();
+		step.stepExpr = expr;
+		step.rightParen = new PunctuationRightParen();
+		return Rust_Generator.wrapExpression(step);
 	}
 }

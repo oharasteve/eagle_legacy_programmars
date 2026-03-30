@@ -24,7 +24,8 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) @DOC("expressions/return-expr.html") Rust_Keyword RETURN = new Rust_Keyword("return");
+	public @S(10) @DOC("expressions/return-expr.html") @NEWLINE Rust_Keyword RETURN =
+			new Rust_Keyword("return");
 	public @S(20) Rust_Expression expr;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 
