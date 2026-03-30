@@ -19,5 +19,8 @@ public class MSSolution_Syntax extends EagleSyntax
 	{
 		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_autoAdvance = false;
+
+		// Because of the 'd': VisualStudioVersion = 17.14.37111.16 d17.14
+		_allowDigitsInKeywords = false;
 	}
 }

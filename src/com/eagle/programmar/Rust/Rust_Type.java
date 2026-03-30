@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Rust;
 
-import com.eagle.programmar.Rust.Rust_Type.Rust_TypePrimitive.Rust_TypePrimitiveStatic;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
@@ -142,7 +141,7 @@ public class Rust_Type extends TokenChooser implements AbstractType
 		array.rightBracket = new PunctuationRightBracket();
 		
 		Rust_TypePrimitive prim = new Rust_TypePrimitive();
-		prim.typeStatic = new Rust_TypePrimitiveStatic();
+		prim.typeStatic = new Rust_TypePrimitive.Rust_TypePrimitiveStatic();
 		prim.typeStatic.setPresent(true);
 		prim.PRIMITIVE.setValue("str");
 		prim.setPresent(true);

@@ -45,7 +45,16 @@ public class MSSolution_Header extends TokenSequence
 		public @S(10) MSSolution_Keyword VISUALSTUDIOVERSION = new MSSolution_Keyword("VisualStudioVersion");
 		public @S(20) PunctuationEquals equals;
 		public @S(30) SeparatedList<MSSolution_Integer, PunctuationPeriod> version;
-		public @S(40) MSSolution_EndOfLine eoln;
+		public @S(40) @OPT MSSolution_DVersion dVersion;
+		public @S(50) MSSolution_EndOfLine eoln;
+		
+		public static class MSSolution_DVersion extends TokenSequence
+		{
+			public @S(10) MSSolution_Keyword D = new MSSolution_Keyword("d");
+			public @S(20) MSSolution_Integer major;
+			public @S(30) PunctuationPeriod dot;
+			public @S(40) MSSolution_Integer minor;
+		}
 	}
 
 	public static class MSSolution_HeaderMinimum extends TokenSequence

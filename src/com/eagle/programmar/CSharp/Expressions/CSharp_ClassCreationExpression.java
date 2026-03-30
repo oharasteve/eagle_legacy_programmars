@@ -20,7 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_ClassCreationExpression extends PrimaryOperator
 {
 	public @S(10) CSharp_Keyword NEW = new CSharp_Keyword("new");
-	public @S(20) CSharp_Type cstype;
+	public @S(20) @OPT CSharp_Type cstype;
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @OPT TokenList<CSharp_Comment> comments;
 	public @S(50) @OPT @NOSPACE CSharp_ArgumentList argList;
