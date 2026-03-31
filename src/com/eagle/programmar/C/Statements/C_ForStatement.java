@@ -80,7 +80,7 @@ public class C_ForStatement extends TokenSequence
 		public static class C_MoreLoopIncrements extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
-			public @S(20) C_ForLoopVariable forVar;
+			public @S(20) C_Expression increment;
 		}
 	}
 
