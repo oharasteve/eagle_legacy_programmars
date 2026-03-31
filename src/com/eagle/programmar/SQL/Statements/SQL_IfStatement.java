@@ -29,10 +29,19 @@ public class SQL_IfStatement extends TokenSequence
 	public @S(20) SQL_Expression condition;
 	public @S(30) SQL_Keyword THEN = new SQL_Keyword("THEN");
 	public @S(40) TokenList<SQL_StatementOrComment> statements;
-	public @S(50) @OPT SQL_IfElseClause elseClause;
-	public @S(60) SQL_Keyword END = new SQL_Keyword("END");
-	public @S(70) SQL_Keyword IF2 = new SQL_Keyword("IF");
-	public @S(80) PunctuationSemicolon semicolon;
+	public @S(50) @OPT TokenList<SQL_IfElseIfClause> elseIfClauses;
+	public @S(60) @OPT SQL_IfElseClause elseClause;
+	public @S(70) SQL_Keyword END = new SQL_Keyword("END");
+	public @S(80) SQL_Keyword IF2 = new SQL_Keyword("IF");
+	public @S(90) PunctuationSemicolon semicolon;
+
+	public static class SQL_IfElseIfClause extends TokenSequence
+	{
+		public @S(10) SQL_Keyword ELSEIF = new SQL_Keyword("ELSEIF");
+		public @S(20) SQL_Expression condition;
+		public @S(30) SQL_Keyword THEN = new SQL_Keyword("THEN");
+		public @S(40) TokenList<SQL_StatementOrComment> statements;
+	}
 
 	public static class SQL_IfElseClause extends TokenSequence
 	{

@@ -30,10 +30,21 @@ public class Fortran_IfStatement extends TokenSequence
 	public @S(30) Fortran_Keyword THEN = new Fortran_Keyword("THEN");
 	public @S(40) Fortran_EOLN eoln1;
 	public @S(50) TokenList<Fortran_Statement> thenStatements;
-	public @S(60) @OPT Fortran_IfElseBlock elseClause;
-	public @S(70) Fortran_Keyword END = new Fortran_Keyword("END");
-	public @S(80) Fortran_Keyword IF2 = new Fortran_Keyword("IF");
-	public @S(90) Fortran_EOLN eoln2;
+	public @S(60) @OPT TokenList<Fortran_IfElseIfBlock> elseIfClauses;
+	public @S(70) @OPT Fortran_IfElseBlock elseClause;
+	public @S(80) Fortran_Keyword END = new Fortran_Keyword("END");
+	public @S(90) Fortran_Keyword IF2 = new Fortran_Keyword("IF");
+	public @S(100) Fortran_EOLN eoln2;
+
+	public static class Fortran_IfElseIfBlock extends TokenSequence
+	{
+		public @S(10) Fortran_Keyword ELSE = new Fortran_Keyword("ELSE");
+		public @S(20) Fortran_Keyword IF = new Fortran_Keyword("IF");
+		public @S(30) Fortran_Expression condition;
+		public @S(40) Fortran_Keyword THEN = new Fortran_Keyword("THEN");
+		public @S(50) Fortran_EOLN eoln;
+		public @S(60) TokenList<Fortran_Statement> elseStatements;
+	}
 
 	public static class Fortran_IfElseBlock extends TokenSequence
 	{

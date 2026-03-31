@@ -16,6 +16,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
@@ -29,7 +30,7 @@ public class Delphi_Uses extends TokenSequence implements EagleRunnable
 
 	public static class Delphi_UseItem extends TokenSequence
 	{
-		public @S(10) Delphi_Identifier_Reference id;
+		public @S(10) SeparatedList<Delphi_Identifier_Reference,PunctuationPeriod> id;
 		public @S(20) @OPT Delphi_UseItemIn in;
 
 		public static class Delphi_UseItemIn extends TokenSequence

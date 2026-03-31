@@ -22,7 +22,7 @@ public class Rexx_Syntax extends EagleSyntax
 		_autoAdvance = false;
 		_extraCharacters = "_";
 		_punctuationExceptions = new String[] {
-				"\\=", "<=", ">=", "//"
+				"\\=", "<=", ">=", "//", "=="
 		};
 
 		addReservedWords(Rexx_Reserved_Words.RESERVED_WORDS);

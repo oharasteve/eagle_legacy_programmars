@@ -29,18 +29,27 @@ public class Ruby_IfStatement extends TokenSequence
 	public @S(20) Ruby_Expression condition;
 	public @S(30) Ruby_EOLN eoln1;
 	public @S(40) TokenList<Ruby_Statement> thenStatements;
-	public @S(50) @OPT Ruby_IfElseClause elseClause;
-	public @S(60) Ruby_Keyword END = new Ruby_Keyword("end");
-	public @S(70) Ruby_EOLN eoln2;
+	public @S(50) @OPT TokenList<Ruby_IfElsif> ifElsif;
+	public @S(60) @OPT Ruby_IfElseClause elseClause;
+	public @S(70) Ruby_Keyword END = new Ruby_Keyword("end");
+	public @S(80) Ruby_EOLN eoln2;
 
-	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
-
+	public static class Ruby_IfElsif extends TokenSequence
+	{
+		public @S(10) Ruby_Keyword ELSIF = new Ruby_Keyword("elsif");
+		public @S(20) Ruby_Expression condition;
+		public @S(30) @OPT Ruby_EOLN eoln2;
+		public @S(40) TokenList<Ruby_Statement> elseStatements;
+	}
+	
 	public static class Ruby_IfElseClause extends TokenSequence
 	{
 		public @S(10) Ruby_Keyword ELSE = new Ruby_Keyword("else");
 		public @S(20) @OPT Ruby_EOLN eoln2;
 		public @S(30) TokenList<Ruby_Statement> elseStatements;
 	}
+
+	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
