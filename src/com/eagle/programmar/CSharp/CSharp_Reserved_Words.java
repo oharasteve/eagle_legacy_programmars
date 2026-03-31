@@ -75,8 +75,6 @@ public class CSharp_Reserved_Words
 			// "System",
 			"this",
 			"throw",
-			"ToLower",
-			"ToUpper",
 			"true",
 			"try",
 			"typeof",

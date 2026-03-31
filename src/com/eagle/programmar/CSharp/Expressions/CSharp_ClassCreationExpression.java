@@ -31,6 +31,7 @@ public class CSharp_ClassCreationExpression extends PrimaryOperator
 	{
 		CSharp_ClassCreationExpression creat = new CSharp_ClassCreationExpression();
 		creat.cstype = type;
+		creat.cstype.setPresent(true);
 		creat.leftParen = new PunctuationLeftParen();
 		if (args != null && args.size() > 0)
 		{

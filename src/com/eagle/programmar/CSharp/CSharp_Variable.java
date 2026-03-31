@@ -20,8 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_Variable extends TokenSequence implements EagleRunnable, AbstractVariable
 {
 	public @S(10) CSharp_VariableIdentifier firstId;
-	public @S(20) @OPT TokenList<CSharp_MoreVariableIdentifiers> moreIds;
-	public @S(30) @OPT TokenList<CSharp_Subscript> subscript;
+	public @S(20) @OPT TokenList<CSharp_Subscript> subscript;
 
 	public static class CSharp_MoreVariableIdentifiers extends TokenSequence
 	{
