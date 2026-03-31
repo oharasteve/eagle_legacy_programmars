@@ -31,6 +31,8 @@ import com.eagle.transform.EagleTransformer;
 public abstract class Python_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
 {
+	public static final String PYTHON = "Python";
+	
 	public Python_Program(String name, EagleSyntax syntax)
 	{
 		super(name, syntax);

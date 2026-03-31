@@ -48,6 +48,7 @@ import com.eagle.programmar.Powershell.Powershell_Program;
 import com.eagle.programmar.Property.Property_Program;
 import com.eagle.programmar.Python.Python2_Program;
 import com.eagle.programmar.Python.Python3_Program;
+import com.eagle.programmar.Python.Python_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_III_Program;
 import com.eagle.programmar.RPG.RPG_Program.RPG_IV_Program;
 import com.eagle.programmar.RPGFree.RPGFree_Program;
@@ -64,10 +65,10 @@ public class EagleLanguageLookup extends LanguageLookup
 {
 	public void add(String name, Class<? extends AbstractLanguage> lang, String... suffixes)
 	{
-		addLanguage(name, lang);
+		super.addLanguage(name, lang);
 		for (String suffix : suffixes)
 		{
-			setLanguageSuffix(suffix, name);
+			super.setLanguageSuffix(suffix, name);
 		}
 	}
 
@@ -117,6 +118,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Property_Program.PROPERTY, Property_Program.class, ".properties");
 		add(Python2_Program.PYTHON2, Python2_Program.class);
 		add(Python3_Program.PYTHON3, Python3_Program.class, ".py");
+		add(Python_Program.PYTHON, Python3_Program.class, ".py");
 		add(Rexx_Program.REXX, Rexx_Program.class, ".rexx");
 		add(RPG_III_Program.RPGIII, RPG_III_Program.class, ".rpg");
 		add(RPG_IV_Program.RPGIV, RPG_IV_Program.class);
