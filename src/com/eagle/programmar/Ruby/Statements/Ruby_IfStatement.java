@@ -39,7 +39,7 @@ public class Ruby_IfStatement extends TokenSequence
 		public @S(10) Ruby_Keyword ELSIF = new Ruby_Keyword("elsif");
 		public @S(20) Ruby_Expression condition;
 		public @S(30) @OPT Ruby_EOLN eoln2;
-		public @S(40) TokenList<Ruby_Statement> elseStatements;
+		public @S(40) TokenList<Ruby_Statement> elseIfStatements;
 	}
 	
 	public static class Ruby_IfElseClause extends TokenSequence
@@ -62,6 +62,15 @@ public class Ruby_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
+			
+			if (ifElsif != null && ifElsif.size() > 0)
+			{
+				for (Ruby_IfElsif elseIfClause : ifElsif._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elseIfClause.ELSIF));
+				}
+			}
+			
 			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
@@ -76,11 +85,32 @@ public class Ruby_IfStatement extends TokenSequence
 		}
 		else
 		{
-			// Check for 'else'
-			if (elseClause != null && elseClause.isPresent())
+			boolean matched = false;
+			int seq = 1;
+			if (ifElsif != null && ifElsif.size() > 0)
 			{
-				_metrics.get(1).completedIf(true);
-				todo = elseClause.elseStatements;
+				for (Ruby_IfElsif elseIfClause : ifElsif._elements)
+				{
+					boolean cond2 = interpreter.getBoolValue(elseIfClause.condition);
+					_metrics.get(seq).completedIf(cond2);
+					if (cond2)
+					{
+						todo = elseIfClause.elseIfStatements;
+						matched = true;
+						break;
+					}
+					seq++;
+				}
+			}
+			
+			if (!matched)
+			{
+				// Check for 'else'
+				if (elseClause != null && elseClause.isPresent())
+				{
+					_metrics.get(seq).completedIf(true);
+					todo = elseClause.elseStatements;
+				}
 			}
 		}
 
