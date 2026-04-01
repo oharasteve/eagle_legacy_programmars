@@ -27,6 +27,7 @@ import com.eagle.programmar.C.Expressions.C_LogicalXorExpression;
 import com.eagle.programmar.C.Expressions.C_MultiplicativeExpression;
 import com.eagle.programmar.C.Expressions.C_NegativeExpression;
 import com.eagle.programmar.C.Expressions.C_Parenthesized_Expression;
+import com.eagle.programmar.C.Expressions.C_PostIncrementParens;
 import com.eagle.programmar.C.Expressions.C_PostIncrementVariable;
 import com.eagle.programmar.C.Expressions.C_PreIncrementExpression;
 import com.eagle.programmar.C.Expressions.C_RelationalExpression;
@@ -97,19 +98,20 @@ public class C_Expression extends PrecedenceChooser
 	public @P(220) C_FunctionPointerCall functionPointerCall;
 	public @P(230) C_PreIncrementExpression preIncrementExpression;
 	public @P(240) C_PostIncrementVariable postIncrementVariable;
-	public @P(250) C_NegativeExpression signedExpression;
-	public @P(260) C_BitwiseNotExpression logicalNotExpression;
-	public @P(270) C_LogicalNotExpression notExpression;
-	public @P(280) C_BuiltIn builtIn;
-	public @P(290) C_VariableExpression variableExpression;
-	public @P(300) C_AddressOfVariable addressOfVariable;
-	public @P(310) C_SizeOfType sizeOfType;
-	public @P(320) C_SizeOfExpr sizeOfExpr;
-	public @P(330) C_VaArgExpr vaArgExpr;
-	public @P(340) C_Parenthesized_Expression parenthesized_Expression;
-	public @P(350) C_StarExpression starExpression;
-	public @P(360) C_CommentExpression commentExpression;
-	public @P(370) CPlus_NewExpression newExpression;
+	public @P(250) C_PostIncrementParens postIncrementParens;
+	public @P(260) C_NegativeExpression signedExpression;
+	public @P(270) C_BitwiseNotExpression logicalNotExpression;
+	public @P(280) C_LogicalNotExpression notExpression;
+	public @P(290) C_BuiltIn builtIn;
+	public @P(300) C_VariableExpression variableExpression;
+	public @P(310) C_AddressOfVariable addressOfVariable;
+	public @P(320) C_SizeOfType sizeOfType;
+	public @P(330) C_SizeOfExpr sizeOfExpr;
+	public @P(340) C_VaArgExpr vaArgExpr;
+	public @P(350) C_Parenthesized_Expression parenthesized_Expression;
+	public @P(360) C_StarExpression starExpression;
+	public @P(370) C_CommentExpression commentExpression;
+	public @P(380) CPlus_NewExpression newExpression;
 
 	///////////////////////////////////////////////
 	// Binary expressions
