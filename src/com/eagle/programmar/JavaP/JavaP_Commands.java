@@ -142,6 +142,7 @@ public class JavaP_Commands
 			"new",
 			"newarray",
 			"pop",
+			"pop2",
 			"putfield",
 			"putstatic",
 			"return",
