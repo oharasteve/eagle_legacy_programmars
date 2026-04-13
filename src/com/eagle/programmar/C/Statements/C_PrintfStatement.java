@@ -48,7 +48,7 @@ public class C_PrintfStatement extends TokenSequence
 
 		String formatted = C_Format.format(interpreter, args, argTypes);
 		_metrics.calledWith(argTypes);
-		System.out.println(formatted);
+		System.out.print(formatted);
 	}
 
 	@Override

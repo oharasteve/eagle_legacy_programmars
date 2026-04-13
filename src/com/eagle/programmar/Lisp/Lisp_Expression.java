@@ -33,6 +33,7 @@ import com.eagle.programmar.Lisp.Operators.Lisp_RelationalOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_RemainderOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_SubseqOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_TruncateOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_ZeropOperator;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Character;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Literal;
@@ -86,6 +87,7 @@ public class Lisp_Expression extends TokenChooser
 	public @CHOICE Lisp_RemainderOperator XXmodulusOperator;
 	public @CHOICE Lisp_SubseqOperator XXsubseqOperator;
 	public @CHOICE Lisp_TruncateOperator XXtruncateOperator;
+	public @CHOICE Lisp_ZeropOperator XXzeropOperator;
 
 	public @CHOICE static class Lisp_Ampersand extends TokenSequence
 	{

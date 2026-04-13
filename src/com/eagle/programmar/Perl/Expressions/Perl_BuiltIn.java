@@ -20,7 +20,7 @@ public class Perl_BuiltIn extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Perl_KeywordChoice builtIn = new Perl_KeywordChoice(
-			"FALSE", "False", "false", "TRUE", "True", "true", "NULL", "null",
+			"FALSE", "False", "false", "TRUE", "True", "true", "NULL", "null", "PHP_EOL",
 			"T_CLASS", "T_FUNCTION", "T_INCLUDE", "T_INCLUDE_ONCE", "T_REQUIRE",
 			"T_REQUIRE_ONCE", "T_USE", "namespace");
 
@@ -34,6 +34,9 @@ public class Perl_BuiltIn extends PrimaryOperator
 			return;
 		case "true":
 			interpreter.pushBool(true);
+			return;
+		case "php_eol":
+			interpreter.pushStr("\n");
 			return;
 		}
 		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtIn);

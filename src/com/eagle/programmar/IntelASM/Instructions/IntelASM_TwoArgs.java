@@ -54,6 +54,10 @@ public class IntelASM_TwoArgs extends TokenSequence implements EagleRunnable
 			int oldVal2 = var.getValue(interpreter);
 			var.setValue(interpreter, oldVal2 - val);
 			break;
+		case "XOR":
+			int oldVal4 = var.getValue(interpreter);
+			var.setValue(interpreter, oldVal4 ^ val);
+			break;
 		default:
 			throw new RuntimeException("Unable to run command: " + CMD);
 		}

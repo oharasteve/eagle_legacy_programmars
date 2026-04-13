@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.TCL.Statements.TCL_AppendStatement;
 import com.eagle.programmar.TCL.Statements.TCL_BlockStatement;
 import com.eagle.programmar.TCL.Statements.TCL_BreakStatement;
 import com.eagle.programmar.TCL.Statements.TCL_ExpressionStatement;
@@ -47,6 +48,7 @@ public class TCL_Element extends TokenSequence
 		public @CHOICE TCL_BlockStatement XXblockStatement;
 		public @CHOICE TCL_Procedure XXprocedure;
 
+		public @CHOICE TCL_AppendStatement XXappendStatement;
 		public @CHOICE TCL_BreakStatement XXbreakStatement;
 		public @CHOICE TCL_ForStatement XXforStatement;
 		public @CHOICE TCL_IfStatement XXifStatement;

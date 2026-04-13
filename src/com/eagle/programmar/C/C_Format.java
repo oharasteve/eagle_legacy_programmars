@@ -27,7 +27,7 @@ public class C_Format
 			ArrayList<TypeEnum> argTypes)
 	{
 		String fmt = interpreter.getStrValue(args.first());
-		fmt = fmt.replaceAll("\\\\n", "");
+		fmt = fmt.replaceAll("\\\\n", "\n");
 		if (fmt.indexOf('%') < 0) return fmt;
 
 		StringBuffer sb = new StringBuffer();

@@ -12,6 +12,7 @@ import com.eagle.programmar.Go.Go_Expression;
 import com.eagle.programmar.Go.Go_Format;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
+import com.eagle.programmar.Go.Terminals.Go_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -32,7 +33,7 @@ public class Go_FmtPrintfStatement extends TokenSequence
 {
 	public @S(10) Go_Keyword FMT = new Go_Keyword("fmt");
 	public @S(20) PunctuationPeriod dot;
-	public @S(30) Go_Keyword PRINTF = new Go_Keyword("Printf");
+	public @S(30) Go_KeywordChoice PRINTF = new Go_KeywordChoice("Printf", "Println");
 	public @S(40) PunctuationLeftParen leftParen;
 	public @S(50) SeparatedList<Go_Expression, PunctuationComma> arguments;
 	public @S(60) PunctuationRightParen rightParen;
@@ -48,12 +49,23 @@ public class Go_FmtPrintfStatement extends TokenSequence
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTF.getValue(), PRINTF);
 		}
 
-		String formatted = Go_Format.format(interpreter, arguments, _metrics);
-		if (formatted.endsWith("\\n"))
+		switch(PRINTF.getValue())
 		{
-			formatted = formatted.substring(0, formatted.length() - 2);
+		case "Printf":
+			String formatted = Go_Format.format(interpreter, arguments, _metrics);
+			if (formatted.endsWith("\\n"))
+			{
+				formatted = formatted.substring(0, formatted.length() - 2);
+			}
+			System.out.println(formatted);
+			break;
+		case "Println":
+			String line = interpreter.getStrValue(arguments.first());
+			System.out.println(line);
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + PRINTF.getValue());
 		}
-		System.out.println(formatted);
 	}
 
 	@Override

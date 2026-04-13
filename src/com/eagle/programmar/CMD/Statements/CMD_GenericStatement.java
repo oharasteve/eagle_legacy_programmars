@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.CMD.Statements;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Terminals.CMD_Filename;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
@@ -11,10 +13,10 @@ import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 
-public class CMD_GenericStatement extends TokenSequence
+public class CMD_GenericStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) CMD_Expression programName;
-	public @S(20) @OPT TokenList<CMD_GenericArgument> args;
+	public @S(20) TokenList<CMD_GenericArgument> args;
 
 	public static class CMD_GenericArgument extends TokenChooser
 	{
@@ -22,5 +24,11 @@ public class CMD_GenericStatement extends TokenSequence
 		public @CHOICE CMD_Filename XXfileName;
 		public @LAST CMD_Expression XXexpr;
 		public @LAST CMD_RawArgument XXrawArg;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		
 	}
 }

@@ -101,7 +101,7 @@ public class SQL_IfStatement extends TokenSequence
 					_metrics.get(seq).completedIf(cond2);
 					if (cond2)
 					{
-						for (SQL_StatementOrComment stmt : elseClause.statements._elements)
+						for (SQL_StatementOrComment stmt : elseIfClause.statements._elements)
 						{
 							result = interpreter.tryToInterpret(stmt);
 							if (result != Eagle_Statement_Result.NORMAL)

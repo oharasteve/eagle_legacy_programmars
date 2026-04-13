@@ -43,7 +43,7 @@ public class Fortran_IfStatement extends TokenSequence
 		public @S(30) Fortran_Expression condition;
 		public @S(40) Fortran_Keyword THEN = new Fortran_Keyword("THEN");
 		public @S(50) Fortran_EOLN eoln;
-		public @S(60) TokenList<Fortran_Statement> elseStatements;
+		public @S(60) TokenList<Fortran_Statement> elseIfStatements;
 	}
 
 	public static class Fortran_IfElseBlock extends TokenSequence
@@ -66,6 +66,15 @@ public class Fortran_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF1));
+			
+			if (elseIfClauses != null)
+			{
+				for (Fortran_IfElseIfBlock elif : elseIfClauses._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELSE));
+				}
+			}
+
 			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
@@ -81,11 +90,30 @@ public class Fortran_IfStatement extends TokenSequence
 		else
 		{
 			todo = null;
+			int seq = 1;
+
+			// Check for 'else if'
+			if (elseIfClauses != null && elseIfClauses.size() > 0)
+			{
+				for (int i = 0; i < elseIfClauses.size(); i++)
+				{
+					Fortran_IfElseIfBlock clause = elseIfClauses._elements.get(i);
+					boolean cond2 = interpreter.getBoolValue(clause.condition);
+					_metrics.get(i).completedIf(cond2);
+					if (cond2)
+					{
+						_metrics.get(seq).completedIf(true);
+						todo = clause.elseIfStatements;
+						break;
+					}
+					seq++;
+				}
+			}
 
 			// Check for 'else'
-			if (elseClause != null && elseClause.isPresent())
+			if (todo == null && elseClause != null && elseClause.isPresent())
 			{
-				_metrics.get(1).completedIf(true);
+				_metrics.get(seq).completedIf(true);
 				todo = elseClause.elseStatements;
 			}
 		}
