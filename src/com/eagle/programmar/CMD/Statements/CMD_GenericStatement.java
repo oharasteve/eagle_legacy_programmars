@@ -16,7 +16,7 @@ import com.eagle.tokens.TokenSequence;
 public class CMD_GenericStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) CMD_Expression programName;
-	public @S(20) TokenList<CMD_GenericArgument> args;
+	public @S(20) @OPT TokenList<CMD_GenericArgument> args;
 
 	public static class CMD_GenericArgument extends TokenChooser
 	{

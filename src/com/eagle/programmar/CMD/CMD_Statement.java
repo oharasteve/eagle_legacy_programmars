@@ -65,6 +65,5 @@ public class CMD_Statement extends TokenChooser
 	public @CHOICE CMD_Shift_Statement XXshiftCommand;
 	public @CHOICE CMD_Xcopy_Statement XXxcopyCommand;
 
-	public @LAST CMD_Expression XXexpressionStatement;
 	public @LAST CMD_GenericStatement XXgenericStatement;
 }
