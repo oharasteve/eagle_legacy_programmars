@@ -11,6 +11,7 @@ import com.eagle.math.EagleInteger;
 import com.eagle.metrics.ForLoopMetric;
 import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
+import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformUntil;
 import com.eagle.programmar.COBOL.Statements.COBOL_PerformClause.COBOL_PerformVarying;
 import com.eagle.tokens.AbstractToken;
@@ -112,7 +113,8 @@ public class COBOL_PerformInline extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String indexVar = null;
 		AbstractExpression initExpr = null;
@@ -128,7 +130,7 @@ public class COBOL_PerformInline extends TokenSequence
 				if (which instanceof COBOL_PerformVarying)
 				{
 					COBOL_PerformVarying varying = (COBOL_PerformVarying) which;
-					indexVar = varying.id.getValue();
+					indexVar = COBOL_Variable.repairName(varying.id.getValue());
 					AbstractExpression fromExpr = transformer.transformExpression(generator, varying.from);
 					initExpr = generator.newAssignmentExpression(indexVar, SubscriptEnum.FIRST_IS_ONE,
 							null, AssignmentEnum.EQUALS, fromExpr, which);

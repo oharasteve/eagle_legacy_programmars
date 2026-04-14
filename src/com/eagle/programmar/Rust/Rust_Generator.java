@@ -341,7 +341,8 @@ public class Rust_Generator
 			ArrayList<ArrayList<Rust_Statement>> elseIfParts,
 			ArrayList<Rust_Statement> ifFalse, AbstractToken source)
 	{
-		throw new RuntimeException("Working on it");
+		return Rust_IfStatement.generateIfElseIfMany(condition, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, source);
 	}
 
 	@Override

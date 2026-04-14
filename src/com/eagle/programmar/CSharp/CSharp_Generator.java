@@ -355,7 +355,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			ArrayList<ArrayList<CSharp_Statement>> elseIfParts,
 			ArrayList<CSharp_Statement> ifFalse, AbstractToken source)
 	{
-		throw new RuntimeException("Working on it");
+		return CSharp_IfStatement.generateIfElseIfMany(condition, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, source);
 	}
 
 	@Override

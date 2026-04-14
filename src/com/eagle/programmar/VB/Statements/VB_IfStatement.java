@@ -208,12 +208,6 @@ public class VB_IfStatement extends TokenSequence
 			}
 		}
 
-		if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent()
-				&& multiLiner.elseIfClause.size() > 0)
-		{
-			throw new RuntimeException("Can't handle VB elseif yet");
-		}
-
 		if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())
 		{
 			for (VB_Element statement : multiLiner.elseClause.elseStatement._elements)
@@ -244,10 +238,20 @@ public class VB_IfStatement extends TokenSequence
 		{
 			elseIfConds.add(transformer.transformExpression(generator,
 					nextElIf.condition));
-			for (VB_Element stmt : nextElIf.elseIfStatement._elements)
+			ArrayList<AbstractStatement> elseIfPart = new ArrayList<AbstractStatement>();
+			for (VB_Element statement : nextElIf.elseIfStatement._elements)
 			{
-				elseIfParts.add(transformer.transformStatement(generator, stmt));
+				for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
+				{
+					VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
+					for (AbstractStatement stmt : transformer.transformStatement(generator,
+							baseStatement.getWhich()))
+					{
+						elseIfPart.add(stmt);
+					}
+				}
 			}
+			elseIfParts.add(elseIfPart);
 		}
 		return generator.newIfElseIfStatement(cond, ifTrue,
 				elseIfConds, elseIfParts, ifFalse, this);

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -15,9 +17,19 @@ import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformableStatementList;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_DivideStatement extends COBOL_AbstractStatement
-		implements EagleRunnable
+		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) @DOC("rlpsdivi.htm") COBOL_Keyword DIVIDE = new COBOL_Keyword("DIVIDE");
 	public @S(20) COBOL_DivideType type;
@@ -102,5 +114,77 @@ public class COBOL_DivideStatement extends COBOL_AbstractStatement
 				interpreter.setSymbol(remainderVar, remainderVar.id.getValue(), new EagleInteger(rem));
 			}
 		}
+	}
+
+	@Override
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractToken which = type.getWhich();
+		if (!(which instanceof COBOL_DivideWithGiving))
+		{
+			throw new RuntimeException("Cannot handle " + which + " yet");
+		}
+		COBOL_DivideWithGiving withGiving = (COBOL_DivideWithGiving) which;
+
+		ArrayList<AbstractStatement> results = new ArrayList<AbstractStatement>();
+		
+		AbstractExpression divExpr;
+		String byInto = withGiving.BYINTO.getValue();
+		AbstractExpression x1 = transformer.transformExpression(generator, withGiving.expr1);
+		AbstractExpression x2 = transformer.transformExpression(generator, withGiving.expr2);
+		switch (byInto.toUpperCase())
+		{
+		case "BY":
+			divExpr = generator.newMultiplicativeExpression(x1,
+					MultiplicativeEnum.DIVIDE_TRUNCATE, x2, this);
+			break;
+		case "INTO":
+			divExpr = generator.newMultiplicativeExpression(x2,
+					MultiplicativeEnum.DIVIDE_TRUNCATE, x1, this);
+			break;
+		default:
+			throw new RuntimeException("Unable to handle: " + byInto);
+		}
+		
+		if (!(withGiving.quotient.getWhich() instanceof COBOL_UserVariable))
+		{
+			throw new RuntimeException("Can only DIVIDE to a Variable: " + this);
+		}
+		COBOL_UserVariable divVar = (COBOL_UserVariable) withGiving.quotient.getWhich();
+		AbstractExpression divAsg = generator.newAssignmentExpression(
+				COBOL_Variable.repairName(divVar.id.getValue()), SubscriptEnum.FIRST_IS_ONE,
+				null, AssignmentEnum.EQUALS, divExpr, this);
+		AbstractStatement divStmt = generator.newExpressionStatement(divAsg, this);
+		results.add(divStmt);
+		
+		if (remainder != null && remainder.isPresent())
+		{
+			AbstractExpression remExpr;
+			AbstractExpression y1 = transformer.transformExpression(generator, withGiving.expr1);
+			AbstractExpression y2 = transformer.transformExpression(generator, withGiving.expr2);
+			switch (byInto.toUpperCase())
+			{
+			case "BY":
+				remExpr = generator.newMultiplicativeExpression(y1,
+						MultiplicativeEnum.REMAINDER, y2, this);
+				break;
+			case "INTO":
+				remExpr = generator.newMultiplicativeExpression(y2,
+						MultiplicativeEnum.REMAINDER, y1, this);
+				break;
+			default:
+				throw new RuntimeException("Unable to handle: " + byInto);
+			}
+
+			COBOL_UserVariable remVar = (COBOL_UserVariable) remainder.remainder.getWhich();
+			AbstractExpression remAsg = generator.newAssignmentExpression(
+					COBOL_Variable.repairName(remVar.id.getValue()), SubscriptEnum.FIRST_IS_ONE,
+					null, AssignmentEnum.EQUALS, remExpr, this);
+			AbstractStatement remStmt = generator.newExpressionStatement(remAsg, this);
+			results.add(remStmt);
+		}
+		
+		return results;
 	}
 }

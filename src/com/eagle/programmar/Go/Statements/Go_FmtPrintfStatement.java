@@ -73,7 +73,15 @@ public class Go_FmtPrintfStatement extends TokenSequence
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTF);
-		AbstractExpression fullExpr = Go_Format.transform(transformer, generator, arguments, metrics);
-		return generator.newPrintStatement(fullExpr, TypeEnum.STRING, true, false, this);
+		switch(PRINTF.getValue())
+		{
+		case "Printf":
+			AbstractExpression fullExpr = Go_Format.transform(transformer, generator, arguments, metrics);
+			return generator.newPrintStatement(fullExpr, TypeEnum.STRING, true, false, this);
+		case "Println":
+			AbstractExpression line = transformer.transformExpression(generator, arguments.first());
+			return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		}
+		return null;
 	}
 }

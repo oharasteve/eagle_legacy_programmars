@@ -155,4 +155,33 @@ public class CSharp_IfStatement extends TokenSequence
 
 		return generateIfElseOne(cond, blockThen, blockElse, source);
 	}
+
+	public static CSharp_Statement generateIfElseIfMany(CSharp_Expression cond,
+			ArrayList<CSharp_Statement> ifTrue, ArrayList<CSharp_Expression> elseIfConds,
+			ArrayList<ArrayList<CSharp_Statement>> elseIfParts, ArrayList<CSharp_Statement> ifFalse,
+			AbstractToken source)
+	{
+		CSharp_Statement thenBlock;
+		CSharp_Statement currElse = null;
+		if (ifFalse != null)
+		{
+			currElse = CSharp_StatementBlock.generateBlock(ifFalse, source);
+		}
+
+		// Work from the bottom (last else) up to the top (first condition)
+		if (elseIfConds != null)
+		{
+			int countElIfs = elseIfConds.size();
+			for (int i = countElIfs-1; i >= 0; i--)
+			{
+				CSharp_Expression currCond = elseIfConds.get(i);
+				ArrayList<CSharp_Statement> currThen = elseIfParts.get(i);
+				thenBlock = CSharp_StatementBlock.generateBlock(currThen, source);
+				currElse = generateIfElseOne(currCond, thenBlock, currElse, source);
+			}
+		}
+		
+		thenBlock = CSharp_StatementBlock.generateBlock(ifTrue, source);
+		return generateIfElseOne(cond, thenBlock, currElse, source);
+	}
 }

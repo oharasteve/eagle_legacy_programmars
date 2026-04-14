@@ -189,7 +189,7 @@ public class Powershell_IfStatement extends TokenSequence
 					nextElIf.condition));
 			for (Powershell_Element stmt : nextElIf.statements._elements)
 			{
-				elseIfParts.add(transformer.transformStatement(generator, stmt));
+				elseIfParts.add(transformer.transformStatement(generator, stmt.element.getWhich()));
 			}
 		}
 		return generator.newIfElseIfStatement(newCond, thenParts,

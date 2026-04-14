@@ -148,4 +148,33 @@ public class Rust_IfStatement extends TokenSequence
 
 		return generateIfElseOne(cond, blockTrue, blockElse, source);
 	}
+
+	public static Rust_Statement generateIfElseIfMany(Rust_Expression cond,
+			ArrayList<Rust_Statement> ifTrue, ArrayList<Rust_Expression> elseIfConds,
+			ArrayList<ArrayList<Rust_Statement>> elseIfParts,
+			ArrayList<Rust_Statement> ifFalse, AbstractToken source)
+	{
+		Rust_Statement thenBlock;
+		Rust_Statement currElse = null;
+		if (ifFalse != null)
+		{
+			currElse = Rust_Block_Statement.generateBlock(ifFalse, source);
+		}
+
+		// Work from the bottom (last else) up to the top (first condition)
+		if (elseIfConds != null)
+		{
+			int countElIfs = elseIfConds.size();
+			for (int i = countElIfs-1; i >= 0; i--)
+			{
+				Rust_Expression currCond = elseIfConds.get(i);
+				ArrayList<Rust_Statement> currThen = elseIfParts.get(i);
+				thenBlock = Rust_Block_Statement.generateBlock(currThen, source);
+				currElse = generateIfElseOne(currCond, thenBlock, currElse, source);
+			}
+		}
+		
+		thenBlock = Rust_Block_Statement.generateBlock(ifTrue, source);
+		return generateIfElseOne(cond, thenBlock, currElse, source);
+	}
 }

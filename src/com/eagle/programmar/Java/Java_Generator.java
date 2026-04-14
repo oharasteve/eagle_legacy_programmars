@@ -338,7 +338,8 @@ public class Java_Generator
 			ArrayList<ArrayList<Java_Statement>> elseIfParts,
 			ArrayList<Java_Statement> ifFalse, AbstractToken source)
 	{
-		throw new RuntimeException("Working on it");
+		return Java_IfStatement.generateIfElseIfMany(condition, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, source);
 	}
 
 	@Override

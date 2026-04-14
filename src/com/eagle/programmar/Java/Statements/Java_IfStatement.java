@@ -157,4 +157,33 @@ public class Java_IfStatement extends TokenSequence
 
 		return generateIfElseOne(cond, thenBlock, elseBlock, source);
 	}
+
+	public static Java_Statement generateIfElseIfMany(Java_Expression cond,
+			ArrayList<Java_Statement> ifTrue, ArrayList<Java_Expression> elseIfConds,
+			ArrayList<ArrayList<Java_Statement>> elseIfParts,
+			ArrayList<Java_Statement> ifFalse, AbstractToken source)
+	{
+		Java_Statement thenBlock;
+		Java_Statement currElse = null;
+		if (ifFalse != null)
+		{
+			currElse = Java_StatementBlock.generateBlock(ifFalse, source);
+		}
+
+		// Work from the bottom (last else) up to the top (first condition)
+		if (elseIfConds != null)
+		{
+			int countElIfs = elseIfConds.size();
+			for (int i = countElIfs-1; i >= 0; i--)
+			{
+				Java_Expression currCond = elseIfConds.get(i);
+				ArrayList<Java_Statement> currThen = elseIfParts.get(i);
+				thenBlock = Java_StatementBlock.generateBlock(currThen, source);
+				currElse = generateIfElseOne(currCond, thenBlock, currElse, source);
+			}
+		}
+		
+		thenBlock = Java_StatementBlock.generateBlock(ifTrue, source);
+		return generateIfElseOne(cond, thenBlock, currElse, source);
+	}
 }

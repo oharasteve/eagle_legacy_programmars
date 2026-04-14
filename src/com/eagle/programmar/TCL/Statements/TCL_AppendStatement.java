@@ -11,10 +11,18 @@ import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.TCL_Variable;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class TCL_AppendStatement extends TokenSequence
-		implements EagleRunnable, AbstractStatement
+		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("TclCmd/append.html") TCL_Keyword APPEND = new TCL_Keyword("append");
 	public @S(20) TCL_Variable var;
@@ -27,5 +35,16 @@ public class TCL_AppendStatement extends TokenSequence
 		String val = interpreter.getStrValue(expr);
 		EagleString newValue = new EagleString(oldValue.forceStringValue() + val);
 		interpreter.setSymbol(var, var.id.getValue(), newValue);
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractExpression subscrExpr = null;
+		AbstractExpression value = transformer.transformExpression(generator, expr);
+		AbstractExpression newAsg = generator.newAssignmentExpression(var.id.getValue(),
+				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.PLUS_EQUALS, value, this);
+		return generator.newExpressionStatement(newAsg, null);
 	}
 }

@@ -402,7 +402,8 @@ public class Python_ForStatement extends TokenSequence
 		String id = initId.getValue();
 		if (!condId.getValue().equals(id) || !incrId.getValue().equals(id))
 		{
-			throw new RuntimeException("Must use the same variable in all parts");
+			throw new RuntimeException("Must use the same variable in all parts: cond=" +
+					condId.getValue() + " incr=" + incrId.getValue() + " init=" + id);
 		}
 
 		// Ok, made it through the gauntlet ....
@@ -447,13 +448,16 @@ public class Python_ForStatement extends TokenSequence
 
 		for (Python_ComplexStatement stmt : actions)
 		{
-			multi.statements.addToken(stmt);
-
-			// If the parent block gets the 'while' as the parent, line numbers in the
-			// side-by-side will pick up the 'while' instead of the first statement.
-			if (forStmt.getTransformationSource() == null)
+			if (stmt != null)
 			{
-				forStmt.setTransformationSource(stmt.getTransformationSource());
+				multi.statements.addToken(stmt);
+	
+				// If the parent block gets the 'while' as the parent, line numbers in the
+				// side-by-side will pick up the 'while' instead of the first statement.
+				if (forStmt.getTransformationSource() == null)
+				{
+					forStmt.setTransformationSource(stmt.getTransformationSource());
+				}
 			}
 		}
 

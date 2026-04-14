@@ -231,7 +231,8 @@ public class Python_Generator
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
+		// Not sure which of the 3 blocks to use ...
+		// throw new RuntimeException("Need to implement");
 	}
 
 	// ================ Statements ================
@@ -314,7 +315,8 @@ public class Python_Generator
 			ArrayList<ArrayList<Python_ComplexStatement>> elseIfParts,
 			ArrayList<Python_ComplexStatement> ifFalse, AbstractToken source)
 	{
-		throw new RuntimeException("Working on it");
+		return Python_IfStatement.generateIfElseIfMany(condition, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, source);
 	}
 
 	@Override

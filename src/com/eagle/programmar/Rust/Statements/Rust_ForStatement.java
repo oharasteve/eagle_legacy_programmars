@@ -314,7 +314,8 @@ public class Rust_ForStatement extends TokenSequence
 		String id = initId.getValue();
 		if (!condId.getValue().equals(id) || !incrId.getValue().equals(id))
 		{
-			throw new RuntimeException("Must use the same variable in all parts");
+			throw new RuntimeException("Must use the same variable in all parts: cond=" +
+					condId.getValue() + " incr=" + incrId.getValue() + " init=" + id);
 		}
 
 		// Ok, made it through the gauntlet ....
