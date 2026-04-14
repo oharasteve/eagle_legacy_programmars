@@ -187,51 +187,69 @@ public class VB_IfStatement extends TokenSequence
 			{
 				ifTrue.add(stmt);
 			}
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
 		}
-		else
+
+		VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
+		for (VB_Element statement : multiLiner.thenStatement._elements)
 		{
-			VB_IfMultiLiner multiLiner = (VB_IfMultiLiner) which;
-			for (VB_Element statement : multiLiner.thenStatement._elements)
+			for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
+			{
+				VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
+				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+						baseStatement.getWhich());
+				if (stmts != null)
+				{
+					for (AbstractStatement stmt : stmts)
+					{
+						ifTrue.add(stmt);
+					}
+				}
+			}
+		}
+
+		if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent()
+				&& multiLiner.elseIfClause.size() > 0)
+		{
+			throw new RuntimeException("Can't handle VB elseif yet");
+		}
+
+		if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())
+		{
+			for (VB_Element statement : multiLiner.elseClause.elseStatement._elements)
 			{
 				for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
 				{
 					VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
-					ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
-							baseStatement.getWhich());
-					if (stmts != null)
+					for (AbstractStatement stmt : transformer.transformStatement(generator,
+							baseStatement.getWhich()))
 					{
-						for (AbstractStatement stmt : stmts)
-						{
-							ifTrue.add(stmt);
-						}
-					}
-				}
-			}
-
-			if (multiLiner.elseIfClause != null && multiLiner.elseIfClause.isPresent()
-					&& multiLiner.elseIfClause.size() > 0)
-			{
-				throw new RuntimeException("Can't handle VB elseif yet");
-			}
-
-			if (multiLiner.elseClause != null && multiLiner.elseClause.isPresent())
-			{
-				for (VB_Element statement : multiLiner.elseClause.elseStatement._elements)
-				{
-					for (int i = 0; i < statement.baseStatements.getPrimaryCount(); i++)
-					{
-						VB_Statement baseStatement = statement.baseStatements.getPrimaryElement(i);
-						for (AbstractStatement stmt : transformer.transformStatement(generator,
-								baseStatement.getWhich()))
-						{
-							ifFalse.add(stmt);
-						}
+						ifFalse.add(stmt);
 					}
 				}
 			}
 		}
 
-		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-		return stmt;
+		if (multiLiner.elseIfClause == null || multiLiner.elseIfClause.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (VB_IfElseIfClause nextElIf : multiLiner.elseIfClause._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			for (VB_Element stmt : nextElIf.elseIfStatement._elements)
+			{
+				elseIfParts.add(transformer.transformStatement(generator, stmt));
+			}
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 }

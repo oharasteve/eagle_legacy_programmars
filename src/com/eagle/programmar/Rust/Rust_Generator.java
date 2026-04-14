@@ -336,6 +336,15 @@ public class Rust_Generator
 	}
 
 	@Override
+	public Rust_Statement newIfElseIfStatement(Rust_Expression condition,
+			ArrayList<Rust_Statement> ifTrue, ArrayList<Rust_Expression> elseIfConds,
+			ArrayList<ArrayList<Rust_Statement>> elseIfParts,
+			ArrayList<Rust_Statement> ifFalse, AbstractToken source)
+	{
+		throw new RuntimeException("Working on it");
+	}
+
+	@Override
 	public Rust_Statement newForLoopStatement1(Rust_Expression init,
 			Rust_Expression term, Rust_Expression incr, Rust_Statement action,
 			AbstractToken source)

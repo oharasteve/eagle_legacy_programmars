@@ -127,11 +127,6 @@ public class FSharp_IfStatement extends TokenSequence
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 
-		if (ifElifs != null && ifElifs.size() > 0)
-		{
-			throw new RuntimeException("if/elif is not yet implemented in F#");
-		}
-
 		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
 				ifThenStatement.getWhich());
 
@@ -142,6 +137,24 @@ public class FSharp_IfStatement extends TokenSequence
 					ifElseBlock.ifElseStatement.getWhich());
 		}
 
-		return generator.newIfStatement(cond, thenParts, elseParts, this);
+		if (ifElifs == null || ifElifs.size() == 0)
+		{
+			return generator.newIfStatement(cond, thenParts, elseParts, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (FSharp_IfElif nextElIf : ifElifs._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			elseIfParts.add(transformer.transformStatement(generator,
+					nextElIf.elifStatement.getWhich()));
+		}
+		return generator.newIfElseIfStatement(cond, thenParts,
+				elseIfConds, elseIfParts, elseParts, this);
 	}
 }

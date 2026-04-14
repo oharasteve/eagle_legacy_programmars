@@ -350,6 +350,15 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
+	public CSharp_Statement newIfElseIfStatement(CSharp_Expression condition,
+			ArrayList<CSharp_Statement> ifTrue, ArrayList<CSharp_Expression> elseIfConds,
+			ArrayList<ArrayList<CSharp_Statement>> elseIfParts,
+			ArrayList<CSharp_Statement> ifFalse, AbstractToken source)
+	{
+		throw new RuntimeException("Working on it");
+	}
+
+	@Override
 	public CSharp_Statement newIfStatement(CSharp_Expression condition,
 			ArrayList<CSharp_Statement> ifTrue,
 			ArrayList<CSharp_Statement> ifFalse, AbstractToken source)

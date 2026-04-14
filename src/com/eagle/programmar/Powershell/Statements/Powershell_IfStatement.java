@@ -149,11 +149,6 @@ public class Powershell_IfStatement extends TokenSequence
 	{
 		AbstractExpression newCond = transformer.transformExpression(generator, condition);
 
-		if (elseIfStmts != null && elseIfStmts.size() > 0)
-		{
-			throw new RuntimeException("if/elif is not yet implemented in Powershell");
-		}
-
 		ArrayList<AbstractStatement> thenParts = new ArrayList<AbstractStatement>();
 		for (Powershell_Element stmt1 : statements._elements)
 		{
@@ -178,6 +173,26 @@ public class Powershell_IfStatement extends TokenSequence
 			}
 		}
 
-		return generator.newIfStatement(newCond, thenParts, elseParts, this);
+		if (elseIfStmts == null || elseIfStmts.size() == 0)
+		{
+			return generator.newIfStatement(newCond, thenParts, elseParts, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Powershell_IfElseIfStatement nextElIf : elseIfStmts._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			for (Powershell_Element stmt : nextElIf.statements._elements)
+			{
+				elseIfParts.add(transformer.transformStatement(generator, stmt));
+			}
+		}
+		return generator.newIfElseIfStatement(newCond, thenParts,
+				elseIfConds, elseIfParts, elseParts, this);
 	}
 }

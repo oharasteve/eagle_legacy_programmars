@@ -29,7 +29,7 @@ public class Algol68_IfStatement extends TokenSequence
 	public @S(20) Algol68_Expression condition;
 	public @S(30) Algol68_Keyword THEN = new Algol68_Keyword("THEN");
 	public @S(40) TokenList<Algol68_Statement> thenStatements;
-	public @S(50) @OPT TokenList<Algol68_IfElifClause> elifClause;
+	public @S(50) @OPT TokenList<Algol68_IfElifClause> elifClauses;
 	public @S(60) @OPT Algol68_IfElseClause elseClause;
 	public @S(70) Algol68_Keyword END = new Algol68_Keyword("FI");
 	public @S(80) @OPT PunctuationSemicolon semicolon;
@@ -62,9 +62,9 @@ public class Algol68_IfStatement extends TokenSequence
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
 
-			if (elifClause != null)
+			if (elifClauses != null)
 			{
-				for (Algol68_IfElifClause elif : elifClause._elements)
+				for (Algol68_IfElifClause elif : elifClauses._elements)
 				{
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elif.ELIF));
 				}
@@ -85,10 +85,11 @@ public class Algol68_IfStatement extends TokenSequence
 		else
 		{
 			int seq = 1;
+			
 			// Check for each 'else if'
-			if (elifClause != null)
+			if (elifClauses != null && elifClauses.size() > 0)
 			{
-				for (Algol68_IfElifClause elif : elifClause._elements)
+				for (Algol68_IfElifClause elif : elifClauses._elements)
 				{
 					boolean cond2 = interpreter.getBoolValue(elif.condition);
 					_metrics.get(seq).completedIf(cond2);
@@ -144,11 +145,6 @@ public class Algol68_IfStatement extends TokenSequence
 			}
 		}
 
-		if (elifClause != null && elifClause.size() > 0)
-		{
-			throw new RuntimeException("Can't handle Algol68 ELIF yet.");
-		}
-
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (Algol68_Statement elseStatement : elseClause.elseStatements._elements)
@@ -160,7 +156,26 @@ public class Algol68_IfStatement extends TokenSequence
 			}
 		}
 
-		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-		return stmt;
+		if (elifClauses == null || elifClauses.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Algol68_IfElifClause nextElIf : elifClauses._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			for (Algol68_Statement stmt : nextElIf.elifStatements._elements)
+			{
+				elseIfParts.add(transformer.transformStatement(generator, stmt));
+			}
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 }

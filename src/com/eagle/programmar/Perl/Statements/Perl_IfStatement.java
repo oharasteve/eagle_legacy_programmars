@@ -157,11 +157,6 @@ public class Perl_IfStatement extends TokenSequence
 		Perl_Expression cond = (Perl_Expression) condition.getWhich();
 		AbstractExpression newCond = transformer.transformExpression(generator, cond);
 
-		if (elseIfClauses != null && elseIfClauses.size() > 0)
-		{
-			throw new RuntimeException("if/elif is not yet implemented in Perl");
-		}
-
 		ArrayList<AbstractStatement> thenParts = transformer.transformStatement(generator,
 				thenStatement.getWhich());
 
@@ -172,6 +167,24 @@ public class Perl_IfStatement extends TokenSequence
 					elseClause.elseStatement.getWhich());
 		}
 
-		return generator.newIfStatement(newCond, thenParts, elseParts, this);
+		if (elseIfClauses == null || elseIfClauses.size() == 0)
+		{
+			return generator.newIfStatement(newCond, thenParts, elseParts, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Perl_IfElseIfClause nextElIf : elseIfClauses._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			elseIfParts.add(transformer.transformStatement(generator,
+					nextElIf.elseIfStatement.getWhich()));
+		}
+		return generator.newIfElseIfStatement(newCond, thenParts,
+				elseIfConds, elseIfParts, elseParts, this);
 	}
 }

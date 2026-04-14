@@ -333,6 +333,15 @@ public class Java_Generator
 	}
 
 	@Override
+	public Java_Statement newIfElseIfStatement(Java_Expression condition,
+			ArrayList<Java_Statement> ifTrue, ArrayList<Java_Expression> elseIfConds,
+			ArrayList<ArrayList<Java_Statement>> elseIfParts,
+			ArrayList<Java_Statement> ifFalse, AbstractToken source)
+	{
+		throw new RuntimeException("Working on it");
+	}
+
+	@Override
 	public Java_Statement newForLoopStatement1(Java_Expression init,
 			Java_Expression term, Java_Expression incr, Java_Statement action,
 			AbstractToken source)

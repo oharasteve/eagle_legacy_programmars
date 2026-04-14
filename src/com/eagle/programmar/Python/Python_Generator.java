@@ -309,6 +309,15 @@ public class Python_Generator
 	}
 
 	@Override
+	public Python_ComplexStatement newIfElseIfStatement(Python_Expression condition,
+			ArrayList<Python_ComplexStatement> ifTrue, ArrayList<Python_Expression> elseIfConds,
+			ArrayList<ArrayList<Python_ComplexStatement>> elseIfParts,
+			ArrayList<Python_ComplexStatement> ifFalse, AbstractToken source)
+	{
+		throw new RuntimeException("Working on it");
+	}
+
+	@Override
 	public Python_ComplexStatement newForLoopStatement1(Python_Expression init,
 			Python_Expression term, Python_Expression incr, Python_ComplexStatement action,
 			AbstractToken source)
