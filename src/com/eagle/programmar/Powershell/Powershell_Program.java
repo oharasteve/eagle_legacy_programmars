@@ -121,6 +121,6 @@ public class Powershell_Program extends AbstractLanguage
 			}
 		}
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

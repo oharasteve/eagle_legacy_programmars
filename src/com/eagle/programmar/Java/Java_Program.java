@@ -151,7 +151,7 @@ public class Java_Program extends AbstractLanguage
 		// Not needed for C# or Java, but Python needs this
 		generator.addCallToMain();
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 
 	public static Java_Program newJavaProgram(Java_Class cls, String pkg)

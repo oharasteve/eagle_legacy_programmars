@@ -168,6 +168,6 @@ public class Algol68_Program extends AbstractLanguage
 			}
 		}
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

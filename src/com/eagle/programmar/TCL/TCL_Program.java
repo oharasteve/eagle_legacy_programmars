@@ -123,6 +123,6 @@ public class TCL_Program extends AbstractLanguage
 			}
 		}
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

@@ -217,6 +217,6 @@ public class PHP_Program extends AbstractLanguage
 			}
 		}
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

@@ -145,7 +145,7 @@ public class CSharp_Program extends AbstractLanguage
 		// Not needed for C# or CSharp, but Python needs this
 		generator.addCallToMain();
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 
 	public void addClass(CSharp_Class cls)

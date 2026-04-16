@@ -163,6 +163,6 @@ public abstract class Python_Program extends AbstractLanguage
 			}
 		}
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

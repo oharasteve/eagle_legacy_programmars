@@ -144,6 +144,6 @@ public class Scala_Program extends AbstractLanguage
 			generator.addCallToMain();
 		}
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

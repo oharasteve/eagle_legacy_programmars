@@ -80,6 +80,6 @@ public class Fortran_Program extends AbstractLanguage
 		// Only needed by Python
 		generator.addCallToMain();
 
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }

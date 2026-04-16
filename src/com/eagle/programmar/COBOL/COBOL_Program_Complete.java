@@ -110,6 +110,6 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 			dataDiv.transform(transformer, generator);
 		}
 		procedureDiv.transform(transformer, generator);
-		return generator.getTransfomedProgram();
+		return generator.getTransformedProgram();
 	}
 }
