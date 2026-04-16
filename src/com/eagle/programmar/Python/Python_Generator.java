@@ -125,7 +125,7 @@ public class Python_Generator
 	}
 
 	@Override
-	public AbstractLanguage getTransfomedProgram()
+	public AbstractLanguage getTransformedProgram()
 	{
 		_program.entries = new TokenList<Python_ComplexStatement>();
 		_program.entries.setPresent(true);

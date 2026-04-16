@@ -111,7 +111,7 @@ public class Java_Generator
 	}
 
 	@Override
-	public AbstractLanguage getTransfomedProgram()
+	public AbstractLanguage getTransformedProgram()
 	{
 		return _program;
 	}
@@ -247,7 +247,7 @@ public class Java_Generator
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
-		Java_Comment comm = new Java_Comment(comment);
+		Java_Comment comm = new Java_Comment("// " + comment);
 		comm.setTransformationSource(source);
 		if (_currentMethod != null)
 		{

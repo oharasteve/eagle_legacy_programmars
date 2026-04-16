@@ -108,7 +108,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
-	public AbstractLanguage getTransfomedProgram()
+	public AbstractLanguage getTransformedProgram()
 	{
 		return _program;
 	}
@@ -238,7 +238,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
-		CSharp_Comment comm = new CSharp_Comment(comment);
+		CSharp_Comment comm = new CSharp_Comment("// " + comment);
 		comm.setTransformationSource(source);
 		if (_currentMethod != null)
 		{

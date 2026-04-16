@@ -241,6 +241,7 @@ public class Python_IfStatement extends TokenSequence
 			{
 				Python_IfElif next = new Python_IfElif();
 				next.condition = elseIfConds.get(i);
+				next.colon = new PunctuationColon();
 				next.elifStatements = new Python_StatementBlock();
 				Python_MultilineStatement elseMulti = new Python_MultilineStatement();
 				elseMulti.statements = new TokenList<Python_ComplexStatement>();

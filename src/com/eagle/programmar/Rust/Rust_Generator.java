@@ -113,7 +113,7 @@ public class Rust_Generator
 	}
 
 	@Override
-	public AbstractLanguage getTransfomedProgram()
+	public AbstractLanguage getTransformedProgram()
 	{
 		return _program;
 	}
@@ -243,7 +243,7 @@ public class Rust_Generator
 	@Override
 	public void addComment(String comment, AbstractToken source)
 	{
-		Rust_Comment comm = new Rust_Comment(comment);
+		Rust_Comment comm = new Rust_Comment("// " + comment);
 		comm.setTransformationSource(source);
 		if (_currentFunction != null)
 		{

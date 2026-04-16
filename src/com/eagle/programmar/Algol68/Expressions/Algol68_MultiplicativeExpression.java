@@ -30,7 +30,7 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 
 	public static class Algol68_MultOper extends TokenChooser
 	{
-		public @CHOICE Algol68_PunctuationChoice XXoperator = new Algol68_PunctuationChoice("*", "/", "%");
+		public @CHOICE Algol68_PunctuationChoice XXoperator = new Algol68_PunctuationChoice("*", "/");
 		public @CHOICE Algol68_KeywordChoice XXMOD = new Algol68_KeywordChoice("mod", "over");
 	}
 
@@ -64,7 +64,7 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 			}
 			interpreter.pushDouble(leftInt / (double) rightInt);
 			return;
-		case "%", "mod":
+		case "mod":
 			interpreter.pushInt(leftInt % rightInt);
 			return;
 		}
@@ -84,7 +84,7 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 		case "/", "over":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
 					this);
-		case "%", "mod":
+		case "mod":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);

@@ -11,6 +11,7 @@ public class C_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"__attribute__",
 			"auto",
+			"bool",
 			"break",
 			"case",
 			"char",

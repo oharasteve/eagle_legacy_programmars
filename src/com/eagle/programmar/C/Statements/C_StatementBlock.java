@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.C.C_Data;
 import com.eagle.programmar.C.C_Program.C_StatementOrComment;
 import com.eagle.programmar.C.C_Statement;
 import com.eagle.programmar.C.C_Syntax;
@@ -67,6 +68,18 @@ public class C_StatementBlock extends TokenSequence
 					for (AbstractStatement stmt2 : stmts)
 					{
 						result.add(stmt2);
+					}
+				}
+			}
+			else if (statement.getWhich() instanceof C_Data)
+			{
+				C_Data stmt2 = (C_Data) statement.getWhich();
+				ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, stmt2.getWhich());
+				if (stmts != null)
+				{
+					for (AbstractStatement stmt3 : stmts)
+					{
+						result.add(stmt3);
 					}
 				}
 			}

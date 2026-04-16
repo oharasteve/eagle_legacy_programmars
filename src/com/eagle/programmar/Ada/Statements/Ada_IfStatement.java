@@ -158,7 +158,32 @@ public class Ada_IfStatement extends TokenSequence
 			}
 		}
 
-		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-		return stmt;
+		if (elseIfClauses == null || elseIfClauses.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Ada_ElseIfClause nextElIf : elseIfClauses._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			ArrayList<AbstractStatement> elseIfPart = new ArrayList<AbstractStatement>();
+			for (Ada_Statement statement : nextElIf.elseIfStatements._elements)
+			{
+				for (AbstractStatement stmt : transformer.transformStatement(generator,
+						statement.getWhich()))
+				{
+					elseIfPart.add(stmt);
+				}
+			}
+			elseIfParts.add(elseIfPart);
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 }

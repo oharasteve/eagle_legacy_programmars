@@ -32,7 +32,7 @@ public class C_Data extends TokenChooser
 
 	public @CHOICE static class C_RegularData extends TokenSequence
 			implements EagleRunnable, AbstractStatement,
-			EagleTransformableStatementList
+					EagleTransformableStatementList
 	{
 		public @S(10) @OPT TokenList<C_DataModifiers> modifiers1;
 		public @S(20) C_Type ctype;
@@ -65,7 +65,8 @@ public class C_Data extends TokenChooser
 		}
 
 		@Override
-		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+				EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			TypeEnum argType2 = ctype.findType();
