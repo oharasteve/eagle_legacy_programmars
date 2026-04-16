@@ -28,8 +28,7 @@ public class FSharp_StartOfLine extends TerminalStartOfLine
             // Find the enclosing TokenList of statements
             if (parent instanceof TokenList && !(parent instanceof SeparatedList))
             {
-                @SuppressWarnings("unchecked")
-                TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
+                TokenList<? extends AbstractToken> tokenList = (TokenList<?>) parent;
                 if (tokenList.size() == 0) break; // First entry always matches
 
                 // The 'elif' clause is an irrelevant TokenList on an 'if' statement
@@ -80,8 +79,7 @@ public class FSharp_StartOfLine extends TerminalStartOfLine
             // Find the enclosing TokenList of statements
             if (parent instanceof TokenList && !(parent instanceof SeparatedList))
             {
-                @SuppressWarnings("unchecked")
-                TokenList<? extends AbstractToken> tokenList = (TokenList<? extends AbstractToken>) parent;
+                TokenList<? extends AbstractToken> tokenList = (TokenList<?>) parent;
 
                 // The 'elif' clause is an irrelevant TokenList on an 'if' statement
                 if (tokenList.size() > 0 && !(tokenList.first() instanceof FSharp_IfElif))

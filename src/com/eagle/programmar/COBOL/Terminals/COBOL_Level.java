@@ -25,8 +25,7 @@ public class COBOL_Level extends TerminalLevelToken
 				throw new RuntimeException("Expected COBOL_CopyOrDataDeclaration, not " + decl.getParent());
 			}
 			COBOL_CopyOrDataDeclaration copyData = (COBOL_CopyOrDataDeclaration) decl.getParent();
-			@SuppressWarnings("unchecked")
-			TokenList<? extends AbstractToken> siblings = (TokenList<? extends AbstractToken>) copyData.getParent();
+			TokenList<? extends AbstractToken> siblings = (TokenList<?>) copyData.getParent();
 			if (DEBUG) System.out.println((_currentLine + 1) + " siblings.size() = " + siblings.size());
 			if (DEBUG) System.out.println((_currentLine + 1) + " parent of TokenList is " + siblings.getParent());
 
