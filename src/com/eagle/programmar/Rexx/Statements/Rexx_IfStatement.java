@@ -38,7 +38,7 @@ public class Rexx_IfStatement extends TokenSequence
 		public @S(10) @OPT TokenList<Rexx_Comment> comments;
 		public @S(20) Rexx_EndOfLine eoln1;
 		public @S(30) Rexx_Keyword ELSE = new Rexx_Keyword("ELSE");
-		public @S(40) Rexx_EndOfLine eoln2;
+		public @S(40) @OPT Rexx_EndOfLine eoln2;
 		public @S(50) Rexx_Statement elseStatement;
 	}
 

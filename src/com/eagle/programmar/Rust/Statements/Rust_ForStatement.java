@@ -125,6 +125,11 @@ public class Rust_ForStatement extends TokenSequence
 			range = (Rust_RangeExpression) which;
 			initExpr = transformer.transformExpression(generator, range.lowExpression);
 			termExpr = transformer.transformExpression(generator, range.highExpression);
+			
+			if (range.dots.getValue().equals("..="))
+			{
+				relOp= RelationalEnum.LESS_EQUALS;
+			}
 		}
 		if (which instanceof Rust_RevMethod)
 		{

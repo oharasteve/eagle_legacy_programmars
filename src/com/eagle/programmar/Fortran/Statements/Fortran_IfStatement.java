@@ -166,7 +166,26 @@ public class Fortran_IfStatement extends TokenSequence
 			}
 		}
 
-		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-		return stmt;
+		if (elseIfClauses == null || elseIfClauses.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Fortran_IfElseIfBlock nextElIf : elseIfClauses._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			for (Fortran_Statement stmt : nextElIf.elseIfStatements._elements)
+			{
+				elseIfParts.add(transformer.transformStatement(generator, stmt));
+			}
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 }

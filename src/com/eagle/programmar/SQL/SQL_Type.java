@@ -85,6 +85,7 @@ public class SQL_Type extends TokenChooser
 			case "INT":
 			case "INTEGER":
 				return TypeEnum.INTEGER;
+			case "CHAR":
 			case "VARCHAR":
 			case "VARCHAR2":
 				return TypeEnum.STRING;

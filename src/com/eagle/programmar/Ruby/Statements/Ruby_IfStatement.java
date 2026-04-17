@@ -29,7 +29,7 @@ public class Ruby_IfStatement extends TokenSequence
 	public @S(20) Ruby_Expression condition;
 	public @S(30) Ruby_EOLN eoln1;
 	public @S(40) TokenList<Ruby_Statement> thenStatements;
-	public @S(50) @OPT TokenList<Ruby_IfElsif> ifElsif;
+	public @S(50) @OPT TokenList<Ruby_IfElsif> ifElsifs;
 	public @S(60) @OPT Ruby_IfElseClause elseClause;
 	public @S(70) Ruby_Keyword END = new Ruby_Keyword("end");
 	public @S(80) Ruby_EOLN eoln2;
@@ -63,9 +63,9 @@ public class Ruby_IfStatement extends TokenSequence
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
 			
-			if (ifElsif != null && ifElsif.size() > 0)
+			if (ifElsifs != null && ifElsifs.size() > 0)
 			{
-				for (Ruby_IfElsif elseIfClause : ifElsif._elements)
+				for (Ruby_IfElsif elseIfClause : ifElsifs._elements)
 				{
 					_metrics.add(new IfCondMetrics(interpreter._metrics, elseIfClause.ELSIF));
 				}
@@ -87,9 +87,9 @@ public class Ruby_IfStatement extends TokenSequence
 		{
 			boolean matched = false;
 			int seq = 1;
-			if (ifElsif != null && ifElsif.size() > 0)
+			if (ifElsifs != null && ifElsifs.size() > 0)
 			{
-				for (Ruby_IfElsif elseIfClause : ifElsif._elements)
+				for (Ruby_IfElsif elseIfClause : ifElsifs._elements)
 				{
 					boolean cond2 = interpreter.getBoolValue(elseIfClause.condition);
 					_metrics.get(seq).completedIf(cond2);
@@ -156,7 +156,26 @@ public class Ruby_IfStatement extends TokenSequence
 			}
 		}
 
-		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-		return stmt;
+		if (ifElsifs == null || ifElsifs.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Ruby_IfElsif nextElIf : ifElsifs._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			for (Ruby_Statement stmt : nextElIf.elseIfStatements._elements)
+			{
+				elseIfParts.add(transformer.transformStatement(generator, stmt));
+			}
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 }

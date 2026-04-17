@@ -70,12 +70,23 @@ public class SQL_DeclareStatement extends TokenSequence
 				newVal = transformer.transformExpression(generator, decl.initialValue);
 				AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
 						SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, newVal, decl.initialValue);
-				result.add(generator.newExpressionStatement(asgExpr, decl.initialValue));
+				if (decl.type != null && decl.type.isPresent())
+				{
+					AbstractType varType = SQL_Type.findAbstractType(generator, decl.type);
+					AbstractStatement varDecl = generator.newDataDeclaration(false, varName,
+							null, varType, asgExpr, null);
+					generator.addStatement(varDecl, null);
+				}
+				else
+				{
+					result.add(generator.newExpressionStatement(asgExpr, decl.initialValue));
+				}
 			}
 			else
 			{
 				AbstractType varType = SQL_Type.findAbstractType(generator, decl.type);
-				AbstractStatement varDecl = generator.newDataDeclaration(false, varName, null, varType, null, null);
+				AbstractStatement varDecl = generator.newDataDeclaration(false, varName,
+						null, varType, null, null);
 				generator.addStatement(varDecl, null);
 			}
 		}
