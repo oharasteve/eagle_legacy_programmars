@@ -66,7 +66,7 @@ public class Algol68_PrintfStatement extends TokenSequence
 			case "ddd":
 				System.out.format("%3d", ival);
 				break;
-			case "dddd":
+			case "-4d":
 				System.out.format("%4d", ival);
 				break;
 			default:
@@ -81,6 +81,9 @@ public class Algol68_PrintfStatement extends TokenSequence
 			{
 			case "dd.d":
 				System.out.format("%4.1f", Double.valueOf(dval));
+				break;
+			case "dddd.d":
+				System.out.format("%6.1f", Double.valueOf(dval));
 				break;
 			default:
 				throw new RuntimeException("Unable to printf " + dval + " using $" + fmt + "$");
