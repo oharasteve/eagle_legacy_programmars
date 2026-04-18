@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
 import com.eagle.programmar.AWK.Terminals.AWK_KeywordChoice;
@@ -23,7 +22,6 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -101,14 +99,8 @@ public class AWK_PrintStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression line = null;
-		Oper2Types types = null;
 		// Pick up metrics, if known
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINT);
-		if (metrics != null)
-		{
-			types = new Oper2Types();
-		}
 
 		AWK_ArgumentList argList;
 		AbstractToken which1 = params.getWhich();
@@ -127,20 +119,33 @@ public class AWK_PrintStatement extends TokenSequence
 			throw new RuntimeException("Unable to handle " + which1);
 		}
 
-		line = transformer.transformExpression(generator, argList.expr);
+		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
+		if (metrics == null)
+		{
+			types.add(TypeEnum.STRING);
+		}
+		else
+		{
+			types.add(metrics.get(0));
+		}
+		pieces.add(transformer.transformExpression(generator, argList.expr));
+		
 		int i = 0;
 		for (AWK_MoreArguments more : argList.more._elements)
 		{
-			i++;
-			if (metrics != null && i < metrics.size())
+			pieces.add(transformer.transformExpression(generator, more.expr));
+			if (metrics == null)
 			{
-				types._type1 = TypeEnum.STRING;
-				types._type2 = metrics.get(i);
+				types.add(TypeEnum.STRING);
 			}
-
-			AbstractExpression next = transformer.transformExpression(generator, more.expr);
-			line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, this);
+			else
+			{
+				i++;
+				types.add(metrics.get(i));
+			}
 		}
-		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		
+		return generator.newPrintStatement(pieces, types, true, false, this);
 	}
 }

@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Delphi.Delphi_Expression;
 import com.eagle.programmar.Delphi.Terminals.Delphi_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
@@ -23,7 +22,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -85,16 +83,13 @@ public class Delphi_Writeln_Statement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression line = null;
-		Oper2Types types = null;
+		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
+
 		if (something != null && something.isPresent())
 		{
 			// Pick up metrics, if known
 			ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(WRITELN);
-			if (metrics != null)
-			{
-				types = new Oper2Types();
-			}
 
 			int numPieces = something.pieces.getPrimaryCount();
 			for (int i = 0; i < numPieces; i++)
@@ -104,20 +99,15 @@ public class Delphi_Writeln_Statement extends TokenSequence
 				{
 					throw new RuntimeException("Can't handle field widths");
 				}
-				if (i == 0)
+				pieces.add(transformer.transformExpression(generator, piece.expr));
+				
+				if (metrics == null)
 				{
-					line = transformer.transformExpression(generator, piece.expr);
+					types.add(TypeEnum.STRING);
 				}
 				else
 				{
-					if (metrics != null)
-					{
-						types._type1 = metrics.get(i - 1);
-						types._type2 = metrics.get(i);
-					}
-
-					AbstractExpression next = transformer.transformExpression(generator, piece.expr);
-					line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
+					types.add(metrics.get(i));
 				}
 			}
 		}
@@ -135,6 +125,6 @@ public class Delphi_Writeln_Statement extends TokenSequence
 			throw new RuntimeException("Unexpected write command: " + WRITELN.getValue());
 		}
 
-		return generator.newPrintStatement(line, TypeEnum.STRING, newLine, false, this);
+		return generator.newPrintStatement(pieces, types, newLine, false, this);
 	}
 }

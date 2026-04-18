@@ -77,10 +77,10 @@ public class Go_FmtPrintfStatement extends TokenSequence
 		{
 		case "Printf":
 			AbstractExpression fullExpr = Go_Format.transform(transformer, generator, arguments, metrics);
-			return generator.newPrintStatement(fullExpr, TypeEnum.STRING, true, false, this);
+			return generator.newPrintStatement1(fullExpr, TypeEnum.STRING, true, false, this);
 		case "Println":
 			AbstractExpression line = transformer.transformExpression(generator, arguments.first());
-			return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+			return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 		}
 		return null;
 	}

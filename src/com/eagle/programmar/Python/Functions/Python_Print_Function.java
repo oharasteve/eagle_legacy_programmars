@@ -13,6 +13,7 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Variable;
+import com.eagle.programmar.Python.Expressions.Python_Additive_Expression;
 import com.eagle.programmar.Python.Expressions.Python_Assignment_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_Literal;
@@ -27,6 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
@@ -99,10 +101,10 @@ public class Python_Print_Function extends PrimaryOperator
 			}
 		}
 
-		return generator.newPrintFunction(result, TypeEnum.STRING, true, false, this);
+		return generator.newPrintFunction1(result, TypeEnum.STRING, true, false, this);
 	}
 
-	public static Python_Expression generatePrintFunc(Python_Expression line, TypeEnum type,
+	public static Python_Expression generatePrintFunc1(Python_Expression line, TypeEnum type,
 			boolean newLine, AbstractToken source)
 	{
 		Python_Print_Function prtFunc = new Python_Print_Function();
@@ -123,5 +125,30 @@ public class Python_Print_Function extends PrimaryOperator
 		prtFunc.rightParen = new PunctuationRightParen();
 		prtFunc.setTransformationSource(source);
 		return Python_Generator.wrapExpression(prtFunc);
+	}
+
+	public static Python_Expression generatePrintFunc(ArrayList<Python_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, AbstractToken source)
+	{
+		Python_Expression line;
+		if (pieces.size() == 0)
+		{
+			line = Python_Literal.generateLiteralExpression("", null);
+		}
+		else
+		{
+			line = pieces.get(0);
+			Oper2Types pair = new Oper2Types();
+			pair._type1 = types.get(0);
+			for (int i = 1; i < pieces.size(); i++)
+			{
+				Python_Expression piece = pieces.get(i);
+				pair._type2 = types.get(i);
+				line = Python_Additive_Expression.generateAdditive(pair, line, AdditiveEnum.PLUS, piece, source);
+				pair._type1 = TypeEnum.STRING;
+			}
+		}
+		
+		return generatePrintFunc1(line, TypeEnum.STRING, newLine, source);
 	}
 }

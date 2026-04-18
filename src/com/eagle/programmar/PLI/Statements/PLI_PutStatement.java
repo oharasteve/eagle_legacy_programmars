@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Label;
 import com.eagle.programmar.PLI.Symbols.PLI_Identifier_Reference;
@@ -174,34 +173,28 @@ public class PLI_PutStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PUT);
-		Oper2Types types = new Oper2Types();
-		types._type1 = TypeEnum.STRING;
 
 		int numExpr = values.exprs.getPrimaryCount();
-		AbstractExpression result = null;
+		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
 		for (int i = 0; i < numExpr; i++)
 		{
-			AbstractExpression piece = transformer.transformExpression(generator,
-					values.exprs.getPrimaryElement(i));
+			pieces.add(transformer.transformExpression(generator, values.exprs.getPrimaryElement(i)));
 
-			if (i == 0)
+			if (metrics == null)
 			{
-				result = piece;
-			}
-			else if (metrics != null)
-			{
-				types._type2 = metrics.get(i);
-				result = generator.newAppendExpression(types, result, piece, PUT);
+				types.add(TypeEnum.STRING);
 			}
 			else
 			{
-				result = generator.newAppendExpression(null, result, piece, PUT);
+				types.add(metrics.get(i));
 			}
 		}
 
-		return generator.newPrintStatement(result, TypeEnum.STRING, true, false, this);
+		return generator.newPrintStatement(pieces, types, true, false, this);
 	}
 }

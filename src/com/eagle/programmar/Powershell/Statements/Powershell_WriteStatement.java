@@ -62,7 +62,7 @@ public class Powershell_WriteStatement extends TokenSequence
 		{
 			Powershell_Expression expr = exprs.getPrimaryElement(i);
 			AbstractExpression line = transformer.transformExpression(generator, expr);
-			result.add(generator.newPrintStatement(line, TypeEnum.STRING, true, false, this));
+			result.add(generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this));
 		}
 		return result;
 	}

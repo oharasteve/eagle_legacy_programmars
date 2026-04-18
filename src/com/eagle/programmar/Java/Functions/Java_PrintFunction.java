@@ -4,13 +4,17 @@
 package com.eagle.programmar.Java.Functions;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
+import com.eagle.programmar.Java.Terminals.Java_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -21,6 +25,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -74,10 +79,10 @@ public class Java_PrintFunction extends PrimaryOperator
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		return generator.newPrintFunction(value, TypeEnum.STRING, newLine, false, this);
+		return generator.newPrintFunction1(value, TypeEnum.STRING, newLine, false, this);
 	}
 
-	public static Java_Expression generatePrintFunc(Java_Expression line, TypeEnum type,
+	public static Java_Expression generatePrintFunc1(Java_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		Java_PrintFunction prtFn = new Java_PrintFunction();
@@ -114,5 +119,30 @@ public class Java_PrintFunction extends PrimaryOperator
 
 		prtFn.setTransformationSource(source);
 		return Java_Generator.wrapExpression(prtFn);
+	}
+	
+	public static Java_Expression generatePrintFunc(ArrayList<Java_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		Java_Expression line;
+		if (pieces.size() == 0)
+		{
+			line = Java_Literal.generateLiteralExpression("", null);
+		}
+		else
+		{
+			line = pieces.get(0);
+			Oper2Types pair = new Oper2Types();
+			pair._type1 = types.get(0);
+			for (int i = 1; i < pieces.size(); i++)
+			{
+				Java_Expression piece = pieces.get(i);
+				pair._type2 = types.get(i);
+				line = Java_AdditiveExpression.generateAdditive(pair, line, AdditiveEnum.PLUS, piece, source);
+				pair._type1 = TypeEnum.STRING;
+			}
+		}
+		
+		return generatePrintFunc1(line, TypeEnum.STRING, newLine, toErr, source);
 	}
 }

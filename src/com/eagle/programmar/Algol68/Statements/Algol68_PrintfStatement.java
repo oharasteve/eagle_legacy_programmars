@@ -132,6 +132,6 @@ public class Algol68_PrintfStatement extends TokenSequence
 		{
 			line = generator.newFormatDecimal(numExpr, decimals, this);
 		}
-		return generator.newPrintStatement(line, type, false, false, this);
+		return generator.newPrintStatement1(line, type, false, false, this);
 	}
 }

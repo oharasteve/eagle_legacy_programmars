@@ -8,14 +8,9 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Format;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Rust_Variable;
-import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
-import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
@@ -31,7 +26,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -72,17 +66,16 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTLN);
 		AbstractExpression value = Rust_Format.compile(transformer, generator, argList, metrics);
-		return generator.newPrintFunction(value, TypeEnum.STRING, true, false, this);
+		return generator.newPrintFunction1(value, TypeEnum.STRING, true, false, this);
 	}
 
-	public static Rust_Expression generatePrintFunc(Rust_Expression line, TypeEnum type,
+	public static Rust_Expression generatePrintFunc1(Rust_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
 		Rust_PrintlnFunction print = new Rust_PrintlnFunction();
 		print.leftParen = new PunctuationLeftParen();
 		print.rightParen = new PunctuationRightParen();
 		print.argList = new SeparatedList<Rust_Expression, PunctuationComma>();
-		
 		print.PRINTLN.setValue(newLine ? "println" : "print");
 		
 		// Simple case -> println!("str");
@@ -97,20 +90,35 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 				Rust_Expression braces = Rust_Literal.generateLiteralExpression("{}", null);
 				print.argList.addPrimaryElement(braces);
 				print.argList.addSecondaryElement(new PunctuationComma());
-		
-				Rust_Identifier_Reference clsName = new Rust_Identifier_Reference();
-				clsName.setValue("String");
-				Rust_Variable fromVar = Rust_Variable.generateVariable("from");
-				ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
-				Rust_Expression blank = Rust_Literal.generateLiteralExpression("", null);
-				args.add(blank);
-				Rust_Expression invokeExpr = Rust_MethodInvocation.generateInvocation(clsName, fromVar, args, source);
-				
-				Oper2Types types = new Oper2Types(TypeEnum.STRING, type);
-				Rust_Expression plusExpr = Rust_AdditiveExpression.generateAdditive(types,
-						invokeExpr, AdditiveEnum.PLUS, line, source);
-				print.argList.addPrimaryElement(plusExpr);
+				print.argList.addPrimaryElement(line);
 			}
+		}
+		
+		print.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(print);
+	}
+
+	public static Rust_Expression generatePrintFunc(ArrayList<Rust_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		Rust_PrintlnFunction print = new Rust_PrintlnFunction();
+		print.leftParen = new PunctuationLeftParen();
+		print.rightParen = new PunctuationRightParen();
+		print.argList = new SeparatedList<Rust_Expression, PunctuationComma>();
+		print.PRINTLN.setValue(newLine ? "println" : "print");
+
+		StringBuffer bracesStr = new StringBuffer();
+		for (int i = 0; i < pieces.size(); i++)
+		{
+			bracesStr.append("{}");
+		}
+		Rust_Expression braces = Rust_Literal.generateLiteralExpression(bracesStr.toString(), null);
+		print.argList.addPrimaryElement(braces);
+		
+		for (int i = 0; i < pieces.size(); i++)
+		{
+			print.argList.addSecondaryElement(new PunctuationComma());
+			print.argList.addPrimaryElement(pieces.get(i));
 		}
 		
 		print.setTransformationSource(source);

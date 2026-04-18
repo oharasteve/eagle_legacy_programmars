@@ -3,12 +3,17 @@
 
 package com.eagle.programmar.CSharp.Functions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Keyword;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
@@ -22,9 +27,10 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CSharp_PrintFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
@@ -81,11 +87,11 @@ public class CSharp_PrintFunction extends PrimaryOperator
 		}
 
 		AbstractExpression value = transformer.transformExpression(generator, args.exprs.first());
-		return generator.newPrintFunction(value, TypeEnum.STRING, newLine, false, this);
+		return generator.newPrintFunction1(value, TypeEnum.STRING, newLine, false, this);
 	}
 
-	public static CSharp_Expression generatePrintFunc(CSharp_Expression line, boolean newLine,
-			boolean toErr, AbstractToken source)
+	public static CSharp_Expression generatePrintFunc1(CSharp_Expression line,
+			TypeEnum type, boolean newLine, boolean toErr, AbstractToken source)
 	{
 		CSharp_PrintFunction prtFn = new CSharp_PrintFunction();
 		prtFn.SYSTEM.setPresent(true);
@@ -124,5 +130,30 @@ public class CSharp_PrintFunction extends PrimaryOperator
 
 		prtFn.setTransformationSource(source);
 		return CSharp_Generator.wrapExpression(prtFn);
+	}
+
+	public static CSharp_Expression generatePrintFunc(ArrayList<CSharp_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		CSharp_Expression line;
+		if (pieces.size() == 0)
+		{
+			line = CSharp_Literal.generateLiteralExpression("", null);
+		}
+		else
+		{
+			line = pieces.get(0);
+			Oper2Types pair = new Oper2Types();
+			pair._type1 = types.get(0);
+			for (int i = 1; i < pieces.size(); i++)
+			{
+				CSharp_Expression piece = pieces.get(i);
+				pair._type2 = types.get(i);
+				line = CSharp_AdditiveExpression.generateAdditive(pair, line, AdditiveEnum.PLUS, piece, source);
+				pair._type1 = TypeEnum.STRING;
+			}
+		}
+		
+		return generatePrintFunc1(line, TypeEnum.STRING, newLine, toErr, source);
 	}
 }

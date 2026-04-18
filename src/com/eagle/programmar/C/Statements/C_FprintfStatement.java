@@ -81,6 +81,6 @@ public class C_FprintfStatement extends PrimaryOperator
 
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(FPRINTF);
 		AbstractExpression line = C_Format.transform(transformer, generator, args, metrics);
-		return generator.newPrintStatement(line, TypeEnum.STRING, true, toErr, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, true, toErr, this);
 	}
 }

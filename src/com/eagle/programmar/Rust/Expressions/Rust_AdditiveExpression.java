@@ -11,6 +11,7 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
+import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -85,12 +86,17 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		Rust_AdditiveExpression add = new Rust_AdditiveExpression();
 		add.left = leftExpr;
 		add.right = rightExpr;
-		if (types != null)
+		if (types == null)
 		{
-			if (types._type1 == TypeEnum.STRING && types._type2 != TypeEnum.STRING)
+			if ((leftExpr.getWhich() instanceof Rust_Literal) &&
+					! (rightExpr.getWhich() instanceof Rust_Literal))
 			{
 				add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
 			}
+		}
+		else if (types._type1 == TypeEnum.STRING && types._type2 != TypeEnum.STRING)
+		{
+			add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
 		}
 
 		switch (oper)

@@ -19,9 +19,9 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationStar;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Fortran_PrintStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
@@ -49,6 +49,6 @@ public class Fortran_PrintStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expression);
-		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 	}
 }

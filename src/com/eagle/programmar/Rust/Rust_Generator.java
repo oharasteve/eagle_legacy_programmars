@@ -380,17 +380,32 @@ public class Rust_Generator
 	}
 
 	@Override
-	public Rust_Expression newPrintFunction(Rust_Expression line, TypeEnum type,
+	public Rust_Expression newPrintFunction1(Rust_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		return Rust_PrintlnFunction.generatePrintFunc(line, type, newLine, toErr, source);
+		return Rust_PrintlnFunction.generatePrintFunc1(line, type, newLine, toErr, source);
 	}
 
 	@Override
-	public Rust_Statement newPrintStatement(Rust_Expression line, TypeEnum type,
+	public Rust_Statement newPrintStatement1(Rust_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		Rust_Expression prtExpr = newPrintFunction(line, type, newLine, toErr, source);
+		Rust_Expression prtExpr = newPrintFunction1(line, type, newLine, toErr, source);
+		return newExpressionStatement(prtExpr, source);
+	}
+
+	@Override
+	public Rust_Expression newPrintFunction(ArrayList<Rust_Expression> pieces, ArrayList<TypeEnum> types,
+			boolean newLine, boolean toErr, AbstractToken source)
+	{
+		return Rust_PrintlnFunction.generatePrintFunc(pieces, types, newLine, toErr, source);
+	}
+
+	@Override
+	public Rust_Statement newPrintStatement(ArrayList<Rust_Expression> pieces, ArrayList<TypeEnum> types,
+			boolean newLine, boolean toErr, AbstractToken source)
+	{
+		Rust_Expression prtExpr = newPrintFunction(pieces, types, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);
 	}
 

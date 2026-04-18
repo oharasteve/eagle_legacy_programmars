@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.Statements.COBOL_DisplayOptions.COBOL_DisplayWithNoAdvancing;
@@ -25,7 +24,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -97,20 +95,17 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (clauses.size() == 1)
 		{
 			COBOL_DisplayClause clause = clauses.first();
-			AbstractExpression line = null;
-			Oper2Types types = null;
+			ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
 
 			// Pick up metrics, if known
 			ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(DISPLAY);
-			if (metrics != null)
-			{
-				types = new Oper2Types();
-			}
 
 			boolean newline = true;
 			for (COBOL_DisplayOptions opt : clause.options._elements)
@@ -125,24 +120,19 @@ public class COBOL_DisplayStatement extends COBOL_AbstractStatement
 			for (int i = 0; i < numPieces; i++)
 			{
 				COBOL_Expression expr = clause.what.exprs.getPrimaryElement(i);
-				if (i == 0)
+				pieces.add(transformer.transformExpression(generator, expr));
+				
+				if (metrics == null)
 				{
-					line = transformer.transformExpression(generator, expr);
+					types.add(TypeEnum.STRING);
 				}
 				else
 				{
-					if (metrics != null)
-					{
-						types._type1 = metrics.get(i - 1);
-						types._type2 = metrics.get(i);
-					}
-
-					AbstractExpression next = transformer.transformExpression(generator, expr);
-					line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, expr);
+					types.add(metrics.get(i));
 				}
 			}
 
-			return generator.newPrintStatement(line, TypeEnum.STRING, newline, false, this);
+			return generator.newPrintStatement(pieces, types, newline, false, this);
 		}
 		throw new RuntimeException("Unable to handle DISPLAY: " + this);
 	}

@@ -34,6 +34,6 @@ public class TCL_PutsStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 	}
 }

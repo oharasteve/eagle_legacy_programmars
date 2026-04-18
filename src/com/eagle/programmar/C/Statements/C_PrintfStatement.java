@@ -57,6 +57,6 @@ public class C_PrintfStatement extends TokenSequence
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTF);
 		AbstractExpression line = C_Format.transform(transformer, generator, args, metrics);
-		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 	}
 }

@@ -14,9 +14,9 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Julia_PrintlnStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
@@ -36,6 +36,6 @@ public class Julia_PrintlnStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		return generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 	}
 }

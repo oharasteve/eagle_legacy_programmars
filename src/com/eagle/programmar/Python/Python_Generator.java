@@ -354,17 +354,32 @@ public class Python_Generator
 	}
 
 	@Override
-	public Python_Expression newPrintFunction(Python_Expression line, TypeEnum type,
+	public Python_Expression newPrintFunction1(Python_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		return Python_Print_Function.generatePrintFunc(line, type, newLine, source);
+		return Python_Print_Function.generatePrintFunc1(line, type, newLine, source);
 	}
 
 	@Override
-	public Python_ComplexStatement newPrintStatement(Python_Expression line, TypeEnum type,
+	public Python_ComplexStatement newPrintStatement1(Python_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		Python_Expression prtExpr = newPrintFunction(line, type, newLine, toErr, source);
+		Python_Expression prtExpr = newPrintFunction1(line, type, newLine, toErr, source);
+		return newExpressionStatement(prtExpr, source);
+	}
+
+	@Override
+	public Python_Expression newPrintFunction(ArrayList<Python_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		return Python_Print_Function.generatePrintFunc(pieces, types, newLine, source);
+	}
+
+	@Override
+	public Python_ComplexStatement newPrintStatement(ArrayList<Python_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		Python_Expression prtExpr = newPrintFunction(pieces, types, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);
 	}
 

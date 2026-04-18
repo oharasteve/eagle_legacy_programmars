@@ -376,17 +376,32 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Expression newPrintFunction(Java_Expression line, TypeEnum type,
+	public Java_Expression newPrintFunction1(Java_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		return Java_PrintFunction.generatePrintFunc(line, type, newLine, toErr, source);
+		return Java_PrintFunction.generatePrintFunc1(line, type, newLine, toErr, source);
 	}
 
 	@Override
-	public Java_Statement newPrintStatement(Java_Expression line, TypeEnum type,
+	public Java_Statement newPrintStatement1(Java_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
-		Java_Expression prtExpr = newPrintFunction(line, type, newLine, toErr, source);
+		Java_Expression prtExpr = newPrintFunction1(line, type, newLine, toErr, source);
+		return newExpressionStatement(prtExpr, source);
+	}
+
+	@Override
+	public Java_Expression newPrintFunction(ArrayList<Java_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		return Java_PrintFunction.generatePrintFunc(pieces, types, newLine, toErr, source);
+	}
+
+	@Override
+	public Java_Statement newPrintStatement(ArrayList<Java_Expression> pieces,
+			ArrayList<TypeEnum> types, boolean newLine, boolean toErr, AbstractToken source)
+	{
+		Java_Expression prtExpr = newPrintFunction(pieces, types, newLine, toErr, source);
 		return newExpressionStatement(prtExpr, source);
 	}
 

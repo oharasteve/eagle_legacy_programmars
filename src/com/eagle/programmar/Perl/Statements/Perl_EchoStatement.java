@@ -37,7 +37,7 @@ public class Perl_EchoStatement extends TokenSequence
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractExpression line = transformer.transformExpression(generator, expr);
-		AbstractStatement stmt = generator.newPrintStatement(line, TypeEnum.STRING, true, false, this);
+		AbstractStatement stmt = generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 		result.add(stmt);
 		return result;
 	}

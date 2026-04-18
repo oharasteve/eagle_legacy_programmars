@@ -72,6 +72,6 @@ public class Ada_PutIntegerStatement extends TokenSequence
 		
 		AbstractExpression fullExpr = transformer.transformExpression(generator, expr);
 		boolean newLine = PUT.getValue().toLowerCase().equals("put_line");
-		return generator.newPrintStatement(fullExpr, type, newLine, false, this);
+		return generator.newPrintStatement1(fullExpr, type, newLine, false, this);
 	}
 }
