@@ -117,9 +117,11 @@ public class Algol68_PrintfStatement extends TokenSequence
 			width = 3;
 			break;
 		case "$dddd$":
+		case "$-4d$":
 			width = 4;
 			break;
 		case "$dd.d$":
+		case "$dddd.d$":
 			decimals = 1;
 			break;
 		default:
