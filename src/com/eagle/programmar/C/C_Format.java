@@ -98,9 +98,15 @@ public class C_Format
 		fmt = fmt.replaceAll("\\\\\"", "\\\"");
 		int nc = fmt.length();
 
-		int sc = fmt.indexOf("%");
-		int pctLen = check(fmt, sc, nc);
-		if (sc < 0 || pctLen == 0)
+		int sc = -1;
+		while(true)
+		{
+			// Find the next "good" %d or %f or whatever
+			sc = fmt.indexOf("%", sc+1);
+			if (sc < 0) break;	// No good % in there at all
+			if (check(fmt, sc, nc) != 0) break;
+		}
+		if (sc < 0)
 		{
 			// Nothing to insert in the string
 			return generator.newLiteralExpression(fmt, fmtExpr);
@@ -148,9 +154,14 @@ public class C_Format
 			}
 
 			prev = sc + 2;
-			sc = fmt.indexOf("%", prev);
-			pctLen = check(fmt, sc, nc);
-			if (sc < 0 || pctLen == 0) break; // Ran out of % insertion points
+			while(true)
+			{
+				// Find the next "good" %d or %f or whatever
+				sc = fmt.indexOf("%", sc+1);
+				if (sc < 0) break;	// No more % in there, we're done
+				if (check(fmt, sc, nc) != 0) break;
+			}
+			if (sc < 0) break;	// No more % in there, we're done
 		}
 		String lastString = fmt.substring(prev);
 		if (lastString.length() > 0)
@@ -161,7 +172,7 @@ public class C_Format
 		return fullExpr;
 	}
 
-	// fmt[sc] is the %. Make sure it is a valid format like %d or %s
+	// fmt[sc] is a %. Make sure it is a valid format like %d or %s
 	// If so, return 1 for the length after the %. Return 0 if fails.
 	private static int check(String fmt, int sc, int nc)
 	{
