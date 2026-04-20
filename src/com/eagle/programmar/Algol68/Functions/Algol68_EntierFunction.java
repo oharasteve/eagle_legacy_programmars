@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Sep 14, 2025
 
-package com.eagle.programmar.Algol68.Expressions;
+package com.eagle.programmar.Algol68.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -16,7 +16,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Algol68_EntierExpression extends PrimaryOperator
+public class Algol68_EntierFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Algol68_Keyword ENTIER = new Algol68_Keyword("ENTIER");
