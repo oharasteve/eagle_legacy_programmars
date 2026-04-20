@@ -88,15 +88,15 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 			types = new Oper2Types();
 		}
 
-		AbstractExpression line = addPiece(generator, metrics, types, 0, piece1);
-		AbstractExpression next = addPiece(generator, metrics, types, 1, piece2);
+		AbstractExpression line = addPiece(transformer, generator, metrics, types, 0, piece1);
+		AbstractExpression next = addPiece(transformer, generator, metrics, types, 1, piece2);
 		line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece2);
 		if (pieces != null && pieces.isPresent())
 		{
 			int i = 2;
 			for (AWK_ConcatPiece piece : pieces._elements)
 			{
-				next = addPiece(generator, metrics, types, i, piece);
+				next = addPiece(transformer, generator, metrics, types, i, piece);
 				line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
 				i++;
 			}
@@ -105,7 +105,7 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		return line;
 	}
 
-	private static AbstractExpression addPiece(
+	private static AbstractExpression addPiece(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			ArrayList<TypeEnum> metrics, Oper2Types types, int i, AWK_ConcatPiece piece)
 	{
@@ -119,22 +119,14 @@ public class AWK_ConcatenationExpression extends PrimaryOperator
 		if (which1 instanceof AWK_String)
 		{
 			AWK_String str = (AWK_String) which1;
-			String lit = str.literal.getValue();
-			if (lit.startsWith("\""))
-			{
-				lit = lit.substring(1, lit.length() - 1);
-			}
-			return generator.newLiteralExpression(lit, piece);
+			return str.literal.transformExpression(transformer, generator);
 		}
-		else if (which1 instanceof AWK_VariableExpression)
+		if (which1 instanceof AWK_VariableExpression)
 		{
 			AWK_VariableExpression varExpr = (AWK_VariableExpression) which1;
 			return generator.newVariableExpression(varExpr.variable.id.getValue(),
 					SubscriptEnum.FIRST_IS_ZERO, null, piece);
 		}
-		else
-		{
-			throw new RuntimeException("Unable to handle: " + which1);
-		}
+		throw new RuntimeException("Unable to handle: " + which1);
 	}
 }
