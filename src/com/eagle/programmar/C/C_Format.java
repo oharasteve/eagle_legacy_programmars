@@ -66,7 +66,8 @@ public class C_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+	public static AbstractExpression transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			SeparatedList<C_Expression, PunctuationComma> args, ArrayList<TypeEnum> metrics)
 	{
 		Oper2Types types = null;
@@ -99,7 +100,7 @@ public class C_Format
 		int nc = fmt.length();
 
 		int sc = -1;
-		while(true)
+		while (true)
 		{
 			// Find the next "good" %d or %f or whatever
 			sc = fmt.indexOf("%", sc+1);
@@ -154,7 +155,7 @@ public class C_Format
 			}
 
 			prev = sc + 2;
-			while(true)
+			while (true)
 			{
 				// Find the next "good" %d or %f or whatever
 				sc = fmt.indexOf("%", sc+1);

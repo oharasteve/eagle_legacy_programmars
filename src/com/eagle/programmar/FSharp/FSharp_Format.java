@@ -64,7 +64,8 @@ public class FSharp_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+	public static AbstractExpression transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			TokenList<FSharp_Expression> argList, ArrayList<TypeEnum> metrics)
 	{
 		Oper2Types types = null;
@@ -89,12 +90,18 @@ public class FSharp_Format
 		{
 			fmt = fmt.substring(0, fmt.length() - 2);
 		}
-		fmt = fmt.replaceAll("\\\\\"", "\\\"");
+		fmt = fmt.replaceAll("\\\\\"", "\\\"").replaceAll("%%", "%");
 		int nc = fmt.length();
 
-		int sc = fmt.indexOf("%");
-		int pctLen = check(fmt, sc, nc);
-		if (sc < 0 || pctLen == 0)
+		int sc = -1;
+		while (true)
+		{
+			// Find the next "good" %d or %f or whatever
+			sc = fmt.indexOf("%", sc+1);
+			if (sc < 0) break;	// No good % in there at all
+			if (check(fmt, sc, nc) != 0) break;
+		}
+		if (sc < 0)
 		{
 			// Nothing to insert in the string
 			return generator.newLiteralExpression(fmt, fmtExpr);
@@ -141,9 +148,14 @@ public class FSharp_Format
 			}
 
 			prev = sc + 2;
-			sc = fmt.indexOf("%", prev);
-			pctLen = check(fmt, sc, nc);
-			if (sc < 0 || pctLen == 0) break; // Ran out of % insertion points
+			while (true)
+			{
+				// Find the next "good" %d or %f or whatever
+				sc = fmt.indexOf("%", sc+1);
+				if (sc < 0) break;	// No more % in there, we're done
+				if (check(fmt, sc, nc) != 0) break;
+			}
+			if (sc < 0) break;	// No more % in there, we're done
 		}
 		String lastString = fmt.substring(prev);
 		if (lastString.length() > 0)
