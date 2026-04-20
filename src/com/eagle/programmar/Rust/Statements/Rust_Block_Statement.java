@@ -66,6 +66,16 @@ public class Rust_Block_Statement extends TokenSequence
 	public static Rust_Statement generateBlock(ArrayList<Rust_Statement> stmts,
 			AbstractToken source)
 	{
+		// Maybe it is already a block?
+		if (stmts.size() == 1)
+		{
+			Rust_Statement stmt = stmts.get(0);
+			if (stmt.getWhich() instanceof Rust_Block_Statement)
+			{
+				return stmt;
+			}
+		}
+
 		Rust_Block_Statement block = new Rust_Block_Statement();
 		block.leftBrace = new PunctuationLeftBrace();
 		block.rightBrace = new PunctuationRightBrace();

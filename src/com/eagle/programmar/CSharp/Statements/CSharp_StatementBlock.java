@@ -82,6 +82,16 @@ public class CSharp_StatementBlock extends TokenSequence
 	public static CSharp_Statement generateBlock(
 			ArrayList<CSharp_Statement> stmts, AbstractToken source)
 	{
+		// Maybe it is already a block?
+		if (stmts.size() == 1)
+		{
+			CSharp_Statement stmt = stmts.get(0);
+			if (stmt.getWhich() instanceof CSharp_StatementBlock)
+			{
+				return stmt;
+			}
+		}
+
 		CSharp_StatementBlock blk = new CSharp_StatementBlock();
 		blk.leftBrace = new PunctuationLeftBrace();
 		blk.rightBrace = new PunctuationRightBrace();
