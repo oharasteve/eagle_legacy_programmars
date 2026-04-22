@@ -28,7 +28,7 @@ public class Rust_IfStatement extends TokenSequence
 {
 	public @S(10) @DOC("expressions/if-expr.html") @NEWLINE Rust_Keyword IF = new Rust_Keyword("if");
 	public @S(20) Rust_Expression condition;
-	public @S(30) Rust_Statement thenStatement;
+	public @S(30) Rust_Block_Statement thenStatement;
 	public @S(40) @OPT @NEWLINE Rust_IfElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
@@ -36,14 +36,14 @@ public class Rust_IfStatement extends TokenSequence
 	public static class Rust_IfElseClause extends TokenSequence implements AbstractStatement
 	{
 		public @S(10) Rust_Keyword ELSE = new Rust_Keyword("else");
-		public @S(20) Rust_Statement elseStatement;
+		public @S(20) Rust_Block_Statement elseStatement;
 	}
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		Rust_Statement todo = null;
+		Rust_Block_Statement todo = null;
 
 		if (_metrics == null)
 		{
@@ -83,7 +83,7 @@ public class Rust_IfStatement extends TokenSequence
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
 
-		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement.getWhich());
+		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement);
 		if (stmts != null)
 		{
 			for (AbstractStatement stmt : stmts)
@@ -95,7 +95,7 @@ public class Rust_IfStatement extends TokenSequence
 		if (elseClause != null && elseClause.isPresent())
 		{
 			for (AbstractStatement stmt : transformer.transformStatement(generator,
-					elseClause.elseStatement.getWhich()))
+					elseClause.elseStatement))
 			{
 				ifFalse.add(stmt);
 			}
@@ -120,13 +120,13 @@ public class Rust_IfStatement extends TokenSequence
 			ifStmt.condition = cond;
 		}
 
-		ifStmt.thenStatement = thenStmt;
+		ifStmt.thenStatement = Rust_Block_Statement.generateBlock1(thenStmt, null);
 
 		if (elseStmt != null)
 		{
 			ifStmt.elseClause = new Rust_IfElseClause();
 			ifStmt.elseClause.setPresent(true);
-			ifStmt.elseClause.elseStatement = elseStmt;
+			ifStmt.elseClause.elseStatement = Rust_Block_Statement.generateBlock1(elseStmt, null);
 			ifStmt.elseClause.elseStatement.setPresent(true);
 		}
 

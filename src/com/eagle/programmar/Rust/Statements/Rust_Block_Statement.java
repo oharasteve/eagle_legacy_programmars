@@ -63,6 +63,30 @@ public class Rust_Block_Statement extends TokenSequence
 		return generator.newBlockStatement(result, this);
 	}
 
+	private static Rust_Block_Statement emptyBlock()
+	{
+		Rust_Block_Statement block = new Rust_Block_Statement();
+		block.leftBrace = new PunctuationLeftBrace();
+		block.rightBrace = new PunctuationRightBrace();
+		block.statements = new TokenList<Rust_Statement>();
+		block.statements.setPresent(true);
+		return block;
+	}
+	
+	public static Rust_Block_Statement generateBlock1(Rust_Statement stmt,
+			AbstractToken source)
+	{
+		// Maybe it is already a block?
+		if (stmt.getWhich() instanceof Rust_Block_Statement)
+		{
+			return (Rust_Block_Statement) stmt.getWhich();
+		}
+
+		Rust_Block_Statement block = emptyBlock();
+		block.statements.addToken(stmt);
+		return block;
+	}
+	
 	public static Rust_Statement generateBlock(ArrayList<Rust_Statement> stmts,
 			AbstractToken source)
 	{
@@ -76,11 +100,7 @@ public class Rust_Block_Statement extends TokenSequence
 			}
 		}
 
-		Rust_Block_Statement block = new Rust_Block_Statement();
-		block.leftBrace = new PunctuationLeftBrace();
-		block.rightBrace = new PunctuationRightBrace();
-		block.statements = new TokenList<Rust_Statement>();
-		block.statements.setPresent(true);
+		Rust_Block_Statement block = emptyBlock();
 		for (Rust_Statement stmt : stmts)
 		{
 			block.statements.addToken(stmt);

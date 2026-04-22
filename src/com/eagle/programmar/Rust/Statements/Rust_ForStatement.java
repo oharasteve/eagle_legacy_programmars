@@ -361,7 +361,14 @@ public class Rust_ForStatement extends TokenSequence
 			range.lowExpression = Rust_ParenthesizedExpression.generateParentheses(fromExpression, null);
 		}
 		
-		range.dots.setValue("..=");
+		if (relOper == RelationalEnum.LESS_EQUALS)
+		{
+			range.dots.setValue("..=");
+		}
+		else
+		{
+			range.dots.setValue("..");
+		}
 
 		AbstractToken which2 = toExpression.getWhich();
 		if ((which2 instanceof Rust_Number) || (which2 instanceof Rust_VariableExpression))
