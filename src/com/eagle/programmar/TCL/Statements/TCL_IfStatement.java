@@ -12,6 +12,7 @@ import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.programmar.TCL.Terminals.TCL_PunctuationChoice;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -29,7 +30,8 @@ public class TCL_IfStatement extends TokenSequence
 	public @S(30) TCL_Expression condition;
 	public @S(40) TCL_PunctuationChoice right = new TCL_PunctuationChoice("}", ")");
 	public @S(50) TCL_Statement thenStatement;
-	public @S(60) @OPT TCL_ElseClause elseClause;
+	public @S(60) @OPT TokenList<TCL_ElseIfClause> elseIfClauses;
+	public @S(70) @OPT TCL_ElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
@@ -37,6 +39,15 @@ public class TCL_IfStatement extends TokenSequence
 	{
 		public @S(10) TCL_Keyword ELSE = new TCL_Keyword("else");
 		public @S(20) TCL_Statement elseStatement;
+	}
+
+	public static class TCL_ElseIfClause extends TokenSequence
+	{
+		public @S(10) TCL_Keyword ELSEIF = new TCL_Keyword("elseif");
+		public @S(20) TCL_PunctuationChoice left = new TCL_PunctuationChoice("{", "(");
+		public @S(30) TCL_Expression condition;
+		public @S(40) TCL_PunctuationChoice right = new TCL_PunctuationChoice("}", ")");
+		public @S(50) TCL_Statement elseIfStatement;
 	}
 
 	@Override
@@ -50,6 +61,15 @@ public class TCL_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
+			
+			if (elseIfClauses != null && elseIfClauses.size() > 0)
+			{
+				for (TCL_ElseIfClause elseIfClause : elseIfClauses._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elseIfClause.ELSEIF));
+				}
+			}
+
 			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
@@ -64,11 +84,32 @@ public class TCL_IfStatement extends TokenSequence
 		}
 		else
 		{
-			// Check for 'else'
-			if (elseClause != null && elseClause.isPresent())
+			boolean matched = false;
+			int seq = 1;
+			if (elseIfClauses != null && elseIfClauses.size() > 0)
 			{
-				_metrics.get(1).completedIf(true);
-				todo = elseClause.elseStatement;
+				for (TCL_ElseIfClause elseIfClause : elseIfClauses._elements)
+				{
+					boolean cond2 = interpreter.getBoolValue(elseIfClause.condition);
+					_metrics.get(seq).completedIf(cond2);
+					if (cond2)
+					{
+						todo = elseIfClause.elseIfStatement;
+						matched = true;
+						break;
+					}
+					seq++;
+				}
+			}
+			
+			if (!matched)
+			{
+				// Check for 'else'
+				if (elseClause != null && elseClause.isPresent())
+				{
+					_metrics.get(seq).completedIf(true);
+					todo = elseClause.elseStatement;
+				}
 			}
 		}
 
@@ -106,7 +147,25 @@ public class TCL_IfStatement extends TokenSequence
 			}
 		}
 
-		AbstractStatement stmt = generator.newIfStatement(cond, ifTrue, ifFalse, this);
-		return stmt;
+		if (elseIfClauses == null || elseIfClauses.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (TCL_ElseIfClause nextElIf : elseIfClauses._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator,
+					nextElIf.elseIfStatement);
+			elseIfParts.add(stmts);
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 }
