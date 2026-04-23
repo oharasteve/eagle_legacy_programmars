@@ -78,7 +78,9 @@ public class TCL_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression compile(EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, String fmt, AbstractToken source)
+	public static AbstractExpression compile(
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+			String fmt, AbstractToken source)
 	{
 		AbstractExpression result = null;
 
