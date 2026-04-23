@@ -14,6 +14,7 @@ import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -29,7 +30,8 @@ public class Rust_IfStatement extends TokenSequence
 	public @S(10) @DOC("expressions/if-expr.html") @NEWLINE Rust_Keyword IF = new Rust_Keyword("if");
 	public @S(20) Rust_Expression condition;
 	public @S(30) Rust_Block_Statement thenStatement;
-	public @S(40) @OPT @NEWLINE Rust_IfElseClause elseClause;
+	public @S(40) @OPT TokenList<Rust_ElseIfClause> elseIfClauses;
+	public @S(50) @OPT @NEWLINE Rust_IfElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
@@ -37,6 +39,14 @@ public class Rust_IfStatement extends TokenSequence
 	{
 		public @S(10) Rust_Keyword ELSE = new Rust_Keyword("else");
 		public @S(20) Rust_Block_Statement elseStatement;
+	}
+
+	public static class Rust_ElseIfClause extends TokenSequence
+	{
+		public @S(10) Rust_Keyword ELSE = new Rust_Keyword("else");
+		public @S(20) Rust_Keyword IF = new Rust_Keyword("if");
+		public @S(30) Rust_Expression condition;
+		public @S(40) Rust_Block_Statement elseIfStatement;
 	}
 
 	@Override
@@ -50,6 +60,15 @@ public class Rust_IfStatement extends TokenSequence
 			// Had to delay to make sure line number etc are all set
 			_metrics = new ArrayList<IfCondMetrics>();
 			_metrics.add(new IfCondMetrics(interpreter._metrics, IF));
+			
+			if (elseIfClauses != null && elseIfClauses.size() > 0)
+			{
+				for (Rust_ElseIfClause elseIfClause : elseIfClauses._elements)
+				{
+					_metrics.add(new IfCondMetrics(interpreter._metrics, elseIfClause.IF));
+				}
+			}
+
 			if (elseClause != null && elseClause.isPresent())
 			{
 				_metrics.add(new IfCondMetrics(interpreter._metrics, elseClause.ELSE));
@@ -62,10 +81,35 @@ public class Rust_IfStatement extends TokenSequence
 		{
 			todo = thenStatement;
 		}
-		else if (elseClause != null && elseClause.isPresent())
+		else
 		{
-			_metrics.get(1).completedIf(true);
-			todo = elseClause.elseStatement;
+			boolean matched = false;
+			int seq = 1;
+			if (elseIfClauses != null && elseIfClauses.size() > 0)
+			{
+				for (Rust_ElseIfClause elseIfClause : elseIfClauses._elements)
+				{
+					boolean cond2 = interpreter.getBoolValue(elseIfClause.condition);
+					_metrics.get(seq).completedIf(cond2);
+					if (cond2)
+					{
+						todo = elseIfClause.elseIfStatement;
+						matched = true;
+						break;
+					}
+					seq++;
+				}
+			}
+			
+			if (!matched)
+			{
+				// Check for 'else'
+				if (elseClause != null && elseClause.isPresent())
+				{
+					_metrics.get(1).completedIf(true);
+					todo = elseClause.elseStatement;
+				}
+			}
 		}
 
 		if (todo != null)
@@ -77,16 +121,17 @@ public class Rust_IfStatement extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression cond = transformer.transformExpression(generator, condition);
 		ArrayList<AbstractStatement> ifTrue = new ArrayList<AbstractStatement>();
 		ArrayList<AbstractStatement> ifFalse = new ArrayList<AbstractStatement>();
 
-		ArrayList<AbstractStatement> stmts = transformer.transformStatement(generator, thenStatement);
-		if (stmts != null)
+		ArrayList<AbstractStatement> stmts1 = transformer.transformStatement(generator, thenStatement);
+		if (stmts1 != null)
 		{
-			for (AbstractStatement stmt : stmts)
+			for (AbstractStatement stmt : stmts1)
 			{
 				ifTrue.add(stmt);
 			}
@@ -101,7 +146,26 @@ public class Rust_IfStatement extends TokenSequence
 			}
 		}
 
-		return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		if (elseIfClauses == null || elseIfClauses.size() == 0)
+		{
+			return generator.newIfStatement(cond, ifTrue, ifFalse, this);
+		}
+
+		// Dang, need some "else if" blocks
+		ArrayList<AbstractExpression> elseIfConds =
+				new ArrayList<AbstractExpression>();
+		ArrayList<ArrayList<AbstractStatement>> elseIfParts =
+				new ArrayList<ArrayList<AbstractStatement>>();
+		for (Rust_ElseIfClause nextElIf : elseIfClauses._elements)
+		{
+			elseIfConds.add(transformer.transformExpression(generator,
+					nextElIf.condition));
+			ArrayList<AbstractStatement> stmts2 = transformer.transformStatement(generator,
+					nextElIf.elseIfStatement);
+			elseIfParts.add(stmts2);
+		}
+		return generator.newIfElseIfStatement(cond, ifTrue,
+				elseIfConds, elseIfParts, ifFalse, this);
 	}
 
 	public static Rust_Statement generateIfElseOne(Rust_Expression cond,

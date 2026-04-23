@@ -10,6 +10,7 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Functions.Rust_ToOwnedMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
@@ -86,19 +87,33 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		Rust_AdditiveExpression add = new Rust_AdditiveExpression();
 		add.left = leftExpr;
 		add.right = rightExpr;
+		
+		boolean stringy = false;
+		
 		if (types == null)
 		{
 			if ((leftExpr.getWhich() instanceof Rust_Literal) &&
 					! (rightExpr.getWhich() instanceof Rust_Literal))
 			{
-				add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
+				stringy = true;
 			}
 		}
-		else if (types._type1 == TypeEnum.STRING && types._type2 != TypeEnum.STRING)
+		else if (types._type1 == TypeEnum.STRING || types._type2 == TypeEnum.STRING)
 		{
-			add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
+			stringy = true;
 		}
 
+		if (stringy)
+		{
+			if (leftExpr.getWhich() instanceof Rust_VariableExpression)
+			{
+				// add.left = Rust_BorrowExpression.generateBorrow(leftExpr, leftExpr);
+				add.left = Rust_ToOwnedMethod.generateOwned(leftExpr, leftExpr);
+				add.left = Rust_ToStringMethod.generateString(add.left, null);
+			}
+			add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
+		}
+		
 		switch (oper)
 		{
 		case PLUS:
