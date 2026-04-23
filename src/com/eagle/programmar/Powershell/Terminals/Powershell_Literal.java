@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Powershell.Terminals;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.programmar.Powershell.Powershell_Format;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -21,10 +23,16 @@ public class Powershell_Literal extends TerminalLiteralToken
 	}
 	
 	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		String result = Powershell_Format.format(interpreter, removeQuotes());
+		interpreter.pushStr(result);
+	}
+
+	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		String str = removeQuotes().replaceAll("`", "");
-		return generator.newLiteralExpression(str, this);
+		return Powershell_Format.compile(generator, removeQuotes(), this);
 	}
 }

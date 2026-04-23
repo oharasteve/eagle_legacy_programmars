@@ -20,9 +20,9 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Powershell_WriteStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
@@ -49,13 +49,14 @@ public class Powershell_WriteStatement extends TokenSequence
 	{
 		for (int i = 0; i < exprs.getPrimaryCount(); i++)
 		{
-			String result = interpreter.getStrValue(exprs.getPrimaryElement(i));
-			System.out.println(result);
+			String line = interpreter.getStrValue(exprs.getPrimaryElement(i));
+			System.out.println(line);
 		}
 	}
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		for (int i = 0; i < exprs.getPrimaryCount(); i++)
