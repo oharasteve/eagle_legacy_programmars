@@ -10,7 +10,6 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Functions.Rust_ToOwnedMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
@@ -90,8 +89,9 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		
 		boolean stringy = false;
 		
-		if ((leftExpr.getWhich() instanceof Rust_Literal) ||
-				(rightExpr.getWhich() instanceof Rust_Literal))
+		AbstractToken leftWhich = leftExpr.getWhich();
+		AbstractToken rightWhich = rightExpr.getWhich();
+		if ((leftWhich instanceof Rust_Literal) || (rightWhich instanceof Rust_Literal))
 		{
 			stringy = true;
 		}
@@ -104,11 +104,16 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		if (stringy)
 		{
 			// Force String's on both sides of the + operator
-			if (leftExpr.getWhich() instanceof Rust_VariableExpression)
+			if (leftWhich instanceof Rust_VariableExpression)
 			{
 				add.left = Rust_ToStringMethod.generateString(leftExpr, leftExpr);
 			}
-			if (rightExpr.getWhich() instanceof Rust_VariableExpression)
+			else if (leftWhich instanceof Rust_Literal)
+			{
+				add.left = Rust_ToStringMethod.generateString(leftExpr, leftExpr);
+			}
+
+			if (rightWhich instanceof Rust_VariableExpression)
 			{
 				add.right = Rust_BorrowExpression.generateBorrow(rightExpr, rightExpr);
 				add.right = Rust_ToStringMethod.generateString(add.right, null);

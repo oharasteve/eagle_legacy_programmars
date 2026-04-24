@@ -7,7 +7,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;

@@ -15,6 +15,7 @@ import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Rust_Variable;
+import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
@@ -361,7 +362,7 @@ public class Rust_ForStatement extends TokenSequence
 			range.lowExpression = Rust_ParenthesizedExpression.generateParentheses(fromExpression, null);
 		}
 		
-		if (relOper == RelationalEnum.LESS_EQUALS)
+		if (relOper == RelationalEnum.LESS_EQUALS || relOper == RelationalEnum.GREATER_EQUALS)
 		{
 			range.dots.setValue("..=");
 		}
@@ -399,9 +400,12 @@ public class Rust_ForStatement extends TokenSequence
 		if (incr == -1)
 		{
 			// Ada, e.g., switched them already, so we have to switch them back.
-			Rust_Expression tempExpr = range.highExpression;
-			range.highExpression = range.lowExpression;
-			range.lowExpression = tempExpr;
+			Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
+			Rust_Expression tempExpr = Rust_AdditiveExpression.generateAdditive(null,
+					range.lowExpression, AdditiveEnum.PLUS, one, null);
+
+			range.lowExpression = range.highExpression;
+			range.highExpression = Rust_ParenthesizedExpression.generateParentheses(tempExpr, null);
 			range.highExpression.setPresent(true);	// Again :(
 			Rust_Expression parenRev = Rust_ParenthesizedExpression.generateParentheses(rangeExpr, null);
 			rangeExpr = Rust_RevMethod.generateRev(parenRev);

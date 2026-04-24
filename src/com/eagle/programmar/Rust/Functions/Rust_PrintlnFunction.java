@@ -33,7 +33,7 @@ import com.eagle.transform.EagleTransformer;
 // This works in rextester:
 //   fn main() {
 //     let ok = 33 as i32;
-//     println!("{}", String::from("") + "Tests passed = " + &ok.to_string() + " of 34");
+//     println!("{}", "Tests passed = ".to_string() + &ok.to_string() + " of 34");
 //   }
 // prints "Tests passed = 33 of 34"
 
