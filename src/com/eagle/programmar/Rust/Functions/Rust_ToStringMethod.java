@@ -25,7 +25,7 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_ToStringMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) @NOSPACE Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
+	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
 	public @S(30) @NOSPACE Rust_KeywordChoice TOSTRING = new Rust_KeywordChoice("as_str", "to_string");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
@@ -49,7 +49,7 @@ public class Rust_ToStringMethod extends PrecedenceOperator
 	{
 		Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
 		// Rust likes '&ok.to_string()' where 'ok' is an i32
-		strMeth.left = Rust_BorrowExpression.generateBorrow(expr, source);
+		strMeth.left = expr;   // Rust_BorrowExpression.generateBorrow(expr, source);
 		
 		strMeth.dot = new PunctuationPeriod();
 		strMeth.TOSTRING.setValue("to_string");

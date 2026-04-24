@@ -90,28 +90,29 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		
 		boolean stringy = false;
 		
-		if (types == null)
+		if ((leftExpr.getWhich() instanceof Rust_Literal) ||
+				(rightExpr.getWhich() instanceof Rust_Literal))
 		{
-			if ((leftExpr.getWhich() instanceof Rust_Literal) &&
-					! (rightExpr.getWhich() instanceof Rust_Literal))
-			{
-				stringy = true;
-			}
+			stringy = true;
 		}
-		else if (types._type1 == TypeEnum.STRING || types._type2 == TypeEnum.STRING)
+
+		if (types != null && (types._type1 == TypeEnum.STRING || types._type2 == TypeEnum.STRING))
 		{
 			stringy = true;
 		}
 
 		if (stringy)
 		{
+			// Force String's on both sides of the + operator
 			if (leftExpr.getWhich() instanceof Rust_VariableExpression)
 			{
-				// add.left = Rust_BorrowExpression.generateBorrow(leftExpr, leftExpr);
-				add.left = Rust_ToOwnedMethod.generateOwned(leftExpr, leftExpr);
-				add.left = Rust_ToStringMethod.generateString(add.left, null);
+				add.left = Rust_ToStringMethod.generateString(leftExpr, leftExpr);
 			}
-			add.right = Rust_ToStringMethod.generateString(rightExpr, rightExpr);
+			if (rightExpr.getWhich() instanceof Rust_VariableExpression)
+			{
+				add.right = Rust_BorrowExpression.generateBorrow(rightExpr, rightExpr);
+				add.right = Rust_ToStringMethod.generateString(add.right, null);
+			}
 		}
 		
 		switch (oper)

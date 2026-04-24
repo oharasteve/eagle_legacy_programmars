@@ -10,7 +10,9 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Variable;
+import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
+import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -121,7 +123,16 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 		varExpr.variable = Rust_Variable.generateVariable(id.getValue());
 		asgExpr.var = Rust_Generator.wrapExpression(varExpr);
 		asgExpr.operator.setValue(punct);
-		asgExpr.expr = expression;
+		
+		if (expression.getWhich() instanceof Rust_Literal)
+		{
+			asgExpr.expr = Rust_ToStringMethod.generateString(expression, source);
+		}
+		else
+		{
+			asgExpr.expr = expression;
+		}
+		
 		asgExpr.setTransformationSource(source);
 		return Rust_Generator.wrapExpression(asgExpr);
 	}
