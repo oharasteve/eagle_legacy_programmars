@@ -39,55 +39,32 @@ public class Powershell_Format
 		}
 
 		StringBuffer sb = new StringBuffer();
-		int sc = 0;
 		int nc = txt.length();
-		char prev = '?';
-		int i = 0;
-		while (i < nc)
+		int sc = 0;
+		while (sc < nc)
 		{
-			char ch = txt.charAt(i);
-			if (ch != '$' || prev == '`')
+			char ch = txt.charAt(sc);
+			if (ch == '`' && sc + 1 < nc)
 			{
-				i++;
-				prev = ch;
+				sc++;
+				ch = txt.charAt(sc);
+				sb.append(ch);
+				continue;
+			}
+			
+			if (ch != '$')
+			{
+				sb.append(ch);
+				sc++;
 				continue;
 			}
 
-			// Was there any stuff before the $ ??
-			if (sc < i)
-			{
-				// Yep, add text
-				sb.append(txt.substring(sc, i));
-			}
-			
-			
-			
-			
-			
-			// HERE I AM
-			
-			
-			
-			
-			
-			
-			// Pull in a text string
-			int first = txt.indexOf('$', sc);
-			if (first < 0)
-			{
-				sb.append(txt.substring(sc, nc));
-				break; // Done -- no more $
-			}
-			if (first > sc)
-			{
-				sb.append(txt.substring(sc, first));
-			}
-			if (first + 1 < nc && txt.charAt(first + 1) == '(')
+			if (sc + 1 < nc && txt.charAt(sc + 1) == '(')
 			{
 				// Extract an expression
-				int second = txt.indexOf(")", first + 2);
-				if (second < 0) throw new RuntimeException("Missing ) in " + txt);
-				String var = txt.substring(first + 2, second);
+				int ec = txt.indexOf(")", sc + 2);
+				if (ec < 0) throw new RuntimeException("Missing ) in " + txt);
+				String var = txt.substring(sc + 2, ec);
 				Powershell_Expression expr = new Powershell_Expression();
 				if (!interpreter._parser.parseLine(var, interpreter._lang, expr))
 				{
@@ -97,37 +74,45 @@ public class Powershell_Format
 				sb.append(val);
 
 				// Look for the next piece
-				sc = second + 1;
+				sc = ec + 1;
 			}
 			else
 			{
 				// Just a variable, like $str
-				int second = first + 1;
-				while (second < nc)
+				int ec = sc + 1;
+				while (ec < nc)
 				{
-					ch = txt.charAt(second);
-					if (!Character.isLetterOrDigit(ch)) break;
-					second++;
+					ch = txt.charAt(ec);
+					if (ch != '_' && !Character.isLetterOrDigit(ch)) break;
+					ec++;
 				}
-				if (first + 1 == second)
+				if (sc + 1 == ec)
 				{
 					// Just a lonely $
 					sb.append('$');
-					sc = first + 1;
+					sc = sc + 1;
 				}
 				else
 				{
-					String varName = txt.substring(first + 1, second);
-					EagleValue value = interpreter.findSymbol(varName);
-					if (value == null)
+					String varName = txt.substring(sc + 1, ec);
+					if (varName.equalsIgnoreCase("True") || varName.equalsIgnoreCase("False"))
 					{
-						throw new RuntimeException("Unable to find variable " + varName);
+						sb.append("$" + varName);
 					}
-					sb.append(value.forceStringValue());
-					sc = second;
+					else
+					{
+						EagleValue value = interpreter.findSymbol(varName);
+						if (value == null)
+						{
+							throw new RuntimeException("Unable to find variable " + varName);
+						}
+						sb.append(value.forceStringValue());
+					}
+					sc = ec;
 				}
 			}
 		}
+
 		return sb.toString();
 	}
 
@@ -144,29 +129,34 @@ public class Powershell_Format
 		}
 
 		int sc = 0;
-		char prev = ' ';
+		char ch = '?';
 		StringBuffer piece = new StringBuffer();
 		while (sc < nc)
 		{
-			char ch = fmt.charAt(sc);
+			char prev = ch;
+			ch = fmt.charAt(sc);
 			
-			// Check for an escape (back-tick) before the $
-			String var = null;
-			if (prev != '`')
+			// Check for an escape (back-tick) first
+			if (ch == '`')
 			{
-				if (ch == '$')
+				// Toss back-quote ticks
+				sc++;
+				continue;
+			}
+			
+			String var = null;
+			if (prev != '`' && ch == '$')
+			{
+				int endDollar = sc + 1;
+				while (endDollar < nc)
 				{
-					int endDollar = sc + 1;
-					while (endDollar < nc)
-					{
-						// Stop on a non-alphanumeric
-						char nxt = fmt.charAt(endDollar);
-						if (nxt != '_' && !Character.isLetterOrDigit(nxt)) break;
-						endDollar++;
-					}
-					var = fmt.substring(sc+1, endDollar);	// Skip the leading $
-					sc = endDollar - 1;
+					// Stop on a non-alphanumeric
+					char nxt = fmt.charAt(endDollar);
+					if (nxt != '_' && !Character.isLetterOrDigit(nxt)) break;
+					endDollar++;
 				}
+				var = fmt.substring(sc+1, endDollar);	// Skip the leading $
+				sc = endDollar - 1;
 			}
 				
 			if (var != null)
