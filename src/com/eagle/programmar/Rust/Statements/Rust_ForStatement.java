@@ -347,9 +347,7 @@ public class Rust_ForStatement extends TokenSequence
 			Rust_Expression delta, ArrayList<Rust_Statement> actions, AbstractToken source)
 	{
 		Rust_ForStatement forStmt = new Rust_ForStatement();
-
 		forStmt.variable = var;
-
 		Rust_RangeExpression range = new Rust_RangeExpression();
 		
 		AbstractToken which1 = fromExpression.getWhich();
@@ -362,14 +360,7 @@ public class Rust_ForStatement extends TokenSequence
 			range.lowExpression = Rust_ParenthesizedExpression.generateParentheses(fromExpression, null);
 		}
 		
-		if (relOper == RelationalEnum.LESS_EQUALS || relOper == RelationalEnum.GREATER_EQUALS)
-		{
-			range.dots.setValue("..=");
-		}
-		else
-		{
-			range.dots.setValue("..");
-		}
+		range.dots.setValue("..");
 
 		AbstractToken which2 = toExpression.getWhich();
 		if ((which2 instanceof Rust_Number) || (which2 instanceof Rust_VariableExpression))
@@ -393,19 +384,29 @@ public class Rust_ForStatement extends TokenSequence
 			incr = Integer.parseInt(num.getValue());
 		}
 		
+		if (relOper == RelationalEnum.LESS_EQUALS)
+		{
+			range.dots.setValue("..=");
+		}
+
 		// range.rev().stepby(n) and range.stepby(n).rev() can be different
 		// Hence, we don't support negative step right now.
 
 		Rust_Expression rangeExpr = Rust_Generator.wrapExpression(range);
 		if (incr == -1)
 		{
-			// Ada, e.g., switched them already, so we have to switch them back.
-			Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
-			Rust_Expression tempExpr = Rust_AdditiveExpression.generateAdditive(null,
-					range.lowExpression, AdditiveEnum.PLUS, one, null);
+			if (relOper == RelationalEnum.GREATER_THAN)
+			{
+				Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
+				range.highExpression = Rust_AdditiveExpression.generateAdditive(null,
+						range.highExpression, AdditiveEnum.PLUS, one, null);
+			}
 
-			range.lowExpression = range.highExpression;
-			range.highExpression = Rust_ParenthesizedExpression.generateParentheses(tempExpr, null);
+			range.dots.setValue("..=");
+
+			Rust_Expression tempExpr = range.highExpression;
+			range.highExpression = range.lowExpression;
+			range.lowExpression = tempExpr; // Rust_ParenthesizedExpression.generateParentheses(tempExpr, null);
 			range.highExpression.setPresent(true);	// Again :(
 			Rust_Expression parenRev = Rust_ParenthesizedExpression.generateParentheses(rangeExpr, null);
 			rangeExpr = Rust_RevMethod.generateRev(parenRev);
