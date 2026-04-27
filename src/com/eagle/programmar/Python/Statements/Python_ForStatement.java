@@ -360,7 +360,7 @@ public class Python_ForStatement extends TokenSequence
 		RelationalEnum relOper;
 		switch (condOper.getValue())
 		{
-		case "=":
+		case "==":
 			relOper = RelationalEnum.EQUALS;
 			break;
 		case "<>", "!=":

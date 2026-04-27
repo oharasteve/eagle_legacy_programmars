@@ -118,6 +118,10 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 				add.right = Rust_BorrowExpression.generateBorrow(rightExpr, rightExpr);
 				add.right = Rust_ToStringMethod.generateString(add.right, null);
 			}
+			else if (rightWhich instanceof Rust_ToStringMethod)
+			{
+				add.right = Rust_BorrowExpression.generateBorrow(rightExpr, rightExpr);
+			}
 		}
 		
 		switch (oper)

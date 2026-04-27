@@ -288,7 +288,7 @@ public class Rust_ForStatement extends TokenSequence
 		RelationalEnum relOper;
 		switch (condOper.getValue())
 		{
-		case "=":
+		case "==":
 			relOper = RelationalEnum.EQUALS;
 			break;
 		case "<>", "!=":
@@ -395,11 +395,17 @@ public class Rust_ForStatement extends TokenSequence
 		Rust_Expression rangeExpr = Rust_Generator.wrapExpression(range);
 		if (incr == -1)
 		{
-			if (relOper == RelationalEnum.GREATER_THAN)
+			switch(relOper)
 			{
+			case GREATER_THAN:
+			case LESS_THAN:
+			case NOT_EQUALS:
 				Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
 				range.highExpression = Rust_AdditiveExpression.generateAdditive(null,
 						range.highExpression, AdditiveEnum.PLUS, one, null);
+				break;
+			default:
+				break;
 			}
 
 			range.dots.setValue("..=");
