@@ -127,6 +127,7 @@ public class SQL_CaseStatement extends TokenSequence
 					SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, thisValue, when);
 			thisCase.add(generator.newExpressionStatement(thisAsgExpr, when));
 
+			thisCase.add(generator.newBreakStatement(null));
 			cases.add(thisCase);
 		}
 
@@ -138,6 +139,7 @@ public class SQL_CaseStatement extends TokenSequence
 			AbstractExpression defaultAsgExpr = generator.newAssignmentExpression(id.getValue(),
 					SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, defaultValue, elseClause);
 			defaultCase.add(generator.newExpressionStatement(defaultAsgExpr, elseClause));
+			defaultCase.add(generator.newBreakStatement(null));
 		}
 
 		AbstractStatement stmt = generator.newSwitchStatement(newValue, values, cases, defaultCase, this);
