@@ -24,7 +24,7 @@ public class Rust_BreakStatement extends TokenSequence
 {
 	public @S(10) @DOC("expressions/loop-expr.html#break-expressions") @NEWLINE Rust_Keyword BREAK =
 			new Rust_Keyword("break");
-	public @S(20) @OPT PunctuationSemicolon semicolon;
+	public @S(20) @OPT @NOSPACE PunctuationSemicolon semicolon;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

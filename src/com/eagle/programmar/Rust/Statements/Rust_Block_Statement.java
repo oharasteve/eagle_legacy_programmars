@@ -63,7 +63,7 @@ public class Rust_Block_Statement extends TokenSequence
 		return generator.newBlockStatement(result, this);
 	}
 
-	private static Rust_Block_Statement emptyBlock()
+	public static Rust_Block_Statement emptyBlock()
 	{
 		Rust_Block_Statement block = new Rust_Block_Statement();
 		block.leftBrace = new PunctuationLeftBrace();

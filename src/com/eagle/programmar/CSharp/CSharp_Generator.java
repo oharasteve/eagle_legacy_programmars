@@ -406,7 +406,8 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 
 	@Override
 	public CSharp_Statement newSwitchStatement(CSharp_Expression expr,
-			ArrayList<CSharp_Expression> values, ArrayList<ArrayList<CSharp_Statement>> cases,
+			ArrayList<ArrayList<CSharp_Expression>> values,
+			ArrayList<ArrayList<CSharp_Statement>> cases,
 			ArrayList<CSharp_Statement> defaultCase, AbstractToken source)
 	{
 		return CSharp_SwitchStatement.generateSwitch(expr, values, cases, defaultCase, source);

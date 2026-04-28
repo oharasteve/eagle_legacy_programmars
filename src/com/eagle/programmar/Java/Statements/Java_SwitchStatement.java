@@ -5,6 +5,9 @@ package com.eagle.programmar.Java.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.metrics.SwitchMetrics;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Statement;
@@ -15,24 +18,29 @@ import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class Java_SwitchStatement extends TokenSequence
-		implements AbstractStatement, EagleScopeInterface
+		implements AbstractStatement, EagleRunnableWithResult, EagleScopeInterface,
+				EagleTransformableStatement
 {
 	public @S(10) @NEWLINE @DOC("statements.html#14.11") Java_Keyword SWITCH = new Java_Keyword("switch");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE Java_Expression val;
+	public @S(30) @NOSPACE Java_Expression value;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 	public @S(50) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(60) TokenList<Java_SwitchCase> caseClauses;
@@ -41,25 +49,32 @@ public class Java_SwitchStatement extends TokenSequence
 	public static class Java_SwitchCase extends TokenChooser
 	{
 		public @CHOICE Java_Comment XXcomment;
-		public @CHOICE Java_CaseClause XXcaseClause;
+		public @CHOICE Java_CaseClauses XXcaseClauses;
 		public @CHOICE Java_DefaultClause XXdefaultClause;
 	}
 
 	public static class Java_CaseClause extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword CASE = new Java_Keyword("case");
-		public @S(20) SeparatedList<Java_Expression, PunctuationComma> exprList;
+		public @S(20) Java_Expression expr;
 		public @S(30) @NOSPACE PunctuationColon colon;
-		public @S(40) @OPT @PYDENT TokenList<Java_StatementOrComment> statements;
+	}
+
+	public static class Java_CaseClauses extends TokenSequence
+	{
+		public @S(10) TokenList<Java_CaseClause> cases;
+		public @S(20) @PYDENT TokenList<Java_StatementOrComment> statements;
 	}
 
 	public static class Java_DefaultClause extends TokenSequence
 	{
 		public @S(10) @NEWLINE Java_Keyword DEFAULT = new Java_Keyword("default");
 		public @S(20) @NOSPACE PunctuationColon colon;
-		public @S(30) @OPT @PYDENT TokenList<Java_StatementOrComment> statements;
+		public @S(30) @PYDENT TokenList<Java_StatementOrComment> statements;
 	}
 
+	private @SKIP SwitchMetrics _metrics = null;
+	
 	private @SKIP EagleScope _scope = new EagleScope(this, Java_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -68,8 +83,128 @@ public class Java_SwitchStatement extends TokenSequence
 		return _scope;
 	}
 
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		TokenList<Java_StatementOrComment> todo = null;
+
+		if (_metrics == null)
+		{
+			// Had to delay to make sure line numbers etc are all set
+			_metrics = new SwitchMetrics(interpreter._metrics, SWITCH);
+		}
+
+		Java_DefaultClause defaultClause = null;
+
+		int val = interpreter.getIntValue(value);
+		for (int i = 0; i < caseClauses.size(); i++)
+		{
+			AbstractToken which = caseClauses._elements.get(i).getWhich();
+			if (which instanceof Java_CaseClauses)
+			{
+				Java_CaseClauses cases = (Java_CaseClauses) which;
+				int numCases = cases.cases.size();
+				for (int j = 0; j < numCases; j++)
+				{
+					Java_Expression expr = cases.cases._elements.get(j).expr;
+					int whenValue = interpreter.getIntValue(expr);
+					if (val == whenValue)
+					{
+						_metrics.matched(expr, whenValue);
+						todo = cases.statements;
+						break;
+					}
+				}
+			}
+			else if (which instanceof Java_DefaultClause)
+			{
+				defaultClause = (Java_DefaultClause) which;
+			}
+			
+			if (todo != null)
+			{
+				break;
+			}
+		}
+
+		if (todo == null && defaultClause != null && defaultClause.isPresent())
+		{
+			_metrics.noMatch(defaultClause);
+			todo = defaultClause.statements;
+		}
+
+		if (todo != null)
+		{
+			for (Java_StatementOrComment stmt : todo._elements)
+			{
+				result = interpreter.tryToInterpret(stmt.getWhich());
+				if (result != Eagle_Statement_Result.NORMAL)
+				{
+					break;
+				}
+			}
+		}
+
+		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractExpression newValue = transformer.transformExpression(generator, value);
+
+		ArrayList<AbstractStatement> defaultActionList = null;
+		
+		ArrayList<ArrayList<AbstractExpression>> allCases = new ArrayList<ArrayList<AbstractExpression>>();
+		ArrayList<ArrayList<AbstractStatement>> allActions = new ArrayList<ArrayList<AbstractStatement>>();
+		for (int i = 0; i < caseClauses.size(); i++)
+		{
+			AbstractToken which = caseClauses._elements.get(i).getWhich();
+			if (which instanceof Java_CaseClauses)
+			{
+				Java_CaseClauses when = (Java_CaseClauses) which;
+				ArrayList<AbstractExpression> caseList = new ArrayList<AbstractExpression>();
+				for (Java_CaseClause clause : when.cases._elements)
+				{
+					AbstractExpression newExpr2 = transformer.transformExpression(generator, clause.expr);
+					caseList.add(newExpr2);
+				}
+				allCases.add(caseList);
+				
+				ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+				for (Java_StatementOrComment stmt1 : when.statements._elements)
+				{
+					ArrayList<AbstractStatement> transStmts = transformer.transformStatement(generator, stmt1);
+					for (AbstractStatement stmt2 : transStmts)
+					{
+						actionList.add(stmt2);
+					}
+				}
+				allActions.add(actionList);
+			}
+			else if (which instanceof Java_DefaultClause)
+			{
+				Java_DefaultClause defaultClause = (Java_DefaultClause) which;
+				defaultActionList = new ArrayList<AbstractStatement>();
+				for (Java_StatementOrComment stmt3 : defaultClause.statements._elements)
+				{
+					for (AbstractStatement stmt4 : transformer.transformStatement(generator, stmt3))
+					{
+						defaultActionList.add(stmt4);
+					}
+				}
+			}
+		}
+
+		AbstractStatement stmt = generator.newSwitchStatement(newValue, allCases, allActions, defaultActionList, this);
+		return stmt;
+	}
+	
 	public static Java_Statement generateSwitch(Java_Expression expr,
-			ArrayList<Java_Expression> values, ArrayList<ArrayList<Java_Statement>> cases,
+			ArrayList<ArrayList<Java_Expression>> values,
+			ArrayList<ArrayList<Java_Statement>> actions,
 			ArrayList<Java_Statement> defaultCase, AbstractToken source)
 	{
 		Java_SwitchStatement switchStmt = new Java_SwitchStatement();
@@ -77,32 +212,34 @@ public class Java_SwitchStatement extends TokenSequence
 		switchStmt.rightParen = new PunctuationRightParen();
 		switchStmt.leftBrace = new PunctuationLeftBrace();
 		switchStmt.rightBrace = new PunctuationRightBrace();
-		switchStmt.val = expr;
+		switchStmt.value = expr;
 
-		int numCases = values.size();
+		int numCaseBlocks = values.size();
 		switchStmt.caseClauses = new TokenList<Java_SwitchCase>();
-		for (int i = 0; i < numCases; i++)
+		for (int i = 0; i < numCaseBlocks; i++)
 		{
-			Java_CaseClause caseClause = new Java_CaseClause();
-			caseClause.exprList = new SeparatedList<Java_Expression, PunctuationComma>();
-			caseClause.exprList.addPrimaryElement(values.get(i));
+			Java_CaseClauses caseClauses = new Java_CaseClauses();
+			caseClauses.cases = new TokenList<Java_CaseClause>();
+			for (int j = 0; j < values.get(i).size(); j++)
+			{
+				Java_CaseClause caseClause = new Java_CaseClause();
+				caseClause.expr = values.get(i).get(j);
+				caseClause.colon = new PunctuationColon();
+				caseClauses.cases.addToken(caseClause);
+			}
 
-			caseClause.colon = new PunctuationColon();
-			caseClause.statements = new TokenList<Java_StatementOrComment>();
-			caseClause.statements.setPresent(true);
+			caseClauses.statements = new TokenList<Java_StatementOrComment>();
+			caseClauses.statements.setPresent(true);
 
-			for (Java_Statement stmt1 : cases.get(i))
+			for (Java_Statement stmt1 : actions.get(i))
 			{
 				Java_StatementOrComment stmtComm1 = new Java_StatementOrComment();
 				stmtComm1.setWhich(stmt1);
-				caseClause.statements.addToken(stmtComm1);
+				caseClauses.statements.addToken(stmtComm1);
 			}
-			Java_StatementOrComment stmtComm1 = new Java_StatementOrComment();
-			stmtComm1.setWhich(Java_BreakStatement.generateBreak(switchStmt));
-			caseClause.statements.addToken(stmtComm1);
 
 			Java_SwitchCase switchCase1 = new Java_SwitchCase();
-			switchCase1.setWhich(caseClause);
+			switchCase1.setWhich(caseClauses);
 			switchStmt.caseClauses.addToken(switchCase1);
 		}
 
@@ -119,9 +256,6 @@ public class Java_SwitchStatement extends TokenSequence
 				stmtComm2.setWhich(stmt2);
 				defaultClause.statements.addToken(stmtComm2);
 			}
-			Java_StatementOrComment stmtComm2 = new Java_StatementOrComment();
-			stmtComm2.setWhich(Java_BreakStatement.generateBreak(switchStmt));
-			defaultClause.statements.addToken(stmtComm2);
 
 			Java_SwitchCase switchCase2 = new Java_SwitchCase();
 			switchCase2.setWhich(defaultClause);

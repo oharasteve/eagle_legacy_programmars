@@ -27,11 +27,11 @@ import com.eagle.tokens.punctuation.PunctuationVerticalBar;
 
 public class Rust_MatchStatement extends TokenSequence implements AbstractStatement, EagleScopeInterface
 {
-	public @S(10) @DOC("expressions/match-expr.html") Rust_Keyword MATCH = new Rust_Keyword("match");
+	public @S(10) @DOC("expressions/match-expr.html") @NEWLINE Rust_Keyword MATCH = new Rust_Keyword("match");
 	public @S(20) Rust_Expression val;
-	public @S(30) PunctuationLeftBrace leftBrace;
+	public @S(30) @INDENT PunctuationLeftBrace leftBrace;
 	public @S(40) TokenList<Rust_MatchClause> clauses;
-	public @S(50) PunctuationRightBrace rightBrace;
+	public @S(50) @OUTDENT PunctuationRightBrace rightBrace;
 
 	public static class Rust_MatchClause extends TokenChooser
 	{
@@ -42,17 +42,17 @@ public class Rust_MatchStatement extends TokenSequence implements AbstractStatem
 
 	public static class Rust_CaseClause extends TokenSequence
 	{
-		public @S(10) SeparatedList<Rust_Expression,PunctuationVerticalBar> exprList;
+		public @S(10) @NEWLINE SeparatedList<Rust_Expression,PunctuationVerticalBar> exprList;
 		public @S(20) Rust_Punctuation arrow = new Rust_Punctuation("=>");
-		public @S(30) @OPT TokenList<Rust_Statement> statements;
+		public @S(30) @OPT @PYDENT Rust_Statement statement;
 		public @S(40) @OPT PunctuationComma comma;
 	}
 
 	public static class Rust_DefaultClause extends TokenSequence
 	{
-		public @S(10) Rust_Punctuation underscore = new Rust_Punctuation('_');
+		public @S(10) @NEWLINE Rust_Punctuation underscore = new Rust_Punctuation('_');
 		public @S(20) Rust_Punctuation arrow = new Rust_Punctuation("=>");
-		public @S(30) @OPT TokenList<Rust_Statement> statements;
+		public @S(30) @OPT @PYDENT Rust_Statement statement;
 		public @S(40) @OPT PunctuationComma comma;
 	}
 
@@ -65,7 +65,7 @@ public class Rust_MatchStatement extends TokenSequence implements AbstractStatem
 	}
 
 	public static Rust_Statement generateMatch(Rust_Expression expr,
-			ArrayList<Rust_Expression> values, ArrayList<ArrayList<Rust_Statement>> stmtLists,
+			ArrayList<ArrayList<Rust_Expression>> values, ArrayList<ArrayList<Rust_Statement>> stmtLists,
 			ArrayList<Rust_Statement> defaultStmts, AbstractToken source)
 	{
 		Rust_MatchStatement matchStmt = new Rust_MatchStatement();
@@ -77,44 +77,53 @@ public class Rust_MatchStatement extends TokenSequence implements AbstractStatem
 		matchStmt.clauses = new TokenList<Rust_MatchClause>();
 		for (int i = 0; i < numCases; i++)
 		{
-			Rust_CaseClause caseClause = new Rust_CaseClause();
-			caseClause.exprList = new SeparatedList<Rust_Expression,PunctuationVerticalBar>();
-			caseClause.exprList.addPrimaryElement(values.get(i));	// Just one value right now
+			Rust_CaseClause caseClause1 = new Rust_CaseClause();
+			caseClause1.exprList = new SeparatedList<Rust_Expression, PunctuationVerticalBar>();
+			caseClause1.arrow = new Rust_Punctuation("=>");
 
-			caseClause.arrow = new Rust_Punctuation("=>");
-			caseClause.statements = new TokenList<Rust_Statement>();
-			caseClause.statements.setPresent(true);
+			for (int k = 0; k < values.get(i).size(); k++)
+			{
+				if (k > 0)
+				{
+					caseClause1.exprList.addSecondaryElement(new PunctuationVerticalBar());
+				}
+				caseClause1.exprList.addPrimaryElement(values.get(i).get(k));
+			}
+			Rust_Block_Statement block1 = Rust_Block_Statement.emptyBlock();
+			caseClause1.statement = Rust_Generator.wrapStatement(block1);
 
 			for (Rust_Statement stmt1 : stmtLists.get(i))
 			{
-				caseClause.statements.addToken(stmt1);
+				if (! (stmt1.getWhich() instanceof Rust_BreakStatement))
+				{
+					block1.statements.addToken(stmt1);
+				}
 			}
-			Rust_Statement breakStmt = Rust_BreakStatement.generateBreak(matchStmt);
-			caseClause.statements.addToken(breakStmt);
 
 			Rust_MatchClause matchClause = new Rust_MatchClause();
-			matchClause.setWhich(caseClause);
+			matchClause.setWhich(caseClause1);
 			matchStmt.clauses.addToken(matchClause);
 		}
 
-		if (defaultStmts != null && defaultStmts.size() > 0)
-		{
-			Rust_DefaultClause defaultClause = new Rust_DefaultClause();
-			defaultClause.arrow = new Rust_Punctuation("=>");
-			defaultClause.statements = new TokenList<Rust_Statement>();
-			defaultClause.statements.setPresent(true);
+		Rust_DefaultClause defaultClause = new Rust_DefaultClause();
+		defaultClause.arrow = new Rust_Punctuation("=>");
+		Rust_Block_Statement block2 = Rust_Block_Statement.emptyBlock();
+		defaultClause.statement = Rust_Generator.wrapStatement(block2);
 
+		if (defaultStmts != null)
+		{
 			for (Rust_Statement stmt2 : defaultStmts)
 			{
-				defaultClause.statements.addToken(stmt2);
+				if (! (stmt2.getWhich() instanceof Rust_BreakStatement))
+				{
+					block2.statements.addToken(stmt2);
+				}
 			}
-			Rust_Statement breakStmt = Rust_BreakStatement.generateBreak(matchStmt);
-			defaultClause.statements.addToken(breakStmt);
-
-			Rust_MatchClause matchClause = new Rust_MatchClause();
-			matchClause.setWhich(defaultClause);
-			matchStmt.clauses.addToken(matchClause);
 		}
+
+		Rust_MatchClause matchClause = new Rust_MatchClause();
+		matchClause.setWhich(defaultClause);
+		matchStmt.clauses.addToken(matchClause);
 
 		return Rust_Generator.wrapStatement(matchStmt);
 	}

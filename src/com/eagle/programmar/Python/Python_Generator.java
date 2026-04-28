@@ -392,7 +392,7 @@ public class Python_Generator
 
 	@Override
 	public Python_ComplexStatement newSwitchStatement(Python_Expression expr,
-			ArrayList<Python_Expression> values, ArrayList<ArrayList<Python_ComplexStatement>> cases,
+			ArrayList<ArrayList<Python_Expression>> values, ArrayList<ArrayList<Python_ComplexStatement>> cases,
 			ArrayList<Python_ComplexStatement> defaultCase, AbstractToken source)
 	{
 		return Python_MatchStatement.generateMatch(expr, values, cases, defaultCase, source);

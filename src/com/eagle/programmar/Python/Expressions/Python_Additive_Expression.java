@@ -102,12 +102,21 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		Python_Additive_Expression addExpr = new Python_Additive_Expression();
 		addExpr.left = leftExpr;
 		addExpr.right = rightExpr;
-		if (types != null)
+		
+		boolean stringy = false;
+		if (leftExpr.getWhich() instanceof Python_Literals || rightExpr.getWhich() instanceof Python_Literals)
 		{
-			if (types._type1 == TypeEnum.STRING && types._type2 != TypeEnum.STRING)
-			{
-				addExpr.right = Python_Str_Function.generateString(null, rightExpr, rightExpr);
-			}
+			stringy = true;
+		}
+		
+		if (types != null && (types._type1 == TypeEnum.STRING || types._type2 == TypeEnum.STRING))
+		{
+			stringy = true;
+		}
+		
+		if (stringy)
+		{
+			addExpr.right = Python_Str_Function.generateString(null, rightExpr, rightExpr);
 		}
 
 		switch (oper)

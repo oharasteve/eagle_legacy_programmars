@@ -418,7 +418,7 @@ public class Rust_Generator
 
 	@Override
 	public Rust_Statement newSwitchStatement(Rust_Expression expr,
-			ArrayList<Rust_Expression> values, ArrayList<ArrayList<Rust_Statement>> cases,
+			ArrayList<ArrayList<Rust_Expression>> values, ArrayList<ArrayList<Rust_Statement>> cases,
 			ArrayList<Rust_Statement> defaultCase, AbstractToken source)
 	{
 		return Rust_MatchStatement.generateMatch(expr, values, cases, defaultCase, source);

@@ -414,7 +414,7 @@ public class Java_Generator
 
 	@Override
 	public Java_Statement newSwitchStatement(Java_Expression expr,
-			ArrayList<Java_Expression> values, ArrayList<ArrayList<Java_Statement>> cases,
+			ArrayList<ArrayList<Java_Expression>> values, ArrayList<ArrayList<Java_Statement>> cases,
 			ArrayList<Java_Statement> defaultCase, AbstractToken source)
 	{
 		return Java_SwitchStatement.generateSwitch(expr, values, cases, defaultCase, source);
