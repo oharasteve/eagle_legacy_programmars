@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Rust.Terminals;
 
+import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.terminals.TerminalNumberToken;
 
@@ -16,6 +18,11 @@ public class Rust_Number extends TerminalNumberToken
 	public static Rust_Number createNumber(int value)
 	{
 		return generateNumber(Integer.toString(value), null);
+	}
+	
+	public static Rust_Expression createExpression(int val)
+	{
+		return Rust_Generator.wrapExpression(createNumber(val));
 	}
 
 	public static Rust_Number generateNumber(String value, AbstractToken source)

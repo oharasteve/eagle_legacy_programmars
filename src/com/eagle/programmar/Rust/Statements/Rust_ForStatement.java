@@ -325,9 +325,7 @@ public class Rust_ForStatement extends TokenSequence
 		}
 
 		// Ok, made it through the gauntlet ....
-		Rust_Number numb = Rust_Number.createNumber(delta);
-		Rust_Expression deltaExp = new Rust_Expression();
-		deltaExp.setWhich(numb);
+		Rust_Expression deltaExp = Rust_Number.createExpression(delta);
 		return generateForRangeMany(initVarExp.variable, TypeEnum.INTEGER,
 				init.expr, relOper, cond.right, deltaExp, actions, source);
 	}

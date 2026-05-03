@@ -19,7 +19,6 @@ public class Rust_Variable extends TokenSequence
 	public void interpret(EagleInterpreter interpreter)
 	{
 		EagleValue value = interpreter.findSymbol(var.getValue());
-
 		interpreter.pushEagleValue(value);
 	}
 

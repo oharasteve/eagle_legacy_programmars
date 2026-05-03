@@ -6,6 +6,7 @@ package com.eagle.programmar.Rust.Expressions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
+import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Type.Rust_TypePrimitive;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
@@ -65,7 +66,7 @@ public class Rust_AsExpression extends PrecedenceOperator
 		return newExpr;
 	}
 	
-	public static Rust_AsExpression generateAsExpr(Rust_Expression expr, Rust_Type type, AbstractToken source)
+	public static Rust_Expression generateAsExpr(Rust_Expression expr, Rust_Type type, AbstractToken source)
 	{
 		Rust_TypeExpression typeExpr = new Rust_TypeExpression();
 		typeExpr.type = type;
@@ -74,6 +75,6 @@ public class Rust_AsExpression extends PrecedenceOperator
 		as.type = typeExpr;
 
 		as.setTransformationSource(source);
-		return as;
+		return Rust_Generator.wrapExpression(as);
 	}
 }

@@ -1,15 +1,14 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Jun 22, 2024
+// Original author: Steven A. O'Hara, May 3, 2026
 
 package com.eagle.programmar.Rust.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Rust_Type;
-import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
-import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -23,41 +22,40 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_LenMethod extends PrecedenceOperator
+public class Rust_UnwrapMethod extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Expression left = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) @NOSPACE PunctuationPeriod dot;
-	public @S(30) @NOSPACE Rust_Keyword LEN = new Rust_Keyword("len");
+	public @S(30) @NOSPACE Rust_KeywordChoice UNWRAP = new Rust_KeywordChoice("unwrap_or");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(50) @NOSPACE Rust_Expression noneExpr;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String str = interpreter.getStrValue(left);
-		interpreter.pushInt(str.length());
+		EagleValue val = interpreter.getEagleValue(left);
+		interpreter.pushEagleValue(val);
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, left);
-		return generator.newLengthFunction(theExpr, this);
+		return transformer.transformExpression(generator, left);
 	}
 
-	public static Rust_Expression generateLength(Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generateUnwrap(Rust_Expression expr, Rust_Expression none, AbstractToken source)
 	{
-		Rust_LenMethod lenMeth = new Rust_LenMethod();
-		lenMeth.left = expr;
+		Rust_UnwrapMethod unwrapMeth = new Rust_UnwrapMethod();
+		unwrapMeth.left = expr;
 		
-		lenMeth.dot = new PunctuationPeriod();
-		lenMeth.leftParen = new PunctuationLeftParen();
-		lenMeth.rightParen = new PunctuationRightParen();
+		unwrapMeth.dot = new PunctuationPeriod();
+		unwrapMeth.leftParen = new PunctuationLeftParen();
+		unwrapMeth.noneExpr = none;
+		unwrapMeth.rightParen = new PunctuationRightParen();
 
-		return Rust_AsExpression.generateAsExpr(
-				Rust_Generator.wrapExpression(lenMeth),
-				Rust_Type.newPrimitiveType("i32"), source);
+		return Rust_Generator.wrapExpression(unwrapMeth);
 	}
 }

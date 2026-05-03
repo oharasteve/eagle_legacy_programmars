@@ -31,19 +31,13 @@ import com.eagle.transform.EagleTransformer;
 /* Ran this in rextester.com
  * 
  *  fn main() {
- *    let s = "abcdèfghij";
- *    println!("{}", &s[0..3]);
- *    println!("{}", &s[1..3]);
- *    println!("{}", &s[1..9]);
- *    println!("{}", &s[2..]);
- *    println!("{}", &s[..4]);
+ *    let s = "abcdèfghij";				RETURNS:
+ *    println!("{}", &s[0..3]);			abc
+ *    println!("{}", &s[1..3]);			bc
+ *    println!("{}", &s[1..9]);			bcdèfgh
+ *    println!("{}", &s[2..]);			cdèfghij
+ *    println!("{}", &s[..4]);			abcd
  *  }
-
- * abc
- * bc
- * bcdèfgh
- * cdèfghij
- * abcd
  * 
  * first is zero, second is ec+1, cannot do &s[1..9999]
 */
