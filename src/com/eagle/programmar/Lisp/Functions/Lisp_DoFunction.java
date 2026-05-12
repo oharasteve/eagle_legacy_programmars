@@ -86,7 +86,7 @@ public class Lisp_DoFunction extends TokenSequence implements AbstractStatement,
 		}
 
 		boolean backwards = false; // TODO -- this might be true in some cases
-		_metrics.competedLoop(metric, backwards);
+		_metrics.completedLoop(metric, backwards);
 
 		if (variables != null && variables.var != null)
 		{

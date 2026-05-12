@@ -175,7 +175,7 @@ public class PLI_DoStatement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric, step < 0);
+		_metrics.completedLoop(metric, step < 0);
 
 		return result;
 	}

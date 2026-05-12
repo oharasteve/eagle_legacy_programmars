@@ -103,7 +103,7 @@ public class Delphi_For_Statement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric, reverse);
+		_metrics.completedLoop(metric, reverse);
 		return result;
 	}
 

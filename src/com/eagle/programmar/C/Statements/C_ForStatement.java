@@ -188,7 +188,7 @@ public class C_ForStatement extends TokenSequence
 			// Have to guess to see if it was backwards
 			boolean backwards = guessDirection(loop.terminateCondition, loop.increment);
 
-			_metrics.competedLoop(metric, backwards);
+			_metrics.completedLoop(metric, backwards);
 			return result;
 		}
 

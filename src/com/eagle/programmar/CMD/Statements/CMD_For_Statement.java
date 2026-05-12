@@ -203,7 +203,7 @@ public class CMD_For_Statement extends TokenSequence implements AbstractStatemen
 		else
 			throw new RuntimeException("Unable to handle " + whichFor);
 
-		_metrics.competedLoop(metric, backwards);
+		_metrics.completedLoop(metric, backwards);
 		return result;
 	}
 }

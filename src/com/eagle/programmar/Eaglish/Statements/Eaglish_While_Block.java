@@ -78,7 +78,7 @@ public class Eaglish_While_Block extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric, false);
+		_metrics.completedLoop(metric, false);
 		return result;
 	}
 

@@ -1,20 +1,20 @@
 // Copyright Eagle Legacy Modernization, LLC, 2010-date
-// Original author: Steven A. O'Hara, Nov 12, 2015
+// Original author: Steven A. O'Hara, May 12, 2026
 
-package com.eagle.programmar.Template;
+package com.eagle.programmar.Haskell;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.tokens.TokenList;
 
-public class Template_Program extends AbstractLanguage implements EagleRunnable
+public class Haskell_Program extends AbstractLanguage implements EagleRunnable
 {
-	public static final String TEMPLATE = "Template";
+	public static final String HASKELL = "Haskell";
 
-	public Template_Program()
+	public Haskell_Program()
 	{
-		super(TEMPLATE, new Template_Syntax());
+		super(HASKELL, new Haskell_Syntax());
 	}
 
 	@Override
@@ -23,14 +23,14 @@ public class Template_Program extends AbstractLanguage implements EagleRunnable
 		return "TBD";
 	}
 
-	public @S(10) @OPT TokenList<Template_Statement> statements;
+	public @S(10) @OPT TokenList<Haskell_Statement> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (statements.isPresent())
 		{
-			for (Template_Statement stmt : statements._elements)
+			for (Haskell_Statement stmt : statements._elements)
 			{
 				interpreter.tryToInterpret(stmt);
 			}

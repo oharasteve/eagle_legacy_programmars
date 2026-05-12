@@ -105,7 +105,7 @@ public class Python_WhileStatement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric, false);
+		_metrics.completedLoop(metric, false);
 		return result;
 	}
 

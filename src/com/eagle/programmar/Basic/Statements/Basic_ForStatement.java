@@ -241,7 +241,7 @@ public class Basic_ForStatement extends TokenSequence implements AbstractStateme
 			}
 		}
 
-		_metrics.competedLoop(metric, backwards);
+		_metrics.completedLoop(metric, backwards);
 		return result;
 	}
 }

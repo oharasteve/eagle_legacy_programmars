@@ -69,7 +69,7 @@ public class Rust_WhileStatement extends TokenSequence implements
 			}
 		}
 
-		_metrics.competedLoop(metric, false);
+		_metrics.completedLoop(metric, false);
 		return result;
 	}
 

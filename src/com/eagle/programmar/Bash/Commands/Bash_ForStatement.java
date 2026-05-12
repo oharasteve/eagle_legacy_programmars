@@ -86,7 +86,7 @@ public class Bash_ForStatement extends TokenSequence implements AbstractStatemen
 			if (start > stop) i--;
 		}
 
-		_metrics.competedLoop(metric, start > stop);
+		_metrics.completedLoop(metric, start > stop);
 		return result;
 	}
 }

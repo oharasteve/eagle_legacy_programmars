@@ -137,7 +137,7 @@ public class Algol68_ForStatement extends TokenSequence
 			i += by;
 		}
 
-		_metrics.competedLoop(metric, by < 0);
+		_metrics.completedLoop(metric, by < 0);
 		return result;
 	}
 

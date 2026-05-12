@@ -107,7 +107,7 @@ public class Powershell_ForStatement extends TokenSequence
 		// Have to guess to see if it was backwards
 		boolean backwards = guessDirection(stopCondition, iterate);
 
-		_metrics.competedLoop(metric, backwards);
+		_metrics.completedLoop(metric, backwards);
 		return result;
 	}
 

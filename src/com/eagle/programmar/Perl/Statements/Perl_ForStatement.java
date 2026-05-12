@@ -124,7 +124,7 @@ public class Perl_ForStatement extends TokenSequence
 			// Have to guess to see if it was backwards
 			boolean backwards = guessDirection(forLikeC.testExpr, forLikeC.incrExpr);
 
-			_metrics.competedLoop(metric, backwards);
+			_metrics.completedLoop(metric, backwards);
 			return result;
 		}
 

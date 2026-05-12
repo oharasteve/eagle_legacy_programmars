@@ -83,7 +83,7 @@ public class Fortran_WhileStatement extends TokenSequence
 			}
 		}
 
-		_metrics.competedLoop(metric, false);
+		_metrics.completedLoop(metric, false);
 		return result;
 	}
 

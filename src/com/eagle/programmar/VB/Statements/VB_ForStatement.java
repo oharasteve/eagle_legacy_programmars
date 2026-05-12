@@ -112,7 +112,7 @@ public class VB_ForStatement extends TokenSequence
 			current += incr;
 		}
 
-		_metrics.competedLoop(metric, incr < 0);
+		_metrics.completedLoop(metric, incr < 0);
 		return result;
 	}
 

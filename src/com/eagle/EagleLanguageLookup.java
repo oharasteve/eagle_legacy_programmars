@@ -29,6 +29,7 @@ import com.eagle.programmar.Fortran.Fortran_Program;
 import com.eagle.programmar.Go.Go_Program;
 import com.eagle.programmar.Gupta.Gupta_Program;
 import com.eagle.programmar.HTML.HTML_Program;
+import com.eagle.programmar.Haskell.Haskell_Program;
 import com.eagle.programmar.IBMASM.IBMASM_Program;
 import com.eagle.programmar.IntelASM.IntelASM_Program;
 import com.eagle.programmar.JSON.JSON_Program;
@@ -98,6 +99,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(FSharp_Program.FSHARP, FSharp_Program.class, ".fs");
 		add(Go_Program.GO, Go_Program.class, ".go");
 		add(Gupta_Program.GUPTA, Gupta_Program.class);
+		add(Haskell_Program.HASKELL, Haskell_Program.class, ".hs");
 		add(HTML_Program.HTML, HTML_Program.class, ".htm", ".html");
 		add(IBMASM_Program.IBMASM, IBMASM_Program.class);
 		add(IntelASM_Program.INTELASM, IntelASM_Program.class, ".asm");

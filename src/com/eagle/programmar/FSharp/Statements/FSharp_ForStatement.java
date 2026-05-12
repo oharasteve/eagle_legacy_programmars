@@ -91,7 +91,7 @@ public class FSharp_ForStatement extends TokenSequence
 				i++;
 		}
 
-		_metrics.competedLoop(metric, backwards);
+		_metrics.completedLoop(metric, backwards);
 		return result;
 	}
 

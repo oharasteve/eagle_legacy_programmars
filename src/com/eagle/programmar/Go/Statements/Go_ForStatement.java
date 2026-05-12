@@ -115,7 +115,7 @@ public class Go_ForStatement extends TokenSequence
 			// Have to guess to see if it was backwards
 			boolean backwards = guessDirection(forLoop.condition, forLoop.increment);
 
-			_metrics.competedLoop(metric, backwards);
+			_metrics.completedLoop(metric, backwards);
 			return result;
 		}
 

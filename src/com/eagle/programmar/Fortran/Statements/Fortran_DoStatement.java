@@ -108,7 +108,7 @@ public class Fortran_DoStatement extends TokenSequence
 			i += incr;
 		}
 
-		_metrics.competedLoop(metric, incr < 0);
+		_metrics.completedLoop(metric, incr < 0);
 		return result;
 	}
 
