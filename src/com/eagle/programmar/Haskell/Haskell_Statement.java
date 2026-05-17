@@ -3,11 +3,12 @@
 
 package com.eagle.programmar.Haskell;
 
+import com.eagle.programmar.Haskell.Statements.Haskell_CommentStatement;
+import com.eagle.programmar.Haskell.Statements.Haskell_Function;
 import com.eagle.tokens.TokenChooser;
 
 public class Haskell_Statement extends TokenChooser
 {
-//	public @CHOICE Haskell_AssignmentStatement XXassignmentStatement;
-//	public @CHOICE Haskell_DataStatement XXdataStatement;
-//	public @CHOICE Haskell_PrintStatement XXprintStatement;
+	public @CHOICE Haskell_CommentStatement XXcomment;
+	public @CHOICE Haskell_Function XXfunction;
 }

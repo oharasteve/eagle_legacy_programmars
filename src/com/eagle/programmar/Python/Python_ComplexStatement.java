@@ -81,8 +81,8 @@ public class Python_ComplexStatement extends TokenSequence
 		public @CHOICE Python_ImportStatement XXimportStatement;
 		public @CHOICE Python_MatchStatement XXmatchStatement;
 		public @CHOICE Python_PassStatement XXpassStatement;
-		// public @CHOICE Python_PrintStatement XXprintStatement; // Added in by
-		// Python2_Program
+		// Added in by Python2_Program
+		// public @CHOICE Python_PrintStatement XXprintStatement;
 		public @CHOICE Python_QuitStatement XXquitStatement;
 		public @CHOICE Python_RaiseStatement XXraiseStatement;
 		public @CHOICE Python_ReturnStatement XXreturnStatement;

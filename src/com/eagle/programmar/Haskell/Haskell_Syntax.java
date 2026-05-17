@@ -19,6 +19,7 @@ public class Haskell_Syntax extends EagleSyntax
 	{
 		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
+		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
 				"++", "::", "!!", "&&", "->", "..", "/="
 		};
@@ -27,10 +28,17 @@ public class Haskell_Syntax extends EagleSyntax
 	}
 
 	private static String[] RESERVED_WORDS = new String[] {
+			"case",
+			"data",
 			"do",
 			"else",
 			"if",
+			"in",
 			"let",
+			"module",
+			"of",
 			"then",
+			"type",
+			"where",
 	};
 }

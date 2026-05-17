@@ -39,7 +39,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Julia_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-		EagleTransformableFunction
+				EagleTransformableFunction
 {
 	public @S(10) @DOC("manual/functions/") Julia_Keyword FUNCTION = new Julia_Keyword("function");
 	public @S(20) Julia_Function_Definition id;
