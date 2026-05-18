@@ -4,11 +4,11 @@
 package com.eagle.programmar.Haskell.Terminals;
 
 import com.eagle.parsers.EagleFileReader;
-import com.eagle.programmar.Python.Python_ComplexStatement;
-import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
-import com.eagle.programmar.Python.Statements.Python_StatementBlock;
-import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_MultilineStatement;
-import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
+import com.eagle.programmar.Haskell.Haskell_ComplexStatement;
+import com.eagle.programmar.Haskell.Haskell_ComplexStatement.Haskell_Statement;
+import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock;
+import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock.Haskell_MultilineStatement;
+import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock.Haskell_SameLineStatement;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.terminals.TerminalStartOfLine;
@@ -31,13 +31,13 @@ public class Haskell_StartOfLine extends TerminalStartOfLine
 			if (DEBUG)
 				System.out.println("**** Parent is " + (parent.getStartLine() + 1) + "/" + (parent.getStartChar() + 1));
 			// Find the enclosing statement block
-			if (parent instanceof Python_StatementBlock)
+			if (parent instanceof Haskell_StatementBlock)
 			{
-				Python_StatementBlock block = (Python_StatementBlock) parent;
-				if (block.getWhich() instanceof Python_MultilineStatement)
+				Haskell_StatementBlock block = (Haskell_StatementBlock) parent;
+				if (block.getWhich() instanceof Haskell_MultilineStatement)
 				{
-					Python_MultilineStatement multi = (Python_MultilineStatement) block.getWhich();
-					if (DEBUG) System.out.println("**** Found a Python_MultilineStatement");
+					Haskell_MultilineStatement multi = (Haskell_MultilineStatement) block.getWhich();
+					if (DEBUG) System.out.println("**** Found a Haskell_MultilineStatement");
 					TokenList<? extends AbstractToken> tokenList = multi.statements;
 					if (tokenList.size() == 0) break; // First entry always matches
 
@@ -46,17 +46,17 @@ public class Haskell_StartOfLine extends TerminalStartOfLine
 					{
 						if (DEBUG) System.out.println(
 								"**** Token is " + (token.getStartLine() + 1) + "/" + (token.getStartChar() + 1));
-						if (token instanceof Python_Comment)
+						if (token instanceof Haskell_Comment)
 						{
 							continue; // Doesn't matter what columns comments are in
 						}
 
-						Python_ComplexStatement firstStmt = (Python_ComplexStatement) token;
+						Haskell_ComplexStatement firstStmt = (Haskell_ComplexStatement) token;
 						AbstractToken child = firstStmt.statementOrComment.getWhich();
-						if (child instanceof Python_SameLineStatement)
+						if (child instanceof Haskell_SameLineStatement)
 						{
-							Python_SameLineStatement stmtList = (Python_SameLineStatement) child;
-							Python_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
+							Haskell_SameLineStatement stmtList = (Haskell_SameLineStatement) child;
+							Haskell_Statement otherStmt = stmtList.statements.getPrimaryElement(0);
 							/////// The KEY Line /////// Who doesn't like Key Lime pie?
 							if (_currentChar != otherStmt.getStartChar())
 							{
@@ -92,7 +92,7 @@ public class Haskell_StartOfLine extends TerminalStartOfLine
 					" at " + (parent.getStartLine() + 1) + "/" + (parent.getStartChar() + 1));
 
 			// Find the enclosing statement block(s)
-			if (parent instanceof Python_MultilineStatement)
+			if (parent instanceof Haskell_MultilineStatement)
 			{
 				depth++;
 			}

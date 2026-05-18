@@ -23,14 +23,14 @@ public class Haskell_Program extends AbstractLanguage implements EagleRunnable
 		return "TBD";
 	}
 
-	public @S(10) @OPT TokenList<Haskell_Statement> statements;
+	public @S(10) @OPT TokenList<Haskell_ComplexStatement> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		if (statements.isPresent())
 		{
-			for (Haskell_Statement stmt : statements._elements)
+			for (Haskell_ComplexStatement stmt : statements._elements)
 			{
 				interpreter.tryToInterpret(stmt);
 			}
