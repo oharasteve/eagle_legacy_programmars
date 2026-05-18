@@ -6,7 +6,7 @@ package com.eagle.programmar.PLI.Functions;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.PLI.PLI_Expression;
-import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
+import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -23,7 +23,7 @@ import com.eagle.transform.EagleTransformer;
 public class PLI_ModFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) PLI_Keyword MOD = new PLI_Keyword("MOD");
+	public @S(10) PLI_KeywordChoice MOD = new PLI_KeywordChoice("MOD", "REM");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) PLI_Expression numerExpr;
 	public @S(40) PunctuationComma comma;
