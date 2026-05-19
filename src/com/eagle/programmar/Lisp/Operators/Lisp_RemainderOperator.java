@@ -24,6 +24,16 @@ public class Lisp_RemainderOperator extends TokenSequence implements EagleRunnab
 	{
 		int left = interpreter.getIntValue(leftExpr);
 		int right = interpreter.getIntValue(rightExpr);
-		interpreter.pushInt(left % right);
+		switch (REM.getValue())
+		{
+		case "MOD":
+			interpreter.pushInt(Math.floorMod(left, right));
+			break;
+		case "REM":
+			interpreter.pushInt(left % right);
+			break;
+		default:
+			throw new RuntimeException("Unexpected operator: " + REM.getValue());
+		}
 	}
 }

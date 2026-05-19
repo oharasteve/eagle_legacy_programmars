@@ -167,11 +167,11 @@ public class COBOL_DivideStatement extends COBOL_AbstractStatement
 			{
 			case "BY":
 				remExpr = generator.newMultiplicativeExpression(y1,
-						MultiplicativeEnum.REMAINDER, y2, this);
+						MultiplicativeEnum.MODULUS, y2, this);
 				break;
 			case "INTO":
 				remExpr = generator.newMultiplicativeExpression(y2,
-						MultiplicativeEnum.REMAINDER, y1, this);
+						MultiplicativeEnum.MODULUS, y1, this);
 				break;
 			default:
 				throw new RuntimeException("Unable to handle: " + byInto);

@@ -59,8 +59,11 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			interpreter.pushInt(leftInt / rightInt);
 			return;
-		case "rem", "mod":
+		case "rem":
 			interpreter.pushInt(leftInt % rightInt);
+			return;
+		case "mod":
+			interpreter.pushInt(Math.floorMod(leftInt, rightInt));
 			return;
 		}
 		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
@@ -79,8 +82,10 @@ public class Ada_MultiplicativeExpression extends PrecedenceOperator
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
-		case "rem", "mod":
+		case "rem":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+		case "mod":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 		}

@@ -101,6 +101,9 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 			CSharp_Type type = CSharp_Type.newPrimitiveType("double");
 			multExpr.right = CSharp_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
+		case MODULUS:
+			multExpr.operator.setValue("%");
+			break;
 		case REMAINDER:
 			multExpr.operator.setValue("%");
 			break;

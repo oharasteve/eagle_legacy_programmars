@@ -28,7 +28,7 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 	public static class COBOL_FunctionName extends TokenChooser
 	{
 		public @FIRST COBOL_KeywordChoice XXbuiltins = new COBOL_KeywordChoice("CURRENT-DATE", "INTEGER-OF-DATE",
-				"LENGTH", "LOWER-CASE", "ORD-MAX", "ORD-MIN", "RANDOM", "REM", "REVERSE", "TRIM", "UPPER-CASE");
+				"LENGTH", "LOWER-CASE", "MOD", "ORD-MAX", "ORD-MIN", "RANDOM", "REM", "REVERSE", "TRIM", "UPPER-CASE");
 
 		public @CHOICE COBOL_Variable XXuserFunc;
 	}
@@ -67,11 +67,21 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		switch (funcName)
 		{
 		case "LENGTH":
-			String str1 = oneStringArg(interpreter, funcName);
+			String str1 = firstStringArg(interpreter, funcName);
 			interpreter.pushInt(str1.length());
 			break;
+		case "REM":
+			int x1 = firstIntArg(interpreter, funcName);
+			int y1 = secondIntArg(interpreter, funcName);
+			interpreter.pushInt(x1 % y1);
+			break;
+		case "MOD":
+			int x2 = firstIntArg(interpreter, funcName);
+			int y2 = secondIntArg(interpreter, funcName);
+			interpreter.pushInt(Math.floorMod(x2, y2));
+			break;
 		case "TRIM":
-			String str2 = oneStringArg(interpreter, funcName);
+			String str2 = firstStringArg(interpreter, funcName);
 			boolean leading = true;
 			COBOL_FunctionParameter arg = args.parameters.first();
 			if (arg.LEADING.isPresent())
@@ -94,7 +104,7 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		}
 	}
 
-	private String oneStringArg(EagleInterpreter interpreter, String funcName)
+	private String firstStringArg(EagleInterpreter interpreter, String funcName)
 	{
 		if (!args.isPresent())
 		{
@@ -106,6 +116,36 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		}
 		COBOL_FunctionParameter arg = args.parameters.first();
 		String value = interpreter.getStrValue(arg.parameter);
+		return value;
+	}
+	
+	private int firstIntArg(EagleInterpreter interpreter, String funcName)
+	{
+		if (!args.isPresent())
+		{
+			throw new RuntimeException("Argument required for function " + funcName);
+		}
+		if (args.parameters._elements.size() < 1)
+		{
+			throw new RuntimeException("Function " + funcName + " requires at least one argument");
+		}
+		COBOL_FunctionParameter arg = args.parameters.first();
+		int value = interpreter.getIntValue(arg.parameter);
+		return value;
+	}
+	
+	private int secondIntArg(EagleInterpreter interpreter, String funcName)
+	{
+		if (!args.isPresent())
+		{
+			throw new RuntimeException("Argument required for function " + funcName);
+		}
+		if (args.parameters._elements.size() < 2)
+		{
+			throw new RuntimeException("Function " + funcName + " requires at least two arguments");
+		}
+		COBOL_FunctionParameter arg = args.parameters._elements.get(1);
+		int value = interpreter.getIntValue(arg.parameter);
 		return value;
 	}
 }

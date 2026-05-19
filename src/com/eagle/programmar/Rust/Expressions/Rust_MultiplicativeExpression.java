@@ -73,7 +73,7 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "%":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
@@ -98,6 +98,9 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 			mul.operator.setValue("/");
 			mul.left = Rust_CastExpression.newCastExpression("f64", leftExpr, source);
 			mul.right = Rust_CastExpression.newCastExpression("f64", rightExpr, source);
+			break;
+		case MODULUS:
+			mul.operator.setValue("%");
 			break;
 		case REMAINDER:
 			mul.operator.setValue("%");

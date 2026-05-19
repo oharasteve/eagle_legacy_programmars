@@ -84,7 +84,7 @@ public class Rexx_MultiplicativeExpression extends PrecedenceOperator
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
 					this);
 		case "//", "mod":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator.getWhich());
 		}

@@ -119,6 +119,9 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 			Java_Type type = Java_Type.newPrimitiveType("double");
 			mulExp.right = Java_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
+		case MODULUS:
+			mulExp.operator.setValue("%");
+			break;
 		case REMAINDER:
 			mulExp.operator.setValue("%");
 			break;

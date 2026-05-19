@@ -48,7 +48,7 @@ public class Delphi_Odd_Function extends PrimaryOperator
 
 		AbstractExpression theExpr2 = generator.newParenthesizedExpression(theExpr, null);
 		AbstractExpression rem = generator.newMultiplicativeExpression(
-				theExpr2, MultiplicativeEnum.REMAINDER, two, null);
+				theExpr2, MultiplicativeEnum.MODULUS, two, null);
 		AbstractExpression result = generator.newRelationalExpression(
 				types, rem, RelationalEnum.EQUALS, one, null);
 		return generator.newParenthesizedExpression(result, this);

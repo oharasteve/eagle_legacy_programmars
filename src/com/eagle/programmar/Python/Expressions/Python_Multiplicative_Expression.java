@@ -57,7 +57,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 			interpreter.pushInt(leftInt / rightInt);
 			break;
 		case "%":
-			interpreter.pushInt(leftInt % rightInt);
+			interpreter.pushInt(Math.floorMod(leftInt, rightInt));
 			break;
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
@@ -80,7 +80,7 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 		case "//":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "%":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
@@ -102,6 +102,9 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 			break;
 		case DIVIDE_NO_TRUNCATE:
 			multExp.operator.setValue("/");
+			break;
+		case MODULUS:
+			multExp.operator.setValue("%");
 			break;
 		case REMAINDER:
 			multExp.operator.setValue("%");

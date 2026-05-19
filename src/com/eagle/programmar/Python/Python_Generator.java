@@ -689,7 +689,7 @@ public class Python_Generator
 			AbstractToken source)
 	{
 		Python_Expression fmt = newLiteralExpression("%" + length + "d", null);
-		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, source);
+		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.MODULUS, expr, source);
 	}
 
 	@Override
@@ -697,7 +697,7 @@ public class Python_Generator
 			AbstractToken source)
 	{
 		Python_Expression fmt = newLiteralExpression("%" + width + "." + decimals + "f", null);
-		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, source);
+		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.MODULUS, expr, source);
 	}
 
 	@Override
@@ -705,7 +705,7 @@ public class Python_Generator
 			AbstractToken source)
 	{
 		Python_Expression fmt = newLiteralExpression("%." + decimals + "f", null);
-		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.REMAINDER, expr, source);
+		return Python_Multiplicative_Expression.generateMultiplicative(fmt, MultiplicativeEnum.MODULUS, expr, source);
 	}
 
 	// ================ Terminals ================

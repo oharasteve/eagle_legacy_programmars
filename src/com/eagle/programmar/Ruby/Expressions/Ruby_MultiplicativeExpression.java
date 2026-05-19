@@ -52,7 +52,7 @@ public class Ruby_MultiplicativeExpression extends PrecedenceOperator
 			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "%":
-			interpreter.pushInt(leftInt % rightInt);
+			interpreter.pushInt(Math.floorMod(leftInt, rightInt));
 			return;
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
@@ -71,7 +71,7 @@ public class Ruby_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "%":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}

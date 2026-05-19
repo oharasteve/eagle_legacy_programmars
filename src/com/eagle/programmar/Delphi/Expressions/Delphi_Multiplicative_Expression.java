@@ -98,7 +98,7 @@ public class Delphi_Multiplicative_Expression extends PrecedenceOperator
 		case "div":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "mod":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		case "shl":
 			return generator.newShiftExpression(leftExpr, ShiftEnum.LEFT, rightExpr, this);
 		case "shr":

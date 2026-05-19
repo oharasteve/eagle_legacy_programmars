@@ -80,7 +80,7 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator
 		case "DIVIDE_TRUNCATE":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "REMAINDER", "MODULUS":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 		}
