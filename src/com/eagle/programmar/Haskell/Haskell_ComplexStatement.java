@@ -5,8 +5,11 @@ package com.eagle.programmar.Haskell;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.Haskell.Statements.Haskell_DoStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ExpressionStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_Function;
+import com.eagle.programmar.Haskell.Statements.Haskell_IfStatement;
+import com.eagle.programmar.Haskell.Statements.Haskell_LetStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock.Haskell_MultilineStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock.Haskell_SameLineStatement;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Comment;
@@ -41,7 +44,10 @@ public class Haskell_ComplexStatement extends TokenSequence
 
 	public static class Haskell_Statement extends TokenChooser
 	{
+		public @CHOICE Haskell_DoStatement XXdoStatement;
 		public @CHOICE Haskell_Function XXfunctionDefinition;
+		public @CHOICE Haskell_IfStatement XXifStatement;
+		public @CHOICE Haskell_LetStatement XXletStatement;
 
 		public @LAST Haskell_ExpressionStatement XXexpression; // Avoid conflict with 'for' statement
 	}

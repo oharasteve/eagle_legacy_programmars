@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Haskell.Statements;
 
+import com.eagle.programmar.Haskell.Haskell_ComplexStatement;
 import com.eagle.programmar.Haskell.Haskell_Type;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Function_Definition;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
@@ -11,6 +12,7 @@ import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Haskell_Function extends TokenSequence
 //		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
@@ -24,7 +26,7 @@ public class Haskell_Function extends TokenSequence
 		public @S(10) Haskell_Function_Definition id;
 		public @S(20) Haskell_Punctuation colonColon = new Haskell_Punctuation("::");
 		public @S(30) Haskell_Type type;
-		public @S(40) TokenList<Haskell_ArrowType> types;
+		public @S(40) @OPT TokenList<Haskell_ArrowType> types;
 		public @S(50) Haskell_EndOfLine eoln;
 		
 		public static class Haskell_ArrowType extends TokenSequence
@@ -37,8 +39,15 @@ public class Haskell_Function extends TokenSequence
 	public static class Haskell_FunctionDefinition extends TokenSequence
 	{
 		public @S(10) Haskell_Identifier_Reference ref;
-		public @S(20) TokenList<Haskell_Parameter_Definition> params;
-		public @S(30) Haskell_EndOfLine eoln;
+		public @S(20) @OPT TokenList<Haskell_Parameter_Definition> params;
+		public @S(30) @OPT Haskell_FunctionAssignment func;
+		public @S(40) Haskell_EndOfLine eoln;
+		
+		public static class Haskell_FunctionAssignment extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) Haskell_ComplexStatement statement;
+		}
 	}
 
 //	public @SKIP CallMetrics _callMetrics = null;
