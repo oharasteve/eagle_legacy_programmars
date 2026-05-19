@@ -14,12 +14,21 @@ import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
-public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRunnable
+public class COBOL_ExpressionFunction extends PrimaryOperator
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) COBOL_Keyword FUNCTION = new COBOL_Keyword("FUNCTION");
 	public @S(20) COBOL_FunctionName func;
@@ -147,5 +156,47 @@ public class COBOL_ExpressionFunction extends PrimaryOperator implements EagleRu
 		COBOL_FunctionParameter arg = args.parameters._elements.get(1);
 		int value = interpreter.getIntValue(arg.parameter);
 		return value;
+	}
+
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractToken which = func.getWhich();
+		if (!(which instanceof COBOL_KeywordChoice))
+		{
+			throw new RuntimeException("UNable to evaluate function " + which);
+		}
+		COBOL_KeywordChoice funcKeyword = (COBOL_KeywordChoice) which;
+		String funcName = funcKeyword.getValue();
+		switch (funcName)
+		{
+		case "REM":
+		case "MOD":
+			break;
+		default:
+			throw new RuntimeException("Unable to transform FUNCTION " + funcName);
+		}
+
+		if (!args.isPresent())
+		{
+			throw new RuntimeException("Argument required for function " + funcName);
+		}
+		if (args.parameters._elements.size() < 2)
+		{
+			throw new RuntimeException("Function " + funcName + " requires at least two arguments");
+		}
+		COBOL_FunctionParameter left = args.parameters._elements.get(0);
+		COBOL_FunctionParameter right = args.parameters._elements.get(1);
+		AbstractExpression leftExpr = transformer.transformExpression(generator, left.parameter);
+		AbstractExpression rightExpr = transformer.transformExpression(generator, right.parameter);
+		switch (funcName)
+		{
+		case "REM":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+		case "MOD":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
+		}
+		throw new RuntimeException("Unable to transform FUNCTION " + funcName);	// Redundant, see above
 	}
 }
