@@ -30,7 +30,7 @@ import com.eagle.transform.EagleTransformer;
 public class CSharp_PragmaDirective extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatement
 {
-	public @S(10) CSharp_Punctuation pound1 = new CSharp_Punctuation('#');
+	public @S(10) @NEWLINE CSharp_Punctuation pound1 = new CSharp_Punctuation('#');
 	public @S(20) CSharp_Keyword PRAGMA = new CSharp_Keyword("pragma");
 	public @S(30) CSharp_Keyword WARNING = new CSharp_Keyword("warning");
 	public @S(40) CSharp_KeywordChoice DISABLE = new CSharp_KeywordChoice("disable", "restore");
