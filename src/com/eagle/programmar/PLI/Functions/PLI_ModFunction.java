@@ -43,6 +43,6 @@ public class PLI_ModFunction extends PrimaryOperator
 	{
 		AbstractExpression numer = transformer.transformExpression(generator, numerExpr);
 		AbstractExpression denom = transformer.transformExpression(generator, denomExpr);
-		return generator.newMultiplicativeExpression(numer, MultiplicativeEnum.MODULUS, denom, this);
+		return generator.newMultiplicativeExpression(numer, MultiplicativeEnum.REMAINDER, denom, this);
 	}
 }

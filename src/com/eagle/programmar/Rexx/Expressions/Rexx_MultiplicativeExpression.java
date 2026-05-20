@@ -8,10 +8,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Rexx.Rexx_Expression;
-import com.eagle.programmar.Rexx.Terminals.Rexx_Keyword;
 import com.eagle.programmar.Rexx.Terminals.Rexx_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -25,14 +23,8 @@ public class Rexx_MultiplicativeExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rexx_Expression left = new Rexx_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Rexx_MultiplyOperation operator;
+	public @S(20) Rexx_PunctuationChoice operator = new Rexx_PunctuationChoice("*", "/", "%", "//");
 	public @S(30) Rexx_Expression right = new Rexx_Expression(this, AllowedPrecedence.HIGHER);
-
-	public static class Rexx_MultiplyOperation extends TokenChooser
-	{
-		public @CHOICE Rexx_Keyword XXMOD = new Rexx_Keyword("mod");
-		public @CHOICE Rexx_PunctuationChoice XXop = new Rexx_PunctuationChoice("*", "/", "%", "//");
-	}
 
 	private @SKIP Operator2Metrics _metrics = null;
 
@@ -41,11 +33,11 @@ public class Rexx_MultiplicativeExpression extends PrecedenceOperator
 	{
 		EagleValue leftValue = interpreter.getEagleValue(left);
 		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = operator.getWhich().toString();
+		String oper = operator.toString();
 
 		if (_metrics == null)
 		{
-			_metrics = new Operator2Metrics(interpreter._metrics, operator.getWhich(), oper);
+			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
 		}
 		_metrics.operated(leftValue.getType(), rightValue.getType());
 
@@ -59,7 +51,7 @@ public class Rexx_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			interpreter.pushDouble((double) leftInt / rightInt);
 			return;
-		case "//", "mod":
+		case "//":
 			interpreter.pushInt(leftInt % rightInt);
 			return;
 		case "%":
@@ -74,7 +66,7 @@ public class Rexx_MultiplicativeExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		switch (operator.getWhich().toString())
+		switch (operator.toString())
 		{
 		case "*":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
@@ -83,10 +75,10 @@ public class Rexx_MultiplicativeExpression extends PrecedenceOperator
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
 					this);
-		case "//", "mod":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
+		case "//":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
 		default:
-			throw new RuntimeException("Unexpected multiplicative operator: " + operator.getWhich());
+			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
 	}
 }

@@ -60,8 +60,11 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator
 		case "DIVIDE_TRUNCATE":
 			interpreter.pushInt(leftInt / rightInt);
 			return;
-		case "REMAINDER", "MODULUS":
+		case "REMAINDER":
 			interpreter.pushInt(leftInt % rightInt);
+			return;
+		case "MODULUS":
+			interpreter.pushInt(Math.floorMod(leftInt, rightInt));
 			return;
 		}
 		throw new RuntimeException("Unable to handle: " + oper);
@@ -79,7 +82,9 @@ public class Eaglish_MultiplicativeExpression extends PrecedenceOperator
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "DIVIDE_TRUNCATE":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
-		case "REMAINDER", "MODULUS":
+		case "REMAINDER":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+		case "MODULUS":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
