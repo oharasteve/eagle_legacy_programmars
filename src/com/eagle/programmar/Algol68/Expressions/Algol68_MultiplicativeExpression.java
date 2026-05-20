@@ -85,7 +85,8 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
 					this);
 		case "mod":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
+			AbstractExpression rightAbs = generator.newAbsFunction(rightExpr,  null);
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightAbs, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 		}
