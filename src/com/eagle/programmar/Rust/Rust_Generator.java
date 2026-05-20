@@ -47,6 +47,7 @@ import com.eagle.programmar.Rust.Statements.Rust_ForStatement;
 import com.eagle.programmar.Rust.Statements.Rust_IfStatement;
 import com.eagle.programmar.Rust.Statements.Rust_LetStatement;
 import com.eagle.programmar.Rust.Statements.Rust_MatchStatement;
+import com.eagle.programmar.Rust.Statements.Rust_Pragma;
 import com.eagle.programmar.Rust.Statements.Rust_ReturnStatement;
 import com.eagle.programmar.Rust.Statements.Rust_WhileStatement;
 import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
@@ -377,6 +378,19 @@ public class Rust_Generator
 			Rust_Expression step, ArrayList<Rust_Statement> actions, AbstractToken source)
 	{
 		return Rust_ForStatement.generateForRangeMany(var, type, first, relOp, last, step, actions, source);
+	}
+
+	@Override
+	public Rust_Statement newPragma(PragmaEnum prag, AbstractToken source)
+	{
+		switch (prag)
+		{
+		case IGNORE_UNREACHABLE_CODE:
+			break;
+		default:
+			return null;	// Don't care
+		}
+		return Rust_Pragma.generatePragma(prag, source);
 	}
 
 	@Override

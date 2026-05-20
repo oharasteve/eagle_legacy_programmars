@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
+import com.eagle.programmar.Python.Functions.Python_Rem_Function;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -89,6 +90,12 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 	public static Python_Expression generateMultiplicative(Python_Expression leftExpr,
 			MultiplicativeEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
+		// Python does MOD not REM with %
+		if (oper == MultiplicativeEnum.REMAINDER)
+		{
+			return Python_Rem_Function.generateRemFunc(leftExpr, rightExpr, source);
+		}
+		
 		Python_Multiplicative_Expression multExp = new Python_Multiplicative_Expression();
 		multExp.left = leftExpr;
 		multExp.right = rightExpr;
@@ -104,9 +111,6 @@ public class Python_Multiplicative_Expression extends PrecedenceOperator
 			multExp.operator.setValue("/");
 			break;
 		case MODULUS:
-			multExp.operator.setValue("%");
-			break;
-		case REMAINDER:
 			multExp.operator.setValue("%");
 			break;
 		default:

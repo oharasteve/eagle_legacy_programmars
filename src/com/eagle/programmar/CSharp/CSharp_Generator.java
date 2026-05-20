@@ -10,6 +10,7 @@ import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
+import com.eagle.programmar.CSharp.Directives.CSharp_PragmaDirective;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AdditiveExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_AssignmentExpression;
 import com.eagle.programmar.CSharp.Expressions.CSharp_BitwiseExpression;
@@ -367,6 +368,12 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 		return CSharp_IfStatement.generateIfElseMany(condition, ifTrue, ifFalse, source);
 	}
 
+	@Override
+	public CSharp_Statement newPragma(PragmaEnum prag, AbstractToken source)
+	{
+		return CSharp_PragmaDirective.generatePragma(prag, source);
+	}
+	
 	@Override
 	public CSharp_Expression newPrintFunction1(CSharp_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)

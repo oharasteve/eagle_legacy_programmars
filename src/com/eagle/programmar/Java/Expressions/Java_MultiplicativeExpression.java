@@ -10,6 +10,7 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Type;
+import com.eagle.programmar.Java.Functions.Java_MathFloorModFunc;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -103,6 +104,12 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 			Java_Expression leftExpr, MultiplicativeEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{
+		// Not the same as % which is Remainder. Differs for negative numbers.
+		if (oper == MultiplicativeEnum.MODULUS)
+		{
+			return Java_MathFloorModFunc.generateMathFloorFunc(leftExpr, rightExpr, source);
+		}
+		
 		Java_MultiplicativeExpression mulExp = new Java_MultiplicativeExpression();
 		mulExp.left = leftExpr;
 		mulExp.right = rightExpr;
@@ -118,9 +125,6 @@ public class Java_MultiplicativeExpression extends PrecedenceOperator
 			mulExp.operator.setValue("/");
 			Java_Type type = Java_Type.newPrimitiveType("double");
 			mulExp.right = Java_CastExpression.newCastExpression(type, rightExpr, source);
-			break;
-		case MODULUS:
-			mulExp.operator.setValue("%");
 			break;
 		case REMAINDER:
 			mulExp.operator.setValue("%");

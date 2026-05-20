@@ -46,6 +46,7 @@ import com.eagle.programmar.Python.Statements.Python_ForStatement;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_GlobalStatement;
 import com.eagle.programmar.Python.Statements.Python_IfStatement;
+import com.eagle.programmar.Python.Statements.Python_ImportStatement;
 import com.eagle.programmar.Python.Statements.Python_MatchStatement;
 import com.eagle.programmar.Python.Statements.Python_QuitStatement;
 import com.eagle.programmar.Python.Statements.Python_ReturnStatement;
@@ -82,6 +83,8 @@ public class Python_Generator
 	private ArrayList<Python_ComplexStatement> _allFunctions = new ArrayList<Python_ComplexStatement>();
 	private ArrayList<Python_ComplexStatement> _mainLogic = new ArrayList<Python_ComplexStatement>();
 
+	public boolean needImportMath = false;
+	
 	public Python_Generator(ParserManager parser, String mainName)
 	{
 		super(parser);
@@ -129,6 +132,11 @@ public class Python_Generator
 	{
 		_program.entries = new TokenList<Python_ComplexStatement>();
 		_program.entries.setPresent(true);
+		if (needImportMath)
+		{
+			Python_ComplexStatement importMath = Python_ImportStatement.createImport("math");
+			_program.entries.addToken(importMath);
+		}
 		for (Python_ComplexStatement stmt1 : _globalData)
 		{
 			_program.entries.addToken(stmt1);
@@ -354,6 +362,12 @@ public class Python_Generator
 	}
 
 	@Override
+	public Python_ComplexStatement newPragma(PragmaEnum prag, AbstractToken source)
+	{
+		return null;	// Python does not care about unreachable code
+	}
+
+	@Override
 	public Python_Expression newPrintFunction1(Python_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{
@@ -531,6 +545,10 @@ public class Python_Generator
 	public Python_Expression newMultiplicativeExpression(Python_Expression left,
 			MultiplicativeEnum oper, Python_Expression right, AbstractToken source)
 	{
+		if (oper == MultiplicativeEnum.REMAINDER)
+		{
+			needImportMath = true;
+		}
 		return Python_Multiplicative_Expression.generateMultiplicative(
 				left, oper, right, source);
 	}

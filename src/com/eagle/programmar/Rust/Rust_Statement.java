@@ -13,6 +13,7 @@ import com.eagle.programmar.Rust.Statements.Rust_FunctionCall;
 import com.eagle.programmar.Rust.Statements.Rust_IfStatement;
 import com.eagle.programmar.Rust.Statements.Rust_LetStatement;
 import com.eagle.programmar.Rust.Statements.Rust_MatchStatement;
+import com.eagle.programmar.Rust.Statements.Rust_Pragma;
 import com.eagle.programmar.Rust.Statements.Rust_ReturnStatement;
 import com.eagle.programmar.Rust.Statements.Rust_WhileStatement;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
@@ -31,6 +32,7 @@ public class Rust_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE Rust_ForStatement XXforStatement;
 	public @CHOICE Rust_LetStatement XXletStatement;
 	public @CHOICE Rust_MatchStatement XXmatchStatement;
+	public @CHOICE Rust_Pragma XXpragma;
 	public @CHOICE Rust_ReturnStatement XXreturnStatement;
 	public @CHOICE Rust_Use XXuseStatement;
 	public @CHOICE Rust_WhileStatement XXwhileStatement;

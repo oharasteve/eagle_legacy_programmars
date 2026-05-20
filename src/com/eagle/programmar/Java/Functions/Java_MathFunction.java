@@ -29,11 +29,12 @@ public class Java_MathFunction extends PrimaryOperator
 
 	public static class Java_MathChoice extends TokenChooser
 	{
-		public @CHOICE Java_MathPowFunc XXmathPowFunction;
-		public @CHOICE Java_MathLogFunc XXmathLogFunction;
-		public @CHOICE Java_MathRoundFunc XXmathRoundFunction;
 		public @CHOICE Java_MathAbsFunc XXmathAbsFunction;
+		public @CHOICE Java_MathFloorModFunc XXmathFloorModFunction;
+		public @CHOICE Java_MathLogFunc XXmathLogFunction;
 		public @CHOICE Java_MathMinMaxFunc XXmathMinMaxFunction;
+		public @CHOICE Java_MathPowFunc XXmathPowFunction;
+		public @CHOICE Java_MathRoundFunc XXmathRoundFunction;
 	}
 
 	public static Java_Expression wrapMathFunction(AbstractToken choice, AbstractToken source)

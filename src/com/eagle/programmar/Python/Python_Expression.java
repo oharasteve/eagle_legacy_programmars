@@ -40,6 +40,7 @@ import com.eagle.programmar.Python.Functions.Python_Int_Function;
 import com.eagle.programmar.Python.Functions.Python_Len_Function;
 import com.eagle.programmar.Python.Functions.Python_Locals_Function;
 import com.eagle.programmar.Python.Functions.Python_Print_Function;
+import com.eagle.programmar.Python.Functions.Python_Rem_Function;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
 import com.eagle.programmar.Python.Methods.Python_EndsWith_Method;
 import com.eagle.programmar.Python.Methods.Python_Find_Method;
@@ -100,18 +101,19 @@ public class Python_Expression extends PrecedenceChooser implements AbstractExpr
 	public @P(220) Python_Str_Function strFunction;
 	public @P(230) Python_Int_Function intFunction;
 	public @P(240) Python_Abs_Function absFunction;
-	public @P(250) Python_Find_Method findFunction;
-	public @P(260) Python_StartsWith_Method startsWithFunction;
-	public @P(270) Python_EndsWith_Method endsWithFunction;
-	public @P(280) Python_Locals_Function localsFunction;
-	public @P(290) Python_Print_Function printFunction;
-	public @P(300) Python_Function_Call functionCall;
-	public @P(310) Python_BuiltIn builtIn;
-	public @P(320) Python_VariableExpression variableExpression;
-	public @P(330) Python_Star_Expression starExpression;
-	public @P(340) Python_StarStar_Expression starStarExpression;
-	public @P(350) Python_Lambda_Expression lambdaExpression;
-	public @P(360) Python_Yield yield;
+	public @P(250) Python_Rem_Function remFunction;
+	public @P(260) Python_Find_Method findFunction;
+	public @P(270) Python_StartsWith_Method startsWithFunction;
+	public @P(280) Python_EndsWith_Method endsWithFunction;
+	public @P(290) Python_Locals_Function localsFunction;
+	public @P(300) Python_Print_Function printFunction;
+	public @P(310) Python_Function_Call functionCall;
+	public @P(320) Python_BuiltIn builtIn;
+	public @P(330) Python_VariableExpression variableExpression;
+	public @P(340) Python_Star_Expression starExpression;
+	public @P(350) Python_StarStar_Expression starStarExpression;
+	public @P(360) Python_Lambda_Expression lambdaExpression;
+	public @P(370) Python_Yield yield;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

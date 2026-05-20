@@ -3,7 +3,9 @@
 
 package com.eagle.programmar.Python.Statements;
 
+import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_Expression;
+import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Syntax.Python_Multiline_Syntax;
 import com.eagle.programmar.Python.Python_Variable;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
@@ -72,5 +74,17 @@ public class Python_ImportStatement extends TokenSequence
 	{
 		public @S(10) Python_Keyword AS = new Python_Keyword("as");
 		public @S(20) Python_Variable asName;
+	}
+	
+	public static Python_ComplexStatement createImport(String name)
+	{
+		Python_Variable var = Python_Variable.newVariable(name);
+		Python_ImportFile impFile = new Python_ImportFile();
+		impFile.importName = new SeparatedList<Python_Variable, PunctuationPeriod>();
+		impFile.importName.addPrimaryElement(var);
+		Python_ImportStatement imp = new Python_ImportStatement();
+		imp.what = new Python_ImportWhat();
+		imp.what.setWhich(impFile);
+		return Python_Generator.wrapStatement(imp);
 	}
 }

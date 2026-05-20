@@ -18,6 +18,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -102,6 +103,11 @@ public class CSharp_MultiplicativeExpression extends PrecedenceOperator
 			multExpr.right = CSharp_CastExpression.newCastExpression(type, rightExpr, source);
 			break;
 		case MODULUS:
+			// Not the same as % which is Remainder. Differs for negative numbers.
+			// a mod b = (a rem b + b) rem b
+			CSharp_Expression aRemb = generateMultiplicative(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, source);
+			CSharp_Expression aRembPlusb = CSharp_AdditiveExpression.generateAdditive(null, aRemb, AdditiveEnum.PLUS, rightExpr, source);
+			multExpr.left = CSharp_ParenthesizedExpression.generateParentheses(aRembPlusb, source);
 			multExpr.operator.setValue("%");
 			break;
 		case REMAINDER:

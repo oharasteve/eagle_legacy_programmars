@@ -376,6 +376,12 @@ public class Java_Generator
 	}
 
 	@Override
+	public Java_Statement newPragma(PragmaEnum prag, AbstractToken source)
+	{
+		return null;	// Java does not allow unreachable code
+	}
+	
+	@Override
 	public Java_Expression newPrintFunction1(Java_Expression line, TypeEnum type,
 			boolean newLine, boolean toErr, AbstractToken source)
 	{

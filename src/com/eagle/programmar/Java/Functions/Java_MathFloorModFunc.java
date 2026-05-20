@@ -1,5 +1,5 @@
 // Copyright Eagle Legacy Modernization, 2010-date
-// Original author: Steven A. O'Hara, Sep 5, 2024
+// Original author: Steven A. O'Hara, May 19, 2026
 
 package com.eagle.programmar.Java.Functions;
 
@@ -19,44 +19,45 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
-public class Java_MathPowFunc extends TokenSequence
+public class Java_MathFloorModFunc extends TokenSequence
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Java_Keyword POW = new Java_Keyword("pow");
+	public @S(10) Java_Keyword FLOORMOD = new Java_Keyword("floorMod");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
-	public @S(30) @NOSPACE Java_Expression number;
+	public @S(30) @NOSPACE Java_Expression numer;
 	public @S(40) @NOSPACE PunctuationComma comma;
-	public @S(50) Java_Expression power;
+	public @S(50) Java_Expression denom;
 	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		double num = interpreter.getDoubleValue(number);
-		double pow = interpreter.getDoubleValue(power);
-		interpreter.pushDouble(Math.pow(num, pow));
+		int x = interpreter.getIntValue(numer);
+		int y = interpreter.getIntValue(denom);
+		interpreter.pushInt(Math.floorMod(x, y));
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression numExpr = transformer.transformExpression(generator, number);
-		AbstractExpression powExpr = transformer.transformExpression(generator, power);
-		return generator.newExponentExpression(numExpr, powExpr, POW);
+		AbstractExpression numerExpr = transformer.transformExpression(generator, numer);
+		AbstractExpression denomExpr = transformer.transformExpression(generator, denom);
+		return generator.newMultiplicativeExpression(numerExpr, MultiplicativeEnum.MODULUS, denomExpr, FLOORMOD);
 	}
 
-	public static Java_Expression generatePowFunc(AbstractExpression number, AbstractExpression power,
+	public static Java_Expression generateMathFloorFunc(AbstractExpression numer, AbstractExpression denom,
 			AbstractToken source)
 	{
-		Java_MathPowFunc pow = new Java_MathPowFunc();
-		pow.leftParen = new PunctuationLeftParen();
-		pow.number = (Java_Expression) number;
-		pow.comma = new PunctuationComma();
-		pow.power = (Java_Expression) power;
-		pow.rightParen = new PunctuationRightParen();
-		pow.setTransformationSource(source);
-		return Java_MathFunction.wrapMathFunction(pow, source);
+		Java_MathFloorModFunc mod = new Java_MathFloorModFunc();
+		mod.leftParen = new PunctuationLeftParen();
+		mod.numer = (Java_Expression) numer;
+		mod.comma = new PunctuationComma();
+		mod.denom = (Java_Expression) denom;
+		mod.rightParen = new PunctuationRightParen();
+		mod.setTransformationSource(source);
+		return Java_MathFunction.wrapMathFunction(mod, source);
 	}
 }
