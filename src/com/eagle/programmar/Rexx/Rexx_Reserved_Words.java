@@ -21,5 +21,6 @@ public class Rexx_Reserved_Words
 			"SAY",
 			"THEN",
 			"TO",
+			"WHILE",
 	};
 }

@@ -126,7 +126,10 @@ public class Rexx_DoStatement extends TokenSequence
 			}
 
 			metric.iterate();
-			interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(current));
+			if (loop != null && loop.isPresent())
+			{
+				interpreter.setSymbol(this, loop.var.getValue(), new EagleInteger(current));
+			}
 
 			for (Rexx_Element stmt : actions._elements)
 			{
