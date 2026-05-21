@@ -9,6 +9,7 @@ import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
 import com.eagle.programmar.Python.Terminals.Python_Keyword;
+import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -31,6 +32,22 @@ public class Python_Abs_Function extends PrimaryOperator
 
 	public static Python_Expression generateAbsFunc(Python_Expression expr, AbstractToken source)
 	{
+		// Don't bother if it is a constant and not negative
+		AbstractToken which = expr.getWhich();
+		if (which instanceof Python_Number)
+		{
+			Python_Number num = (Python_Number) which;
+			try
+			{
+				int n = Integer.parseInt(num.getValue());
+				if (n >= 0) return expr;
+			}
+			catch (Exception ex)
+			{
+				// Ignore errors
+			}
+		}
+
 		Python_Abs_Function absFn = new Python_Abs_Function();
 		absFn.leftParen = new PunctuationLeftParen();
 		absFn.rightParen = new PunctuationRightParen();
