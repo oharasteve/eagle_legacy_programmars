@@ -12,7 +12,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class CSharp_SizeOfFunction extends PrimaryOperator
 {
 	public @S(10) CSharp_KeywordChoice SIZEOF = new CSharp_KeywordChoice("sizeof", "typeof");
-	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) CSharp_Type type;
-	public @S(40) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE CSharp_Type type;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 }

@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_MathPowFunc extends TokenSequence implements EagleRunnable
 {
-	public @S(10) @NOSPACE CSharp_Keyword POW = new CSharp_Keyword("Pow");
+	public @S(10) CSharp_Keyword POW = new CSharp_Keyword("Pow");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression number;
 	public @S(40) @NOSPACE PunctuationComma comma;

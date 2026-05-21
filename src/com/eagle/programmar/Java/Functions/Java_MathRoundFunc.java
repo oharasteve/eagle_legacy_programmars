@@ -14,9 +14,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Java_MathRoundFunc extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Java_Keyword ROUND = new Java_Keyword("round");
-	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) Java_Expression number;
-	public @S(40) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(30) @NOSPACE Java_Expression number;
+	public @S(40) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

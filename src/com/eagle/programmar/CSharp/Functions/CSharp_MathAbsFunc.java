@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class CSharp_MathAbsFunc extends TokenSequence implements EagleRunnable
 {
-	public @S(10) @NOSPACE CSharp_Keyword ABS = new CSharp_Keyword("Abs");
+	public @S(10) CSharp_Keyword ABS = new CSharp_Keyword("Abs");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(30) @NOSPACE CSharp_Expression number;
 	public @S(40) @NOSPACE PunctuationRightParen rightParen;
