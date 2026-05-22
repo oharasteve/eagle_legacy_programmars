@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
 import com.eagle.tokens.PrimaryOperator;
@@ -60,17 +59,7 @@ public class TCL_BracketStringCat extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		Oper2Types types = null;
-
-		// Pick up metrics, if known
-		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(CAT);
-		if (metrics != null)
-		{
-			types = new Oper2Types();
-		}
-
 		AbstractExpression result = null;
-		int i = 0;
 		for (TCL_Expression expr : strings._elements)
 		{
 			AbstractExpression piece = transformer.transformExpression(generator, expr);
@@ -80,15 +69,8 @@ public class TCL_BracketStringCat extends PrimaryOperator
 			}
 			else
 			{
-				if (metrics != null)
-				{
-					types._type1 = metrics.get(i - 1);
-					types._type2 = metrics.get(i);
-				}
-
-				result = generator.newAppendExpression(types, result, piece, expr);
+				result = generator.newAppendExpression(result, piece, expr);
 			}
-			i++;
 		}
 		return result;
 	}

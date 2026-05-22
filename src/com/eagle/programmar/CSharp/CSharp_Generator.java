@@ -444,9 +444,10 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
-	public CSharp_Expression newAppendExpression(Oper2Types types,
-			CSharp_Expression left, CSharp_Expression right, AbstractToken source)
+	public CSharp_Expression newAppendExpression(CSharp_Expression left, CSharp_Expression right,
+			AbstractToken source)
 	{
+		Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 		return CSharp_AdditiveExpression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 

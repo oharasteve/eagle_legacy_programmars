@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
 import com.eagle.programmar.AWK.Expressions.AWK_String;
 import com.eagle.programmar.AWK.Terminals.AWK_Literal;
@@ -76,13 +75,6 @@ public class AWK_Format
 	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			AWK_Expression fmtExpr, TokenList<AWK_MoreArguments> argList, ArrayList<TypeEnum> metrics)
 	{
-		Oper2Types types = null;
-		if (metrics != null)
-		{
-			types = new Oper2Types();
-			types._type1 = TypeEnum.STRING;
-		}
-
 		if (!(fmtExpr.getWhich() instanceof AWK_String))
 		{
 			throw new RuntimeException("Format must be a literal, not " + fmtExpr.getWhich());
@@ -111,17 +103,11 @@ public class AWK_Format
 		// Have to compose a string out of the pieces
 		int prev = 0;
 		AbstractExpression fullExpr = null;
-		int i = 0;
 		for (AWK_MoreArguments more : argList._elements)
 		{
 			String nextString = fmt.substring(prev, sc);
 			if (nextString.length() > 0)
 			{
-				if (metrics != null)
-				{
-					types._type2 = TypeEnum.STRING;
-				}
-
 				AbstractExpression nextExpr = generator.newLiteralExpression(nextString, null);
 				if (fullExpr == null)
 				{
@@ -129,13 +115,8 @@ public class AWK_Format
 				}
 				else
 				{
-					fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+					fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 				}
-			}
-
-			if (metrics != null)
-			{
-				types._type2 = metrics.get(i);
 			}
 
 			AWK_Expression nextArg = more.expr;
@@ -146,21 +127,19 @@ public class AWK_Format
 			}
 			else
 			{
-				fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+				fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 			}
 
 			prev = sc + 2;
 			sc = fmt.indexOf("%", prev);
 			pctLen = check(fmt, sc, nc);
 			if (sc < 0 || pctLen == 0) break; // Ran out of % insertion points
-
-			i++;
 		}
 		String lastString = fmt.substring(prev);
 		if (lastString.length() > 0)
 		{
 			AbstractExpression lastStr = generator.newLiteralExpression(lastString, null);
-			fullExpr = generator.newAppendExpression(types, fullExpr, lastStr, null);
+			fullExpr = generator.newAppendExpression(fullExpr, lastStr, null);
 		}
 		return fullExpr;
 	}

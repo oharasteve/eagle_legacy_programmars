@@ -55,7 +55,7 @@ public class Ada_AppendStatement extends TokenSequence
 		AbstractExpression theVarExpr = generator.newVariableExpression(varName,
 				SubscriptEnum.FIRST_IS_ONE, null, varExpr);
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
-		AbstractExpression appExpr = generator.newAppendExpression(null, theVarExpr, theExpr, this);
+		AbstractExpression appExpr = generator.newAppendExpression(theVarExpr, theExpr, this);
 		AbstractExpression asgExpr = generator.newAssignmentExpression(varName, null, null,
 				AssignmentEnum.EQUALS, appExpr, this);
 		return generator.newExpressionStatement(asgExpr, this);

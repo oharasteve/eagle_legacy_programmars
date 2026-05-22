@@ -450,9 +450,10 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Expression newAppendExpression(Oper2Types types,
-			Java_Expression left, Java_Expression right, AbstractToken source)
+	public Java_Expression newAppendExpression(Java_Expression left, Java_Expression right,
+			AbstractToken source)
 	{
+		Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 		return Java_AdditiveExpression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
 	}
 

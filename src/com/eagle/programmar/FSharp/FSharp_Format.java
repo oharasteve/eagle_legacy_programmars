@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Literal;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -68,13 +67,6 @@ public class FSharp_Format
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			TokenList<FSharp_Expression> argList, ArrayList<TypeEnum> metrics)
 	{
-		Oper2Types types = null;
-		if (metrics != null)
-		{
-			types = new Oper2Types();
-			types._type1 = TypeEnum.STRING;
-		}
-
 		FSharp_Expression fmtExpr = argList.first();
 		if (!(fmtExpr.getWhich() instanceof FSharp_Literal))
 		{
@@ -115,11 +107,6 @@ public class FSharp_Format
 			String nextString = fmt.substring(prev, sc);
 			if (nextString.length() > 0)
 			{
-				if (metrics != null)
-				{
-					types._type2 = TypeEnum.STRING;
-				}
-
 				AbstractExpression nextExpr = generator.newLiteralExpression(nextString, null);
 				if (fullExpr == null)
 				{
@@ -127,13 +114,8 @@ public class FSharp_Format
 				}
 				else
 				{
-					fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+					fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 				}
-			}
-
-			if (metrics != null)
-			{
-				types._type2 = metrics.get(i - 1);
 			}
 
 			FSharp_Expression nextArg = argList._elements.get(i);
@@ -144,7 +126,7 @@ public class FSharp_Format
 			}
 			else
 			{
-				fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+				fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 			}
 
 			prev = sc + 2;
@@ -161,7 +143,7 @@ public class FSharp_Format
 		if (lastString.length() > 0)
 		{
 			AbstractExpression lastStr = generator.newLiteralExpression(lastString, null);
-			fullExpr = generator.newAppendExpression(types, fullExpr, lastStr, null);
+			fullExpr = generator.newAppendExpression(fullExpr, lastStr, null);
 		}
 		return fullExpr;
 	}

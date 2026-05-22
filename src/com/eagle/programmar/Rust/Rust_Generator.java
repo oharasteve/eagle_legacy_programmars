@@ -462,10 +462,10 @@ public class Rust_Generator
 	}
 
 	@Override
-	public Rust_Expression newAppendExpression(Oper2Types types,
-			Rust_Expression left, Rust_Expression right, AbstractToken source)
+	public Rust_Expression newAppendExpression(Rust_Expression left,
+			Rust_Expression right, AbstractToken source)
 	{
-		return Rust_AdditiveExpression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
+		return Rust_AdditiveExpression.generateAppend(left, right, source);
 	}
 
 	@Override

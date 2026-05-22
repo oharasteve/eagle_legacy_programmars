@@ -436,10 +436,10 @@ public class Python_Generator
 	}
 
 	@Override
-	public Python_Expression newAppendExpression(Oper2Types types,
-			Python_Expression left, Python_Expression right, AbstractToken source)
+	public Python_Expression newAppendExpression(Python_Expression left,
+			Python_Expression right, AbstractToken source)
 	{
-		return Python_Additive_Expression.generateAdditive(types, left, AdditiveEnum.PLUS, right, source);
+		return Python_Additive_Expression.generateAppend(left, right, source);
 	}
 
 	@Override

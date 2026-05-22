@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.SQL.SQL_Expression;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.tokens.PrimaryOperator;
@@ -22,7 +21,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -64,24 +62,10 @@ public class SQL_ConcatFunction extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression line = null;
-		Oper2Types types = null;
-
-		// Pick up metrics, if known
-		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(CONCAT);
-		if (metrics != null)
-		{
-			types = new Oper2Types();
-		}
 
 		int numPieces = exprs.getPrimaryCount();
 		for (int i = 0; i < numPieces; i++)
 		{
-			if (metrics != null)
-			{
-				types._type1 = TypeEnum.STRING;
-				types._type2 = metrics.get(i);
-			}
-
 			SQL_Expression piece = exprs.getPrimaryElement(i);
 			AbstractExpression next = transformer.transformExpression(generator, piece);
 			if (i == 0)
@@ -90,7 +74,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 			}
 			else
 			{
-				line = generator.newAdditiveExpression(types, line, AdditiveEnum.PLUS, next, piece);
+				line = generator.newAppendExpression(line, next, piece);
 			}
 		}
 

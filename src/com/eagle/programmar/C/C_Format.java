@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.C.Expressions.C_Literals;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -70,13 +69,6 @@ public class C_Format
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			SeparatedList<C_Expression, PunctuationComma> args, ArrayList<TypeEnum> metrics)
 	{
-		Oper2Types types = null;
-		if (metrics != null)
-		{
-			types = new Oper2Types();
-			types._type1 = TypeEnum.STRING;
-		}
-
 		C_Expression fmtExpr = args.first();
 		if (!(fmtExpr.getWhich() instanceof C_Literals))
 		{
@@ -122,11 +114,6 @@ public class C_Format
 			String nextString = fmt.substring(prev, sc);
 			if (nextString.length() > 0)
 			{
-				if (metrics != null)
-				{
-					types._type2 = TypeEnum.STRING;
-				}
-
 				AbstractExpression nextExpr = generator.newLiteralExpression(nextString, null);
 				if (fullExpr == null)
 				{
@@ -134,13 +121,8 @@ public class C_Format
 				}
 				else
 				{
-					fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+					fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 				}
-			}
-
-			if (metrics != null)
-			{
-				types._type2 = metrics.get(i - 1);
 			}
 
 			C_Expression nextArg = args.getPrimaryElement(i);
@@ -151,7 +133,7 @@ public class C_Format
 			}
 			else
 			{
-				fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+				fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 			}
 
 			prev = sc + 2;
@@ -168,7 +150,7 @@ public class C_Format
 		if (lastString.length() > 0)
 		{
 			AbstractExpression lastStr = generator.newLiteralExpression(lastString, null);
-			fullExpr = generator.newAppendExpression(types, fullExpr, lastStr, null);
+			fullExpr = generator.newAppendExpression(fullExpr, lastStr, null);
 		}
 		return fullExpr;
 	}

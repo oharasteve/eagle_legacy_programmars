@@ -101,29 +101,6 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 			stringy = true;
 		}
 
-		if (stringy)
-		{
-			// Force String's on both sides of the + operator
-			if (leftWhich instanceof Rust_VariableExpression)
-			{
-				add.left = Rust_ToStringMethod.generateString(leftExpr, leftExpr);
-			}
-			else if (leftWhich instanceof Rust_Literal)
-			{
-				add.left = Rust_ToStringMethod.generateString(leftExpr, leftExpr);
-			}
-
-			if (rightWhich instanceof Rust_VariableExpression)
-			{
-				add.right = Rust_BorrowExpression.generateBorrow(rightExpr, rightExpr);
-				add.right = Rust_ToStringMethod.generateString(add.right, null);
-			}
-			else if (rightWhich instanceof Rust_ToStringMethod)
-			{
-				add.right = Rust_BorrowExpression.generateBorrow(rightExpr, rightExpr);
-			}
-		}
-		
 		switch (oper)
 		{
 		case PLUS:
@@ -133,6 +110,51 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 			add.operator.setValue("-");
 			break;
 		}
+
+		if (stringy)
+		{
+			return sharedAppend(add, source);
+		}
+		
+		add.setTransformationSource(source);
+		return Rust_Generator.wrapExpression(add);
+	}
+	
+
+	public static Rust_Expression generateAppend(Rust_Expression leftExpr,
+			Rust_Expression rightExpr, AbstractToken source)
+	{
+		Rust_AdditiveExpression add = new Rust_AdditiveExpression();
+		add.left = leftExpr;
+		add.operator.setValue("+");
+		add.right = rightExpr;
+		return sharedAppend(add, source);
+	}	
+	
+	private static Rust_Expression sharedAppend(Rust_AdditiveExpression add, AbstractToken source)
+	{
+		// Force String's on both sides of the + operator
+		AbstractToken leftWhich = add.left.getWhich();
+		AbstractToken rightWhich = add.right.getWhich();
+		if (leftWhich instanceof Rust_VariableExpression)
+		{
+			add.left = Rust_ToStringMethod.generateString(add.left, add.left);
+		}
+		else if (leftWhich instanceof Rust_Literal)
+		{
+			add.left = Rust_ToStringMethod.generateString(add.left, add.left);
+		}
+
+		if (rightWhich instanceof Rust_VariableExpression)
+		{
+			add.right = Rust_BorrowExpression.generateBorrow(add.right, add.right);
+			add.right = Rust_ToStringMethod.generateString(add.right, null);
+		}
+		else if (rightWhich instanceof Rust_ToStringMethod)
+		{
+			add.right = Rust_BorrowExpression.generateBorrow(add.right, add.right);
+		}
+
 		add.setTransformationSource(source);
 		return Rust_Generator.wrapExpression(add);
 	}

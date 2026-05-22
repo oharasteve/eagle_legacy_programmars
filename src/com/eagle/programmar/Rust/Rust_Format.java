@@ -117,7 +117,7 @@ public class Rust_Format
 				}
 				else
 				{
-					fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+					fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 				}
 			}
 
@@ -134,7 +134,7 @@ public class Rust_Format
 			}
 			else
 			{
-				fullExpr = generator.newAppendExpression(types, fullExpr, nextExpr, null);
+				fullExpr = generator.newAppendExpression(fullExpr, nextExpr, null);
 			}
 
 			prev = sc + 2;
@@ -145,7 +145,7 @@ public class Rust_Format
 		if (lastString.length() > 0)
 		{
 			AbstractExpression lastStr = generator.newLiteralExpression(lastString, null);
-			fullExpr = generator.newAppendExpression(types, fullExpr, lastStr, null);
+			fullExpr = generator.newAppendExpression(fullExpr, lastStr, null);
 		}
 		return fullExpr;
 	}

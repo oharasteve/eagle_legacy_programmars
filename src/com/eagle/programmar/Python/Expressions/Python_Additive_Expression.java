@@ -133,4 +133,15 @@ public class Python_Additive_Expression extends PrecedenceOperator
 		addExpr.setTransformationSource(source);
 		return Python_Generator.wrapExpression(addExpr);
 	}
+
+	public static Python_Expression generateAppend(Python_Expression leftExpr,
+			Python_Expression rightExpr, AbstractToken source)
+	{
+		Python_Additive_Expression addExpr = new Python_Additive_Expression();
+		addExpr.left = leftExpr;
+		addExpr.operator.setValue("+");
+		addExpr.right = Python_Str_Function.generateString(null, rightExpr, rightExpr);
+		addExpr.setTransformationSource(source);
+		return Python_Generator.wrapExpression(addExpr);
+	}
 }

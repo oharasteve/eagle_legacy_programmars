@@ -73,10 +73,6 @@ public class Python_Print_Function extends PrimaryOperator
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINT);
-		Oper2Types types = new Oper2Types();
-		types._type1 = TypeEnum.STRING;
-
 		int numExpr = exprs.getPrimaryCount();
 		AbstractExpression space = null;
 		if (numExpr > 1)
@@ -94,10 +90,8 @@ public class Python_Print_Function extends PrimaryOperator
 			}
 			else
 			{
-				types._type2 = TypeEnum.STRING;
-				result = generator.newAppendExpression(types, result, space, PRINT);
-				types._type2 = metrics.get(i);
-				result = generator.newAppendExpression(types, result, piece, PRINT);
+				result = generator.newAppendExpression(result, space, PRINT);
+				result = generator.newAppendExpression(result, piece, PRINT);
 			}
 		}
 
