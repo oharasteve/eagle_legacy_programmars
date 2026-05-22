@@ -51,7 +51,8 @@ public class Algol68_Data extends TokenSequence
 	}
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		TypeEnum typ = Algol68_Type.findType(type);
 

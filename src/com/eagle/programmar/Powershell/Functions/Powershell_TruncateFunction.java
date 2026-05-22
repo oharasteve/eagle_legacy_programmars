@@ -37,7 +37,8 @@ public class Powershell_TruncateFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
 		return generator.newTruncateExpression(newExpr, TRUNCATE);

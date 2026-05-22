@@ -68,7 +68,8 @@ public class Rust_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression compile(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+	public static AbstractExpression compile(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			SeparatedList<Rust_Expression, PunctuationComma> argList, ArrayList<TypeEnum> metrics)
 	{
 		Oper2Types types = null;

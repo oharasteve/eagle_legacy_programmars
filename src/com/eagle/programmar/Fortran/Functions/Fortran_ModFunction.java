@@ -39,7 +39,8 @@ public class Fortran_ModFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, numerExpr);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, denomExpr);

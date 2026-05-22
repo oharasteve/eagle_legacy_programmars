@@ -45,7 +45,8 @@ public class Julia_BracketsExpression extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		int numElts = expressions.getPrimaryCount();
 		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();

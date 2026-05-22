@@ -53,7 +53,8 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 		}
 	}
 
-	public void transformConsts(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformConsts(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_Const constant : this.constants._elements)
 		{

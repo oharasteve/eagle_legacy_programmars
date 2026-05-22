@@ -153,7 +153,8 @@ public class Java_HexFloatingNumber extends TerminalToken
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		double value = Double.parseDouble(_numberAsText);
 		return generator.newNumberExpression(Double.toString(value), this);

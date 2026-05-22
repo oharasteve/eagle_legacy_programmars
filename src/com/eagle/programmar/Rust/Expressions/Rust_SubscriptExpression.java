@@ -101,7 +101,8 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression newExpr = transformer.transformExpression(generator, expr);
 		Oper2Types types = transformer.findOperator2Metric(leftBracket);

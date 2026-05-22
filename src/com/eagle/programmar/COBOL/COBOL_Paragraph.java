@@ -61,7 +61,8 @@ public class COBOL_Paragraph extends TokenSequence
 		}
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String paraName = "paragraph_with_no_name";
 		for (COBOL_ParagraphHeader header : paragraphHeaders._elements)
@@ -90,7 +91,8 @@ public class COBOL_Paragraph extends TokenSequence
 		}
 	}
 
-	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	private void findGlobalVariables(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// Why isn't there a pointer up to the COBOL_Program at the top of the tree?
 		AbstractToken parent = this.getParent();

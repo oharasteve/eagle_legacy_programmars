@@ -82,7 +82,8 @@ public class Delphi_Function extends TokenSequence
 		}
 	}
 
-	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformFunction(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String funcName = this.forward.id.getValue();
 		AbstractType type = this.forward.type.convertType(generator);

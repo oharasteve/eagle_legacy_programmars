@@ -80,7 +80,8 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(40) TokenList<COBOL_ReportEntry> reportEntries;
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_DataSection section : sections._elements)
 		{

@@ -86,7 +86,8 @@ public class Delphi_Procedure extends TokenSequence
 		}
 	}
 
-	public void transformProcedure(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformProcedure(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String procName = this.forward.id.getValue();
 		generator.addMethod(null, procName, this);

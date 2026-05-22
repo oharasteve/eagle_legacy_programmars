@@ -29,7 +29,8 @@ public class Delphi_Types extends TokenSequence
 		public @S(40) PunctuationSemicolon semicolon;
 	}
 
-	public void transformTypes(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformTypes(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_MoreTypes typeEntry : this.moreTypes._elements)
 		{

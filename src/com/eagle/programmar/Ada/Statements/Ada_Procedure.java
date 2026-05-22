@@ -88,7 +88,8 @@ public class Ada_Procedure extends TokenSequence
 	}
 
 	@Override
-	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformFunction(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String fnName = id.getValue();
 		boolean isMain = false;
@@ -139,7 +140,8 @@ public class Ada_Procedure extends TokenSequence
 		generator.doneMethod();
 	}
 
-	public void transformBody(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformBody(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Ada_Statement stmt1 : statements1._elements)
 		{

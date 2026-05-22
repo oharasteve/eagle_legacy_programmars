@@ -266,7 +266,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		return array;
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
 		{

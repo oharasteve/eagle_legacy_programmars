@@ -23,7 +23,8 @@ public class COBOL_StatementOrComment extends TokenChooser
 	public @CHOICE COBOL_Statement XXstatement;
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractToken which = this.getWhich();
 		if (which instanceof COBOL_Statement)

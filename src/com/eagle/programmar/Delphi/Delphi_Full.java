@@ -70,7 +70,8 @@ public class Delphi_Full extends TokenSequence implements EagleRunnable
 		}
 	}
 
-	public void transformFull(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformFull(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_Header header : this.headers._elements)
 		{

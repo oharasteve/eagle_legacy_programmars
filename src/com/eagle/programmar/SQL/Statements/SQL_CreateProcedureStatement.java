@@ -94,7 +94,8 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 	}
 
 	@Override
-	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformFunction(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String newName = procName.getValue();
 		generator.addMethod(null, newName, this);
@@ -137,7 +138,8 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 		generator.doneMethod();
 	}
 
-	private void findGlobalVariables(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	private void findGlobalVariables(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// Are there any 'global' variables we need to declare?
 		Collection<String> externals = this.getScope().allExternalReferences();

@@ -72,7 +72,8 @@ public class AWK_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
+	public static AbstractExpression transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			AWK_Expression fmtExpr, TokenList<AWK_MoreArguments> argList, ArrayList<TypeEnum> metrics)
 	{
 		if (!(fmtExpr.getWhich() instanceof AWK_String))

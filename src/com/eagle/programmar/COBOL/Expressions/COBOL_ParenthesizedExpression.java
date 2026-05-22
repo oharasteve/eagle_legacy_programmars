@@ -33,7 +33,8 @@ public class COBOL_ParenthesizedExpression extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression newExpr = transformer.transformExpression(generator, expression);
 		return generator.newParenthesizedExpression(newExpr, this);

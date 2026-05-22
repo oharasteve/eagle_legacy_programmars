@@ -44,7 +44,8 @@ public class PHP_Body extends TokenChooser
 		}
 
 		@Override
-		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+		public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 		{
 			ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 			for (PHP_Element entry : elements._elements)

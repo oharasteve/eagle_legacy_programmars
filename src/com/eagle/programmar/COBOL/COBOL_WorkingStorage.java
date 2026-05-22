@@ -40,7 +40,8 @@ public class COBOL_WorkingStorage extends TokenSequence implements EagleRunnable
 		}
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)
 		{

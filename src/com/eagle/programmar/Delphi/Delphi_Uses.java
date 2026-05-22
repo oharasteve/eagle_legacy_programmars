@@ -54,7 +54,8 @@ public class Delphi_Uses extends TokenSequence implements EagleRunnable
 		// Nothing to do here
 	}
 
-	public void transformUses(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformUses(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		// Nothing to do here either
 	}

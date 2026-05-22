@@ -45,7 +45,8 @@ public class Perl_ArrayFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		int numArgs = arguments.getPrimaryCount();
 		ArrayList<AbstractExpression> exprs = new ArrayList<AbstractExpression>();

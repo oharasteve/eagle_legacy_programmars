@@ -22,7 +22,8 @@ public class Java_StatementOrComment extends TokenChooser
 	public @CHOICE @NEWLINE Java_Statement XXstatement;
 
 	@Override
-	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (this.getWhich() instanceof Java_Statement)
 		{

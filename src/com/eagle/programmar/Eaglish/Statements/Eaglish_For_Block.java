@@ -106,7 +106,8 @@ public class Eaglish_For_Block extends TokenSequence
 	}
 
 	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression initExpr = transformer.transformExpression(generator, startValue);
 		AbstractExpression termExpr = transformer.transformExpression(generator, stopValue);

@@ -41,7 +41,8 @@ public class TCL_BracketLindex extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression indexExpr = transformer.transformExpression(generator, index);
 		return generator.newVariableExpression(arrayVar.id.getValue(),

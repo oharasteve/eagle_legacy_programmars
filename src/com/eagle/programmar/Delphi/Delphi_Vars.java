@@ -41,7 +41,8 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 		// Nothing to do here without initializers
 	}
 
-	public void transformVars(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformVars(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (Delphi_Var var : this.vars._elements)
 		{

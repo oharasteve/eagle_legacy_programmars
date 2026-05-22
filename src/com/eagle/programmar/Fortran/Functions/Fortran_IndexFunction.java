@@ -51,7 +51,8 @@ public class Fortran_IndexFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractVariable var = generator.newVariable(variable.var.getValue());
 		AbstractExpression pattExpr = transformer.transformExpression(generator, pattern);

@@ -33,7 +33,8 @@ public class Delphi_Statement_List extends TokenSequence
 
 	// It looks odd to leave extra { } around the program / function / procedure
 	// implementation
-	public void transformRemoveBeginEnd(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformRemoveBeginEnd(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractStatement newStmt = transformer.transformStatement1(generator, this.stmt.getWhich());
 		generator.addStatement(newStmt, this);

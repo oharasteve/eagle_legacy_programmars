@@ -76,7 +76,8 @@ public class VB_Subroutine extends TokenSequence
 	}
 
 	@Override
-	public void transformFunction(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transformFunction(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 //		PrivacyEnum privacy = PrivacyEnum.NONE;
 //		if (modifier != null && modifier.isPresent())

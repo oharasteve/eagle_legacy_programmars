@@ -48,7 +48,8 @@ public class TCL_BracketStringFirst extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractVariable strVar = generator.newVariable(string.id.getValue());
 		AbstractExpression pattExpr = transformer.transformExpression(generator, pattern);

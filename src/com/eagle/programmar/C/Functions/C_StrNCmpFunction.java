@@ -63,7 +63,8 @@ public class C_StrNCmpFunction extends PrimaryOperator
 	}
 
 	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		Oper2Types types = new Oper2Types(TypeEnum.STRING, TypeEnum.STRING);
 		AbstractExpression newNc = transformer.transformExpression(generator, ncExpr);

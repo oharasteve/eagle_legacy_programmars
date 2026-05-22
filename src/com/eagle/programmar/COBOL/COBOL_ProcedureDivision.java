@@ -85,7 +85,8 @@ public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunna
 		interpreter.tryToInterpret(sections.first());
 	}
 
-	public void transform(EagleTransformer transformer, EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	public void transform(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_Section section : sections._elements)
 		{
