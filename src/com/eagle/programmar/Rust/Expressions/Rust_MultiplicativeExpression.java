@@ -9,6 +9,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Functions.Rust_ModMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -84,6 +85,11 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 			Rust_Expression leftExpr, MultiplicativeEnum oper,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
+		if (oper == MultiplicativeEnum.MODULUS)
+		{
+			return Rust_ModMethod.generateModFunc(leftExpr, rightExpr, source);
+		}
+		
 		Rust_MultiplicativeExpression mul = new Rust_MultiplicativeExpression();
 		mul.left = leftExpr;
 		mul.right = rightExpr;
@@ -100,9 +106,9 @@ public class Rust_MultiplicativeExpression extends PrecedenceOperator
 			mul.left = Rust_CastExpression.newCastExpression("f64", leftExpr, source);
 			mul.right = Rust_CastExpression.newCastExpression("f64", rightExpr, source);
 			break;
-		case MODULUS:
-			mul.operator.setValue("%");
-			break;
+//		case MODULUS:
+//			(-5 as i32).rem_euclid(3) = 1, which is the Euclidean modulo result.
+//          Handled above in generateModFunc()
 		case REMAINDER:
 			mul.operator.setValue("%");
 			break;

@@ -32,6 +32,7 @@ import com.eagle.programmar.Rust.Functions.Rust_FindMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
 import com.eagle.programmar.Rust.Functions.Rust_MapMethod;
+import com.eagle.programmar.Rust.Functions.Rust_ModMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PowMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Functions.Rust_RevMethod;
@@ -86,17 +87,18 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(100) Rust_MethodInvocation methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
 	public @P(120) Rust_AbsMethod absMethod;
-	public @P(130) Rust_NotExpression notExpression;
-	public @P(140) Rust_BuiltIn builtIn;
-	public @P(150) Rust_VariableExpression variableExpression;
-	public @P(160) Rust_CastExpression castExpression;
-	public @P(170) Rust_FormatFunction builtinFunction;
-	public @P(180) Rust_ParenthesizedExpression parenthesizedExpression;
-	public @P(190) Rust_ExpressionArray expressionArray;
-	public @P(200) Rust_BorrowExpression borrowExpression;
-	public @P(210) Rust_PrintlnFunction printlnStatement;
-	public @P(220) Rust_TypeExpression typeExpression;
-	public @P(230) Rust_ClassCreationExpression createExpression;
+	public @P(130) Rust_ModMethod modMethod;
+	public @P(140) Rust_NotExpression notExpression;
+	public @P(150) Rust_BuiltIn builtIn;
+	public @P(160) Rust_VariableExpression variableExpression;
+	public @P(170) Rust_CastExpression castExpression;
+	public @P(180) Rust_FormatFunction builtinFunction;
+	public @P(190) Rust_ParenthesizedExpression parenthesizedExpression;
+	public @P(200) Rust_ExpressionArray expressionArray;
+	public @P(210) Rust_BorrowExpression borrowExpression;
+	public @P(220) Rust_PrintlnFunction printlnStatement;
+	public @P(230) Rust_TypeExpression typeExpression;
+	public @P(240) Rust_ClassCreationExpression createExpression;
 	
 	///////////////////////////////////////////////
 	// Binary expressions
