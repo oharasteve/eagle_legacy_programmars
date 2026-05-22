@@ -3,7 +3,6 @@
 
 package com.eagle.programmar.Rust.Statements;
 
-import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
@@ -28,25 +27,30 @@ public class Rust_Pragma extends TokenSequence
 	
 	public static Rust_Statement generatePragma(PragmaEnum prag, AbstractToken source)
 	{
-		String code;
-		switch (prag)
-		{
-		case IGNORE_UNREACHABLE_CODE:
-			code = "unreachable_code";
-			break;
-		default:
-			return null;
-		}
+		// This is considered an unstable feature and therefore is an ERROR!
+		// error[E0658]: attributes on expressions are experimental
+		// #[allow(unreachable_code)]
+		return null;
 		
-		Rust_Pragma stmt = new Rust_Pragma();
-		stmt.leftBracket = new PunctuationLeftBracket();
-		stmt.ALLOW.setValue("allow");
-		stmt.leftParen = new PunctuationLeftParen();
-		stmt.UNREACH.setValue(code);
-		stmt.rightParen = new PunctuationRightParen();
-		stmt.rightBracket = new PunctuationRightBracket();
-		
-		stmt.setTransformationSource(source);
-		return Rust_Generator.wrapStatement(stmt);
+//		String code;
+//		switch (prag)
+//		{
+//		case IGNORE_UNREACHABLE_CODE:
+//			code = "unreachable_code";
+//			break;
+//		default:
+//			return null;
+//		}
+//		
+//		Rust_Pragma stmt = new Rust_Pragma();
+//		stmt.leftBracket = new PunctuationLeftBracket();
+//		stmt.ALLOW.setValue("allow");
+//		stmt.leftParen = new PunctuationLeftParen();
+//		stmt.UNREACH.setValue(code);
+//		stmt.rightParen = new PunctuationRightParen();
+//		stmt.rightBracket = new PunctuationRightBracket();
+//		
+//		stmt.setTransformationSource(source);
+//		return Rust_Generator.wrapStatement(stmt);
 	}
 }

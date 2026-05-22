@@ -9,7 +9,9 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
+import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -109,7 +111,16 @@ public class Rust_LetStatement extends TokenSequence
 		{
 			letStmt.init = new Rust_DataInitialize();
 			letStmt.init.equals = new PunctuationEquals();
-			letStmt.init.expr = initial;
+			
+			if (initial.getWhich() instanceof Rust_Literal)
+			{
+				letStmt.init.expr = Rust_ToStringMethod.generateString(initial, null);
+			}
+			else
+			{
+				letStmt.init.expr = initial;
+			}
+			
 			letStmt.init.setPresent(true);
 		}
 

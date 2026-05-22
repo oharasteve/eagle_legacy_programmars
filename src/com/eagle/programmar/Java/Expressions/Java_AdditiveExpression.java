@@ -10,6 +10,7 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
+import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -110,6 +111,36 @@ public class Java_AdditiveExpression extends PrecedenceOperator
 	public static Java_Expression generateAdditive(Oper2Types types, Java_Expression leftExpr, AdditiveEnum oper,
 			Java_Expression rightExpr, AbstractToken source)
 	{
+		// Don't bother if both are constants, just use the sum (or difference) directly
+		AbstractToken whichLeft = leftExpr.getWhich();
+		if (whichLeft instanceof Java_Number)
+		{
+			AbstractToken whichRight = rightExpr.getWhich();
+			if (whichRight instanceof Java_Number)
+			{
+				Java_Number leftNum = (Java_Number) whichLeft;
+				Java_Number rightNum = (Java_Number) whichRight;
+				try
+				{
+					int left = Integer.parseInt(leftNum.getValue());
+					int right = Integer.parseInt(rightNum.getValue());
+					switch (oper)
+					{
+					case PLUS:
+						return Java_Generator.wrapExpression(Java_Number.createNumber(left + right));
+					case MINUS:
+						return Java_Generator.wrapExpression(Java_Number.createNumber(left - right));
+					default:
+						// Ignore this case
+					}
+				}
+				catch (Exception ex)
+				{
+					// Ignore errors
+				}
+			}
+		}
+
 		Java_AdditiveExpression addExpr = new Java_AdditiveExpression();
 		addExpr.left = leftExpr;
 		addExpr.right = rightExpr;

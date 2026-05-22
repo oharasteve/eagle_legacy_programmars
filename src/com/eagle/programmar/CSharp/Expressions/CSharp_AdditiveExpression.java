@@ -10,6 +10,7 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
+import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -99,6 +100,36 @@ public class CSharp_AdditiveExpression extends PrecedenceOperator
 			CSharp_Expression leftExpr, AdditiveEnum oper,
 			CSharp_Expression rightExpr, AbstractToken source)
 	{
+		// Don't bother if both are constants, just use the sum (or difference) directly
+		AbstractToken whichLeft = leftExpr.getWhich();
+		if (whichLeft instanceof CSharp_Number)
+		{
+			AbstractToken whichRight = rightExpr.getWhich();
+			if (whichRight instanceof CSharp_Number)
+			{
+				CSharp_Number leftNum = (CSharp_Number) whichLeft;
+				CSharp_Number rightNum = (CSharp_Number) whichRight;
+				try
+				{
+					int left = Integer.parseInt(leftNum.getValue());
+					int right = Integer.parseInt(rightNum.getValue());
+					switch (oper)
+					{
+					case PLUS:
+						return CSharp_Generator.wrapExpression(CSharp_Number.createNumber(left + right));
+					case MINUS:
+						return CSharp_Generator.wrapExpression(CSharp_Number.createNumber(left - right));
+					default:
+						// Ignore this case
+					}
+				}
+				catch (Exception ex)
+				{
+					// Ignore errors
+				}
+			}
+		}
+
 		CSharp_AdditiveExpression addExpr = new CSharp_AdditiveExpression();
 		addExpr.left = leftExpr;
 		addExpr.right = rightExpr;

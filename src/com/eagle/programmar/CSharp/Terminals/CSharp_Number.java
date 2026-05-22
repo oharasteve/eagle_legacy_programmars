@@ -15,6 +15,11 @@ public class CSharp_Number extends TerminalNumberToken
 		super("Ee", "LlFfDdUuMm", true, false, '?');
 	}
 
+	public static CSharp_Number createNumber(int value)
+	{
+		return generateNumber(Integer.toString(value), null);
+	}
+	
 	public static CSharp_Number generateNumber(String value, AbstractToken source)
 	{
 		CSharp_Number num = new CSharp_Number();

@@ -15,6 +15,11 @@ public class Java_Number extends TerminalNumberToken
 		super("Ee", "LlFfDd", true, true, '_');
 	}
 
+	public static Java_Number createNumber(int value)
+	{
+		return generateNumber(Integer.toString(value), null);
+	}
+	
 	public static Java_Number generateNumber(String value, AbstractToken source)
 	{
 		Java_Number num = new Java_Number();

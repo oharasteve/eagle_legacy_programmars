@@ -11,6 +11,7 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Functions.Python_Str_Function;
+import com.eagle.programmar.Python.Terminals.Python_Number;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -99,6 +100,36 @@ public class Python_Additive_Expression extends PrecedenceOperator
 	public static Python_Expression generateAdditive(Oper2Types types, Python_Expression leftExpr,
 			AdditiveEnum oper, Python_Expression rightExpr, AbstractToken source)
 	{
+		// Don't bother if both are constants, just use the sum (or difference) directly
+		AbstractToken whichLeft = leftExpr.getWhich();
+		if (whichLeft instanceof Python_Number)
+		{
+			AbstractToken whichRight = rightExpr.getWhich();
+			if (whichRight instanceof Python_Number)
+			{
+				Python_Number leftNum = (Python_Number) whichLeft;
+				Python_Number rightNum = (Python_Number) whichRight;
+				try
+				{
+					int left = Integer.parseInt(leftNum.getValue());
+					int right = Integer.parseInt(rightNum.getValue());
+					switch (oper)
+					{
+					case PLUS:
+						return Python_Generator.wrapExpression(Python_Number.createNumber(left + right));
+					case MINUS:
+						return Python_Generator.wrapExpression(Python_Number.createNumber(left - right));
+					default:
+						// Ignore this case
+					}
+				}
+				catch (Exception ex)
+				{
+					// Ignore errors
+				}
+			}
+		}
+
 		Python_Additive_Expression addExpr = new Python_Additive_Expression();
 		addExpr.left = leftExpr;
 		addExpr.right = rightExpr;

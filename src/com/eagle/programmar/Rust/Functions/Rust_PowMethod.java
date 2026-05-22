@@ -7,7 +7,8 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
+import com.eagle.programmar.Rust.Rust_Type;
+import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -52,9 +53,10 @@ public class Rust_PowMethod extends PrecedenceOperator
 
 	public static Rust_Expression generatePower(Rust_Expression baseExpr, Rust_Expression powerExpr, AbstractToken source)
 	{
-		Rust_Expression castExpr = Rust_CastExpression.newCastExpression("u32", baseExpr, null);
+		Rust_Type u32 = Rust_Type.newPrimitiveType("u32");
+		Rust_Expression asExpr = Rust_AsExpression.generateAsExpr(baseExpr, u32, source);
 		Rust_PowMethod pow = new Rust_PowMethod();
-		pow.left = Rust_ParenthesizedExpression.generateParentheses(castExpr, null);
+		pow.left = Rust_ParenthesizedExpression.generateParentheses(asExpr, null);
 		pow.dot = new PunctuationPeriod();
 		pow.leftParen = new PunctuationLeftParen();
 		pow.power = powerExpr;

@@ -38,6 +38,7 @@ public class Rust_AsExpression extends PrecedenceOperator
 			switch (prim)
 			{
 			case "i32":
+			case "u32":
 			case "usize":
 				int inum = interpreter.getIntValue(expression);
 				interpreter.pushInt(inum);

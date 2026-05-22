@@ -12,6 +12,7 @@ import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
+import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -84,6 +85,36 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 	public static Rust_Expression generateAdditive(Oper2Types types, Rust_Expression leftExpr, AdditiveEnum oper,
 			Rust_Expression rightExpr, AbstractToken source)
 	{
+		// Don't bother if both are constants, just use the sum (or difference) directly
+		AbstractToken whichLeft = leftExpr.getWhich();
+		if (whichLeft instanceof Rust_Number)
+		{
+			AbstractToken whichRight = rightExpr.getWhich();
+			if (whichRight instanceof Rust_Number)
+			{
+				Rust_Number leftNum = (Rust_Number) whichLeft;
+				Rust_Number rightNum = (Rust_Number) whichRight;
+				try
+				{
+					int left = Integer.parseInt(leftNum.getValue());
+					int right = Integer.parseInt(rightNum.getValue());
+					switch (oper)
+					{
+					case PLUS:
+						return Rust_Generator.wrapExpression(Rust_Number.createNumber(left + right));
+					case MINUS:
+						return Rust_Generator.wrapExpression(Rust_Number.createNumber(left - right));
+					default:
+						// Ignore this case
+					}
+				}
+				catch (Exception ex)
+				{
+					// Ignore errors
+				}
+			}
+		}
+
 		Rust_AdditiveExpression add = new Rust_AdditiveExpression();
 		add.left = leftExpr;
 		add.right = rightExpr;
