@@ -18,7 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class Rust_CastExpression extends PrimaryOperator
 		implements EagleRunnable
 {
-	public @S(10) Rust_KeywordChoice type = new Rust_KeywordChoice("i32", "u32", "f64");
+	public @S(10) Rust_KeywordChoice type = new Rust_KeywordChoice("i32", "u32", "i64", "f64");
 	public @S(20) @NOSPACE Rust_Punctuation colonColon = new Rust_Punctuation("::");
 	public @S(30) @NOSPACE Rust_Keyword FROM = new Rust_Keyword("from");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
@@ -30,7 +30,7 @@ public class Rust_CastExpression extends PrimaryOperator
 	{
 		switch (type.getValue())
 		{
-		case "i32":
+		case "i64":
 			int inum = interpreter.getIntValue(expression);
 			interpreter.pushInt(inum);
 			break;
