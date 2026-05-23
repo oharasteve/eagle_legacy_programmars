@@ -38,6 +38,7 @@ import com.eagle.transform.EagleTransformer;
  *    println!("{}", &s[1..9]);			bcdèfgh
  *    println!("{}", &s[2..]);			cdèfghij
  *    println!("{}", &s[..4]);			abcd
+ *    println!("{}", &s[2..1000]);		(error)
  *  }
  * 
  * first is zero, second is ec+1, cannot do &s[1..9999]
@@ -145,16 +146,16 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		throw new RuntimeException("Unable to handle " + expr);
 	}
 	
-	public static Rust_Expression generateSubscriptExpression(AbstractExpression theExpr,
-			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
-			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
+	public static Rust_Expression generateSubscriptExpression(Rust_Expression theExpr,
+			Rust_Expression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			Rust_Expression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		Rust_SubscriptExpression subscr = new Rust_SubscriptExpression();
-		subscr.expr = Rust_BorrowExpression.generateBorrow((Rust_Expression) theExpr, source);
+		subscr.expr = Rust_BorrowExpression.generateBorrow(theExpr, source);
 		subscr.leftBracket = new PunctuationLeftBracket();
 		subscr.rightBracket = new PunctuationRightBracket();
 
-		Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(
+		Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(theExpr,
 				sc, whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
 		subscr.subscrExpr = Rust_Generator.wrapExpression(range);
 

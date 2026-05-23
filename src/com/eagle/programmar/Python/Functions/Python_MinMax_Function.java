@@ -16,9 +16,9 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.MinMaxEnum;
 
-public class Python_MinMax_Function extends PrimaryOperator
-		implements EagleRunnable
+public class Python_MinMax_Function extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Python_KeywordChoice MINMAX = new Python_KeywordChoice("min", "max");
 	public @S(20) @NOSPACE PunctuationLeftParen leftParen;
@@ -56,21 +56,40 @@ public class Python_MinMax_Function extends PrimaryOperator
 		interpreter.pushInt(result);
 	}
 
-	public Python_Expression generateMinMax(boolean isMin,
+	public static Python_Expression generateMinMax2(MinMaxEnum minmax, Python_Expression x1, Python_Expression x2, AbstractToken source)
+	{
+		ArrayList<Python_Expression> exprs = new ArrayList<Python_Expression>();
+		exprs.add(x1);
+		exprs.add(x2);
+		return generateMinMax(minmax, exprs, source);
+	}
+	
+	public static Python_Expression generateMinMax(MinMaxEnum minmax,
 			ArrayList<Python_Expression> exprs, AbstractToken source)
 	{
-		this.MINMAX.setValue(isMin ? "min" : "max");
-		this.leftParen = new PunctuationLeftParen();
-		this.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
-		this.expressions.addPrimaryElement(exprs.get(0));
+		Python_MinMax_Function mm = new Python_MinMax_Function();
+		switch (minmax)
+		{
+		case MIN:
+			mm.MINMAX.setValue("min");
+			break;
+		case MAX:
+			mm.MINMAX.setValue("max");
+			break;
+		default:
+			throw new RuntimeException("Unexpected min/max: " + minmax.toString());
+		}
+		mm.leftParen = new PunctuationLeftParen();
+		mm.expressions = new SeparatedList<Python_Expression, PunctuationComma>();
+		mm.expressions.addPrimaryElement(exprs.get(0));
 		for (int i = 1; i < exprs.size(); i++)
 		{
-			this.expressions.addSecondaryElement(new PunctuationComma());
-			this.expressions.addPrimaryElement(exprs.get(i));
+			mm.expressions.addSecondaryElement(new PunctuationComma());
+			mm.expressions.addPrimaryElement(exprs.get(i));
 		}
-		this.rightParen = new PunctuationRightParen();
+		mm.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Python_Generator.wrapExpression(this);
+		mm.setTransformationSource(source);
+		return Python_Generator.wrapExpression(mm);
 	}
 }

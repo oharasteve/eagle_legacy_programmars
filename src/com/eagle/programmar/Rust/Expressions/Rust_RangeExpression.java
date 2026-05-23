@@ -9,12 +9,15 @@ import com.eagle.math.EagleRange;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Rust_Type;
+import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
+import com.eagle.programmar.Rust.Functions.Rust_MinMaxMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.MinMaxEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
@@ -46,21 +49,21 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 		interpreter.pushEagleValue(range);
 	}
 	
-	public static Rust_RangeExpression generateSubscript(AbstractExpression sc, SubstringSCEnum whichSC,
-			SubstringECEnum whichEC, AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
+	public static Rust_RangeExpression generateSubscript(Rust_Expression theExpr, Rust_Expression sc, SubstringSCEnum whichSC,
+			SubstringECEnum whichEC, Rust_Expression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		Rust_RangeExpression range = new Rust_RangeExpression();
 		
 		switch (whichSC)
 		{
 		case FIRST_CHAR_IS_ZERO:
-			range.lowExpression = (Rust_Expression) sc;
+			range.lowExpression = sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
 			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Rust_Expression scMinusOne = Rust_AdditiveExpression.generateAdditive(types,
-					(Rust_Expression) sc, AdditiveEnum.MINUS, one, source);
+					sc, AdditiveEnum.MINUS, one, source);
 			range.lowExpression = scMinusOne;
 			break;
 		}
@@ -78,12 +81,14 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 					Rust_Expression one = Rust_Generator.wrapExpression(Rust_Number.generateNumber("1", source));
 					Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 					Rust_Expression ecPlusOne = Rust_AdditiveExpression.generateAdditive(types,
-							(Rust_Expression) ecOrnc, AdditiveEnum.PLUS, one, source);
+							ecOrnc, AdditiveEnum.PLUS, one, source);
 					range.highExpression = ecPlusOne;
 					break;
 				case FIRST_CHAR_IS_ONE:
-					range.highExpression = (Rust_Expression) ecOrnc;
+					range.highExpression = ecOrnc;
 					break;
+				default:
+					throw new RuntimeException("Unexpected sc: " + whichSC.toString());
 				}
 				range.highExpression.setPresent(true);
 			}
@@ -91,21 +96,36 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 		case GIVEN_EC_PLUS_ONE:
 			if (ecOrnc != null)
 			{
-				range.highExpression = (Rust_Expression) ecOrnc;
+				range.highExpression = ecOrnc;
 				range.highExpression.setPresent(true);
 			}
 			break;
 		case GIVEN_NC:
 			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Rust_Expression scPlusNc = Rust_AdditiveExpression.generateAdditive(types,
-					range.lowExpression, AdditiveEnum.PLUS, (Rust_Expression) ecOrnc, source);
+					range.lowExpression, AdditiveEnum.PLUS, ecOrnc, source);
 			range.highExpression = scPlusNc;
 			range.highExpression.setPresent(true);
 			break;
 		case GIVEN_NEITHER:
 			break;
+		default:
+			throw new RuntimeException("Unexpected ec: " + whichEC.toString());
 		}
 		
+		// Need to handle ncMightBeTooBig. Can't let ec go past len(left)
+		if (ncMightBeTooBig && range.highExpression != null && range.highExpression.isPresent())
+		{
+			// (9999 as usize).min(abc.len())
+			Rust_Type typ = Rust_Type.newPrimitiveType("usize");
+			Rust_Expression as = Rust_AsExpression.generateAsExpr(range.highExpression, typ, null);
+			Rust_Expression asParen = Rust_ParenthesizedExpression.generateParentheses(as, null);
+			Rust_Expression len = Rust_LenMethod.generateLengthUsize(theExpr);
+			Rust_Expression min = Rust_MinMaxMethod.generateMinMax2(MinMaxEnum.MIN, asParen, len, null);
+			range.highExpression = Rust_ParenthesizedExpression.generateParentheses(min, source);
+			range.highExpression.setPresent(true);
+		}
+
 		return range;
 	}
 }

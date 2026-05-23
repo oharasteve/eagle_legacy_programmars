@@ -33,7 +33,7 @@ public class Rust_ModMethod extends PrecedenceOperator
 	public @S(30) @NOSPACE Rust_Keyword REM = new Rust_Keyword("rem_euclid");
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(50) @NOSPACE Rust_Expression denom;
-	public @S(50) @NOSPACE PunctuationRightParen rightParen;
+	public @S(60) @NOSPACE PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

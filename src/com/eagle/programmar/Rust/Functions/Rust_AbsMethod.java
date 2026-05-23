@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
@@ -77,7 +78,7 @@ public class Rust_AbsMethod extends PrecedenceOperator
 		}
 		else
 		{
-			abs.expression = expr;
+			abs.expression = Rust_CastExpression.newCastExpression("f64", expr, null);
 		}
 
 		abs.setTransformationSource(source);

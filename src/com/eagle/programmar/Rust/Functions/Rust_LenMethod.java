@@ -47,17 +47,20 @@ public class Rust_LenMethod extends PrecedenceOperator
 		return generator.newLengthFunction(theExpr, this);
 	}
 
-	public static Rust_Expression generateLength(Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generateLengthUsize(Rust_Expression expr)
 	{
 		Rust_LenMethod lenMeth = new Rust_LenMethod();
 		lenMeth.left = expr;
-		
 		lenMeth.dot = new PunctuationPeriod();
 		lenMeth.leftParen = new PunctuationLeftParen();
 		lenMeth.rightParen = new PunctuationRightParen();
 
-		return Rust_AsExpression.generateAsExpr(
-				Rust_Generator.wrapExpression(lenMeth),
+		return Rust_Generator.wrapExpression(lenMeth);
+	}
+	
+	public static Rust_Expression generateLengthI32(Rust_Expression expr, AbstractToken source)
+	{
+		return Rust_AsExpression.generateAsExpr(generateLengthUsize(expr),
 				Rust_Type.newPrimitiveType("i32"), source);
 	}
 }

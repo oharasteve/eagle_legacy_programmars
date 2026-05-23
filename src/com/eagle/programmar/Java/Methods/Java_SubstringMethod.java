@@ -9,19 +9,17 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Expressions.Java_AdditiveExpression;
-import com.eagle.programmar.Java.Functions.Java_MathFunction;
 import com.eagle.programmar.Java.Functions.Java_MathMinMaxFunc;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
 import com.eagle.programmar.Java.Terminals.Java_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator.AdditiveEnum;
+import com.eagle.transform.EagleGenerator.MinMaxEnum;
 import com.eagle.transform.EagleGenerator.SubstringECEnum;
 import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
@@ -54,9 +52,9 @@ public class Java_SubstringMethod extends PrecedenceOperator
 		}
 	}
 
-	public static Java_Expression generateExpression(AbstractExpression theExpr,
-			AbstractExpression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
-			AbstractExpression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
+	public static Java_Expression generateExpression(Java_Expression theExpr,
+			Java_Expression sc, SubstringSCEnum whichSC, SubstringECEnum whichEC,
+			Java_Expression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		Java_SubstringMethod expr = new Java_SubstringMethod();
 		expr.dot = new PunctuationPeriod();
@@ -127,17 +125,8 @@ public class Java_SubstringMethod extends PrecedenceOperator
 		// Need to handle ncMightBeTooBig. Can't let ec go past len(left)
 		if (ncMightBeTooBig && expr.ecExpr != null)
 		{
-			Java_MathMinMaxFunc minFn = new Java_MathMinMaxFunc();
-			minFn.leftParen = new PunctuationLeftParen();
-			minFn.expressions = new SeparatedList<Java_Expression, PunctuationComma>();
-			minFn.expressions.addPrimaryElement(expr.ecExpr);
-			minFn.expressions.addSecondaryElement(new PunctuationComma());
-			minFn.rightParen = new PunctuationRightParen();
-
-			Java_Expression len = Java_LengthMethod.generateLength((Java_Expression) theExpr, source);
-			minFn.expressions.addPrimaryElement(len);
-
-			expr.ecExpr = Java_MathFunction.wrapMathFunction(minFn, source);
+			Java_Expression len = Java_LengthMethod.generateLength(theExpr, source);
+			expr.ecExpr = Java_MathMinMaxFunc.generateMinMax2(MinMaxEnum.MIN, expr.ecExpr, len, source);
 			expr.ecExpr.setPresent(true);
 		}
 

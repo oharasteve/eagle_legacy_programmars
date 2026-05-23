@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
-import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -16,6 +15,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.MinMaxEnum;
 
 public class CSharp_MathMinMaxFunc extends PrimaryOperator
 		implements EagleRunnable
@@ -56,21 +56,39 @@ public class CSharp_MathMinMaxFunc extends PrimaryOperator
 		interpreter.pushInt(result);
 	}
 
-	public CSharp_Expression generateMinMax(boolean isMin,
-			ArrayList<CSharp_Expression> exprs, AbstractToken source)
+	public static CSharp_Expression generateMinMax2(MinMaxEnum minmax, CSharp_Expression x1, CSharp_Expression x2, AbstractToken source)
 	{
-		this.MINMAX.setValue(isMin ? "Min" : "Max");
-		this.leftParen = new PunctuationLeftParen();
-		this.expressions = new SeparatedList<CSharp_Expression, PunctuationComma>();
-		this.expressions.addPrimaryElement(exprs.get(0));
+		ArrayList<CSharp_Expression> exprs = new ArrayList<CSharp_Expression>();
+		exprs.add(x1);
+		exprs.add(x2);
+		return generateMinMax(minmax, exprs, source);
+	}
+	
+	public static CSharp_Expression generateMinMax(MinMaxEnum minmax, ArrayList<CSharp_Expression> exprs, AbstractToken source)
+	{
+		CSharp_MathMinMaxFunc mm = new CSharp_MathMinMaxFunc();
+		switch (minmax)
+		{
+		case MIN:
+			mm.MINMAX.setValue("Min");
+			break;
+		case MAX:
+			mm.MINMAX.setValue("Max");
+			break;
+		default:
+			throw new RuntimeException("Unexpected min/max: " + minmax.toString());
+		}
+		mm.leftParen = new PunctuationLeftParen();
+		mm.expressions = new SeparatedList<CSharp_Expression, PunctuationComma>();
+		mm.expressions.addPrimaryElement(exprs.get(0));
 		for (int i = 1; i < exprs.size(); i++)
 		{
-			this.expressions.addSecondaryElement(new PunctuationComma());
-			this.expressions.addPrimaryElement(exprs.get(i));
+			mm.expressions.addSecondaryElement(new PunctuationComma());
+			mm.expressions.addPrimaryElement(exprs.get(i));
 		}
-		this.rightParen = new PunctuationRightParen();
+		mm.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return CSharp_Generator.wrapExpression(this);
+		mm.setTransformationSource(source);
+		return CSharp_MathFunction.wrapMathFunction(mm, source);
 	}
 }

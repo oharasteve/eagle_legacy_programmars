@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
-import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -16,6 +15,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.transform.EagleGenerator.MinMaxEnum;
 
 public class Java_MathMinMaxFunc extends PrimaryOperator
 		implements EagleRunnable
@@ -56,21 +56,39 @@ public class Java_MathMinMaxFunc extends PrimaryOperator
 		interpreter.pushInt(result);
 	}
 
-	public Java_Expression generateMinMax(boolean isMin,
-			ArrayList<Java_Expression> exprs, AbstractToken source)
+	public static Java_Expression generateMinMax2(MinMaxEnum minmax, Java_Expression x1, Java_Expression x2, AbstractToken source)
 	{
-		this.MINMAX.setValue(isMin ? "min" : "max");
-		this.leftParen = new PunctuationLeftParen();
-		this.expressions = new SeparatedList<Java_Expression, PunctuationComma>();
-		this.expressions.addPrimaryElement(exprs.get(0));
+		ArrayList<Java_Expression> exprs = new ArrayList<Java_Expression>();
+		exprs.add(x1);
+		exprs.add(x2);
+		return generateMinMax(minmax, exprs, source);
+	}
+	
+	public static Java_Expression generateMinMax(MinMaxEnum minmax, ArrayList<Java_Expression> exprs, AbstractToken source)
+	{
+		Java_MathMinMaxFunc mm = new Java_MathMinMaxFunc();
+		switch (minmax)
+		{
+		case MIN:
+			mm.MINMAX.setValue("min");
+			break;
+		case MAX:
+			mm.MINMAX.setValue("max");
+			break;
+		default:
+			throw new RuntimeException("Unexpected min/max: " + minmax.toString());
+		}
+		mm.leftParen = new PunctuationLeftParen();
+		mm.expressions = new SeparatedList<Java_Expression, PunctuationComma>();
+		mm.expressions.addPrimaryElement(exprs.get(0));
 		for (int i = 1; i < exprs.size(); i++)
 		{
-			this.expressions.addSecondaryElement(new PunctuationComma());
-			this.expressions.addPrimaryElement(exprs.get(i));
+			mm.expressions.addSecondaryElement(new PunctuationComma());
+			mm.expressions.addPrimaryElement(exprs.get(i));
 		}
-		this.rightParen = new PunctuationRightParen();
+		mm.rightParen = new PunctuationRightParen();
 
-		this.setTransformationSource(source);
-		return Java_Generator.wrapExpression(this);
+		mm.setTransformationSource(source);
+		return Java_MathFunction.wrapMathFunction(mm, source);
 	}
 }

@@ -683,7 +683,7 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newLengthFunction(Rust_Expression expr, AbstractToken source)
 	{
-		return Rust_LenMethod.generateLength(expr, source);
+		return Rust_LenMethod.generateLengthI32(expr, source);
 	}
 
 	@Override
