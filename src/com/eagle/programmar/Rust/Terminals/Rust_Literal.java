@@ -19,9 +19,9 @@ public class Rust_Literal extends TerminalLiteralToken
 	{
 		Rust_Literal lit = new Rust_Literal();
 		String val = '"' + value
-//				.replaceAll("\\\\", "\\\\\\\\")
-				.replaceAll("\\\"", "\\\\\"")
-				.replaceAll("\n", "\\n") + '"';
+				.replaceAll("\\\\n", "\n")
+				.replaceAll("\\\"", "\\\"")
+				.replaceAll("\\\\", "\\\\\\\\") + '"';
 		lit.setValue(val);
 		lit.setTransformationSource(source);
 		return lit;
