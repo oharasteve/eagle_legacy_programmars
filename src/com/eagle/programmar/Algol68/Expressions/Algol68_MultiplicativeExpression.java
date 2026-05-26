@@ -5,6 +5,7 @@ package com.eagle.programmar.Algol68.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleDouble;
 import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.programmar.Algol68.Algol68_Expression;
@@ -49,6 +50,21 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.getType(), rightValue.getType());
 
+		if (leftValue instanceof EagleDouble || rightValue instanceof EagleDouble)
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "*":
+				interpreter.pushDouble(leftDbl * rightDbl);
+				return;
+			case "/":
+				interpreter.pushDouble(leftDbl / rightDbl);
+				return;
+			}
+		}
+		
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
 		switch (oper)
@@ -56,13 +72,11 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 		case "*":
 			interpreter.pushInt(leftInt * rightInt);
 			return;
-		case "/", "over":
-			if (leftInt % rightInt == 0)
-			{
-				interpreter.pushInt(leftInt / rightInt);
-				return;
-			}
+		case "/":
 			interpreter.pushDouble(leftInt / (double) rightInt);
+			return;
+		case "over":
+			interpreter.pushInt(leftInt / rightInt);
 			return;
 		case "mod":
 			interpreter.pushInt(Math.floorMod(leftInt, Math.abs(rightInt)));
@@ -82,9 +96,10 @@ public class Algol68_MultiplicativeExpression extends PrecedenceOperator
 		{
 		case "*":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
-		case "/", "over":
-			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr,
-					this);
+		case "/":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_NO_TRUNCATE, rightExpr, this);
+		case "over":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
 		case "mod":
 			AbstractExpression rightAbs = generator.newAbsFunction(rightExpr,  null);
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightAbs, this);
