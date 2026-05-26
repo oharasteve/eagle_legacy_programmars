@@ -25,7 +25,7 @@ public class Rust_NegativeExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Punctuation operator = new Rust_Punctuation("-");
-	public @S(20) Rust_Expression expr;
+	public @S(20) @NOSPACE Rust_Expression expr;
 
 	private @SKIP Operator1Metrics _metrics = null;
 

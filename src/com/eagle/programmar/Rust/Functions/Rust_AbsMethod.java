@@ -48,21 +48,46 @@ public class Rust_AbsMethod extends PrecedenceOperator
 		return generator.newAbsFunction(numExpr, this);
 	}
 
-	public static Rust_Expression generateAbsFunc(Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generateAbsFunc(Rust_Expression expression, AbstractToken source)
 	{
-		// Don't bother if it is a constant and not negative
-		AbstractToken which = expr.getWhich();
+		// Don't bother if it is a constant
+		AbstractToken which = expression.getWhich();
 		if (which instanceof Rust_Number)
 		{
 			Rust_Number num = (Rust_Number) which;
 			try
 			{
 				int n = Integer.parseInt(num.getValue());
-				if (n >= 0) return expr;
+				if (n < 0) num.setValue(Integer.toString(-n));
+				return expression;
 			}
 			catch (Exception ex)
 			{
 				// Ignore errors
+			}
+		}
+
+		// Negative numbers might be given as "(-3)"
+		if (which instanceof Rust_ParenthesizedExpression)
+		{
+			Rust_ParenthesizedExpression paren = (Rust_ParenthesizedExpression) which;
+			if (paren.expressions.size() == 1)
+			{
+				Rust_Expression expr = paren.expressions.first();
+				if (expr.getWhich() instanceof Rust_Number)
+				{
+					Rust_Number num = (Rust_Number) expr.getWhich();
+					try
+					{
+						int n = Integer.parseInt(num.getValue());
+						num.setValue(Integer.toString(Math.abs(n)));
+						return Rust_Generator.wrapExpression(num);
+					}
+					catch (Exception ex)
+					{
+						// Ignore errors
+					}
+				}
 			}
 		}
 		
@@ -70,15 +95,15 @@ public class Rust_AbsMethod extends PrecedenceOperator
 		abs.dot = new PunctuationPeriod();
 		abs.leftParen = new PunctuationLeftParen();
 		abs.rightParen = new PunctuationRightParen();
-		if (expr.getWhich() instanceof Rust_ParenthesizedExpression)
+		if (expression.getWhich() instanceof Rust_ParenthesizedExpression)
 		{
 			// Don't create a second set of parens
-			Rust_ParenthesizedExpression parens = (Rust_ParenthesizedExpression) expr.getWhich();
+			Rust_ParenthesizedExpression parens = (Rust_ParenthesizedExpression) expression.getWhich();
 			abs.expression = parens.expressions.first();
 		}
 		else
 		{
-			abs.expression = Rust_CastExpression.newCastExpression("f64", expr, null);
+			abs.expression = Rust_CastExpression.newCastExpression("f64", expression, null);
 		}
 
 		abs.setTransformationSource(source);
