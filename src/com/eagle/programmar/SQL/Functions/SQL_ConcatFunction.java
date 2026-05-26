@@ -61,6 +61,7 @@ public class SQL_ConcatFunction extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetric(CONCAT);
 		AbstractExpression line = null;
 
 		int numPieces = exprs.getPrimaryCount();
@@ -68,6 +69,12 @@ public class SQL_ConcatFunction extends PrimaryOperator
 		{
 			SQL_Expression piece = exprs.getPrimaryElement(i);
 			AbstractExpression next = transformer.transformExpression(generator, piece);
+			
+			if (types != null && types.get(i) != TypeEnum.STRING)
+			{
+				next = generator.newStringFunction(types.get(i), next, null);
+			}
+			
 			if (i == 0)
 			{
 				line = next;
