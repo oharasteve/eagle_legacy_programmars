@@ -5,7 +5,6 @@ package com.eagle.programmar.Python.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Expressions.Python_Parenthesized_Expression;
@@ -19,6 +18,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -45,7 +45,7 @@ public class Python_Str_Function extends PrimaryOperator
 		return generator.newStringFunction(null, theExpr, this);
 	}
 
-	public static Python_Expression generateString(Oper1Types types, Python_Expression expr, AbstractToken source)
+	public static Python_Expression generateString(TypeEnum type, Python_Expression expr, AbstractToken source)
 	{
 		Python_Str_Function str = new Python_Str_Function();
 		str.leftParen = new PunctuationLeftParen();

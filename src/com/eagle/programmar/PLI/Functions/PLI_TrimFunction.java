@@ -52,16 +52,20 @@ public class PLI_TrimFunction extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		Oper1Types types = transformer.findOperator1Metric(TRIM);
+		TypeEnum type;
 		if (types == null)
 		{
-			types = new Oper1Types();
-			types._type1 = TypeEnum.INTEGER;	// Rash assumption
+			type = TypeEnum.INTEGER;	// Rash assumption
+		}
+		else
+		{
+			type = types._type1;
 		}
 		
 		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		if (types._type1 != TypeEnum.STRING)
+		if (type != TypeEnum.STRING)
 		{
-			theExpr = generator.newStringFunction(types, theExpr, this);
+			theExpr = generator.newStringFunction(type, theExpr, this);
 		}
 		return generator.newTrimFunction(theExpr, this);
 	}

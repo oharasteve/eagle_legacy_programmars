@@ -23,6 +23,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -126,7 +127,7 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 		
 		if (expression.getWhich() instanceof Rust_Literal)
 		{
-			asgExpr.expr = Rust_ToStringMethod.generateString(expression, source);
+			asgExpr.expr = Rust_ToStringMethod.generateString(TypeEnum.STRING, expression, source);
 		}
 		else
 		{

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -52,15 +51,14 @@ public class Fortran_Format
 			throw new RuntimeException("Need to implement Fortran format: " + format);
 		}
 
-		Oper1Types valType = null;
+		TypeEnum type = TypeEnum.OTHER;
 		if (metrics != null)
 		{
-			valType = new Oper1Types();
-			valType._type1 = metrics.get(0);
+			type = metrics.get(0);
 		}
 
 		AbstractExpression newExpr = generator.newVariableExpression(args.first().getValue(),
 				SubscriptEnum.FIRST_IS_ONE, null, args);
-		return generator.newStringFunction(valType, newExpr, null);
+		return generator.newStringFunction(type, newExpr, null);
 	}
 }

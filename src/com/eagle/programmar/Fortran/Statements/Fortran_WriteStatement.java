@@ -9,7 +9,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Fortran.Fortran_Format;
 import com.eagle.programmar.Fortran.Fortran_Variable;
 import com.eagle.programmar.Fortran.Symbols.Fortran_Variable_Reference;
@@ -76,9 +75,7 @@ public class Fortran_WriteStatement extends TokenSequence
 		
 		AbstractExpression line = Fortran_Format.transform(transformer, generator,
 				format.getValue(), parameters, metrics);
-		Oper1Types types = new Oper1Types();
-		types._type1 = TypeEnum.INTEGER;
-		AbstractExpression expr = generator.newStringFunction(types, line, WRITE);
+		AbstractExpression expr = generator.newStringFunction(TypeEnum.INTEGER, line, WRITE);
 		AbstractExpression newValue = generator.newAssignmentExpression(var.var.getValue(),
 				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, expr, WRITE);
 		return generator.newExpressionStatement(newValue, WRITE);

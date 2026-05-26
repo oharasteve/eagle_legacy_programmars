@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.metrics.EagleMetrics;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Rust.Rust_Program.Rust_TopElement;
@@ -693,9 +692,9 @@ public class Rust_Generator
 	}
 
 	@Override
-	public Rust_Expression newStringFunction(Oper1Types types, Rust_Expression expr, AbstractToken source)
+	public Rust_Expression newStringFunction(TypeEnum type, Rust_Expression expr, AbstractToken source)
 	{
-		return Rust_ToStringMethod.generateString(expr, source);
+		return Rust_ToStringMethod.generateString(type, expr, source);
 	}
 
 	@Override

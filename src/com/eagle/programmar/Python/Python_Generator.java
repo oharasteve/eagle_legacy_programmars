@@ -6,7 +6,6 @@ package com.eagle.programmar.Python;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
@@ -667,9 +666,9 @@ public class Python_Generator
 	}
 
 	@Override
-	public Python_Expression newStringFunction(Oper1Types types, Python_Expression expr, AbstractToken source)
+	public Python_Expression newStringFunction(TypeEnum type, Python_Expression expr, AbstractToken source)
 	{
-		return Python_Str_Function.generateString(types, expr, source);
+		return Python_Str_Function.generateString(type, expr, source);
 	}
 
 	@Override

@@ -6,7 +6,6 @@ package com.eagle.programmar.Java.Methods;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Java_Variable;
@@ -37,11 +36,11 @@ public class Java_ToStringMethod extends PrecedenceOperator
 		interpreter.pushStr(val.toString());
 	}
 
-	public static Java_Expression generateString(Oper1Types types, Java_Expression expr, AbstractToken source)
+	public static Java_Expression generateString(TypeEnum type, Java_Expression expr, AbstractToken source)
 	{
 		Java_ToStringMethod strMeth = new Java_ToStringMethod();
 
-		if (types != null && types._type1 == TypeEnum.INTEGER)
+		if (type == TypeEnum.INTEGER)
 		{
 			// Java does not like 'ok.toString()' where 'ok' is an int instead of an
 			// Integer.

@@ -114,7 +114,7 @@ public class Rust_LetStatement extends TokenSequence
 			
 			if (initial.getWhich() instanceof Rust_Literal)
 			{
-				letStmt.init.expr = Rust_ToStringMethod.generateString(initial, null);
+				letStmt.init.expr = Rust_ToStringMethod.generateString(TypeEnum.STRING, initial, null);
 			}
 			else
 			{

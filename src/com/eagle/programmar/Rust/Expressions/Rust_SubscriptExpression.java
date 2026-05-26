@@ -162,6 +162,6 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		subscr.setTransformationSource(source);
 		Rust_Expression sub = Rust_Generator.wrapExpression(subscr);
 		Rust_Expression paren = Rust_ParenthesizedExpression.generateParentheses(sub, null);
-		return Rust_ToStringMethod.generateString(paren, null);
+		return Rust_ToStringMethod.generateString(TypeEnum.STRING, paren, null);
 	}
 }

@@ -18,6 +18,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -45,7 +46,7 @@ public class Rust_ToStringMethod extends PrecedenceOperator
 		return theExpr;
 	}
 
-	public static Rust_Expression generateString(Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generateString(TypeEnum type, Rust_Expression expr, AbstractToken source)
 	{
 		Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
 		// Rust likes '&ok.to_string()' where 'ok' is an i32

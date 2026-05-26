@@ -170,17 +170,17 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		AbstractToken rightWhich = add.right.getWhich();
 		if (leftWhich instanceof Rust_VariableExpression)
 		{
-			add.left = Rust_ToStringMethod.generateString(add.left, add.left);
+			add.left = Rust_ToStringMethod.generateString(TypeEnum.OTHER, add.left, add.left);
 		}
 		else if (leftWhich instanceof Rust_Literal)
 		{
-			add.left = Rust_ToStringMethod.generateString(add.left, add.left);
+			add.left = Rust_ToStringMethod.generateString(TypeEnum.STRING, add.left, add.left);
 		}
 
 		if (rightWhich instanceof Rust_VariableExpression)
 		{
 			add.right = Rust_BorrowExpression.generateBorrow(add.right, add.right);
-			add.right = Rust_ToStringMethod.generateString(add.right, null);
+			add.right = Rust_ToStringMethod.generateString(TypeEnum.OTHER, add.right, null);
 		}
 		else if (rightWhich instanceof Rust_ToStringMethod)
 		{

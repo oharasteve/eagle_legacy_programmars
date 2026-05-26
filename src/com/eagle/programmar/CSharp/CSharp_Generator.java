@@ -6,7 +6,6 @@ package com.eagle.programmar.CSharp;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.metrics.Operator1Metrics.Oper1Types;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
@@ -660,9 +659,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
-	public CSharp_Expression newStringFunction(Oper1Types types, CSharp_Expression expr, AbstractToken source)
+	public CSharp_Expression newStringFunction(TypeEnum type, CSharp_Expression expr, AbstractToken source)
 	{
-		return CSharp_ToStringMethod.generateString(types, expr, source);
+		return CSharp_ToStringMethod.generateString(type, expr, source);
 	}
 
 	@Override
