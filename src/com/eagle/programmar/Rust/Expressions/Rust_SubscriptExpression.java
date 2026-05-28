@@ -155,9 +155,16 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		subscr.leftBracket = new PunctuationLeftBracket();
 		subscr.rightBracket = new PunctuationRightBracket();
 
-		Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(theExpr,
-				sc, whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
-		subscr.subscrExpr = Rust_Generator.wrapExpression(range);
+		if (whichEC == SubstringECEnum.GIVEN_NEITHER)
+		{
+			subscr.subscrExpr = sc;
+		}
+		else
+		{
+			Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(theExpr,
+					sc, whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
+			subscr.subscrExpr = Rust_Generator.wrapExpression(range);
+		}
 
 		subscr.setTransformationSource(source);
 		Rust_Expression sub = Rust_Generator.wrapExpression(subscr);

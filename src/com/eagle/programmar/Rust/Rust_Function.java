@@ -16,7 +16,6 @@ import com.eagle.programmar.Rust.Symbols.Rust_Function_Definition;
 import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
 import com.eagle.programmar.Rust.Terminals.Rust_Comment;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
-import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
@@ -42,7 +41,7 @@ import com.eagle.transform.EagleTransformer;
 public class Rust_Function extends TokenSequence
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface, EagleTransformableFunction
 {
-	public @S(10) @OPT Rust_Keyword PUB = new Rust_Keyword("pub");
+	public @S(10) @OPT @BLANKLINE Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/functions.html") Rust_Keyword FN = new Rust_Keyword("fn");
 	public @S(30) Rust_Function_Definition id;
 	public @S(40) @NOSPACE PunctuationLeftParen leftParen;
@@ -197,22 +196,22 @@ public class Rust_Function extends TokenSequence
 		this.id.setValue(methodName);
 	}
 
-	public void addFunctionParameter(AbstractType type, String name)
+	public void addFunctionParameter(Rust_Type type, String name)
 	{
 		Rust_Parameter param = new Rust_Parameter();
 		param.var = new Rust_Variable_Definition();
 		param.var.setValue(name);
 		param.colon = new PunctuationColon();
-		param.type = (Rust_Type) type;
+		param.type = type;
 		
-		if (param.type.getWhich() instanceof Rust_KeywordChoice)
+		if (type.getWhich() instanceof Rust_TypePrimitive)
 		{
-			Rust_KeywordChoice kw = (Rust_KeywordChoice) param.type.getWhich();
-			if (kw.getValue().equals("String"))
+			Rust_TypePrimitive prim = (Rust_TypePrimitive) type.getWhich();
+			if (prim.PRIMITIVE.getValue().equals("String"))
 			{
 				// &str is a read-only pointer, String is mutable
 				// Don't ever want to change function parameters
-				kw.setValue("&str");
+				prim.PRIMITIVE.setValue("&str");
 			}
 		}
 		
