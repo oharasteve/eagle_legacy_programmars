@@ -53,6 +53,7 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			SubstringECEnum whichEC, Rust_Expression ecOrnc, boolean ncMightBeTooBig, AbstractToken source)
 	{
 		Rust_RangeExpression range = new Rust_RangeExpression();
+		Rust_Type usize = Rust_Type.newPrimitiveType("usize");
 		
 		switch (whichSC)
 		{
@@ -67,8 +68,9 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			range.lowExpression = scMinusOne;
 			break;
 		}
-
+		range.lowExpression = Rust_AsExpression.generateAsExpr(range.lowExpression, usize, source);
 		range.dots.setValue("..");
+		range.highExpression = null;
 		
 		switch (whichEC)
 		{
@@ -90,14 +92,12 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 				default:
 					throw new RuntimeException("Unexpected sc: " + whichSC.toString());
 				}
-				range.highExpression.setPresent(true);
 			}
 			break;
 		case GIVEN_EC_PLUS_ONE:
 			if (ecOrnc != null)
 			{
 				range.highExpression = ecOrnc;
-				range.highExpression.setPresent(true);
 			}
 			break;
 		case GIVEN_NC:
@@ -105,7 +105,6 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			Rust_Expression scPlusNc = Rust_AdditiveExpression.generateAdditive(types,
 					range.lowExpression, AdditiveEnum.PLUS, ecOrnc, source);
 			range.highExpression = scPlusNc;
-			range.highExpression.setPresent(true);
 			break;
 		case GIVEN_NEITHER:
 			break;
@@ -113,17 +112,22 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			throw new RuntimeException("Unexpected ec: " + whichEC.toString());
 		}
 		
-		// Need to handle ncMightBeTooBig. Can't let ec go past len(left)
-		if (ncMightBeTooBig && range.highExpression != null && range.highExpression.isPresent())
+		if (range.highExpression != null)
 		{
-			// (9999 as usize).min(abc.len())
-			Rust_Type typ = Rust_Type.newPrimitiveType("usize");
-			Rust_Expression as = Rust_AsExpression.generateAsExpr(range.highExpression, typ, null);
-			Rust_Expression asParen = Rust_ParenthesizedExpression.generateParentheses(as, null);
-			Rust_Expression len = Rust_LenMethod.generateLengthUsize(theExpr);
-			Rust_Expression min = Rust_MinMaxMethod.generateMinMax2(MinMaxEnum.MIN, asParen, len, null);
-			range.highExpression = Rust_ParenthesizedExpression.generateParentheses(min, source);
 			range.highExpression.setPresent(true);
+			range.highExpression = Rust_AsExpression.generateAsExpr(range.highExpression, usize, source);
+			range.highExpression.setPresent(true);		// Yes, you need to set it again and again ...
+			
+			// Need to handle ncMightBeTooBig. Can't let ec go past len(left)
+			if (ncMightBeTooBig)
+			{
+				// (9999 as usize).min(abc.len())
+				Rust_Expression asParen = Rust_ParenthesizedExpression.generateParentheses(range.highExpression, null);
+				Rust_Expression len = Rust_LenMethod.generateLengthUsize(theExpr);
+				Rust_Expression min = Rust_MinMaxMethod.generateMinMax2(MinMaxEnum.MIN, asParen, len, null);
+				range.highExpression = Rust_ParenthesizedExpression.generateParentheses(min, source);
+				range.highExpression.setPresent(true);
+			}
 		}
 
 		return range;
