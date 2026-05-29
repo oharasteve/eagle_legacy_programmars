@@ -140,6 +140,7 @@ public class Perl_FunctionCall extends PrimaryOperator
 	{
 		String name = fnName.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = 0;
 		if (argument != null && argument.isPresent()) argCount++;
 		if (moreArgs != null && moreArgs.isPresent()) argCount += moreArgs.size();
@@ -159,6 +160,6 @@ public class Perl_FunctionCall extends PrimaryOperator
 		}
 
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, fnName);
+		return generator.newMethodInvocation(var, args, types, fnName);
 	}
 }

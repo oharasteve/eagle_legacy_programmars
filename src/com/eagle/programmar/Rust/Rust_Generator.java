@@ -17,9 +17,9 @@ import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
 import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ClassCreationExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
+import com.eagle.programmar.Rust.Expressions.Rust_FunctionCall;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
@@ -468,10 +468,13 @@ public class Rust_Generator
 	{
 		Rust_Variable var = Rust_Variable.generateVariable(name + ".insert");
 		ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
+		ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
 		args.add(subscript);
 		args.add(expression);
+		types.add(TypeEnum.INTEGER);
+		types.add(TypeEnum.STRING);
 		Rust_Identifier_Reference className = null;
-		return Rust_MethodInvocation.generateInvocation(className, var, args, source);
+		return Rust_FunctionCall.generateInvocation(className, var, args, types, source);
 	}
 
 	@Override
@@ -653,9 +656,9 @@ public class Rust_Generator
 
 	@Override
 	public Rust_Expression newMethodInvocation(Rust_Variable var,
-			ArrayList<Rust_Expression> args, AbstractToken source)
+			ArrayList<Rust_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
-		return Rust_MethodInvocation.generateInvocation(null, var, args, source);
+		return Rust_FunctionCall.generateInvocation(null, var, args, types, source);
 	}
 
 	@Override

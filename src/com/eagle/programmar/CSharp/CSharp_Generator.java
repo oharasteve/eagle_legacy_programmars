@@ -627,9 +627,9 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 
 	@Override
 	public CSharp_Expression newMethodInvocation(CSharp_Variable var,
-			ArrayList<CSharp_Expression> args, AbstractToken source)
+			ArrayList<CSharp_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
-		return CSharp_MethodInvocation.generateInvocation(var, args, source);
+		return CSharp_MethodInvocation.generateInvocation(var, args, types, source);
 	}
 
 	@Override

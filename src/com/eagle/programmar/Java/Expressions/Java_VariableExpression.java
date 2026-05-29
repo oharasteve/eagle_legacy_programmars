@@ -74,8 +74,10 @@ public class Java_VariableExpression extends PrimaryOperator
 			{
 				Java_Variable var = Java_Variable.newVariable(name + ".get");
 				ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
+				ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
 				args.add(subscrExpr);
-				return Java_MethodInvocation.generateInvocation(var, args, source);
+				types.add(TypeEnum.INTEGER);
+				return Java_MethodInvocation.generateInvocation(var, args, types, source);
 			}
 
 			Java_Subscript subscript = new Java_Subscript();

@@ -99,7 +99,9 @@ public class Fortran_CallStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		String name = variable.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = arguments.getPrimaryCount();
 		for (int i = 0; i < argCount; i++)
 		{
@@ -108,8 +110,8 @@ public class Fortran_CallStatement extends TokenSequence
 			args.add(newArg);
 		}
 
-		AbstractVariable var = generator.newVariable(variable.getValue());
-		AbstractExpression expr = generator.newMethodInvocation(var, args, variable);
+		AbstractVariable var = generator.newVariable(name);
+		AbstractExpression expr = generator.newMethodInvocation(var, args, types, variable);
 		return generator.newExpressionStatement(expr, variable);
 	}
 }

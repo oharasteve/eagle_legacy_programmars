@@ -106,7 +106,9 @@ public class AWK_CallFunction extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		String name = functionName.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		if (argList != null && argList.isPresent())
 		{
 			args.add(transformer.transformExpression(generator, argList.expr));
@@ -116,7 +118,7 @@ public class AWK_CallFunction extends PrimaryOperator
 			}
 		}
 
-		AbstractVariable var = generator.newVariable(functionName.getValue());
-		return generator.newMethodInvocation(var, args, this);
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, types, this);
 	}
 }

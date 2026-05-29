@@ -99,6 +99,7 @@ public class Eaglish_FunctionCall extends PrimaryOperator
 	{
 		String name = fnName.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = arguments.getPrimaryCount();
 		for (int i = 0; i < argCount; i++)
 		{
@@ -108,6 +109,6 @@ public class Eaglish_FunctionCall extends PrimaryOperator
 		}
 
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, this);
+		return generator.newMethodInvocation(var, args, types, this);
 	}
 }

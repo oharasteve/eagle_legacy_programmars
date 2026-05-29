@@ -34,16 +34,16 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_MethodInvocation extends PrimaryOperator
+public class Rust_FunctionCall extends PrimaryOperator
 		implements EagleRunnableWithResult, EagleTransformableExpression
 {
-	public @S(10) Rust_MethodWhat what;
+	public @S(10) Rust_WhatFunction what;
 	public @S(20) @OPT @NOSPACE Rust_Punctuation bang = new Rust_Punctuation("!");
 	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
 	public @S(40) @OPT @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> argList;
 	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 	
-	public static class Rust_MethodWhat extends TokenChooser
+	public static class Rust_WhatFunction extends TokenChooser
 	{
 		public @FIRST Rust_MethodClass XXmethodClass;
 		public @CHOICE Rust_Variable XXmethodName;
@@ -140,6 +140,7 @@ public class Rust_MethodInvocation extends PrimaryOperator
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			int argCount = argList.getPrimaryCount();
 			for (int i = 0; i < argCount; i++)
 			{
@@ -149,7 +150,7 @@ public class Rust_MethodInvocation extends PrimaryOperator
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			return generator.newMethodInvocation(var, args, id);
+			return generator.newMethodInvocation(var, args, types, id);
 		}
 
 		// Dang. Scale uses () for both arrays and function calls
@@ -160,10 +161,10 @@ public class Rust_MethodInvocation extends PrimaryOperator
 	}
 	
 	public static Rust_Expression generateInvocation(Rust_Identifier_Reference clsName,
-			Rust_Variable var, ArrayList<Rust_Expression> args, AbstractToken source)
+			Rust_Variable var, ArrayList<Rust_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
-		Rust_MethodInvocation invoke = new Rust_MethodInvocation();
-		invoke.what = new Rust_MethodWhat();
+		Rust_FunctionCall invoke = new Rust_FunctionCall();
+		invoke.what = new Rust_WhatFunction();
 
 		if (clsName == null)
 		{
@@ -185,8 +186,13 @@ public class Rust_MethodInvocation extends PrimaryOperator
 		boolean first = true;
 		if (args != null)
 		{
+			int i = 0;
 			for (Rust_Expression arg : args)
 			{
+				TypeEnum type = TypeEnum.OTHER;
+				if (types != null) type = types.get(i);
+				i++;
+				
 				if (first)
 				{
 					first = false;
@@ -196,6 +202,10 @@ public class Rust_MethodInvocation extends PrimaryOperator
 					invoke.argList.addSecondaryElement(new PunctuationComma());
 				}
 				
+				if (type == TypeEnum.STRING)
+				{
+					arg = Rust_BorrowExpression.generateBorrow(arg, null);
+				}
 				invoke.argList.addPrimaryElement(arg);
 			}
 		}

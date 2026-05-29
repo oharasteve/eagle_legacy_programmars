@@ -96,7 +96,9 @@ public class Rexx_CallStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		String name = subName.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = arguments.getPrimaryCount();
 		for (int i = 0; i < argCount; i++)
 		{
@@ -105,8 +107,8 @@ public class Rexx_CallStatement extends TokenSequence
 			args.add(newArg);
 		}
 
-		AbstractVariable var = generator.newVariable(subName.getValue());
-		AbstractExpression expr = generator.newMethodInvocation(var, args, subName);
+		AbstractVariable var = generator.newVariable(name);
+		AbstractExpression expr = generator.newMethodInvocation(var, args, types, subName);
 		return generator.newExpressionStatement(expr, subName);
 	}
 }

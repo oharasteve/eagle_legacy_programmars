@@ -8,7 +8,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
-import com.eagle.programmar.Rust.Symbols.Rust_Variable_Definition;
+import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
@@ -30,7 +30,7 @@ public class Rust_ConstStatement extends TokenSequence
 {
 	public @S(10) @OPT @NEWLINE Rust_Keyword PUB = new Rust_Keyword("pub");
 	public @S(20) @DOC("items/static-items.html") Rust_KeywordChoice STATIC = new Rust_KeywordChoice("const", "static");
-	public @S(30) Rust_Variable_Definition var;
+	public @S(30) Rust_Variable var;
 	public @S(40) PunctuationColon colon = new PunctuationColon();
 	public @S(50) Rust_Type type;
 	public @S(60) @OPT Rust_Data_Initial init;
@@ -47,8 +47,9 @@ public class Rust_ConstStatement extends TokenSequence
 	{
 		if (init.isPresent())
 		{
+			String id = var.var.getValue();
 			EagleValue val = interpreter.getEagleValue(init.expr);
-			interpreter.setSymbol(var, var.getValue(), val);
+			interpreter.setSymbol(var, id, val);
 		}
 	}
 
@@ -66,7 +67,7 @@ public class Rust_ConstStatement extends TokenSequence
 			initial = transformer.transformExpression(generator, init.expr);
 		}
 
-		String name = var.getValue();
+		String name = var.var.getValue();
 		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
 		return stmt;
 	}
@@ -83,8 +84,7 @@ public class Rust_ConstStatement extends TokenSequence
 		data.semicolon = new PunctuationSemicolon();
 
 		// Set data name and type
-		data.var = new Rust_Variable_Definition();
-		data.var.setValue(name);
+		data.var = Rust_Variable.generateVariable(name);
 		data.type = type;
 
 		if (isStatic)

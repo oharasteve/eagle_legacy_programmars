@@ -118,6 +118,7 @@ public class Fortran_FunctionCall extends PrimaryOperator
 	{
 		String name = variable.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		if (argList != null && argList.isPresent())
 		{
 			for (int i = 0; i < argList.getPrimaryCount(); i++)
@@ -136,6 +137,6 @@ public class Fortran_FunctionCall extends PrimaryOperator
 
 		// Must be a function call
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, this);
+		return generator.newMethodInvocation(var, args, types, this);
 	}
 }

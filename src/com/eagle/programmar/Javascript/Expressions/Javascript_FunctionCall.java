@@ -129,6 +129,8 @@ public class Javascript_FunctionCall extends PrimaryOperator
 		if (variable.firstId.getWhich() instanceof Javascript_Identifier_Reference)
 		{
 			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) variable.firstId.getWhich();
+			String name = id.getValue();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 			int numArgs = arguments.expressions.getPrimaryCount();
 			for (int i = 0; i < numArgs; i++)
@@ -137,8 +139,8 @@ public class Javascript_FunctionCall extends PrimaryOperator
 				args.add(transformer.transformExpression(generator, expr));
 			}
 
-			AbstractVariable var = generator.newVariable(id.getValue());
-			return generator.newMethodInvocation(var, args, this);
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, types, this);
 		}
 		throw new RuntimeException("Can't handle: " + this);
 	}

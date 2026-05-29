@@ -166,6 +166,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		Delphi_Variable variable = this.name;
 		Delphi_Identifier_Reference id = variable.var;
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(id.getValue());
 		if (this.argList != null && this.argList.isPresent())
 		{
 			int nargs = this.argList.exprs.getPrimaryCount();
@@ -177,6 +178,6 @@ public class Delphi_Function_Call extends PrimaryOperator
 		}
 
 		AbstractVariable var = generator.newVariable(id.getValue());
-		return generator.newMethodInvocation(var, args, this);
+		return generator.newMethodInvocation(var, args, types, this);
 	}
 }

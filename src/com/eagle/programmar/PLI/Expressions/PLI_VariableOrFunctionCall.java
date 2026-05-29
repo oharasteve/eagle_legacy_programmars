@@ -148,6 +148,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 			if (generator.isKnownMethod(name))
 			{
 				ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+				ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 				for (int i = 0; i < argCount; i++)
 				{
 					PLI_ExpressionOrStar arg = subscript.args.getPrimaryElement(i);
@@ -160,7 +161,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 				}
 
 				AbstractVariable var = generator.newVariable(name);
-				return generator.newMethodInvocation(var, args, id);
+				return generator.newMethodInvocation(var, args, types, id);
 			}
 
 			// Case III: an array variable, with a subscript

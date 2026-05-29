@@ -197,6 +197,8 @@ public class Ada_FunctionCall extends PrimaryOperator
 		{
 			// There is a function or procedure with this name
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
+
 			for (int i = 0; i < argCount; i++)
 			{
 				Ada_FunctionArg fnArg = argList.arguments.getPrimaryElement(i);
@@ -214,7 +216,7 @@ public class Ada_FunctionCall extends PrimaryOperator
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			return generator.newMethodInvocation(var, args, functionName);
+			return generator.newMethodInvocation(var, args, types, functionName);
 		}
 
 		// Hopefully, it is an array with a subscript

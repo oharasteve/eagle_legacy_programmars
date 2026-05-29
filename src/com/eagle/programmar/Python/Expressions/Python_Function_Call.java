@@ -121,6 +121,7 @@ public class Python_Function_Call extends PrimaryOperator
 		Python_Identifier_Reference id = (Python_Identifier_Reference) fnName.var.getWhich();
 		String name = id.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = argList.getPrimaryCount();
 		for (int i = 0; i < argCount; i++)
 		{
@@ -130,11 +131,11 @@ public class Python_Function_Call extends PrimaryOperator
 		}
 
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, id);
+		return generator.newMethodInvocation(var, args, types, id);
 	}
 
 	public static Python_Expression generateInvocation(Python_Variable var,
-			ArrayList<Python_Expression> args, AbstractToken source)
+			ArrayList<Python_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
 		Python_Function_Call invoke = new Python_Function_Call();
 		invoke.leftParen = new PunctuationLeftParen();

@@ -146,6 +146,7 @@ public class C_FunctionCall extends PrimaryOperator
 		C_Identifier_Reference id = (C_Identifier_Reference) which0;
 		String name = id.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 
 		if (argList != null && argList.isPresent())
 		{
@@ -173,6 +174,6 @@ public class C_FunctionCall extends PrimaryOperator
 		}
 
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, id);
+		return generator.newMethodInvocation(var, args, types, id);
 	}
 }

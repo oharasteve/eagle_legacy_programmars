@@ -72,7 +72,7 @@ public class Rust_AsExpression extends PrecedenceOperator
 		Rust_TypeExpression typeExpr = new Rust_TypeExpression();
 		typeExpr.type = type;
 		Rust_AsExpression as = new Rust_AsExpression();
-		as.expression = expr;
+		as.expression = Rust_ParenthesizedExpression.generateParentheses(expr, null);
 		as.type = typeExpr;
 
 		as.setTransformationSource(source);

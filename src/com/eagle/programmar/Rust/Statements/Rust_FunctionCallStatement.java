@@ -5,7 +5,7 @@ package com.eagle.programmar.Rust.Statements;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
+import com.eagle.programmar.Rust.Expressions.Rust_FunctionCall;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -16,10 +16,10 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Rust_FunctionCall extends TokenSequence
+public class Rust_FunctionCallStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
-	public @S(10) Rust_MethodInvocation method;
+	public @S(10) Rust_FunctionCall method;
 	public @S(20) @OPT PunctuationSemicolon semicolon;
 
 	@Override

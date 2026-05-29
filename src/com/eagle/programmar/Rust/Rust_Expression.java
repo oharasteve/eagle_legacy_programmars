@@ -14,7 +14,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_ClassCreationExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
-import com.eagle.programmar.Rust.Expressions.Rust_MethodInvocation;
+import com.eagle.programmar.Rust.Expressions.Rust_FunctionCall;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
@@ -85,7 +85,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	///////////////////////////////////////////////
 	// Primary expressions
 
-	public @P(100) Rust_MethodInvocation methodInvocation;
+	public @P(100) Rust_FunctionCall methodInvocation;
 	public @P(110) Rust_NegativeExpression negativeExpression;
 	public @P(120) Rust_AbsMethod absMethod;
 	public @P(130) Rust_ModMethod modMethod;

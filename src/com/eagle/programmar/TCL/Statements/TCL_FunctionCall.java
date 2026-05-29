@@ -94,6 +94,7 @@ public class TCL_FunctionCall extends TokenSequence
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			for (TCL_Expression arg : callArguments._elements)
 			{
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
@@ -101,7 +102,7 @@ public class TCL_FunctionCall extends TokenSequence
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			AbstractExpression expr = generator.newMethodInvocation(var, args, function);
+			AbstractExpression expr = generator.newMethodInvocation(var, args, types, function);
 			return generator.newExpressionStatement(expr, callArguments);
 		}
 

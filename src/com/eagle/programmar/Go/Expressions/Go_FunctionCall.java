@@ -98,6 +98,7 @@ public class Go_FunctionCall extends PrimaryOperator
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			int argCount = arguments.getPrimaryCount();
 			for (int i = 0; i < argCount; i++)
 			{
@@ -107,7 +108,7 @@ public class Go_FunctionCall extends PrimaryOperator
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			return generator.newMethodInvocation(var, args, funcName);
+			return generator.newMethodInvocation(var, args, types, funcName);
 		}
 
 		// Dang. Go uses () for both arrays and function calls

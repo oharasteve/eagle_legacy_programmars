@@ -135,7 +135,9 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 		if (variable.firstId.getWhich() instanceof CSharp_Identifier_Reference)
 		{
 			CSharp_Identifier_Reference id = (CSharp_Identifier_Reference) variable.firstId.getWhich();
+			String name = id.getValue();
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			if (this.argList != null && this.argList.isPresent())
 			{
 				CSharp_Expression expr1 = argList.arg.getExpression();
@@ -150,14 +152,14 @@ public class CSharp_MethodInvocation extends PrimaryOperator
 				}
 			}
 
-			AbstractVariable var = generator.newVariable(id.getValue());
-			return generator.newMethodInvocation(var, args, this);
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, types, this);
 		}
 		throw new RuntimeException("Can't handle: " + this);
 	}
 
 	public static CSharp_Expression generateInvocation(CSharp_Variable var,
-			ArrayList<CSharp_Expression> args, AbstractToken source)
+			ArrayList<CSharp_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
 		CSharp_MethodInvocation invok = new CSharp_MethodInvocation();
 		invok.methodName = new CSharp_Variable();

@@ -124,7 +124,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 		}
 
 		AbstractVariable para = generator.newVariable(COBOL_Variable.repairName(performStartParagraph.getValue()));
-		AbstractExpression expr = generator.newMethodInvocation(para, null, this);
+		AbstractExpression expr = generator.newMethodInvocation(para, null, null, this);
 		AbstractStatement stmt = generator.newExpressionStatement(expr, this);
 
 		// Four cases: both varying and while; just varying; just while; neither
@@ -134,7 +134,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 		}
 		if (whileExpr == null)
 		{
-			AbstractExpression callExpr = generator.newMethodInvocation(para, null, this);
+			AbstractExpression callExpr = generator.newMethodInvocation(para, null, null, this);
 			return generator.newExpressionStatement(callExpr, this);
 		}
 		return generator.newWhileStatement1(whileExpr, stmt, this);

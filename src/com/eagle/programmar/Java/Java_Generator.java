@@ -470,9 +470,12 @@ public class Java_Generator
 	{
 		Java_Variable var = Java_Variable.newVariable(name + ".put");
 		ArrayList<Java_Expression> args = new ArrayList<Java_Expression>();
+		ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
 		args.add(subscript);
 		args.add(expression);
-		return Java_MethodInvocation.generateInvocation(var, args, source);
+		types.add(TypeEnum.INTEGER);
+		types.add(TypeEnum.STRING);
+		return Java_MethodInvocation.generateInvocation(var, args, types, source);
 	}
 
 	@Override
@@ -640,9 +643,9 @@ public class Java_Generator
 
 	@Override
 	public Java_Expression newMethodInvocation(Java_Variable var,
-			ArrayList<Java_Expression> args, AbstractToken source)
+			ArrayList<Java_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
-		return Java_MethodInvocation.generateInvocation(var, args, source);
+		return Java_MethodInvocation.generateInvocation(var, args, types, source);
 	}
 
 	@Override

@@ -162,6 +162,7 @@ public class SQL_CallStatement extends TokenSequence
 //		}
 
 		ArrayList<AbstractExpression> arguments = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		for (int i = 0; i < argCount; i++)
 		{
 			SQL_FunctionArg arg = args.getPrimaryElement(i);
@@ -174,7 +175,7 @@ public class SQL_CallStatement extends TokenSequence
 		}
 
 		AbstractVariable newName = generator.newVariable(name);
-		AbstractExpression newExpr = generator.newMethodInvocation(newName, arguments, this);
+		AbstractExpression newExpr = generator.newMethodInvocation(newName, arguments, types, this);
 		return generator.newExpressionStatement(newExpr, CALL);
 	}
 }

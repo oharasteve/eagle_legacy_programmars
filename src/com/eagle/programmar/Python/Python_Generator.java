@@ -119,9 +119,11 @@ public class Python_Generator
 	{
 		Python_Variable mainVar = newVariable(mainName());
 		ArrayList<Python_Expression> args = new ArrayList<Python_Expression>();
+		ArrayList<TypeEnum> types = new ArrayList<TypeEnum>();
 		Python_Expression none = Python_BuiltIn.generateBuiltIn(BuiltInEnum.NULL, null);
 		args.add(none);
-		Python_Expression mainExpr = Python_Function_Call.generateInvocation(mainVar, args, null);
+		types.add(TypeEnum.OTHER);
+		Python_Expression mainExpr = Python_Function_Call.generateInvocation(mainVar, args, types, null);
 		Python_ComplexStatement mainStmt = Python_ExpressionStatement.newExpressionStatement(mainExpr, null);
 		addStatement(mainStmt, null);
 	}
@@ -640,9 +642,9 @@ public class Python_Generator
 
 	@Override
 	public Python_Expression newMethodInvocation(Python_Variable var,
-			ArrayList<Python_Expression> args, AbstractToken source)
+			ArrayList<Python_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
-		return Python_Function_Call.generateInvocation(var, args, source);
+		return Python_Function_Call.generateInvocation(var, args, types, source);
 	}
 
 	@Override

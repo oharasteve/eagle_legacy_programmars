@@ -124,7 +124,11 @@ public class Algol68_ProcedureCall extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		Algol68_Identifier_Reference id = procName.vars.first();
+		String name = id.getValue();
+
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = argList.arguments.getPrimaryCount();
 		for (int i = 0; i < argCount; i++)
 		{
@@ -138,9 +142,7 @@ public class Algol68_ProcedureCall extends PrimaryOperator
 			args.add(newArg);
 		}
 
-		Algol68_Identifier_Reference id = procName.vars.first();
-		String name = id.getValue();
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, procName);
+		return generator.newMethodInvocation(var, args, types, procName);
 	}
 }

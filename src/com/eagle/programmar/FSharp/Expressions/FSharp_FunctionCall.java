@@ -96,6 +96,7 @@ public class FSharp_FunctionCall extends PrimaryOperator
 	{
 		String name = functionName.id.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 
 		if (argList != null && argList.size() > 0)
 		{
@@ -108,6 +109,6 @@ public class FSharp_FunctionCall extends PrimaryOperator
 		}
 
 		AbstractVariable var = generator.newVariable(name);
-		return generator.newMethodInvocation(var, args, functionName.id);
+		return generator.newMethodInvocation(var, args, types, functionName.id);
 	}
 }

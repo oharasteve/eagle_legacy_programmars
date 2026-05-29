@@ -109,7 +109,9 @@ public class SQL_FunctionCall extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		SQL_Identifier_Reference id = funcName.ids.first();
+		String name = id.getValue();
 		ArrayList<AbstractExpression> arguments = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		if (args != null && args.isPresent())
 		{
 			int argCount = args.getPrimaryCount();
@@ -122,10 +124,11 @@ public class SQL_FunctionCall extends PrimaryOperator
 				}
 				SQL_Expression expr = (SQL_Expression) arg.getWhich();
 				arguments.add(transformer.transformExpression(generator, expr));
+				
 			}
 		}
 
-		AbstractVariable var = generator.newVariable(id.getValue());
-		return generator.newMethodInvocation(var, arguments, this);
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, arguments, types, this);
 	}
 }

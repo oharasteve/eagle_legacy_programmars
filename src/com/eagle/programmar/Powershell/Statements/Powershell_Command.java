@@ -152,7 +152,9 @@ public class Powershell_Command extends TokenSequence
 			throw new RuntimeException("Can only transform user functions");
 		}
 		Powershell_Function_Reference fnName = (Powershell_Function_Reference) whichCommand.getWhich();
+		String name = fnName.getValue();
 		ArrayList<AbstractExpression> newArgs = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		if (argList != null && argList.isPresent())
 		{
 			for (Powershell_CommandArg arg : argList._elements)
@@ -167,8 +169,8 @@ public class Powershell_Command extends TokenSequence
 			}
 		}
 
-		AbstractVariable var = generator.newVariable(fnName.getValue());
-		AbstractExpression fnCall = generator.newMethodInvocation(var, newArgs, this);
+		AbstractVariable var = generator.newVariable(name);
+		AbstractExpression fnCall = generator.newMethodInvocation(var, newArgs, types, this);
 		return generator.newExpressionStatement(fnCall, this);
 	}
 }

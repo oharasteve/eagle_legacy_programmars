@@ -112,6 +112,7 @@ public class Scala_FunctionCall extends PrimaryOperator
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			int argCount = argList.getPrimaryCount();
 			for (int i = 0; i < argCount; i++)
 			{
@@ -121,7 +122,7 @@ public class Scala_FunctionCall extends PrimaryOperator
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			return generator.newMethodInvocation(var, args, methodName);
+			return generator.newMethodInvocation(var, args, types, methodName);
 		}
 
 		// Dang. Scala uses () for both arrays and function calls

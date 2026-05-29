@@ -96,6 +96,7 @@ public class Eaglish_Call_Statement extends TokenSequence
 	{
 		String name = funcName.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		int argCount = callParams.args.getPrimaryCount();
 		for (int i = 0; i < argCount; i++)
 		{
@@ -105,7 +106,7 @@ public class Eaglish_Call_Statement extends TokenSequence
 		}
 
 		AbstractVariable var = generator.newVariable(name);
-		AbstractExpression invocation = generator.newMethodInvocation(var, args, this);
+		AbstractExpression invocation = generator.newMethodInvocation(var, args, types, this);
 		return generator.newExpressionStatement(invocation, CALL);
 	}
 }

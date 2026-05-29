@@ -113,7 +113,9 @@ public class Powershell_FunctionCall extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		String name = funcRef.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 		if (arguments != null && arguments.isPresent())
 		{
 			for (Powershell_FunctionArg arg : arguments._elements)
@@ -122,7 +124,7 @@ public class Powershell_FunctionCall extends PrimaryOperator
 			}
 		}
 
-		AbstractVariable var = generator.newVariable(funcRef.getValue());
-		return generator.newMethodInvocation(var, args, this);
+		AbstractVariable var = generator.newVariable(name);
+		return generator.newMethodInvocation(var, args, types, this);
 	}
 }

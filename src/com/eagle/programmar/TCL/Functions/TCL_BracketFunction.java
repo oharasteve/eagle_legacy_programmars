@@ -99,6 +99,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 		if (generator.isKnownMethod(name))
 		{
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			for (TCL_Expression arg : callArguments._elements)
 			{
 				AbstractExpression newArg = transformer.transformExpression(generator, arg);
@@ -106,7 +107,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 			}
 
 			AbstractVariable var = generator.newVariable(name);
-			return generator.newMethodInvocation(var, args, function);
+			return generator.newMethodInvocation(var, args, types, function);
 		}
 
 		throw new RuntimeException("Unknown function: " + name);

@@ -134,7 +134,9 @@ public class Java_MethodInvocation extends PrimaryOperator
 		if (variable.firstId.getWhich() instanceof Java_Identifier_Reference)
 		{
 			Java_Identifier_Reference id = (Java_Identifier_Reference) variable.firstId.getWhich();
+			String name = id.getValue();
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			if (this.argList != null && this.argList.isPresent())
 			{
 				args.add(transformer.transformExpression(generator, this.argList.arg));
@@ -147,14 +149,14 @@ public class Java_MethodInvocation extends PrimaryOperator
 				}
 			}
 
-			AbstractVariable var = generator.newVariable(id.getValue());
-			return generator.newMethodInvocation(var, args, this);
+			AbstractVariable var = generator.newVariable(name);
+			return generator.newMethodInvocation(var, args, types, this);
 		}
 		throw new RuntimeException("Can't handle: " + this);
 	}
 
 	public static Java_Expression generateInvocation(Java_Variable var,
-			ArrayList<Java_Expression> args, AbstractToken source)
+			ArrayList<Java_Expression> args, ArrayList<TypeEnum> types, AbstractToken source)
 	{
 		Java_MethodInvocation invoke = new Java_MethodInvocation();
 		invoke.methodName = new Java_Variable();
