@@ -197,31 +197,14 @@ public class Rust_Generator
 	{
 		if (stmt == null) return;
 
-//		// Cannot put data into the 'main' method when it was declared in a global area
-//		if (stmt.getWhich() instanceof Rust_Data)
-//		{
-//			boolean saveGlobally = false;
-//			if (_currentFunction == null)
-//			{
-//				saveGlobally = true;
-//			}
-//			else if (_currentFunction.id.getValue().equals("main"))
-//			{
-//				saveGlobally = true;
-//			}
-//
-//			if (saveGlobally)
-//			{
-//				Rust_Data data = (Rust_Data) stmt.getWhich();
-//				data.STATIC.setValue("static");
-//
-//				// Put it in program, not the 'main' method
-//				Rust_TopElement element = new Rust_TopElement();
-//				element.setWhich(data);
-//				_program.addTopElement(element);
-//				return;
-//			}
-//		}
+		if (stmt.getWhich() instanceof Rust_ConstStatement)
+		{
+			// Put it in program, not the 'main' method
+			Rust_TopElement element = new Rust_TopElement();
+			element.setWhich(stmt);
+			_program.addTopElement(element);
+			return;
+		}
 
 		checkFunction();
 		
@@ -274,13 +257,17 @@ public class Rust_Generator
 	public Rust_Statement newDataDeclaration(boolean isStatic, String name, Rust_Expression size,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
+		int assignments = 0;
 		if (_metrics != null)
 		{
-			if (_metrics.countAssignments(name, null) == 1)
-			{
-				return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
-			}
+			assignments = _metrics.countAssignments(name, null);
 		}
+
+		if (isStatic || assignments == 1)
+		{
+			return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
+		}
+		
 		return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 

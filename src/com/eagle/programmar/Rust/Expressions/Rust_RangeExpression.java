@@ -122,9 +122,9 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			if (ncMightBeTooBig)
 			{
 				// (9999 as usize).min(abc.len())
-				Rust_Expression asParen = Rust_ParenthesizedExpression.generateParentheses(range.highExpression, null);
+				Rust_Expression paren = Rust_ParenthesizedExpression.generateParentheses(range.highExpression, null);
 				Rust_Expression len = Rust_LenMethod.generateLengthUsize(theExpr);
-				Rust_Expression min = Rust_MinMaxMethod.generateMinMax2(MinMaxEnum.MIN, asParen, len, null);
+				Rust_Expression min = Rust_MinMaxMethod.generateMinMax2(MinMaxEnum.MIN, paren, len, null);
 				range.highExpression = Rust_ParenthesizedExpression.generateParentheses(min, source);
 				range.highExpression.setPresent(true);
 			}

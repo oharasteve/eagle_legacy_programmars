@@ -8,7 +8,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
-import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.tokens.AbstractToken;
@@ -101,8 +100,8 @@ public class Rust_VariableExpression extends PrimaryOperator
 			subExpr = subscrExpr;
 		}
 		
-		Rust_Type type = Rust_Type.newPrimitiveType("usize");
-		subExpr = Rust_AsExpression.generateAsExpr(subExpr, type, source);
+//		Rust_Type usize = Rust_Type.newPrimitiveType("usize");
+//		subExpr = Rust_AsExpression.generateAsExpr(subExpr, usize, source);
 		return Rust_SubscriptExpression.generateSubscriptExpression(theExpr, subExpr,
 				SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NEITHER, null, false, source);
 	}

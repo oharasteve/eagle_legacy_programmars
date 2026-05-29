@@ -71,7 +71,7 @@ public class Rust_ConstStatement extends TokenSequence
 		return stmt;
 	}
 
-	public static Rust_ConstStatement newDataDeclaration(boolean isStatic, String name, Rust_Expression size,
+	public static Rust_ConstStatement newDataDeclaration(boolean isStatic, String name, Rust_Expression unusedSize,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
 		if (type == null)

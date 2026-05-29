@@ -58,6 +58,7 @@ public class Ada_Data extends TokenSequence
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = type.convertType(generator);
 		AbstractExpression newInit = null;
+		boolean isConst = type.CONSTANT.isPresent();
 
 		if (initial != null && initial.isPresent())
 		{
@@ -69,7 +70,7 @@ public class Ada_Data extends TokenSequence
 		{
 			Ada_Variable_Definition id = ids.getPrimaryElement(i);
 			String varName = id.getValue();
-			AbstractStatement data = generator.newDataDeclaration(false, varName, null,
+			AbstractStatement data = generator.newDataDeclaration(isConst, varName, null,
 					newType, newInit, this);
 			if (data != null)
 			{

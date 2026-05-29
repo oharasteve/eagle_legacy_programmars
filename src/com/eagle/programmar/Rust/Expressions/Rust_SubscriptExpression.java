@@ -12,6 +12,7 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -155,10 +156,18 @@ public class Rust_SubscriptExpression extends PrecedenceOperator
 		subscr.leftBracket = new PunctuationLeftBracket();
 		subscr.rightBracket = new PunctuationRightBracket();
 
-		Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(theExpr,
-				sc, whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
-		subscr.subscrExpr = Rust_Generator.wrapExpression(range);
-
+		if (whichEC == SubstringECEnum.GIVEN_NEITHER)
+		{
+			Rust_Type usize = Rust_Type.newPrimitiveType("usize");
+			subscr.subscrExpr = Rust_AsExpression.generateAsExpr(sc, usize, source);
+		}
+		else
+		{
+			Rust_RangeExpression range = Rust_RangeExpression.generateSubscript(theExpr,
+					sc, whichSC, whichEC, ecOrnc, ncMightBeTooBig, source);
+			subscr.subscrExpr = Rust_Generator.wrapExpression(range);
+		}
+		
 		subscr.setTransformationSource(source);
 		Rust_Expression sub = Rust_Generator.wrapExpression(subscr);
 		Rust_Expression paren = Rust_ParenthesizedExpression.generateParentheses(sub, null);
