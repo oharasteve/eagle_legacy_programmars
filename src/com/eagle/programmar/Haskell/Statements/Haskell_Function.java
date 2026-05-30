@@ -171,7 +171,7 @@ public class Haskell_Function extends TokenSequence
 //				{
 //					// System.err.println("****** Found var " + met._symbolName);
 //					AbstractType absType = generator.transformType(typ, null, this);
-//					AbstractStatement dataStmt = generator.newDataDeclaration(false,
+//					AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE,
 //							met._symbolName, null, absType, null, this);
 //					generator.addStatement(dataStmt, this);
 //				}

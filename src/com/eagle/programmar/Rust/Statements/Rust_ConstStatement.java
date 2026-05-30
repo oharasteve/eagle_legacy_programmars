@@ -21,6 +21,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -68,11 +69,11 @@ public class Rust_ConstStatement extends TokenSequence
 		}
 
 		String name = var.var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.CONST, name, null, newType, initial, this);
 		return stmt;
 	}
 
-	public static Rust_ConstStatement newDataDeclaration(boolean isStatic, String name, Rust_Expression unusedSize,
+	public static Rust_ConstStatement newDataDeclaration(StaticEnum isStatic, String name, Rust_Expression unusedSize,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
 		if (type == null)
@@ -87,9 +88,16 @@ public class Rust_ConstStatement extends TokenSequence
 		data.var = Rust_Variable.generateVariable(name);
 		data.type = type;
 
-		if (isStatic)
+		switch (isStatic)
 		{
+		case STATIC:
 			data.STATIC.setValue("static");
+			break;
+		case CONST:
+			data.STATIC.setValue("const");
+			break;
+		default:
+			break;	// Nothing
 		}
 
 		// Set the initial value, if any

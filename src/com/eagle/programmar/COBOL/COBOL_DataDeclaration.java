@@ -43,6 +43,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationStar;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
@@ -299,7 +300,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 								SubscriptEnum.FIRST_IS_ONE, null, this);
 						newType = generator.transformType(TypeEnum.ARRAY, varName, this);
 						AbstractStatement data = generator.newDataDeclaration(
-								false, varName, null, newType, redef, this);
+								StaticEnum.NONE, varName, null, newType, redef, this);
 						generator.addStatement(data, this);
 						return;
 					}
@@ -336,7 +337,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			if (newType != null)
 			{
 				AbstractStatement data = generator.newDataDeclaration(
-						false, varName, null, newType, expression, this);
+						StaticEnum.NONE, varName, null, newType, expression, this);
 				generator.addStatement(data, this);
 				return;
 			}
@@ -359,7 +360,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 					AbstractExpression arrayExpr = generator.newArrayExpression(newValues, this);
 					newType = generator.transformType(TypeEnum.ARRAY, varName, this);
 					AbstractStatement data = generator.newDataDeclaration(
-							false, varName, null, newType, arrayExpr, this);
+							StaticEnum.NONE, varName, null, newType, arrayExpr, this);
 					generator.addStatement(data, this);
 					return;
 				}

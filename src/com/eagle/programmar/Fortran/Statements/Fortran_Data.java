@@ -23,6 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 
 public class Fortran_Data extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
@@ -103,7 +104,7 @@ public class Fortran_Data extends TokenSequence
 			
 			if (! skipVariable)
 			{
-				AbstractStatement stmt = generator.newDataDeclaration(false, varDef.getValue(),
+				AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, varDef.getValue(),
 						null, newType, null, varDef);
 				result.add(stmt);
 			}

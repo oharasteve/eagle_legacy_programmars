@@ -23,6 +23,7 @@ import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 
 public class SQL_Program extends AbstractLanguage
 		implements EagleRunnable, EagleTransformableProgram
@@ -112,7 +113,7 @@ public class SQL_Program extends AbstractLanguage
 			// System.err.println("****** Found var " + met._symbolName);
 			SQL_Type type = SQL_Type.newPrimitiveType("VARCHAR");
 			AbstractType abstrType = SQL_Type.findAbstractType(generator, type);
-			AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+			AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
 					null, abstrType, null, this);
 			generator.addStatement(dataStmt, this);
 		}

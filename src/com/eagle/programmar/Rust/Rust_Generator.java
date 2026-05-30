@@ -39,7 +39,6 @@ import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
 import com.eagle.programmar.Rust.Functions.Rust_TrimMethod;
 import com.eagle.programmar.Rust.Statements.Rust_Block_Statement;
 import com.eagle.programmar.Rust.Statements.Rust_BreakStatement;
-import com.eagle.programmar.Rust.Statements.Rust_ConstStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExitStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ExpressionStatement;
 import com.eagle.programmar.Rust.Statements.Rust_ForStatement;
@@ -197,14 +196,14 @@ public class Rust_Generator
 	{
 		if (stmt == null) return;
 
-		if (stmt.getWhich() instanceof Rust_ConstStatement)
-		{
-			// Put it in program, not the 'main' method
-			Rust_TopElement element = new Rust_TopElement();
-			element.setWhich(stmt);
-			_program.addTopElement(element);
-			return;
-		}
+//		if (stmt.getWhich() instanceof Rust_ConstStatement)
+//		{
+//			// Put it in program, not the 'main' method
+//			Rust_TopElement element = new Rust_TopElement();
+//			element.setWhich(stmt);
+//			_program.addTopElement(element);
+//			return;
+//		}
 
 		checkFunction();
 		
@@ -254,20 +253,14 @@ public class Rust_Generator
 	}
 
 	@Override
-	public Rust_Statement newDataDeclaration(boolean isStatic, String name, Rust_Expression size,
+	public Rust_Statement newDataDeclaration(StaticEnum isStatic, String name, Rust_Expression size,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
-		int assignments = 0;
 		if (_metrics != null)
 		{
-			assignments = _metrics.countAssignments(name, null);
+			int assignments = _metrics.countAssignments(name, null);
+			if (assignments == 1) isStatic = StaticEnum.CONST;
 		}
-
-		if (isStatic || assignments == 1)
-		{
-			return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
-		}
-		
 		return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 

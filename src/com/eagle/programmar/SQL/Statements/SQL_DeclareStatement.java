@@ -23,6 +23,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
@@ -74,7 +75,7 @@ public class SQL_DeclareStatement extends TokenSequence
 				if (decl.type != null && decl.type.isPresent())
 				{
 					AbstractType varType = SQL_Type.findAbstractType(generator, decl.type);
-					AbstractStatement varDecl = generator.newDataDeclaration(false, varName,
+					AbstractStatement varDecl = generator.newDataDeclaration(StaticEnum.NONE, varName,
 							null, varType, asgExpr, null);
 					generator.addStatement(varDecl, null);
 				}
@@ -86,7 +87,7 @@ public class SQL_DeclareStatement extends TokenSequence
 			else
 			{
 				AbstractType varType = SQL_Type.findAbstractType(generator, decl.type);
-				AbstractStatement varDecl = generator.newDataDeclaration(false, varName,
+				AbstractStatement varDecl = generator.newDataDeclaration(StaticEnum.NONE, varName,
 						null, varType, null, null);
 				generator.addStatement(varDecl, null);
 			}

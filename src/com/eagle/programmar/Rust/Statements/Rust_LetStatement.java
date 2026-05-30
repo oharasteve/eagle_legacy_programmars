@@ -22,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -73,14 +74,14 @@ public class Rust_LetStatement extends TokenSequence
 			AbstractExpression initial = transformer.transformExpression(generator, init.expr);
 	
 			String name = var.var.getValue();
-			AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
+			AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
 			return stmt;
 		}
 		
 		return null;
 	}
 	
-	public static Rust_LetStatement newDataDeclaration(boolean isStatic, String name,
+	public static Rust_LetStatement newDataDeclaration(StaticEnum isStatic, String name,
 			Rust_Expression size, Rust_Type typ, Rust_Expression initial, AbstractToken source)
 	{
 		if (typ == null)

@@ -92,7 +92,8 @@ public class Javascript_Program extends AbstractLanguage
 				if (which2 instanceof Javascript_Data)
 				{
 					Javascript_Data data = (Javascript_Data) which2;
-					ArrayList<AbstractStatement> stmts3 = data.transformStaticData(true, transformer, generator);
+					// transformStaticData ??
+					ArrayList<AbstractStatement> stmts3 = data.transformStatement(transformer, generator);
 					for (AbstractStatement stmt3 : stmts3)
 					{
 						generator.addStatement(stmt3, elt1);

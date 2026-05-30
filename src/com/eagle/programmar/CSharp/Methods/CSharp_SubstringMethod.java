@@ -67,7 +67,7 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, left);
 		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
 		AbstractExpression nc = null;
-		SubstringECEnum given = SubstringECEnum.GIVEN_NEITHER;
+		SubstringECEnum given = SubstringECEnum.TO_END;
 		if (ncExpr != null && ncExpr.isPresent())
 		{
 			nc = transformer.transformExpression(generator, ncExpr);
@@ -143,7 +143,10 @@ public class CSharp_SubstringMethod extends PrecedenceOperator
 				expr.ncExpr.setPresent(true);
 			}
 			break;
-		case GIVEN_NEITHER:
+		case JUST_ONE:
+			expr.ncExpr = null;
+			break;
+		case TO_END:
 			expr.ncExpr = null;
 			break;
 		}

@@ -50,7 +50,7 @@ public class SQL_SubstringFunction extends PrimaryOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		AbstractExpression sc = transformer.transformExpression(generator, scExpr);
 		AbstractExpression nc = null;
-		SubstringECEnum given = SubstringECEnum.GIVEN_NEITHER;
+		SubstringECEnum given = SubstringECEnum.TO_END;
 		if (ncExpr != null && ncExpr.isPresent())
 		{
 			nc = transformer.transformExpression(generator, ncExpr);

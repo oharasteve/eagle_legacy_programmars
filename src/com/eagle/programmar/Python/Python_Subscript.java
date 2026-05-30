@@ -214,7 +214,9 @@ public class Python_Subscript extends TokenSequence
 			subscr.body.subscriptStop.expr = scPlusNc;
 			subscr.body.subscriptStop.expr.setPresent(true);
 			break;
-		case GIVEN_NEITHER:
+		case JUST_ONE:
+			break;
+		case TO_END:
 			break;
 		}
 

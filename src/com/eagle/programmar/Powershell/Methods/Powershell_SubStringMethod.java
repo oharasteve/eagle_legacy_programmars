@@ -63,7 +63,7 @@ public class Powershell_SubStringMethod extends PrecedenceOperator
 		AbstractExpression theExpr = transformer.transformExpression(generator, strExpr);
 		AbstractExpression theSC = transformer.transformExpression(generator, scExpr);
 		AbstractExpression theNC = null;
-		SubstringECEnum whichEC = SubstringECEnum.GIVEN_NEITHER;
+		SubstringECEnum whichEC = SubstringECEnum.TO_END;
 		if (ncGiven != null && ncGiven.isPresent())
 		{
 			theNC = transformer.transformExpression(generator, ncGiven.ncExpr);

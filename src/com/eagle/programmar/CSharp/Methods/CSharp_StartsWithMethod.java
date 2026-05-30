@@ -81,7 +81,7 @@ public class CSharp_StartsWithMethod extends PrecedenceOperator
 			// C# does not support str.StartsWith("patt",sc)
 			// Have to use Substring instead
 			startsMeth.left = CSharp_SubstringMethod.generateExpression(
-					expr, sc, whichSC, SubstringECEnum.GIVEN_NEITHER, null, false, source);
+					expr, sc, whichSC, SubstringECEnum.TO_END, null, false, source);
 		}
 		startsMeth.rightParen = new PunctuationRightParen();
 

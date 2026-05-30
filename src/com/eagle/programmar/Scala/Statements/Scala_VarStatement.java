@@ -17,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -49,7 +50,7 @@ public class Scala_VarStatement extends TokenSequence
 		AbstractExpression initial = transformer.transformExpression(generator, value);
 
 		String name = id.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
 		return stmt;
 	}
 }

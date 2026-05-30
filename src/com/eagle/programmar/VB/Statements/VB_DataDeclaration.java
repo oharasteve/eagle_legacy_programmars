@@ -23,6 +23,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
@@ -126,7 +127,7 @@ public class VB_DataDeclaration extends TokenSequence
 		}
 
 		String name = var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(false, name, size, newType, initial, this);
+		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, size, newType, initial, this);
 		result.add(stmt);
 
 		if (moreVariables != null && moreVariables.isPresent())
@@ -148,7 +149,7 @@ public class VB_DataDeclaration extends TokenSequence
 				}
 				newType = generator.transformType(type, null, dataType);
 
-				stmt = generator.newDataDeclaration(false, name, size, newType, initial, more);
+				stmt = generator.newDataDeclaration(StaticEnum.NONE, name, size, newType, initial, more);
 				result.add(stmt);
 			}
 		}

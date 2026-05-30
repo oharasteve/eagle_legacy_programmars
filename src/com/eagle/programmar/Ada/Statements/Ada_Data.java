@@ -22,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
@@ -58,7 +59,8 @@ public class Ada_Data extends TokenSequence
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		AbstractType newType = type.convertType(generator);
 		AbstractExpression newInit = null;
-		boolean isConst = type.CONSTANT.isPresent();
+		StaticEnum isConst = StaticEnum.NONE; 
+		if (type.CONSTANT.isPresent()) isConst = StaticEnum.CONST;
 
 		if (initial != null && initial.isPresent())
 		{

@@ -87,9 +87,9 @@ public class C_AdditiveExpression extends PrecedenceOperator
 		{
 			if (types._type1 == TypeEnum.STRING && types._type2 == TypeEnum.INTEGER)
 			{
-				// str+sc in C means substring(str, sc)
+				// str+sc in C means substring(str, sc, 999999)
 				return generator.newSubstringFunction(leftExpr, rightExpr,
-						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.GIVEN_NEITHER,
+						SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.TO_END,
 						null, false, left);
 			}
 		}

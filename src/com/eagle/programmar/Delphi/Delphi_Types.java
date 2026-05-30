@@ -15,6 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 
 public class Delphi_Types extends TokenSequence
 {
@@ -36,7 +37,7 @@ public class Delphi_Types extends TokenSequence
 		{
 			String varName = typeEntry.name.getValue();
 			AbstractType type = typeEntry.type.convertType(generator);
-			AbstractStatement data = generator.newDataDeclaration(false, varName, null,
+			AbstractStatement data = generator.newDataDeclaration(StaticEnum.NONE, varName, null,
 					type, null, typeEntry);
 			generator.addStatement(data, typeEntry);
 		}

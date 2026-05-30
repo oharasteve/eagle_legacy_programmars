@@ -19,6 +19,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -48,7 +49,7 @@ public class Go_Data extends TokenSequence
 		{
 			AbstractType dataType = generator.transformType(TypeEnum.ARRAY, null, this);
 			AbstractExpression value = transformer.transformExpression(generator, initValue);
-			AbstractStatement dataStmt = generator.newDataDeclaration(false, id.getValue(), null,
+			AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, id.getValue(), null,
 					dataType, value, this);
 			return dataStmt;
 		}

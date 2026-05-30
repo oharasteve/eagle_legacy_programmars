@@ -20,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformer;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 
 public class Delphi_Vars extends TokenSequence implements EagleRunnable
 {
@@ -57,7 +58,7 @@ public class Delphi_Vars extends TokenSequence implements EagleRunnable
 			{
 				Delphi_Variable_Definition def = var.vars.getPrimaryElement(i);
 				String varName = def.getValue();
-				AbstractStatement data = generator.newDataDeclaration(false, varName, null,
+				AbstractStatement data = generator.newDataDeclaration(StaticEnum.NONE, varName, null,
 						newType, null, def);
 				if (data != null)
 				{

@@ -33,6 +33,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
@@ -197,7 +198,7 @@ public class Go_Function extends TokenSequence
 				{
 					// System.err.println("****** Found local var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);
-					AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName, null, absType,
+					AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName, null, absType,
 							null, this);
 					generator.addStatement(dataStmt, this);
 				}

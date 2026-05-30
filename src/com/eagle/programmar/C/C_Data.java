@@ -22,6 +22,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
@@ -93,7 +94,7 @@ public class C_Data extends TokenChooser
 			{
 				initial = transformer.transformExpression(generator, initialValue.expression);
 			}
-			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
+			result.add(generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this));
 
 			for (C_MoreIdentifiers more : moreIds._elements)
 			{
@@ -103,7 +104,7 @@ public class C_Data extends TokenChooser
 				{
 					initial = transformer.transformExpression(generator, more.initialValue.expression);
 				}
-				result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
+				result.add(generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this));
 			}
 
 			return result;

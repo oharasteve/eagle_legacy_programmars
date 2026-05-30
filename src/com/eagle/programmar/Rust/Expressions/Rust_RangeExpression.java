@@ -68,8 +68,12 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			range.lowExpression = scMinusOne;
 			break;
 		}
+		
 		range.lowExpression = Rust_AsExpression.generateAsExpr(range.lowExpression, usize, source);
-		range.dots.setValue("..");
+		if (whichEC != SubstringECEnum.JUST_ONE)
+		{
+			range.dots.setValue("..");
+		}
 		range.highExpression = null;
 		
 		switch (whichEC)
@@ -106,7 +110,7 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 					range.lowExpression, AdditiveEnum.PLUS, ecOrnc, source);
 			range.highExpression = scPlusNc;
 			break;
-		case GIVEN_NEITHER:
+		case TO_END:
 			break;
 		default:
 			throw new RuntimeException("Unexpected ec: " + whichEC.toString());

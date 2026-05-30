@@ -261,7 +261,7 @@ public class Python_Generator
 	}
 
 	@Override
-	public Python_ComplexStatement newDataDeclaration(boolean isStatic, String name, Python_Expression size,
+	public Python_ComplexStatement newDataDeclaration(StaticEnum isStatic, String name, Python_Expression size,
 			Python_Type type, Python_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Python_Data.newDataDeclaration(name, size, type, initial, source));

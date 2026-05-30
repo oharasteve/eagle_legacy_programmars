@@ -278,7 +278,7 @@ public class Java_Generator
 	}
 
 	@Override
-	public Java_Statement newDataDeclaration(boolean isStatic, String name, Java_Expression size,
+	public Java_Statement newDataDeclaration(StaticEnum isStatic, String name, Java_Expression size,
 			Java_Type type, Java_Expression initial, AbstractToken source)
 	{
 		return wrapStatement(Java_Data.newDataDeclaration(isStatic, name, size, type, initial, source));

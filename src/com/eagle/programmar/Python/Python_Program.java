@@ -24,6 +24,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
@@ -135,7 +136,7 @@ public abstract class Python_Program extends AbstractLanguage
 
 				// System.err.println("****** Found var " + met._symbolName);
 				AbstractExpression initExpr = null;
-				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
 						null, abstrType, initExpr, this);
 				generator.addStatement(dataStmt, this);
 			}

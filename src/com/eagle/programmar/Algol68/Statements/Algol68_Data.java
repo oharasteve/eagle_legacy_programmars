@@ -21,6 +21,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
@@ -76,7 +77,7 @@ public class Algol68_Data extends TokenSequence
 			AbstractType newType = generator.transformType(typ, null, null);
 
 			String name = var.getValue();
-			AbstractStatement stmt = generator.newDataDeclaration(false, name, null, newType, initial, this);
+			AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
 			result.add(stmt);
 		}
 

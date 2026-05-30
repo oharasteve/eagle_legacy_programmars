@@ -19,6 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Delphi_Consts extends TokenSequence implements EagleRunnable
@@ -68,7 +69,7 @@ public class Delphi_Consts extends TokenSequence implements EagleRunnable
 			AbstractExpression expression = transformer.transformExpression(generator,
 					constant.expr);
 			AbstractStatement data = generator.newDataDeclaration(
-					false, varName, null, newType, expression, constant);
+					StaticEnum.CONST, varName, null, newType, expression, constant);
 			generator.addStatement(data, constant);
 		}
 	}

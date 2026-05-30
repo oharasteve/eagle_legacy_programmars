@@ -144,7 +144,7 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 				FSharp_RangeExpr_low range = (FSharp_RangeExpr_low) whichSubscr;
 				AbstractExpression scExpr = transformer.transformExpression(generator, range.low);
 				return generator.newSubstringFunction(newExpr, scExpr, SubstringSCEnum.FIRST_CHAR_IS_ZERO,
-						SubstringECEnum.GIVEN_NEITHER, null, false, expr);
+						SubstringECEnum.TO_END, null, false, expr);
 			}
 			else if (whichSubscr instanceof FSharp_RangeExpr_high)
 			{

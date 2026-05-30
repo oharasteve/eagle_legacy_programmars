@@ -66,7 +66,7 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 			// Rust does not support str.StartsWith("patt",sc)
 			// Have to use Substring instead
 			startsExpr.left = Rust_SubscriptExpression.generateSubscriptExpression(
-					expr, sc, whichSC, SubstringECEnum.GIVEN_NEITHER, null, false, source);
+					expr, sc, whichSC, SubstringECEnum.TO_END, null, false, source);
 		}
 		startsExpr.rightParen = new PunctuationRightParen();
 

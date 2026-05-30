@@ -18,6 +18,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
@@ -87,7 +88,7 @@ public class Ruby_Program extends AbstractLanguage
 				AbstractType abstrType = generator.transformType(typE, null, this);
 
 				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(false, met._symbolName,
+				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
 						null, abstrType, null, this);
 				generator.addStatement(dataStmt, this);
 			}

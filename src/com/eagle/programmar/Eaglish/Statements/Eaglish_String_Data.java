@@ -17,6 +17,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -57,6 +58,6 @@ public class Eaglish_String_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, init.expression);
 		}
-		return generator.newDataDeclaration(false, name, null, newType, initial, this);
+		return generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
 	}
 }

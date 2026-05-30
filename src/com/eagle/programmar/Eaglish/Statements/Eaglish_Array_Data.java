@@ -23,6 +23,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -80,6 +81,6 @@ public class Eaglish_Array_Data extends TokenSequence
 			}
 			initial = generator.newArrayExpression(vals, ARRAY);
 		}
-		return generator.newDataDeclaration(false, name, null, newType, initial, this);
+		return generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
 	}
 }

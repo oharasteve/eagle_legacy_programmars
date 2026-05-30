@@ -117,7 +117,10 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			expr.ecExpr = scPlusNc;
 			expr.ecExpr.setPresent(true);
 			break;
-		case GIVEN_NEITHER:
+		case JUST_ONE:
+			expr.ecExpr = null;
+			break;
+		case TO_END:
 			expr.ecExpr = null;
 			break;
 		}

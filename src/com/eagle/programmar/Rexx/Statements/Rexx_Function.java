@@ -32,6 +32,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
@@ -175,7 +176,7 @@ public class Rexx_Function extends TokenSequence
 				{
 					// System.err.println("****** Found var " + met._symbolName);
 					AbstractType absType = generator.transformType(typ, null, this);
-					AbstractStatement dataStmt = generator.newDataDeclaration(false,
+					AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE,
 							met._symbolName, null, absType, null, this);
 					generator.addStatement(dataStmt, this);
 				}

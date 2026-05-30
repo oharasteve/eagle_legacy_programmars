@@ -24,6 +24,7 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
 
@@ -96,7 +97,7 @@ public class CSharp_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
 		}
-		result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
+		result.add(generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this));
 
 		for (CSharp_MoreIdentifiers more : dataBody.moreIds._elements)
 		{
@@ -106,7 +107,7 @@ public class CSharp_Data extends TokenSequence
 			{
 				initial = transformer.transformExpression(generator, more.initialValue.expression);
 			}
-			result.add(generator.newDataDeclaration(false, name, null, newType, initial, this));
+			result.add(generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this));
 		}
 
 		return result;
@@ -124,10 +125,10 @@ public class CSharp_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
 		}
-		return generator.newDataDeclaration(true, name, null, newType, initial, dataBody);
+		return generator.newDataDeclaration(StaticEnum.STATIC, name, null, newType, initial, dataBody);
 	}
 
-	public static CSharp_Data newDataDeclaration(boolean isStatic, String name, CSharp_Expression size,
+	public static CSharp_Data newDataDeclaration(StaticEnum isStatic, String name, CSharp_Expression size,
 			CSharp_Type type, CSharp_Expression initial, AbstractToken source)
 	{
 		if (type == null)
@@ -150,7 +151,7 @@ public class CSharp_Data extends TokenSequence
 		data.dataBody.id.setValue(name);
 		data.dataBody.type = type;
 
-		if (isStatic)
+		if (isStatic == StaticEnum.STATIC)
 		{
 			data.addModifier("static");
 		}

@@ -20,6 +20,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
@@ -73,11 +74,11 @@ public class Javascript_Data extends TokenSequence
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		return transformStaticData(false, transformer, generator);
+		return transformStaticData(StaticEnum.NONE, transformer, generator);
 	}
 
 	// Called directly from Javascript_Program for static class-level data
-	public ArrayList<AbstractStatement> transformStaticData(boolean isStatic,
+	public ArrayList<AbstractStatement> transformStaticData(StaticEnum isStatic,
 			EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
