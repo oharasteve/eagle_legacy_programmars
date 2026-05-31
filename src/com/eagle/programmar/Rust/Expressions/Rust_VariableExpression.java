@@ -103,6 +103,6 @@ public class Rust_VariableExpression extends PrimaryOperator
 //		Rust_Type usize = Rust_Type.newPrimitiveType("usize");
 //		subExpr = Rust_AsExpression.generateAsExpr(subExpr, usize, source);
 		return Rust_SubscriptExpression.generateSubscriptExpression(theExpr, subExpr,
-				SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.TO_END, null, false, source);
+				SubstringSCEnum.FIRST_CHAR_IS_ZERO, SubstringECEnum.JUST_ONE, null, false, source);
 	}
 }

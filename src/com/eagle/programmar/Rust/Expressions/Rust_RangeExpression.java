@@ -25,7 +25,7 @@ import com.eagle.transform.EagleGenerator.TypeEnum;
 public class Rust_RangeExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Rust_Expression lowExpression = new Rust_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) @NOSPACE Rust_PunctuationChoice dots = new Rust_PunctuationChoice("..", "..=");
+	public @S(20) @OPT @NOSPACE Rust_PunctuationChoice dots = new Rust_PunctuationChoice("..", "..=");
 	public @S(30) @OPT @NOSPACE Rust_Expression highExpression = new Rust_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
@@ -109,6 +109,8 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			Rust_Expression scPlusNc = Rust_AdditiveExpression.generateAdditive(types,
 					range.lowExpression, AdditiveEnum.PLUS, ecOrnc, source);
 			range.highExpression = scPlusNc;
+			break;
+		case JUST_ONE:
 			break;
 		case TO_END:
 			break;
