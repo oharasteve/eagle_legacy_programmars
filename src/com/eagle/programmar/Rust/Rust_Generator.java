@@ -6,7 +6,6 @@ package com.eagle.programmar.Rust;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
-import com.eagle.metrics.EagleMetrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Rust.Rust_Program.Rust_TopElement;
@@ -73,7 +72,7 @@ public class Rust_Generator
 	public static String SUFFIX = ".rs";
 
 	private Rust_Program _program;
-	private EagleMetrics _metrics = null;
+//	private EagleMetrics _metrics = null;
 
 	public Rust_Generator(ParserManager parser, String className)
 	{
@@ -257,20 +256,17 @@ public class Rust_Generator
 	public Rust_Statement newDataDeclaration(StaticEnum isStatic, String name, Rust_Expression size,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
-		if (_metrics != null)
-		{
-			int assignments = _metrics.countAssignments(name, null);
-			if (assignments == 1) isStatic = StaticEnum.CONST;
-		}
+//		if (_metrics != null)
+//		{
+//			int assignments = _metrics.countAssignments(name, null);
+//			if (assignments == 1) isStatic = StaticEnum.CONST;
+//		}
 		
 		if (isStatic == StaticEnum.CONST)
 		{
 			return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 		}
-		else
-		{
-			return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
-		}
+		return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 
 	@Override

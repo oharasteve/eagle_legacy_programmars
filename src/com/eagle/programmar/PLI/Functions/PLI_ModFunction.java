@@ -35,7 +35,7 @@ public class PLI_ModFunction extends PrimaryOperator
 	{
 		int numer = interpreter.getIntValue(numerExpr);
 		int denom = interpreter.getIntValue(denomExpr);
-		interpreter.pushInt(numer % denom);
+		interpreter.pushInt(Math.floorMod(numer, Math.abs(denom)));
 	}
 
 	@Override
@@ -44,6 +44,7 @@ public class PLI_ModFunction extends PrimaryOperator
 	{
 		AbstractExpression numer = transformer.transformExpression(generator, numerExpr);
 		AbstractExpression denom = transformer.transformExpression(generator, denomExpr);
-		return generator.newMultiplicativeExpression(numer, MultiplicativeEnum.REMAINDER, denom, this);
+		AbstractExpression rightAbs = generator.newAbsFunction(denom, null);
+		return generator.newMultiplicativeExpression(numer, MultiplicativeEnum.MODULUS, rightAbs, this);
 	}
 }
