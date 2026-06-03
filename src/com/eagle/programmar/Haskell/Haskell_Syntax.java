@@ -21,7 +21,7 @@ public class Haskell_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"++", "::", "!!", "&&", "<-", "->", "..", "/="
+				"++", "::", "!!", "&&", "||", "<-", "->", "..", "/="
 		};
 
 		addReservedWords(RESERVED_WORDS);

@@ -34,6 +34,7 @@ public class Haskell_StatementBlock extends TokenChooser
 	{
 		public @S(10) SeparatedList<Haskell_Statement, PunctuationSemicolon> statements;
 		public @S(20) @OPT Haskell_Comment comment;
+		public @S(30) @OPT Haskell_EndOfLine eoln;
 
 		@Override
 		public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

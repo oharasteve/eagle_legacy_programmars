@@ -19,21 +19,21 @@ import com.eagle.transform.EagleTransformer;
 public class Haskell_BuiltInExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Haskell_KeywordChoice builtinConstant = new Haskell_KeywordChoice("false", "true");
+	public @S(10) Haskell_KeywordChoice builtinConstant = new Haskell_KeywordChoice("False", "True");
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		switch (builtinConstant.toString())
 		{
-		case "false":
+		case "False":
 			interpreter.pushBool(false);
 			return;
-		case "true":
+		case "True":
 			interpreter.pushBool(true);
 			return;
 		}
-		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
+		throw new RuntimeException("Can't handle BuiltIn's other than True/False: " + builtinConstant);
 	}
 
 	@Override
@@ -43,10 +43,10 @@ public class Haskell_BuiltInExpression extends PrimaryOperator
 		BuiltInEnum builtIn;
 		switch (builtinConstant.toString())
 		{
-		case "false":
+		case "False":
 			builtIn = BuiltInEnum.FALSE;
 			break;
-		case "true":
+		case "True":
 			builtIn = BuiltInEnum.TRUE;
 			break;
 		default:

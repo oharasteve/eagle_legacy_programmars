@@ -4,9 +4,7 @@
 package com.eagle.programmar.Haskell;
 
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.TokenSequence.S;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
