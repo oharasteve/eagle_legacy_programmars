@@ -6,10 +6,11 @@ package com.eagle.programmar.Haskell.Symbols;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Template.Terminals.Template_Identifier;
+import com.eagle.programmar.Haskell.Terminals.Haskell_Identifier;
 import com.eagle.tokens.ReferenceInterface;
 
-public class Haskell_Identifier_Reference extends Template_Identifier implements ReferenceInterface, EagleRunnable
+public class Haskell_Identifier_Reference extends Haskell_Identifier
+		implements ReferenceInterface, EagleRunnable
 {
 	@Override
 	public void interpret(EagleInterpreter interpreter)

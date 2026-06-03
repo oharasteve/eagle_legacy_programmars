@@ -25,10 +25,14 @@ public class Haskell_Comment extends TerminalCommentToken
 	{
 		if (findStart(lines) == FOUND.EOF) return false;
 		EagleLineReader rec = lines.get(_currentLine);
-		char ch = rec.charAt(_currentChar);
-		if (ch == '-')
+		int nc = rec.length();
+		if (_currentChar < nc)
 		{
-			return super.possibleCommentToEndOfLine(rec, "--");
+			char ch = rec.charAt(_currentChar);
+			if (ch == '-')
+			{
+				return super.possibleCommentToEndOfLine(rec, "--");
+			}
 		}
 		return false;
 	}
