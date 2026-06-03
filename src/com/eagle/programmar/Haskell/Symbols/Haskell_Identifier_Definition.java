@@ -3,9 +3,9 @@
 
 package com.eagle.programmar.Haskell.Symbols;
 
-import com.eagle.programmar.Template.Terminals.Template_Identifier;
+import com.eagle.programmar.Haskell.Terminals.Haskell_Identifier;
 import com.eagle.tokens.DefinitionInterface;
 
-public abstract class Haskell_Identifier_Definition extends Template_Identifier implements DefinitionInterface
+public abstract class Haskell_Identifier_Definition extends Haskell_Identifier implements DefinitionInterface
 {
 }

@@ -22,7 +22,7 @@ public class Haskell_Type extends TokenChooser
 		public @S(20) Haskell_Type type;
 	}
 	
-	public @CHOICE Haskell_KeywordChoice primitive = new Haskell_KeywordChoice(
+	public @CHOICE Haskell_KeywordChoice XXprimitive = new Haskell_KeywordChoice(
 			"Bool",
 			"Int", "Integer",
 			"String");
