@@ -4,9 +4,11 @@
 package com.eagle.programmar.Haskell.Statements;
 
 import com.eagle.programmar.Haskell.Terminals.Haskell_Comment;
+import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.tokens.TokenSequence;
 
-public class Haskell_CommentStatement extends TokenSequence
+public class Haskell_CommentEndOfLine extends TokenSequence
 {
 	public @S(10) Haskell_Comment comment;
+	public @S(20) Haskell_EndOfLine eoln;
 }
