@@ -58,19 +58,19 @@ public class Java_SubstringMethod extends PrecedenceOperator
 	{
 		Java_SubstringMethod expr = new Java_SubstringMethod();
 		expr.dot = new PunctuationPeriod();
-		expr.left = (Java_Expression) theExpr;
+		expr.left = theExpr;
 		expr.leftParen = new PunctuationLeftParen();
 		expr.rightParen = new PunctuationRightParen();
 
 		switch (whichSC)
 		{
 		case FIRST_CHAR_IS_ZERO:
-			expr.scExpr = (Java_Expression) sc;
+			expr.scExpr = sc;
 			break;
 		case FIRST_CHAR_IS_ONE:
 			Java_Expression one = Java_Number.generateNumberExpression("1", source);
 			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
-			Java_Expression scMinusOne = Java_AdditiveExpression.generateAdditive(types, (Java_Expression) sc,
+			Java_Expression scMinusOne = Java_AdditiveExpression.generateAdditive(types, sc,
 					AdditiveEnum.MINUS, one, source);
 			expr.scExpr = scMinusOne;
 			break;
@@ -88,12 +88,12 @@ public class Java_SubstringMethod extends PrecedenceOperator
 				case FIRST_CHAR_IS_ZERO:
 					Java_Expression one = Java_Number.generateNumberExpression("1", source);
 					Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
-					Java_Expression ecPlusOne = Java_AdditiveExpression.generateAdditive(types, (Java_Expression) ecOrnc,
+					Java_Expression ecPlusOne = Java_AdditiveExpression.generateAdditive(types, ecOrnc,
 							AdditiveEnum.PLUS, one, source);
 					expr.ecExpr = ecPlusOne;
 					break;
 				case FIRST_CHAR_IS_ONE:
-					expr.ecExpr = (Java_Expression) ecOrnc;
+					expr.ecExpr = ecOrnc;
 					break;
 				}
 				expr.ecExpr.setPresent(true);
@@ -104,7 +104,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			{
 				expr.comma = new PunctuationComma();
 				expr.comma.setPresent(true);
-				expr.ecExpr = (Java_Expression) ecOrnc;
+				expr.ecExpr = ecOrnc;
 				expr.ecExpr.setPresent(true);
 			}
 			break;
@@ -113,7 +113,7 @@ public class Java_SubstringMethod extends PrecedenceOperator
 			expr.comma.setPresent(true);
 			Oper2Types types = new Oper2Types(TypeEnum.INTEGER, TypeEnum.INTEGER);
 			Java_Expression scPlusNc = Java_AdditiveExpression.generateAdditive(types, expr.scExpr,
-					AdditiveEnum.PLUS, (Java_Expression) ecOrnc, source);
+					AdditiveEnum.PLUS, ecOrnc, source);
 			expr.ecExpr = scPlusNc;
 			expr.ecExpr.setPresent(true);
 			break;
