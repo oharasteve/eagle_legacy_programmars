@@ -89,6 +89,7 @@ public class JavaP_Commands
 			"ifnonnull",
 			"ifnull",
 			"iinc",
+			"iinc_w",
 			"iload",
 			"iload_0",
 			"iload_1",
