@@ -21,13 +21,16 @@ public class Haskell_Syntax extends EagleSyntax
 		_continuationChar = null;
 		_autoAdvance = false;
 		_punctuationExceptions = new String[] {
-				"++", "::", "!!", "&&", "||", "<-", "->", "..", "/="
+				"++", "::", "!!", "&&", "||", "<-", "->",
+				"..", "/=", "<=", ">=", "=="
 		};
 
 		addReservedWords(RESERVED_WORDS);
 	}
 
 	private static String[] RESERVED_WORDS = new String[] {
+			"False",
+			"True",
 			"case",
 			"data",
 			"do",
@@ -37,6 +40,7 @@ public class Haskell_Syntax extends EagleSyntax
 			"let",
 			"module",
 			"of",
+			"return",
 			"then",
 			"type",
 			"where",

@@ -63,7 +63,7 @@ public class Haskell_MultiplicativeExpression extends PrecedenceOperator
 			interpreter.pushInt(leftInt % rightInt);
 			return;
 		case "`mod`":
-			interpreter.pushInt(leftInt % rightInt);
+			interpreter.pushInt(Math.floorMod(leftInt, rightInt));
 			return;
 		}
 		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
@@ -81,8 +81,10 @@ public class Haskell_MultiplicativeExpression extends PrecedenceOperator
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.TIMES, rightExpr, this);
 		case "/":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.DIVIDE_TRUNCATE, rightExpr, this);
-		case "%":
+		case "`rem`":
 			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.REMAINDER, rightExpr, this);
+		case "`mod`":
+			return generator.newMultiplicativeExpression(leftExpr, MultiplicativeEnum.MODULUS, rightExpr, this);
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}

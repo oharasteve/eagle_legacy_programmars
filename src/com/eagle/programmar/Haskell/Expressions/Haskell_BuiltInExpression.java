@@ -24,7 +24,7 @@ public class Haskell_BuiltInExpression extends PrimaryOperator
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		switch (builtinConstant.toString())
+		switch (builtinConstant.getValue())
 		{
 		case "False":
 			interpreter.pushBool(false);
@@ -41,7 +41,7 @@ public class Haskell_BuiltInExpression extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		BuiltInEnum builtIn;
-		switch (builtinConstant.toString())
+		switch (builtinConstant.getValue())
 		{
 		case "False":
 			builtIn = BuiltInEnum.FALSE;

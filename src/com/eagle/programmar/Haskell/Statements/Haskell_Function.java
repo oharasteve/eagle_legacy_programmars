@@ -13,15 +13,12 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Haskell.Haskell_ComplexStatement;
-import com.eagle.programmar.Haskell.Haskell_Syntax;
 import com.eagle.programmar.Haskell.Haskell_Type;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Function_Definition;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Parameter_Definition;
 import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
-import com.eagle.scope.EagleScope;
-import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -37,8 +34,7 @@ import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
 public class Haskell_Function extends TokenSequence
-		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-				EagleTransformableFunction
+		implements AbstractFunction, EagleRunnable, EagleTransformableFunction
 {
 	public @S(10) Haskell_FunctionPrototype prototype;
 	public @S(20) Haskell_FunctionDefinition definition;
@@ -76,14 +72,6 @@ public class Haskell_Function extends TokenSequence
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
 
-	private @SKIP EagleScope _scope = new EagleScope(this, Haskell_Syntax.IS_CASE_SENSITIVE);
-
-	@Override
-	public EagleScope getScope()
-	{
-		return _scope;
-	}
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -101,9 +89,13 @@ public class Haskell_Function extends TokenSequence
 			_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 		}
 
-		// Don't do anything here.
+		// Don't do much here.
 		// We searched for all the functions in a preliminary pass
-		// And we only evaluate when it is called
+		// And we only evaluate when it is called, except for "main"
+		if (definition.ref.getValue().equals("main"))
+		{
+			interpreter.tryToInterpret(definition.func.statement);
+		}
 	}
 
 	@Override
