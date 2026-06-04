@@ -29,9 +29,9 @@ public class Haskell_LetStatement extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) Haskell_Keyword LET = new Haskell_Keyword("let");
-	public @S(20) Haskell_Variable var;
+	public @S(20) Haskell_Variable variable;
 	public @S(30) PunctuationEquals equals;
-	public @S(40) Haskell_Expression expr;
+	public @S(40) Haskell_Expression expression;
 	public @S(50) @OPT @PYDENT Haskell_LetBlock block;
 	
 	public static class Haskell_LetBlock extends TokenSequence
@@ -51,8 +51,8 @@ public class Haskell_LetStatement extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.getEagleValue(expr);
-		interpreter.setSymbol(var.id, var.id.getValue(), value);
+		EagleValue value = interpreter.getEagleValue(expression);
+		interpreter.setSymbol(variable.id, variable.id.getValue(), value);
 
 		if (block != null)
 		{
@@ -69,7 +69,7 @@ public class Haskell_LetStatement extends TokenSequence
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
-		assign(transformer, generator, result, var, expr);
+		assign(transformer, generator, result, variable, expression);
 		
 		if (block != null)
 		{
