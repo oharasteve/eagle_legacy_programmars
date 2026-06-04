@@ -59,7 +59,6 @@ public class Haskell_Function extends TokenSequence
 		public @S(10) Haskell_Identifier_Reference ref;
 		public @S(20) @OPT TokenList<Haskell_Parameter_Definition> params;
 		public @S(30) Haskell_FunctionAssignment func;
-		public @S(40) @OPT Haskell_EndOfLine eoln;
 		
 		public static class Haskell_FunctionAssignment extends TokenSequence
 		{

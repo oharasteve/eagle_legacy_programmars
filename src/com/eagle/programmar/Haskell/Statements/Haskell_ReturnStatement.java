@@ -7,7 +7,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Haskell.Haskell_Expression;
-import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
@@ -24,7 +23,6 @@ public class Haskell_ReturnStatement extends TokenSequence
 {
 	public @S(10) @NEWLINE Haskell_Keyword RETURN = new Haskell_Keyword("return");
 	public @S(20) @OPT Haskell_Expression expression;
-	public @S(30) Haskell_EndOfLine eoln;
 
 	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)

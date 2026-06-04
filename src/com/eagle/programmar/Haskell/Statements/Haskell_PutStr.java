@@ -6,7 +6,6 @@ package com.eagle.programmar.Haskell.Statements;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Haskell.Haskell_Expression;
-import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_KeywordChoice;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
 import com.eagle.tokens.TokenSequence;
@@ -16,7 +15,6 @@ public class Haskell_PutStr extends TokenSequence implements EagleRunnable
 	public @S(10) Haskell_KeywordChoice PUTSTR = new Haskell_KeywordChoice("putStr", "putStrLn");
 	public @S(20) Haskell_Punctuation dollar = new Haskell_Punctuation("$");
 	public @S(30) Haskell_Expression expression;
-	public @S(40) Haskell_EndOfLine eoln;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

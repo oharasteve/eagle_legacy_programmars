@@ -33,7 +33,6 @@ public class Haskell_LetStatement extends TokenSequence
 	public @S(30) PunctuationEquals equals;
 	public @S(40) Haskell_Expression expr;
 	public @S(50) @OPT @PYDENT Haskell_LetBlock block;
-	public @S(60) @OPT Haskell_EndOfLine eoln;
 	
 	public static class Haskell_LetBlock extends TokenSequence
 	{
