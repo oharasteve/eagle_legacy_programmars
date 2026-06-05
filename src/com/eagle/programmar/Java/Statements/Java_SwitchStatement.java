@@ -176,7 +176,7 @@ public class Java_SwitchStatement extends TokenSequence
 				for (Java_CaseClause clause : when.cases._elements)
 				{
 					int nExprs = clause.exprs.getPrimaryCount();
-					for (int k = 0; i < nExprs; k++)
+					for (int k = 0; k < nExprs; k++)
 					{
 						Java_Expression expr = clause.exprs.getPrimaryElement(k);
 						AbstractExpression newExpr2 = transformer.transformExpression(generator, expr);
