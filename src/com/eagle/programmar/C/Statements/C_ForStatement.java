@@ -16,6 +16,7 @@ import com.eagle.programmar.C.C_Variable;
 import com.eagle.programmar.C.Expressions.C_PostIncrementVariable;
 import com.eagle.programmar.C.Expressions.C_PreIncrementExpression;
 import com.eagle.programmar.C.Expressions.C_RelationalExpression;
+import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -110,7 +111,7 @@ public class C_ForStatement extends TokenSequence
 
 	public static class C_ForWithoutType extends TokenSequence
 	{
-		public @S(10) C_Variable_Definition variable;
+		public @S(10) C_Variable variable;
 		public @S(20) PunctuationEquals equals;
 		public @S(30) C_Expression initialExpr;
 	}
@@ -143,7 +144,12 @@ public class C_ForStatement extends TokenSequence
 			{
 				C_ForWithoutType noType = (C_ForWithoutType) which;
 				EagleValue initial = interpreter.getEagleValue(noType.initialExpr);
-				interpreter.setSymbol(noType.variable, noType.variable.getValue(), initial);
+				C_Variable var = noType.variable;
+				if (var.firstId.getWhich() instanceof C_Identifier_Reference)
+				{
+					C_Identifier_Reference id = (C_Identifier_Reference) var.firstId.getWhich();
+					interpreter.setSymbol(id, id.getValue(), initial);
+				}
 			}
 			else
 			{
@@ -242,8 +248,14 @@ public class C_ForStatement extends TokenSequence
 			else if (which instanceof C_ForWithoutType)
 			{
 				C_ForWithoutType noType = (C_ForWithoutType) which;
-				varName = noType.variable.getValue();
-				forInit = noType.initialExpr;
+				
+				C_Variable var = noType.variable;
+				if (var.firstId.getWhich() instanceof C_Identifier_Reference)
+				{
+					C_Identifier_Reference id = (C_Identifier_Reference) var.firstId.getWhich();
+					varName = id.getValue();
+					forInit = noType.initialExpr;
+				}
 			}
 
 			if (forInit != null)
