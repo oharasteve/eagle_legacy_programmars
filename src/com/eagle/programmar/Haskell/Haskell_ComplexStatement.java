@@ -5,10 +5,12 @@ package com.eagle.programmar.Haskell;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.Haskell.Statements.Haskell_FunctionCall;
 import com.eagle.programmar.Haskell.Statements.Haskell_DoStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ExpressionStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_Function;
 import com.eagle.programmar.Haskell.Statements.Haskell_IfStatement;
+import com.eagle.programmar.Haskell.Statements.Haskell_ImportStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_LetStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_PutStr;
 import com.eagle.programmar.Haskell.Statements.Haskell_ReturnStatement;
@@ -46,9 +48,11 @@ public class Haskell_ComplexStatement extends TokenSequence
 
 	public static class Haskell_Statement extends TokenChooser
 	{
+		public @CHOICE Haskell_FunctionCall XXassignment;
 		public @CHOICE Haskell_DoStatement XXdoStatement;
 		public @CHOICE Haskell_Function XXfunctionDefinition;
 		public @CHOICE Haskell_IfStatement XXifStatement;
+		public @CHOICE Haskell_ImportStatement XXimportStatement;
 		public @CHOICE Haskell_LetStatement XXletStatement;
 		public @CHOICE Haskell_PutStr XXputStr;
 		public @CHOICE Haskell_ReturnStatement XXreturnStatement;

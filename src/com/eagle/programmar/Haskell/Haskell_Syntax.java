@@ -25,24 +25,6 @@ public class Haskell_Syntax extends EagleSyntax
 				"..", "/=", "<=", ">=", "=="
 		};
 
-		addReservedWords(RESERVED_WORDS);
+		addReservedWords(Haskell_Reserved_Words.RESERVED_WORDS);
 	}
-
-	private static String[] RESERVED_WORDS = new String[] {
-			"False",
-			"True",
-			"case",
-			"data",
-			"do",
-			"else",
-			"if",
-			"in",
-			"let",
-			"module",
-			"of",
-			"return",
-			"then",
-			"type",
-			"where",
-	};
 }
