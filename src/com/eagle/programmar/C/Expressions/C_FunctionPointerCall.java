@@ -6,7 +6,7 @@ package com.eagle.programmar.C.Expressions;
 import com.eagle.programmar.C.C_ArgumentList;
 import com.eagle.programmar.C.C_Subscript;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
-import com.eagle.programmar.C.Terminals.C_Punctuation;
+import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -42,7 +42,7 @@ public class C_FunctionPointerCall extends PrimaryOperator
 	
 	public static class C_MethodNextParam extends TokenSequence
 	{
-		public @S(10) C_Punctuation arrow = new C_Punctuation("->");
+		public @S(10) C_PunctuationChoice arrow = new C_PunctuationChoice("->", ".");
 		public @S(20) C_MethodParameter nextParam;
 	}
 }
