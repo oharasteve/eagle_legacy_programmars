@@ -19,7 +19,7 @@ public class Natural_Program extends AbstractLanguage
 	@Override
 	public String getDocRoot()
 	{
-		return "http://documentation.softwareag.com/natural/nat627unx/";
+		return "https://documentation.softwareag.com/natural/nat827mf/";
 	}
 
 	// Components of a Natural Program
