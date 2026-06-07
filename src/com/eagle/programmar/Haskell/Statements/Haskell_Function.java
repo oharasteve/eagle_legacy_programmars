@@ -14,12 +14,16 @@ import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Haskell.Haskell_ComplexStatement;
 import com.eagle.programmar.Haskell.Haskell_Type;
+import com.eagle.programmar.Haskell.Statements.Haskell_Function.Haskell_FunctionBody.Haskell_FunctionAssignment;
+import com.eagle.programmar.Haskell.Statements.Haskell_Function.Haskell_FunctionBody.Haskell_FunctionGuard;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Function_Definition;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Parameter_Definition;
 import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -36,7 +40,7 @@ import com.eagle.transform.EagleTransformer;
 public class Haskell_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleTransformableFunction
 {
-	public @S(10) Haskell_FunctionPrototype prototype;
+	public @S(10) @OPT Haskell_FunctionPrototype prototype;
 	public @S(20) Haskell_FunctionDefinition definition;
 	
 	public static class Haskell_FunctionPrototype extends TokenSequence
@@ -58,9 +62,18 @@ public class Haskell_Function extends TokenSequence
 	{
 		public @S(10) Haskell_Identifier_Reference ref;
 		public @S(20) @OPT TokenList<Haskell_Parameter_Definition> params;
-		public @S(30) Haskell_FunctionAssignment func;
+		public @S(30) Haskell_FunctionBody body;
+	}
+	
+	public static class Haskell_FunctionBody extends TokenChooser
+	{
+		public @CHOICE static class Haskell_FunctionGuard extends TokenSequence
+		{
+			public @S(10) Haskell_EndOfLine eoln;
+			public @S(20) Haskell_GuardStatement guard;
+		}
 		
-		public static class Haskell_FunctionAssignment extends TokenSequence
+		public @CHOICE static class Haskell_FunctionAssignment extends TokenSequence
 		{
 			public @S(10) PunctuationEquals equals;
 			public @S(20) Haskell_ComplexStatement statement;
@@ -91,9 +104,19 @@ public class Haskell_Function extends TokenSequence
 		// Don't do much here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called, except for "main"
+		AbstractToken which = definition.body.getWhich();
 		if (definition.ref.getValue().equals("main"))
 		{
-			interpreter.tryToInterpret(definition.func.statement);
+			if (which instanceof Haskell_FunctionAssignment)
+			{
+				Haskell_FunctionAssignment asg = (Haskell_FunctionAssignment) which;
+				interpreter.tryToInterpret(asg.statement);
+			}
+			else if (which instanceof Haskell_FunctionGuard)
+			{
+				Haskell_FunctionGuard guard = (Haskell_FunctionGuard) which;
+				interpreter.tryToInterpret(guard.guard);
+			}
 		}
 	}
 
@@ -137,13 +160,24 @@ public class Haskell_Function extends TokenSequence
 		}
 
 		addLocalVars(transformer, generator);
-
-		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, definition.func.statement);
+		
+		Collection<AbstractStatement> newStmts = null;
+		AbstractToken which = definition.body.getWhich();
+		if (which instanceof Haskell_FunctionAssignment)
+		{
+			Haskell_FunctionAssignment asg = (Haskell_FunctionAssignment) which;
+			newStmts = transformer.transformStatement(generator, asg.statement);
+		}
+		else if (which instanceof Haskell_FunctionGuard)
+		{
+			Haskell_FunctionGuard guard = (Haskell_FunctionGuard) which;
+			newStmts = transformer.transformStatement(generator, guard.guard);
+		}
 		if (newStmts != null)
 		{
 			for (AbstractStatement newStmt : newStmts)
 			{
-				generator.addStatement(newStmt, definition.func);
+				generator.addStatement(newStmt, definition.body);
 			}
 		}
 

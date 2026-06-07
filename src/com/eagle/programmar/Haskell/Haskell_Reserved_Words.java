@@ -17,13 +17,17 @@ public class Haskell_Reserved_Words
 			"isPrefixOf",
 			"length",
 			"let",
+			"map",
+			"mod",
 			"module",
 			"not",
 			"of",
+			"otherwise",
 			"return",
 			"show",
 			"then",
 			"type",
+			"unlines",
 			"where",
 	};
 }
