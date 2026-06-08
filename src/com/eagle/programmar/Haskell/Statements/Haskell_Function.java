@@ -81,8 +81,8 @@ public class Haskell_Function extends TokenSequence
 
 	public static class Haskell_FunctionBody extends TokenChooser implements EagleRunnable
 	{
-		public @CHOICE Haskell_FunctionGuard funcGuard;
-		public @CHOICE Haskell_FunctionAssignment funcAssignment;
+		public @CHOICE Haskell_FunctionGuard XXfuncGuard;
+		public @CHOICE Haskell_FunctionAssignment XXfuncAssignment;
 
 		@Override
 		public void interpret(EagleInterpreter interpreter)
