@@ -68,6 +68,7 @@ public class Haskell_AdditiveExpression extends PrecedenceOperator
 				return;
 			}
 		}
+		
 		throw new RuntimeException("Unexpected additive operator: " + oper);
 	}
 

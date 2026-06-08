@@ -25,7 +25,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Julia_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-		EagleTransformableStatement
+				EagleTransformableStatement
 {
 	public @S(10) Julia_Keyword WHILE = new Julia_Keyword("while");
 	public @S(20) Julia_Expression condition;

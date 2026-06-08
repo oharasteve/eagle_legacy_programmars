@@ -13,14 +13,15 @@ import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Haskell.Haskell_ComplexStatement;
+import com.eagle.programmar.Haskell.Haskell_Syntax;
 import com.eagle.programmar.Haskell.Haskell_Type;
-import com.eagle.programmar.Haskell.Statements.Haskell_Function.Haskell_FunctionBody.Haskell_FunctionAssignment;
-import com.eagle.programmar.Haskell.Statements.Haskell_Function.Haskell_FunctionBody.Haskell_FunctionGuard;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Function_Definition;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Parameter_Definition;
 import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
+import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -38,7 +39,8 @@ import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
 public class Haskell_Function extends TokenSequence
-		implements AbstractFunction, EagleRunnable, EagleTransformableFunction
+		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
+				EagleTransformableFunction
 {
 	public @S(10) @OPT Haskell_FunctionPrototype prototype;
 	public @S(20) Haskell_FunctionDefinition definition;
@@ -65,18 +67,37 @@ public class Haskell_Function extends TokenSequence
 		public @S(30) Haskell_FunctionBody body;
 	}
 	
-	public static class Haskell_FunctionBody extends TokenChooser
+	public static class Haskell_FunctionGuard extends TokenSequence
 	{
-		public @CHOICE static class Haskell_FunctionGuard extends TokenSequence
+		public @S(10) Haskell_EndOfLine eoln;
+		public @S(20) Haskell_GuardStatement guard;
+	}
+	
+	public static class Haskell_FunctionAssignment extends TokenSequence
+	{
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Haskell_ComplexStatement statement;
+	}
+
+	public static class Haskell_FunctionBody extends TokenChooser implements EagleRunnable
+	{
+		public @CHOICE Haskell_FunctionGuard funcGuard;
+		public @CHOICE Haskell_FunctionAssignment funcAssignment;
+
+		@Override
+		public void interpret(EagleInterpreter interpreter)
 		{
-			public @S(10) Haskell_EndOfLine eoln;
-			public @S(20) Haskell_GuardStatement guard;
-		}
-		
-		public @CHOICE static class Haskell_FunctionAssignment extends TokenSequence
-		{
-			public @S(10) PunctuationEquals equals;
-			public @S(20) Haskell_ComplexStatement statement;
+			AbstractToken which = this.getWhich();
+			if (which instanceof Haskell_FunctionAssignment)
+			{
+				Haskell_FunctionAssignment asg = (Haskell_FunctionAssignment) which;
+				interpreter.tryToInterpret(asg.statement);
+			}
+			else if (which instanceof Haskell_FunctionGuard)
+			{
+				Haskell_FunctionGuard guard = (Haskell_FunctionGuard) which;
+				interpreter.tryToInterpret(guard.guard);
+			}
 		}
 	}
 
@@ -84,6 +105,14 @@ public class Haskell_Function extends TokenSequence
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;
 
+	private @SKIP EagleScope _scope = new EagleScope(this, Haskell_Syntax.IS_CASE_SENSITIVE);
+
+	@Override
+	public EagleScope getScope()
+	{
+		return _scope;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -104,19 +133,11 @@ public class Haskell_Function extends TokenSequence
 		// Don't do much here.
 		// We searched for all the functions in a preliminary pass
 		// And we only evaluate when it is called, except for "main"
-		AbstractToken which = definition.body.getWhich();
 		if (definition.ref.getValue().equals("main"))
 		{
-			if (which instanceof Haskell_FunctionAssignment)
-			{
-				Haskell_FunctionAssignment asg = (Haskell_FunctionAssignment) which;
-				interpreter.tryToInterpret(asg.statement);
-			}
-			else if (which instanceof Haskell_FunctionGuard)
-			{
-				Haskell_FunctionGuard guard = (Haskell_FunctionGuard) which;
-				interpreter.tryToInterpret(guard.guard);
-			}
+			interpreter.callingFunction("main", this);
+			interpreter.tryToInterpret(definition.body);
+			interpreter.completedFunction("main", this);
 		}
 	}
 

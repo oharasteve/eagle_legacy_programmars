@@ -136,7 +136,7 @@ public class Delphi_Function_Call extends PrimaryOperator
 		if (func != null)
 		{
 			// Delphi uses the function name for the return value
-			// Sort-of like this: function sqrt(x) { sqrt = x*x }
+			// Sort-of like this: function sqr(x) { sqr = x*x }
 			EagleValue val = interpreter.findSymbol(fnName);
 			if (val != null)
 			{
