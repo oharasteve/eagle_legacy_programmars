@@ -13,7 +13,8 @@ public class Python_Number extends TerminalNumberToken
 	public Python_Number()
 	{
 		// J is for complex ...
-		super("Ee", "JjLl", true, false, '?');
+		// 4_000 is the same as 4,000
+		super("Ee", "JjLl", true, true, '_');
 	}
 	
 	public static Python_Number createNumber(int value)
