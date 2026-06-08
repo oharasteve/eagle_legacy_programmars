@@ -79,11 +79,11 @@ public class Haskell_Expression extends PrecedenceChooser implements AbstractExp
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
 
-	public @P(1000) Haskell_MultiplicativeExpression multiplicativeExpression;
-	public @P(1010) Haskell_AdditiveExpression additiveExpression;
-	public @P(1020) Haskell_ConcatExpression concatExpression;
-	public @P(1030) Haskell_RelationalExpression relationalExpression;
-	public @P(1040) Haskell_LogicalAndExpression andExpression;
-	public @P(1050) Haskell_LogicalOrExpression orExpression;
-	public @P(1060) Haskell_SubscriptExpression subscriptExpression;
+	public @P(1000) Haskell_SubscriptExpression subscriptExpression;
+	public @P(1010) Haskell_MultiplicativeExpression multiplicativeExpression;
+	public @P(1020) Haskell_AdditiveExpression additiveExpression;
+	public @P(1030) Haskell_ConcatExpression concatExpression;
+	public @P(1040) Haskell_RelationalExpression relationalExpression;
+	public @P(1050) Haskell_LogicalAndExpression andExpression;
+	public @P(1060) Haskell_LogicalOrExpression orExpression;
 }
