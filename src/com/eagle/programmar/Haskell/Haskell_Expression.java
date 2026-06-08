@@ -4,6 +4,7 @@
 package com.eagle.programmar.Haskell;
 
 import com.eagle.programmar.Haskell.Expressions.Haskell_AdditiveExpression;
+import com.eagle.programmar.Haskell.Expressions.Haskell_BracketsExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_BuiltInExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_ConcatExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_LogicalAndExpression;
@@ -14,7 +15,9 @@ import com.eagle.programmar.Haskell.Expressions.Haskell_NegativeExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_ParenthesizedExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_RangeExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_RelationalExpression;
+import com.eagle.programmar.Haskell.Expressions.Haskell_SubscriptExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_VariableExpression;
+import com.eagle.programmar.Haskell.Functions.Haskell_IfFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_IsPrefixOfFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_LengthFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_MapFunction;
@@ -70,6 +73,8 @@ public class Haskell_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(190) Haskell_VariableExpression variableExpression;
 	public @P(200) Haskell_ParenthesizedExpression parenExpression;
 	public @P(210) Haskell_RangeExpression rangeExpression;
+	public @P(220) Haskell_BracketsExpression bracketsExpression;
+	public @P(230) Haskell_IfFunction ifFunction;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions
@@ -80,4 +85,5 @@ public class Haskell_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(1030) Haskell_RelationalExpression relationalExpression;
 	public @P(1040) Haskell_LogicalAndExpression andExpression;
 	public @P(1050) Haskell_LogicalOrExpression orExpression;
+	public @P(1060) Haskell_SubscriptExpression subscriptExpression;
 }

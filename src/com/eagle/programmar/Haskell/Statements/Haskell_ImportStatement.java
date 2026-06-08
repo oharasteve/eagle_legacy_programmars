@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Haskell.Haskell_Variable;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
+import com.eagle.programmar.Haskell.Terminals.Haskell_KeywordChoice;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
@@ -22,7 +23,7 @@ public class Haskell_ImportStatement extends TokenSequence implements EagleRunna
 	public static class Haskell_ImportWhat extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) Haskell_Keyword id;
+		public @S(20) Haskell_KeywordChoice KEY = new Haskell_KeywordChoice("isPrefixOf");
 		public @S(30) PunctuationRightParen rightParen;
 	}
 

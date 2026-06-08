@@ -13,6 +13,7 @@ public class Haskell_Reserved_Words
 			"do",
 			"else",
 			"if",
+			"import",
 			"in",
 			"isPrefixOf",
 			"length",

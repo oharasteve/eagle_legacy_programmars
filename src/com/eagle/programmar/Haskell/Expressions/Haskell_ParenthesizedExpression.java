@@ -7,10 +7,12 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
@@ -21,20 +23,31 @@ public class Haskell_ParenthesizedExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) Haskell_Expression expression;
+	public @S(20) SeparatedList<Haskell_Expression,PunctuationComma> expressions;
 	public @S(30) PunctuationRightParen rightParen;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		interpreter.tryToInterpret(expression);
+		if (expressions.getPrimaryCount() == 1)
+		{
+			interpreter.tryToInterpret(expressions.first());
+		}
+		else
+		{
+			throw new RuntimeException("Need to implement tuples");
+		}
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression theExpr = transformer.transformExpression(generator, expression);
-		return generator.newParenthesizedExpression(theExpr, this);
+		if (expressions.getPrimaryCount() == 1)
+		{
+			AbstractExpression theExpr = transformer.transformExpression(generator, expressions.first());
+			return generator.newParenthesizedExpression(theExpr, this);
+		}
+		throw new RuntimeException("Need to implement tuples");
 	}
 }
