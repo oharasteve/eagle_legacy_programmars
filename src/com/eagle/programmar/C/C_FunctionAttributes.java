@@ -8,10 +8,11 @@ import com.eagle.programmar.C.Terminals.C_KeywordChoice;
 import com.eagle.programmar.C.Terminals.C_Number;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class C_FunctionAttributes extends TokenSequence
@@ -19,22 +20,47 @@ public class C_FunctionAttributes extends TokenSequence
 	public @S(10) C_Keyword ATTRIBUTE = new C_Keyword("__attribute__");
 	public @S(20) PunctuationLeftParen leftParen1;
 	public @S(30) PunctuationLeftParen leftParen2;
-	public @S(40) C_FunctionAttribute attrib;
-	public @S(50) @OPT TokenList<C_FunctionMoreAttributes> more;
-	public @S(60) PunctuationRightParen rightParen1;
-	public @S(70) PunctuationRightParen rightParen2;
+	public @S(40) SeparatedList<C_FunctionAttribute,PunctuationComma> attributes;
+	public @S(50) PunctuationRightParen rightParen1;
+	public @S(60) PunctuationRightParen rightParen2;
 
 	public static class C_FunctionAttribute extends TokenChooser
 	{
-		public @CHOICE C_KeywordChoice XXATTR = new C_KeywordChoice("deprecated", "__const__", "__deprecated__",
+		public @CHOICE C_KeywordChoice XXATTR = new C_KeywordChoice(
+				"deprecated",
+				"__const__",
+				"__deprecated__",
 				"__leaf__",
-				"__malloc__", "__noreturn__", "__nothrow__", "__pure__", "__warn_unused_result__");
+				"__malloc__",
+				"__noreturn__",
+				"__nothrow__",
+				"__pure__",
+				"__warn_unused_result__");
+
+		public @CHOICE static class C_FunctionAttributeAvailability extends TokenSequence
+		{
+			public @S(10) C_Keyword AVAILABILITY = new C_Keyword("__availability__");
+			public @S(20) PunctuationLeftParen leftParen;
+			public @S(30) C_KeywordChoice MACOS = new C_KeywordChoice(
+					"ios",
+					"macosx");
+			public @S(40) PunctuationComma comma1;
+			public @S(50) C_Keyword INTRODUCED = new C_Keyword("introduced");
+			public @S(60) PunctuationEquals equals;
+			public @S(70) C_Number number1;
+			public @S(80) PunctuationPeriod dot;
+			public @S(90) C_Number number2;
+			public @S(100) PunctuationRightParen rightParen;
+		}
 
 		public @CHOICE static class C_FunctionAttributeFormat extends TokenSequence
 		{
 			public @S(10) C_Keyword FORMAT = new C_Keyword("__format__");
 			public @S(20) PunctuationLeftParen leftParen;
-			public @S(30) C_KeywordChoice FMTS = new C_KeywordChoice("__printf__", "__scanf__", "__strfmon__");
+			public @S(30) C_KeywordChoice FMTS = new C_KeywordChoice(
+					"__printf__",
+					"__scanf__",
+					"__strfmon__");
 			public @S(40) PunctuationComma comma1;
 			public @S(50) C_Number number1;
 			public @S(60) PunctuationComma comma2;
@@ -65,11 +91,5 @@ public class C_FunctionAttributes extends TokenSequence
 			public @S(30) C_Number number;
 			public @S(40) PunctuationRightParen rightParen;
 		}
-	}
-
-	public static class C_FunctionMoreAttributes extends TokenSequence
-	{
-		public @S(10) PunctuationComma comma;
-		public @S(20) C_FunctionAttribute attrib;
 	}
 }
