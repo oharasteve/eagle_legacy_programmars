@@ -4,6 +4,7 @@
 package com.eagle.programmar.C.Types;
 
 import com.eagle.programmar.C.C_Expression;
+import com.eagle.programmar.C.C_FunctionAttributes;
 import com.eagle.programmar.C.C_Subscript;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Symbols.C_Field_Definition;
@@ -32,7 +33,8 @@ public class C_TypeStruct extends TokenSequence
 	public @S(40) @OPT C_Type_Definition def;
 	public @S(50) @OPT C_Comment comment2;
 	public @S(60) @OPT C_StructBody body;
-	public @S(70) @OPT PunctuationSemicolon semicolon;
+	public @S(70) @OPT C_FunctionAttributes attributes;
+	public @S(80) @OPT PunctuationSemicolon semicolon;
 
 	public static class C_StructBody extends TokenSequence
 	{
@@ -73,8 +75,9 @@ public class C_TypeStruct extends TokenSequence
 				public @S(20) @OPT TokenList<C_Comment> comments;
 				public @S(30) @OPT TokenList<PunctuationStar> stars;
 				public @S(40) C_Field_Definition id;
-				public @S(50) @OPT TokenList<C_Subscript> subscripts;
-				public @S(60) @OPT C_FieldInitialValue initialValue;
+				public @S(50) @OPT C_TypeNumberOfBits bits;
+				public @S(60) @OPT TokenList<C_Subscript> subscripts;
+				public @S(70) @OPT C_FieldInitialValue initialValue;
 			}
 
 			public static class C_FieldInitialValue extends TokenSequence

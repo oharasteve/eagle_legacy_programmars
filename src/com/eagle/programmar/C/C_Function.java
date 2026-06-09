@@ -46,20 +46,22 @@ import com.eagle.transform.EagleTransformer;
 
 public class C_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
-		EagleTransformableFunction
+				EagleTransformableFunction
 {
 	public @S(10) @OPT C_Extern_C externC;
 	public @S(20) @OPT C_FunctionDeclspec declspec;
 	public @S(30) @OPT C_Keyword EXTENSION = new C_Keyword("__extension__");
-	public @S(40) @OPT C_FunctionAttributes attributes;
+	public @S(40) @OPT TokenList<C_FunctionAttributes> attributes1;
 	public @S(50) @OPT C_KeywordChoice scope1 = new C_KeywordChoice(C_Program.getModifiers());
 	public @S(60) @OPT C_Comment comment1;
-	public @S(70) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
-	public @S(80) C_FunctionTypeName typeName;
-	public @S(90) C_Function_ParameterDefs parameters;
-	public @S(100) @OPT TokenList<C_Comment> comments2;
-	public @S(110) @OPT C_Keyword CONST = new C_Keyword("const");
-	public @S(120) C_FunctionBody body;
+	public @S(70) @OPT TokenList<C_FunctionAttributes> attributes2;
+	public @S(80) @OPT C_KeywordChoice scope2 = new C_KeywordChoice(C_Program.getModifiers());
+	public @S(90) C_FunctionTypeName typeName;
+	public @S(100) C_Function_ParameterDefs parameters;
+	public @S(110) @OPT C_FunctionAsm asm;
+	public @S(120) @OPT TokenList<C_Comment> comments2;
+	public @S(130) @OPT C_Keyword CONST = new C_Keyword("const");
+	public @S(140) C_FunctionBody body;
 
 	public static class C_FunctionTypeName extends TokenChooser
 	{
@@ -101,13 +103,14 @@ public class C_Function extends TokenSequence
 
 	public static class C_FunctionRegularParameter extends TokenSequence
 	{
-		public @S(10) @OPT C_Keyword CONST = new C_Keyword("const");
+		public @S(10) @OPT C_Keyword CONST1 = new C_Keyword("const");
 		public @S(20) C_Type ctype;
 		public @S(30) @OPT C_KeywordChoice RESTRICT = new C_KeywordChoice("__restrict", "restrict");
 		public @S(40) @OPT C_Variable_Definition id;
 		public @S(50) @OPT TokenList<C_Subscript> subscripts;
 		public @S(60) @OPT C_FunctionDefaultValue value;
-		public @S(70) @OPT C_Comment comment;
+		public @S(70) @OPT C_Keyword CONST2 = new C_Keyword("const");
+		public @S(80) @OPT C_Comment comment;
 
 		public static class C_FunctionDefaultValue extends TokenSequence
 		{
@@ -159,11 +162,10 @@ public class C_Function extends TokenSequence
 
 			public static class C_FunctionAssembler extends TokenSequence
 			{
-				public @S(10) C_Keyword ASM = new C_Keyword("__asm__");
+				public @S(10) C_KeywordChoice ASM = new C_KeywordChoice("__asm", "__asm__");
 				public @S(20) PunctuationLeftParen leftParen;
-				public @S(30) C_Literal blank;
-				public @S(40) C_Literal functionName;
-				public @S(50) PunctuationRightParen rightParen;
+				public @S(30) TokenList<C_Literal> literals;
+				public @S(40) PunctuationRightParen rightParen;
 			}
 		}
 	}
@@ -184,6 +186,16 @@ public class C_Function extends TokenSequence
 		public @S(40) PunctuationRightParen rightParen;
 	}
 
+	// __asm("_" "fopen" )
+	public static class C_FunctionAsm extends TokenSequence
+	{
+		public @S(10) C_Keyword ASM = new C_Keyword("__asm");
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) C_Literal underscore;
+		public @S(40) C_Literal fopen;
+		public @S(50) PunctuationRightParen rightParen;
+	}
+	
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
 	public @SKIP ReturnMetrics _returnMetrics = null;

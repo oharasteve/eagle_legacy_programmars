@@ -24,13 +24,14 @@ public class C_FunctionPointer extends TokenSequence
 	public @S(20) C_Type jtype;
 	public @S(30) PunctuationLeftParen leftParen1;
 	public @S(40) PunctuationStar star;
-	public @S(50) C_Field_Definition id;
-	public @S(60) @OPT C_Function_ParameterDefs weirdExtraParameters;
-	public @S(70) PunctuationRightParen rightParen1;
-	public @S(80) PunctuationLeftParen leftParen2;
-	public @S(90) @OPT C_Comment comment;
-	public @S(100) @OPT C_FunctionParameter param;
-	public @S(110) @OPT TokenList<C_MoreParameterDefs> moreParams;
-	public @S(120) PunctuationRightParen rightParen2;
-	public @S(130) @OPT PunctuationSemicolon semicolon;
+	public @S(50) @OPT C_KeywordChoice NULLABLE = new C_KeywordChoice("_Nullable", "_Nonnull");
+	public @S(60) @OPT C_Field_Definition id;
+	public @S(70) @OPT C_Function_ParameterDefs weirdExtraParameters;
+	public @S(80) PunctuationRightParen rightParen1;
+	public @S(90) PunctuationLeftParen leftParen2;
+	public @S(100) @OPT C_Comment comment;
+	public @S(110) @OPT C_FunctionParameter param;
+	public @S(120) @OPT TokenList<C_MoreParameterDefs> moreParams;
+	public @S(130) PunctuationRightParen rightParen2;
+	public @S(140) @OPT PunctuationSemicolon semicolon;
 }

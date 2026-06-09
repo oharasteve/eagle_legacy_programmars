@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.C.C_Function.C_FunctionAsm;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Types.C_FunctionPointer;
@@ -43,8 +44,10 @@ public class C_Data extends TokenChooser
 		public @S(60) @OPT TokenList<C_Subscript> subscripts;
 		public @S(70) @OPT C_DataInitialValue initialValue;
 		public @S(80) @OPT TokenList<C_MoreIdentifiers> moreIds;
-		public @S(90) PunctuationSemicolon semicolon;
-		public @S(100) @OPT TokenList<C_Comment> comments2;
+		public @S(90) @OPT C_FunctionAttributes attributes;  // I know, it is data here
+		public @S(100) @OPT C_FunctionAsm asm;
+		public @S(110) PunctuationSemicolon semicolon;
+		public @S(120) @OPT TokenList<C_Comment> comments2;
 
 		public static class C_MoreIdentifiers extends TokenSequence
 		{
