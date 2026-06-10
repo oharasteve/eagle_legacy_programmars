@@ -76,6 +76,7 @@ public class C_ForStatement extends TokenSequence
 		{
 			public @FIRST C_ForWithType XXforWithType;
 			public @CHOICE C_ForWithoutType XXforWithoutType;
+			public @CHOICE C_PostIncrementVariable XXforPostIncrement;
 		}
 
 		public static class C_MoreLoopIncrements extends TokenSequence
@@ -115,7 +116,7 @@ public class C_ForStatement extends TokenSequence
 		public @S(20) PunctuationEquals equals;
 		public @S(30) C_Expression initialExpr;
 	}
-
+	
 	private @SKIP ForLoopMetrics _metrics = null;
 
 	private @SKIP EagleScope _scope = new EagleScope(this, C_Syntax.IS_CASE_SENSITIVE);
