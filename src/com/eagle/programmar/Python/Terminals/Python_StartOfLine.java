@@ -15,11 +15,6 @@ import com.eagle.tokens.terminals.TerminalStartOfLine;
 
 public class Python_StartOfLine extends TerminalStartOfLine
 {
-	private static final String TAB = "  ";
-	private static final int TABLEN = TAB.length();
-
-	private static final boolean DEBUG = false;
-
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
@@ -82,41 +77,8 @@ public class Python_StartOfLine extends TerminalStartOfLine
 	}
 
 	@Override
-	public String toString()
+	protected boolean goDeeper(AbstractToken parent)
 	{
-		int depth = 0;
-		AbstractToken parent = this.getParent();
-		while (parent != null)
-		{
-			if (DEBUG) System.out.println("**** Parent " + parent.getClass().getSimpleName() +
-					" at " + (parent.getStartLine() + 1) + "/" + (parent.getStartChar() + 1));
-
-			// Find the enclosing statement block(s)
-			if (parent instanceof Python_MultilineStatement)
-			{
-				depth++;
-			}
-			if (DEBUG) System.out.println("     Token " + this.getClass().getSimpleName() +
-					" at " + (getStartLine() + 1) + "/" + (getStartChar() + 1) + " depth=" + depth);
-			parent = parent.getParent();
-		}
-
-		// Might be a tad faster with the 'switch'. It is not needed.
-		switch (depth)
-		{
-		case 0:
-			return "";
-		case 1:
-			return TAB;
-		case 2:
-			return TAB + TAB;
-		case 3:
-			return TAB + TAB + TAB;
-		case 4:
-			return TAB + TAB + TAB + TAB;
-		}
-		StringBuffer sb = new StringBuffer(TABLEN * depth);
-		for (int i = 0; i < depth; i++) sb.append(TAB);
-		return sb.toString();
+		return parent instanceof Python_MultilineStatement;
 	}
 }

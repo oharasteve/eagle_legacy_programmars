@@ -15,9 +15,6 @@ import com.eagle.tokens.terminals.TerminalStartOfLine;
 
 public class FSharp_StartOfLine extends TerminalStartOfLine
 {
-	private static final String TAB = "  ";
-    private static final int TABLEN = TAB.length();
-
     @Override
     public boolean parse(EagleFileReader lines)
     {
@@ -69,29 +66,19 @@ public class FSharp_StartOfLine extends TerminalStartOfLine
         return true;
     }
 
-    @Override
-    public String toString()
-    {
-        int depth = 0;
-        AbstractToken parent = this.getParent();
-        while (parent != null)
+	@Override
+	protected boolean goDeeper(AbstractToken parent)
+	{
+        if (parent instanceof TokenList && !(parent instanceof SeparatedList))
         {
-            // Find the enclosing TokenList of statements
-            if (parent instanceof TokenList && !(parent instanceof SeparatedList))
+            TokenList<? extends AbstractToken> tokenList = (TokenList<?>) parent;
+
+            // The 'elif' clause is an irrelevant TokenList on an 'if' statement
+            if (tokenList.size() > 0 && !(tokenList.first() instanceof FSharp_IfElif))
             {
-                TokenList<? extends AbstractToken> tokenList = (TokenList<?>) parent;
-
-                // The 'elif' clause is an irrelevant TokenList on an 'if' statement
-                if (tokenList.size() > 0 && !(tokenList.first() instanceof FSharp_IfElif))
-                {
-                    depth++;
-                }
+                return true;
             }
-            parent = parent.getParent();
         }
-
-        StringBuffer sb = new StringBuffer(TABLEN * depth);
-        for (int i = 1; i < depth; i++) sb.append(TAB);
-        return sb.toString();
-    }
+        return false;
+	}
 }
