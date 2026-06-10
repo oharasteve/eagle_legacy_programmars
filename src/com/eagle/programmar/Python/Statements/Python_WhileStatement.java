@@ -47,7 +47,7 @@ import com.eagle.transform.EagleTransformer;
 
 public class Python_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult,
-		EagleTransformableStatement
+				EagleTransformableStatement
 {
 	public @S(10) @DOC("compound_stmts.html#the-while-statement") @NOSPACE Python_Keyword WHILE = new Python_Keyword(
 			"while");

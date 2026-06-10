@@ -27,4 +27,18 @@ public class Haskell_Syntax extends EagleSyntax
 
 		addReservedWords(Haskell_Reserved_Words.RESERVED_WORDS);
 	}
+
+	public static class Haskell_Multiline_Syntax extends Haskell_Syntax
+	{
+		@Override
+		public String syntaxId()
+		{
+			return "Haskell Multi";
+		}
+
+		public Haskell_Multiline_Syntax()
+		{
+			_autoAdvance = true;
+		}
+	}
 }

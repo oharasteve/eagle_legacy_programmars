@@ -53,7 +53,7 @@ public class FSharp_StartOfLine extends TerminalStartOfLine
                         }
                         else
                         {
-                            throw new RuntimeException("Expected a FSharp_Statement, not " + token);
+                            throw new RuntimeException("Expected an FSharp_Statement, not " + token);
                         }
                     }
                     break;
