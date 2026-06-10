@@ -31,7 +31,7 @@ public class Haskell_MultiplicativeExpression extends PrecedenceOperator
 	public static class Haskell_MultOper extends TokenChooser
 	{
 		public @CHOICE Haskell_PunctuationChoice XXTimes = new Haskell_PunctuationChoice("*", "/");
-		public @CHOICE Haskell_KeywordChoice XXMod = new Haskell_KeywordChoice("`mod`", "`rem`");
+		public @CHOICE Haskell_KeywordChoice XXMod = new Haskell_KeywordChoice("`div`", "`quot`", "`mod`", "`rem`");
 	}
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -49,6 +49,21 @@ public class Haskell_MultiplicativeExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.getType(), rightValue.getType());
 
+		if (leftValue.isDouble() || rightValue.isDouble())
+		{
+			double leftDbl = leftValue.forceDoubleValue();
+			double rightDbl = rightValue.forceDoubleValue();
+			switch (oper)
+			{
+			case "*":
+				interpreter.pushDouble(leftDbl * rightDbl);
+				return;
+			case "/":
+				interpreter.pushDouble(leftDbl / rightDbl);
+				return;
+			}
+		}
+		
 		int leftInt = leftValue.forceIntegerValue();
 		int rightInt = rightValue.forceIntegerValue();
 		switch (oper)
@@ -57,7 +72,13 @@ public class Haskell_MultiplicativeExpression extends PrecedenceOperator
 			interpreter.pushInt(leftInt * rightInt);
 			return;
 		case "/":
+			interpreter.pushDouble((double)leftInt / (double)rightInt);
+			return;
+		case "`quot`":
 			interpreter.pushInt(leftInt / rightInt);
+			return;
+		case "`div`":
+			interpreter.pushInt(Math.floorDiv(leftInt, rightInt));
 			return;
 		case "`rem`":
 			interpreter.pushInt(leftInt % rightInt);
@@ -66,6 +87,7 @@ public class Haskell_MultiplicativeExpression extends PrecedenceOperator
 			interpreter.pushInt(Math.floorMod(leftInt, rightInt));
 			return;
 		}
+
 		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
 	}
 
