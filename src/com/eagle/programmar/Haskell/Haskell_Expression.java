@@ -17,11 +17,13 @@ import com.eagle.programmar.Haskell.Expressions.Haskell_RangeExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_RelationalExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_SubscriptExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_VariableExpression;
+import com.eagle.programmar.Haskell.Functions.Haskell_DropFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_IfFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_IsPrefixOfFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_LengthFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_MapFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_ModFunction;
+import com.eagle.programmar.Haskell.Functions.Haskell_SecondFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_ShowFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_SumFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_UnlinesFunction;
@@ -69,14 +71,16 @@ public class Haskell_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(140) Haskell_ModFunction modFunction;
 	public @P(150) Haskell_SumFunction sumFunction;
 	public @P(160) Haskell_ShowFunction showFunction;
-	public @P(170) Haskell_MapFunction mapFunction;
-	public @P(180) Haskell_UnlinesFunction unlinesFunction;
-	public @P(190) Haskell_IsPrefixOfFunction isPrefixOfFunction;
-	public @P(200) Haskell_VariableExpression variableExpression;
-	public @P(210) Haskell_ParenthesizedExpression parenExpression;
-	public @P(220) Haskell_RangeExpression rangeExpression;
-	public @P(230) Haskell_BracketsExpression bracketsExpression;
-	public @P(240) Haskell_IfFunction ifFunction;
+	public @P(170) Haskell_SecondFunction secondFunction;
+	public @P(180) Haskell_DropFunction dropFunction;
+	public @P(190) Haskell_MapFunction mapFunction;
+	public @P(200) Haskell_UnlinesFunction unlinesFunction;
+	public @P(210) Haskell_IsPrefixOfFunction isPrefixOfFunction;
+	public @P(220) Haskell_VariableExpression variableExpression;
+	public @P(230) Haskell_ParenthesizedExpression parenExpression;
+	public @P(240) Haskell_RangeExpression rangeExpression;
+	public @P(250) Haskell_BracketsExpression bracketsExpression;
+	public @P(260) Haskell_IfFunction ifFunction;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

@@ -5,14 +5,15 @@ package com.eagle.programmar.Haskell;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.programmar.Haskell.Statements.Haskell_FunctionCall;
 import com.eagle.programmar.Haskell.Statements.Haskell_DoStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ExpressionStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_Function;
+import com.eagle.programmar.Haskell.Statements.Haskell_FunctionCall;
 import com.eagle.programmar.Haskell.Statements.Haskell_IfStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ImportStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_LetStatement;
-import com.eagle.programmar.Haskell.Statements.Haskell_PutStr;
+import com.eagle.programmar.Haskell.Statements.Haskell_MapMStatement;
+import com.eagle.programmar.Haskell.Statements.Haskell_PutStrStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ReturnStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock.Haskell_MultilineStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_StatementBlock.Haskell_SameLineStatement;
@@ -54,7 +55,8 @@ public class Haskell_ComplexStatement extends TokenSequence
 		public @CHOICE Haskell_IfStatement XXifStatement;
 		public @CHOICE Haskell_ImportStatement XXimportStatement;
 		public @CHOICE Haskell_LetStatement XXletStatement;
-		public @CHOICE Haskell_PutStr XXputStr;
+		public @CHOICE Haskell_MapMStatement XXmapMStatement;
+		public @CHOICE Haskell_PutStrStatement XXputStrState,emt;
 		public @CHOICE Haskell_ReturnStatement XXreturnStatement;
 
 		public @LAST Haskell_ExpressionStatement XXexpression; // Avoid conflict with 'for' statement

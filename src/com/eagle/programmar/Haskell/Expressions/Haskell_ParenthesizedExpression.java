@@ -23,7 +23,7 @@ public class Haskell_ParenthesizedExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftParen leftParen;
-	public @S(20) SeparatedList<Haskell_Expression,PunctuationComma> expressions;
+	public @S(20) @OPT SeparatedList<Haskell_Expression,PunctuationComma> expressions;
 	public @S(30) PunctuationRightParen rightParen;
 
 	@Override

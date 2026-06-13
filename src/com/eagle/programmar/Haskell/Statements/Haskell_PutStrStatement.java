@@ -10,7 +10,7 @@ import com.eagle.programmar.Haskell.Terminals.Haskell_KeywordChoice;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
 import com.eagle.tokens.TokenSequence;
 
-public class Haskell_PutStr extends TokenSequence implements EagleRunnable
+public class Haskell_PutStrStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Haskell_KeywordChoice PUTSTR = new Haskell_KeywordChoice("putStr", "putStrLn");
 	public @S(20) Haskell_Punctuation dollar = new Haskell_Punctuation("$");
