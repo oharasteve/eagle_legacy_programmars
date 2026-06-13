@@ -23,6 +23,7 @@ import com.eagle.programmar.Haskell.Functions.Haskell_LengthFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_MapFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_ModFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_ShowFunction;
+import com.eagle.programmar.Haskell.Functions.Haskell_SumFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_UnlinesFunction;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Literal;
@@ -66,15 +67,16 @@ public class Haskell_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(120) Haskell_BuiltInExpression builtinExpression;
 	public @P(130) Haskell_LengthFunction lengthFunction;
 	public @P(140) Haskell_ModFunction modFunction;
-	public @P(150) Haskell_ShowFunction showFunction;
-	public @P(160) Haskell_MapFunction mapFunction;
-	public @P(170) Haskell_UnlinesFunction unlinesFunction;
-	public @P(180) Haskell_IsPrefixOfFunction isPrefixOfFunction;
-	public @P(190) Haskell_VariableExpression variableExpression;
-	public @P(200) Haskell_ParenthesizedExpression parenExpression;
-	public @P(210) Haskell_RangeExpression rangeExpression;
-	public @P(220) Haskell_BracketsExpression bracketsExpression;
-	public @P(230) Haskell_IfFunction ifFunction;
+	public @P(150) Haskell_SumFunction sumFunction;
+	public @P(160) Haskell_ShowFunction showFunction;
+	public @P(170) Haskell_MapFunction mapFunction;
+	public @P(180) Haskell_UnlinesFunction unlinesFunction;
+	public @P(190) Haskell_IsPrefixOfFunction isPrefixOfFunction;
+	public @P(200) Haskell_VariableExpression variableExpression;
+	public @P(210) Haskell_ParenthesizedExpression parenExpression;
+	public @P(220) Haskell_RangeExpression rangeExpression;
+	public @P(230) Haskell_BracketsExpression bracketsExpression;
+	public @P(240) Haskell_IfFunction ifFunction;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

@@ -9,10 +9,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Haskell.Haskell_Expression;
+import com.eagle.programmar.Haskell.Haskell_Syntax.Haskell_Multiline_Syntax;
 import com.eagle.programmar.Haskell.Haskell_Variable;
-import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -31,22 +30,25 @@ public class Haskell_LetStatement extends TokenSequence
 	public @S(10) Haskell_Keyword LET = new Haskell_Keyword("let");
 	public @S(20) Haskell_Variable variable;
 	public @S(30) PunctuationEquals equals;
-	public @S(40) Haskell_Expression expression;
-	public @S(50) @OPT @PYDENT Haskell_LetBlock block;
+	public @S(40) @SYNTAX(Haskell_Multiline_Syntax.class) Haskell_Expression expression;
 	
-	public static class Haskell_LetBlock extends TokenSequence
-	{
-		public @S(10) @OPT Haskell_EndOfLine eoln;
-		public @S(20) TokenList<Haskell_LetMore> more;
-	}
+	// Let's get individual "Let" to work
 	
-	public static class Haskell_LetMore extends TokenSequence
-	{
-		public @S(10) Haskell_Variable var;
-		public @S(20) PunctuationEquals equals;
-		public @S(30) Haskell_Expression expr;
-		public @S(40) Haskell_EndOfLine eoln;
-	}
+//	public @S(50) @OPT Haskell_LetBlock block;
+//	
+//	public static class Haskell_LetBlock extends TokenSequence
+//	{
+//		public @S(10) @OPT Haskell_EndOfLine eoln;
+//		public @S(20) TokenList<Haskell_LetMore> more;
+//	}
+//	
+//	public static class Haskell_LetMore extends TokenSequence
+//	{
+//		public @S(10) Haskell_Variable var;
+//		public @S(20) PunctuationEquals equals;
+//		public @S(30) Haskell_Expression expr;
+//		public @S(40) Haskell_EndOfLine eoln;
+//	}
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -54,14 +56,14 @@ public class Haskell_LetStatement extends TokenSequence
 		EagleValue value = interpreter.getEagleValue(expression);
 		interpreter.setSymbol(variable.id, variable.id.getValue(), value);
 
-		if (block != null)
-		{
-			for (Haskell_LetMore let : block.more._elements)
-			{
-				value = interpreter.getEagleValue(let.expr);
-				interpreter.setSymbol(let.var.id, let.var.id.getValue(), value);
-			}
-		}
+//		if (block != null)
+//		{
+//			for (Haskell_LetMore let : block.more._elements)
+//			{
+//				value = interpreter.getEagleValue(let.expr);
+//				interpreter.setSymbol(let.var.id, let.var.id.getValue(), value);
+//			}
+//		}
 	}
 
 	@Override
@@ -71,13 +73,13 @@ public class Haskell_LetStatement extends TokenSequence
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 		assign(transformer, generator, result, variable, expression);
 		
-		if (block != null)
-		{
-			for (Haskell_LetMore let : block.more._elements)
-			{
-				assign(transformer, generator, result, let.var, let.expr);
-			}
-		}
+//		if (block != null)
+//		{
+//			for (Haskell_LetMore let : block.more._elements)
+//			{
+//				assign(transformer, generator, result, let.var, let.expr);
+//			}
+//		}
 		return result;
 	}
 	

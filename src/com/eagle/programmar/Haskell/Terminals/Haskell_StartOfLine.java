@@ -24,7 +24,10 @@ public class Haskell_StartOfLine extends TerminalStartOfLine
 		while (parent != null)
 		{
 			if (DEBUG)
+			{
 				System.out.println("**** Parent is " + (parent.getStartLine() + 1) + "/" + (parent.getStartChar() + 1));
+			}
+			
 			// Find the enclosing statement block
 			if (parent instanceof Haskell_StatementBlock)
 			{
@@ -39,11 +42,13 @@ public class Haskell_StartOfLine extends TerminalStartOfLine
 					// Find first non-comment statement
 					for (AbstractToken token : tokenList._elements)
 					{
-						if (DEBUG) System.out.println(
-								"**** Token is " + (token.getStartLine() + 1) + "/" + (token.getStartChar() + 1));
 						if (token instanceof Haskell_Comment)
 						{
 							continue; // Doesn't matter what columns comments are in
+						}
+						if (DEBUG)
+						{
+							System.out.println("**** First token is " + token);
 						}
 
 						Haskell_ComplexStatement firstStmt = (Haskell_ComplexStatement) token;
@@ -55,12 +60,14 @@ public class Haskell_StartOfLine extends TerminalStartOfLine
 							/////// The KEY Line /////// Who doesn't like Key Lime pie?
 							if (_currentChar != otherStmt.getStartChar())
 							{
-								if (DEBUG) System.out.println("**** FAIL: Comparing " +
-										(_currentLine + 1) + "/" + (_currentChar + 1) + " to " +
-										(otherStmt.getStartLine() + 1) + "/" + (otherStmt.getStartChar() + 1));
+								if (DEBUG) {
+									System.out.println("**** FAIL: Compared " +
+											(_currentLine + 1) + "/" + (_currentChar + 1) + " to " +
+											(otherStmt.getStartLine() + 1) + "/" + (otherStmt.getStartChar() + 1));
+								}
 								return false;
 							}
-							if (DEBUG) System.out.println("**** MATCH: Comparing " +
+							if (DEBUG) System.out.println("**** MATCH: Compared " +
 									(_currentLine + 1) + "/" + (_currentChar + 1) + " to " +
 									(otherStmt.getStartLine() + 1) + "/" + (otherStmt.getStartChar() + 1));
 							break;
