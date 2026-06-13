@@ -16,6 +16,7 @@ import com.eagle.programmar.Haskell.Expressions.Haskell_ParenthesizedExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_RangeExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_RelationalExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_SubscriptExpression;
+import com.eagle.programmar.Haskell.Expressions.Haskell_TupleExpression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_VariableExpression;
 import com.eagle.programmar.Haskell.Functions.Haskell_DropFunction;
 import com.eagle.programmar.Haskell.Functions.Haskell_IfFunction;
@@ -78,9 +79,10 @@ public class Haskell_Expression extends PrecedenceChooser implements AbstractExp
 	public @P(210) Haskell_IsPrefixOfFunction isPrefixOfFunction;
 	public @P(220) Haskell_VariableExpression variableExpression;
 	public @P(230) Haskell_ParenthesizedExpression parenExpression;
-	public @P(240) Haskell_RangeExpression rangeExpression;
-	public @P(250) Haskell_BracketsExpression bracketsExpression;
-	public @P(260) Haskell_IfFunction ifFunction;
+	public @P(240) Haskell_TupleExpression tupleExpression;
+	public @P(250) Haskell_RangeExpression rangeExpression;
+	public @P(260) Haskell_BracketsExpression bracketsExpression;
+	public @P(270) Haskell_IfFunction ifFunction;
 
 	///////////////////////////////////////////////////////////////////////////
 	// Binary Expressions

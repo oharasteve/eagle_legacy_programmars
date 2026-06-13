@@ -8,11 +8,13 @@ import java.util.Collection;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.Haskell.Haskell_ComplexStatement;
+import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.programmar.Haskell.Haskell_Syntax;
 import com.eagle.programmar.Haskell.Haskell_Type;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Function_Definition;
@@ -139,6 +141,55 @@ public class Haskell_Function extends TokenSequence
 			interpreter.tryToInterpret(definition.body);
 			interpreter.completedFunction("main", this);
 		}
+	}
+	
+	// Called from Haskell_FunctionCall and Haskell_ParenthesizedExpression
+	public void call(EagleInterpreter interpreter, String fnName, ArrayList<Haskell_Expression> arguments)
+	{
+		// Make sure the function args match up
+		int argCount = 0;
+		if (arguments != null)
+		{
+			argCount = arguments.size();
+		}
+		
+		int paramCount = 0;
+		if (definition.params != null && definition.params.isPresent())
+		{
+			paramCount = definition.params.size();
+		}
+
+		if (argCount != paramCount)
+		{
+			throw new RuntimeException("Function " + fnName + " expects #args = " +
+					paramCount + ", but was given " + argCount);
+		}
+
+		interpreter.callingFunction(fnName, this);
+
+		// Now assign all the parameters
+		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
+		for (int i = 0; i < argCount; i++)
+		{
+			Haskell_Expression expr = arguments.get(i);
+			Haskell_Parameter_Definition param = definition.params._elements.get(i);
+			EagleValue val = interpreter.getEagleValue(expr);
+			interpreter.setSymbol(param, param.getValue(), val);
+			argTypes.add(val.getType());
+		}
+
+		// Prepare to evaluate the function
+		long startTime = System.nanoTime();
+
+		// And transfer control to the function
+		interpreter.tryToInterpret(definition.body);
+
+		long elapsedTime = System.nanoTime() - startTime;
+		_callMetrics.addCallFrom(this, elapsedTime);
+		_argumentsMetrics.calledWith(argTypes);
+
+		// Now remove all those parameters
+		interpreter.completedFunction(fnName, this);
 	}
 
 	@Override

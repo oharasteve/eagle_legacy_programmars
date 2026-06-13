@@ -11,9 +11,11 @@ import com.eagle.programmar.Haskell.Expressions.Haskell_RangeExpression;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationBackSlash;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Haskell_MapMStatement extends TokenSequence
 		implements EagleRunnable // , EagleTransformableStatementList
@@ -25,8 +27,9 @@ public class Haskell_MapMStatement extends TokenSequence
 	public @S(40) Haskell_Variable variable;
 	public @S(50) Haskell_Punctuation arrow = new Haskell_Punctuation("->");
 	public @S(60) Haskell_Identifier_Reference funcName;
-	public @S(70) Haskell_Expression argument;
-	public @S(80) Haskell_RangeExpression rangeExpr;
+	public @S(70) TokenList<Haskell_Expression> arguments;
+	public @S(80) PunctuationRightParen rightParen;
+	public @S(90) Haskell_RangeExpression rangeExpr;
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
