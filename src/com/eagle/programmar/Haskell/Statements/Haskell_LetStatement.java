@@ -12,7 +12,6 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.programmar.Haskell.Haskell_Syntax.Haskell_Multiline_Syntax;
 import com.eagle.programmar.Haskell.Haskell_Variable;
-import com.eagle.programmar.Haskell.Statements.Haskell_LetStatement.Haskell_LetVariable.Haskell_LetMultiple;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
@@ -34,15 +33,16 @@ public class Haskell_LetStatement extends TokenSequence
 	public static class Haskell_LetVariable extends TokenChooser
 	{
 		public @CHOICE Haskell_Variable XXvariable;
-		
-		public @CHOICE static class Haskell_LetMultiple extends TokenSequence
-		{
-			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) SeparatedList<Haskell_Variable,PunctuationComma> variables;
-			public @S(30) PunctuationRightParen rightParen;
-		}
+		public @CHOICE Haskell_LetMultiple XXmultipleVars;
 	}
 	
+	public static class Haskell_LetMultiple extends TokenSequence
+	{
+		public @S(10) PunctuationLeftParen leftParen;
+		public @S(20) SeparatedList<Haskell_Variable,PunctuationComma> variables;
+		public @S(30) PunctuationRightParen rightParen;
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
