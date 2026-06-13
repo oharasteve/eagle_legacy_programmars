@@ -56,7 +56,7 @@ public class Haskell_ComplexStatement extends TokenSequence
 		public @CHOICE Haskell_ImportStatement XXimportStatement;
 		public @CHOICE Haskell_LetStatement XXletStatement;
 		public @CHOICE Haskell_MapMStatement XXmapMStatement;
-		public @CHOICE Haskell_PutStrStatement XXputStrState,emt;
+		public @CHOICE Haskell_PutStrStatement XXputStrState;
 		public @CHOICE Haskell_ReturnStatement XXreturnStatement;
 
 		public @LAST Haskell_ExpressionStatement XXexpression; // Avoid conflict with 'for' statement
