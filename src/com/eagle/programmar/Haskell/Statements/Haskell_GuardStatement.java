@@ -18,6 +18,7 @@ public class Haskell_GuardStatement extends TokenSequence
 	public @S(30) Haskell_Keyword OTHERWISE = new Haskell_Keyword("otherwise");
 	public @S(40) PunctuationEquals equals;
 	public @S(50) Haskell_Expression value;
+	public @S(60) @OPT Haskell_GuardWhere where;
 	
 	public static class Haskell_GuardLine extends TokenSequence
 	{
@@ -26,5 +27,13 @@ public class Haskell_GuardStatement extends TokenSequence
 		public @S(30) PunctuationEquals equals;
 		public @S(40) Haskell_Expression value;
 		public @S(50) Haskell_EndOfLine eoln;
+	}
+	
+	public static class Haskell_GuardWhere extends TokenSequence
+	{
+		public @S(10) Haskell_EndOfLine eoln1;
+		public @S(20) Haskell_Keyword WHERE = new Haskell_Keyword("where");
+		public @S(30) @OPT Haskell_EndOfLine eoln2;
+		public @S(40) Haskell_StatementBlock block;
 	}
 }
