@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.Haskell.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleInteger;
 import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.programmar.Haskell.Haskell_Variable;
 import com.eagle.programmar.Haskell.Expressions.Haskell_RangeExpression;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
+import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationBackSlash;
@@ -34,6 +38,26 @@ public class Haskell_MapMStatement extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		throw new RuntimeException("Need to implement");
+		String fnName = funcName.getValue();
+		AbstractFunction fn = interpreter.findFunction(fnName);
+		if (fn == null)
+		{
+			throw new RuntimeException("Unable to find a function named " + fnName);
+		}
+		Haskell_Function func = (Haskell_Function) fn;
+
+		int start = interpreter.getIntValue(rangeExpr.start);
+		int stop = interpreter.getIntValue(rangeExpr.stop);
+		for (int i = start; i <= stop; i++)
+		{
+			interpreter.setSymbol(variable.id, variable.id.getValue(), new EagleInteger(i));
+			
+			ArrayList<Haskell_Expression> args = new ArrayList<Haskell_Expression>();
+			for (Haskell_Expression expr : arguments._elements)
+			{
+				args.add(expr);
+			}
+			func.call(interpreter, fnName, args);
+		}
 	}
 }

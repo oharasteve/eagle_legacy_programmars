@@ -58,13 +58,17 @@ public class Haskell_ParenthesizedExpression extends PrimaryOperator
 			}
 		}
 		
-		if (nValues == 1)
+		if (nValues == 0)
+		{
+			interpreter.pushBool(false);	// () is NIL
+		}
+		else if (nValues == 1)
 		{
 			interpreter.tryToInterpret(first);
 		}
 		else
 		{
-			throw new RuntimeException("Unknown parenthese expression");
+			throw new RuntimeException("Unknown parentheses expression: " + this + " nValues=" + nValues);
 		}
 	}
 
