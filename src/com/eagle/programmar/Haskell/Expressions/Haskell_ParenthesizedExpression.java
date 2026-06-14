@@ -9,7 +9,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.programmar.Haskell.Statements.Haskell_Function;
-import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
+import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
@@ -39,10 +39,10 @@ public class Haskell_ParenthesizedExpression extends PrimaryOperator
 		if (nValues >= 1)
 		{
 			first = expressions.first();
-			if (first.getWhich() instanceof Haskell_Keyword)
+			if (first.getWhich() instanceof Haskell_Identifier_Reference)
 			{
-				Haskell_Keyword kw = (Haskell_Keyword) first.getWhich();
-				String name = kw.getValue();
+				Haskell_Identifier_Reference ref = (Haskell_Identifier_Reference) first.getWhich();
+				String name = ref.getValue();
 				AbstractFunction fn = interpreter.findFunction(name);
 				if (fn != null)
 				{

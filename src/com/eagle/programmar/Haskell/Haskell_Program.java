@@ -42,7 +42,7 @@ public class Haskell_Program extends AbstractLanguage implements EagleRunnable
 				if (which2 instanceof Haskell_Function)
 				{
 					Haskell_Function fn = (Haskell_Function) which2;
-					interpreter.addFunction(fn.definition.ref.getValue(), fn);
+					interpreter.addFunction(fn.definition.def.getValue(), fn);
 				}
 			}
 		}

@@ -42,28 +42,45 @@ public class Haskell_RelationalExpression extends PrecedenceOperator
 		}
 		_metrics.operated(leftValue.getType(), rightValue.getType());
 
-		int leftInt = leftValue.forceIntegerValue();
-		int rightInt = rightValue.forceIntegerValue();
-		switch (oper)
+		if (leftValue.isString() || rightValue.isString())
 		{
-		case "==":
-			interpreter.pushBool(leftInt == rightInt);
-			return;
-		case "/=":
-			interpreter.pushBool(leftInt != rightInt);
-			return;
-		case "<":
-			interpreter.pushBool(leftInt < rightInt);
-			return;
-		case "<=":
-			interpreter.pushBool(leftInt <= rightInt);
-			return;
-		case ">":
-			interpreter.pushBool(leftInt > rightInt);
-			return;
-		case ">=":
-			interpreter.pushBool(leftInt >= rightInt);
-			return;
+			String leftStr = leftValue.forceStringValue();
+			String rightStr = rightValue.forceStringValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftStr.equals(rightStr));
+				return;
+			case "/=":
+				interpreter.pushBool(!leftStr.equals(rightStr));
+				return;
+			}
+		}
+		else
+		{
+			int leftInt = leftValue.forceIntegerValue();
+			int rightInt = rightValue.forceIntegerValue();
+			switch (oper)
+			{
+			case "==":
+				interpreter.pushBool(leftInt == rightInt);
+				return;
+			case "/=":
+				interpreter.pushBool(leftInt != rightInt);
+				return;
+			case "<":
+				interpreter.pushBool(leftInt < rightInt);
+				return;
+			case "<=":
+				interpreter.pushBool(leftInt <= rightInt);
+				return;
+			case ">":
+				interpreter.pushBool(leftInt > rightInt);
+				return;
+			case ">=":
+				interpreter.pushBool(leftInt >= rightInt);
+				return;
+			}
 		}
 		throw new RuntimeException("Unexpected relational operator: " + oper);
 	}

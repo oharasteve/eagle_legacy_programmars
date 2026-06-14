@@ -5,6 +5,7 @@ package com.eagle.programmar.Haskell;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
+import com.eagle.programmar.Haskell.Statements.Haskell_DataStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_DoStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ExpressionStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_Function;
@@ -12,6 +13,7 @@ import com.eagle.programmar.Haskell.Statements.Haskell_FunctionCall;
 import com.eagle.programmar.Haskell.Statements.Haskell_IfStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ImportStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_LetStatement;
+import com.eagle.programmar.Haskell.Statements.Haskell_MainFunction;
 import com.eagle.programmar.Haskell.Statements.Haskell_MapMStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_PutStrStatement;
 import com.eagle.programmar.Haskell.Statements.Haskell_ReturnStatement;
@@ -49,17 +51,20 @@ public class Haskell_ComplexStatement extends TokenSequence
 
 	public static class Haskell_Statement extends TokenChooser
 	{
-		public @CHOICE Haskell_FunctionCall XXassignment;
+		public @FIRST Haskell_Function XXfunctionDefinition;
+
+		public @CHOICE Haskell_DataStatement XXdataStatement;
 		public @CHOICE Haskell_DoStatement XXdoStatement;
-		public @CHOICE Haskell_Function XXfunctionDefinition;
+		public @CHOICE Haskell_FunctionCall XXassignment;
 		public @CHOICE Haskell_IfStatement XXifStatement;
 		public @CHOICE Haskell_ImportStatement XXimportStatement;
 		public @CHOICE Haskell_LetStatement XXletStatement;
+		public @CHOICE Haskell_MainFunction XXmainFunction;
 		public @CHOICE Haskell_MapMStatement XXmapMStatement;
 		public @CHOICE Haskell_PutStrStatement XXputStrState;
 		public @CHOICE Haskell_ReturnStatement XXreturnStatement;
 
-		public @LAST Haskell_ExpressionStatement XXexpression; // Avoid conflict with 'for' statement
+		public @LAST Haskell_ExpressionStatement XXexpression;
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Haskell_Type extends TokenChooser
 {
-	public @CHOICE static class Haskell_IO_type extends TokenSequence
+	public @CHOICE static class Haskell_TypeIO extends TokenSequence
 	{
 		public @S(10) Haskell_Keyword IO = new Haskell_Keyword("IO");
 		public @S(20) Haskell_Type type;

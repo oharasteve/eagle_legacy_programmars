@@ -44,15 +44,15 @@ public class Haskell_Function extends TokenSequence
 		implements AbstractFunction, EagleRunnable, EagleScopeInterface,
 				EagleTransformableFunction
 {
-	public @S(10) @OPT Haskell_FunctionPrototype prototype;
+	public @S(10) Haskell_FunctionPrototype prototype;
 	public @S(20) Haskell_FunctionDefinition definition;
 	
 	public static class Haskell_FunctionPrototype extends TokenSequence
 	{
-		public @S(10) Haskell_Function_Definition id;
+		public @S(10) Haskell_Identifier_Reference id;
 		public @S(20) Haskell_Punctuation colonColon = new Haskell_Punctuation("::");
 		public @S(30) Haskell_Type type;
-		public @S(40) @OPT TokenList<Haskell_ArrowType> types;
+		public @S(40) TokenList<Haskell_ArrowType> types;
 		public @S(50) Haskell_EndOfLine eoln;
 		
 		public static class Haskell_ArrowType extends TokenSequence
@@ -64,7 +64,7 @@ public class Haskell_Function extends TokenSequence
 
 	public static class Haskell_FunctionDefinition extends TokenSequence
 	{
-		public @S(10) Haskell_Identifier_Reference ref;
+		public @S(10) Haskell_Function_Definition def;
 		public @S(20) @OPT TokenList<Haskell_Parameter_Definition> params;
 		public @S(30) Haskell_FunctionBody body;
 	}
@@ -118,7 +118,7 @@ public class Haskell_Function extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		Haskell_Function_Definition id = prototype.id;
+		Haskell_Function_Definition id = definition.def;
 		if (_callMetrics == null)
 		{
 			_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
@@ -134,13 +134,7 @@ public class Haskell_Function extends TokenSequence
 
 		// Don't do much here.
 		// We searched for all the functions in a preliminary pass
-		// And we only evaluate when it is called, except for "main"
-		if (definition.ref.getValue().equals("main"))
-		{
-			interpreter.callingFunction("main", this);
-			interpreter.tryToInterpret(definition.body);
-			interpreter.completedFunction("main", this);
-		}
+		// And we only evaluate when it is called (except for Haskell_MainFunction)
 	}
 	
 	// Called from Haskell_FunctionCall and Haskell_ParenthesizedExpression
@@ -196,7 +190,7 @@ public class Haskell_Function extends TokenSequence
 	public void transformFunction(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		Haskell_Function_Definition id = prototype.id;
+		Haskell_Function_Definition id = definition.def;
 		TypeEnum metricRetType = transformer.findReturnMetric(id);
 		AbstractType newReturnType = generator.transformType(metricRetType, null, id);
 
