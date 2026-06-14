@@ -8,7 +8,6 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.programmar.Haskell.Haskell_Variable;
-import com.eagle.programmar.Haskell.Statements.Haskell_GuardStatement.Haskell_GuardWhere.Haskell_WhereAssignment;
 import com.eagle.programmar.Haskell.Terminals.Haskell_EndOfLine;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Punctuation;
@@ -40,14 +39,14 @@ public class Haskell_GuardStatement extends TokenSequence implements EagleRunnab
 		public @S(20) Haskell_Keyword WHERE = new Haskell_Keyword("where");
 		public @S(30) @OPT Haskell_EndOfLine eoln2;
 		public @S(40) TokenList<Haskell_WhereAssignment> assignments;
-		
-		public static class Haskell_WhereAssignment extends TokenSequence
-		{
-			public @S(10) Haskell_Variable variable;
-			public @S(20) PunctuationEquals equals;
-			public @S(30) Haskell_Expression expression;
-			public @S(40) Haskell_EndOfLine eoln;
-		}
+	}
+
+	public static class Haskell_WhereAssignment extends TokenSequence
+	{
+		public @S(10) Haskell_Variable variable;
+		public @S(20) PunctuationEquals equals;
+		public @S(30) Haskell_Expression expression;
+		public @S(40) Haskell_EndOfLine eoln;
 	}
 
 	@Override
