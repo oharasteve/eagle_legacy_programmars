@@ -13,7 +13,7 @@ import com.eagle.tokens.TokenSequence;
 public class Haskell_PutStrStatement extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Haskell_KeywordChoice PUTSTR = new Haskell_KeywordChoice("putStr", "putStrLn");
-	public @S(20) Haskell_Punctuation dollar = new Haskell_Punctuation("$");
+	public @S(20) @OPT Haskell_Punctuation dollar = new Haskell_Punctuation("$");
 	public @S(30) Haskell_Expression expression;
 	
 	@Override
