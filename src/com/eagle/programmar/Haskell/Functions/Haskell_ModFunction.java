@@ -5,39 +5,50 @@ package com.eagle.programmar.Haskell.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Haskell.Haskell_Expression;
-import com.eagle.programmar.Haskell.Terminals.Haskell_Keyword;
+import com.eagle.programmar.Haskell.Haskell_Variable;
+import com.eagle.programmar.Haskell.Expressions.Haskell_ParenthesizedExpression;
+import com.eagle.programmar.Haskell.Terminals.Haskell_KeywordChoice;
+import com.eagle.programmar.Haskell.Terminals.Haskell_Number;
 import com.eagle.tokens.PrimaryOperator;
-import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.tokens.interfaces.AbstractStatement;
-import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleTransformableExpression;
-import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
+import com.eagle.tokens.TokenChooser;
 
 public class Haskell_ModFunction extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableExpression
+		implements EagleRunnable // , EagleTransformableExpression
 {
-	public @S(10) Haskell_Keyword MOD = new Haskell_Keyword("mod");
-	public @S(20) Haskell_Expression numer;
-	public @S(30) Haskell_Expression denom;
+	public @S(10) Haskell_KeywordChoice MOD = new Haskell_KeywordChoice("mod", "div");
+	public @S(20) Haskell_ModArgument numer;
+	public @S(30) Haskell_ModArgument denom;
 
+	public static class Haskell_ModArgument extends TokenChooser
+	{
+		public @CHOICE Haskell_Number XXnumber;
+		public @CHOICE Haskell_Variable XXvar;
+		public @CHOICE Haskell_ParenthesizedExpression XXparens;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
 		int numerInt = interpreter.getIntValue(numer);
 		int denomInt = interpreter.getIntValue(denom);
-		interpreter.pushInt(Math.floorMod(numerInt, denomInt));
+		switch (MOD.getValue())
+		{
+		case "mod":
+			interpreter.pushInt(Math.floorMod(numerInt, denomInt));
+			return;
+		case "div":
+			interpreter.pushInt(Math.floorDiv(numerInt, denomInt));
+			return;
+		}
+		throw new RuntimeException("Unable to handle " + MOD.getValue());
 	}
 
-	@Override
-	public AbstractExpression transformExpression(EagleTransformer transformer,
-			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
-	{
-		AbstractExpression numerExpr = transformer.transformExpression(generator, numer);
-		AbstractExpression denomExpr = transformer.transformExpression(generator, denom);
-		return generator.newMultiplicativeExpression(numerExpr, MultiplicativeEnum.MODULUS, denomExpr, this);
-	}
+//	@Override
+//	public AbstractExpression transformExpression(EagleTransformer transformer,
+//			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+//	{
+//		AbstractExpression numerExpr = transformer.transformExpression(generator, numer);
+//		AbstractExpression denomExpr = transformer.transformExpression(generator, denom);
+//		return generator.newMultiplicativeExpression(numerExpr, MultiplicativeEnum.MODULUS, denomExpr, this);
+//	}
 }

@@ -8,6 +8,7 @@ public class Haskell_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"case",
 			"data",
+			"div",
 			"do",
 			"drop",
 			"else",
