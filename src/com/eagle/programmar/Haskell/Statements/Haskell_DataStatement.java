@@ -27,7 +27,7 @@ public class Haskell_DataStatement extends TokenSequence implements EagleRunnabl
 		public @S(10) Haskell_Identifier_Reference id;
 		public @S(20) Haskell_Punctuation colonColon = new Haskell_Punctuation("::");
 		public @S(30) Haskell_Type type;
-		public @S(50) Haskell_EndOfLine eoln;
+		public @S(40) Haskell_EndOfLine eoln;
 	}
 
 	@Override
