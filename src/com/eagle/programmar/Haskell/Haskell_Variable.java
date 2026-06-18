@@ -8,20 +8,18 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Haskell.Symbols.Haskell_Identifier_Reference;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationLeftBracket;
-import com.eagle.tokens.punctuation.PunctuationRightBracket;
 
 public class Haskell_Variable extends TokenSequence implements EagleRunnable
 {
 	public @S(10) Haskell_Identifier_Reference id;
-	public @S(20) @OPT Haskell_Subscript subscript;
+//	public @S(20) @OPT Haskell_Subscript subscript;
 
-	public static class Haskell_Subscript extends TokenSequence
-	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) Haskell_Expression expr;
-		public @S(30) PunctuationRightBracket rightBracket;
-	}
+//	public static class Haskell_Subscript extends TokenSequence
+//	{
+//		public @S(10) PunctuationLeftBracket leftBracket;
+//		public @S(20) Haskell_Expression expr;
+//		public @S(30) PunctuationRightBracket rightBracket;
+//	}
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)

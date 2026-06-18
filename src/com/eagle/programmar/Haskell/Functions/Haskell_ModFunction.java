@@ -5,15 +5,24 @@ package com.eagle.programmar.Haskell.Functions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Haskell.Haskell_Variable;
+import com.eagle.programmar.Haskell.Haskell_Expression;
 import com.eagle.programmar.Haskell.Expressions.Haskell_ParenthesizedExpression;
+import com.eagle.programmar.Haskell.Expressions.Haskell_VariableExpression;
 import com.eagle.programmar.Haskell.Terminals.Haskell_KeywordChoice;
 import com.eagle.programmar.Haskell.Terminals.Haskell_Number;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 
 public class Haskell_ModFunction extends PrimaryOperator
-		implements EagleRunnable // , EagleTransformableExpression
+		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Haskell_KeywordChoice MOD = new Haskell_KeywordChoice("mod", "div");
 	public @S(20) Haskell_ModArgument numer;
@@ -22,8 +31,15 @@ public class Haskell_ModFunction extends PrimaryOperator
 	public static class Haskell_ModArgument extends TokenChooser
 	{
 		public @CHOICE Haskell_Number XXnumber;
-		public @CHOICE Haskell_Variable XXvar;
+		public @CHOICE Haskell_VariableExpression XXvar;
 		public @CHOICE Haskell_ParenthesizedExpression XXparens;
+		
+		public Haskell_Expression wrapExpression()
+		{
+			Haskell_Expression expr = new Haskell_Expression();
+			expr.setWhich(this.getWhich());
+			return expr;
+		}
 	}
 	
 	@Override
@@ -43,12 +59,12 @@ public class Haskell_ModFunction extends PrimaryOperator
 		throw new RuntimeException("Unable to handle " + MOD.getValue());
 	}
 
-//	@Override
-//	public AbstractExpression transformExpression(EagleTransformer transformer,
-//			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
-//	{
-//		AbstractExpression numerExpr = transformer.transformExpression(generator, numer);
-//		AbstractExpression denomExpr = transformer.transformExpression(generator, denom);
-//		return generator.newMultiplicativeExpression(numerExpr, MultiplicativeEnum.MODULUS, denomExpr, this);
-//	}
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractExpression numerExpr = transformer.transformExpression(generator, numer.wrapExpression());
+		AbstractExpression denomExpr = transformer.transformExpression(generator, denom.wrapExpression());
+		return generator.newMultiplicativeExpression(numerExpr, MultiplicativeEnum.MODULUS, denomExpr, this);
+	}
 }

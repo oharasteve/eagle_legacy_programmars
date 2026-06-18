@@ -32,10 +32,10 @@ public class Haskell_VariableExpression extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression subscr = null;
-		if (variable.subscript != null && variable.subscript.isPresent())
-		{
-			subscr = transformer.transformExpression(generator, variable.subscript.expr);
-		}
+//		if (variable.subscript != null && variable.subscript.isPresent())
+//		{
+//			subscr = transformer.transformExpression(generator, variable.subscript.expr);
+//		}
 		return generator.newVariableExpression(variable.id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, subscr, this);
 	}
