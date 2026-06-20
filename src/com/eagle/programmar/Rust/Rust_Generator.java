@@ -10,10 +10,10 @@ import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Rust.Rust_Program.Rust_TopElement;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AssignmentExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BitwiseExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_BuiltIn;
-import com.eagle.programmar.Rust.Expressions.Rust_CastExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ClassCreationExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_FunctionCall;
@@ -196,13 +196,50 @@ public class Rust_Generator
 	{
 		if (stmt == null) return;
 
-		if (stmt.getWhich() instanceof Rust_ConstStatement)
+		boolean saveInClass = false;
+		AbstractToken which = stmt.getWhich();
+		if (which instanceof Rust_LetStatement)
 		{
-			// Put it in program, not the 'main' method
-			Rust_TopElement element = new Rust_TopElement();
-			element.setWhich(stmt);
-			_program.addTopElement(element);
-			return;
+			if (_currentFunction == null)
+			{
+				saveInClass = true;
+			}
+			else if (_currentFunction.id.getValue().equals("main"))
+			{
+				saveInClass = true;
+			}
+		}
+		else if (which instanceof Rust_ConstStatement)
+		{
+			saveInClass = true;
+		}
+		
+		if (saveInClass)
+		{
+			Rust_Statement newStmt = null;
+			if (stmt.getWhich() instanceof Rust_LetStatement)
+			{
+				// Have to convert it over to 'static' data
+				// "`let` cannot be used for global variables"
+				Rust_LetStatement letStmt = (Rust_LetStatement) stmt.getWhich();
+				if (letStmt.init != null && letStmt.colonType != null)
+				{
+					Rust_ConstStatement staticStmt = Rust_ConstStatement.newDataDeclaration(
+							StaticEnum.STATIC, letStmt.var.var.getValue(), null,
+							letStmt.colonType.type, letStmt.init.expr,
+							letStmt.getTransformationSource());
+					newStmt = wrapStatement(staticStmt);
+				}
+			}
+			
+			if (newStmt != null)
+			{
+				// Put it in program, not in the 'main' method
+				Rust_TopElement element = new Rust_TopElement();
+				element.setWhich(newStmt);
+				_program.addTopElement(element);
+				return;
+			}
 		}
 
 		checkFunction();
@@ -576,7 +613,8 @@ public class Rust_Generator
 	@Override
 	public Rust_Expression newTruncateExpression(Rust_Expression expr, AbstractToken source)
 	{
-		return Rust_CastExpression.newCastExpression("i32", expr, source);
+		Rust_Type type = Rust_Type.newPrimitiveType("i32");
+		return Rust_AsExpression.generateAsExpr(expr, type, source);
 	}
 
 	@Override
