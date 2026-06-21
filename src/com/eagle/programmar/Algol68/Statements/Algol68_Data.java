@@ -39,7 +39,7 @@ public class Algol68_Data extends TokenSequence
 		public @S(10) Algol68_PunctuationChoice equals = new Algol68_PunctuationChoice("=", ":=");
 		public @S(20) Algol68_Expression value;
 	}
-
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -77,7 +77,11 @@ public class Algol68_Data extends TokenSequence
 			AbstractType newType = generator.transformType(typ, null, null);
 
 			String name = var.getValue();
-			AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
+			int asgs = transformer._metrics.countAssignments(name, null);
+			StaticEnum isConst = StaticEnum.NONE;
+			if (asgs == 1) isConst = StaticEnum.CONST;			
+			
+			AbstractStatement stmt = generator.newDataDeclaration(isConst, name, null, newType, initial, this);
 			result.add(stmt);
 		}
 
