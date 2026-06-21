@@ -49,7 +49,11 @@ public class Go_Data extends TokenSequence
 		{
 			AbstractType dataType = generator.transformType(TypeEnum.ARRAY, null, this);
 			AbstractExpression value = transformer.transformExpression(generator, initValue);
-			AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, id.getValue(), null,
+			String name = id.getValue();
+			int asgs = transformer._metrics.countAssignments(name, null);
+			StaticEnum isConst = StaticEnum.NONE;
+			if (asgs == 1) isConst = StaticEnum.CONST;			
+			AbstractStatement dataStmt = generator.newDataDeclaration(isConst, name, null,
 					dataType, value, this);
 			return dataStmt;
 		}
