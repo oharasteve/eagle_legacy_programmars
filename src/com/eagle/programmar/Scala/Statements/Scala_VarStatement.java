@@ -28,15 +28,23 @@ public class Scala_VarStatement extends TokenSequence
 	public @S(10) @DOC("taste-vars-data-types.html#two-types-of-variables") Scala_Keyword VAR = new Scala_Keyword(
 			"var");
 	public @S(20) Scala_Variable_Definition id;
-	public @S(30) PunctuationEquals equals;
-	public @S(40) Scala_Expression value;
-	public @S(50) Scala_EOLN eoln;
+	public @S(30) @OPT Scala_VarInit init;
+	public @S(40) Scala_EOLN eoln;
 
+	public static class Scala_VarInit extends TokenSequence
+	{
+		public @S(10) PunctuationEquals equals;
+		public @S(20) Scala_Expression value;
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(value);
-		interpreter.setSymbol(id, id.toString(), val);
+		if (init != null && init.isPresent())
+		{
+			EagleValue val = interpreter.getEagleValue(init.value);
+			interpreter.setSymbol(id, id.toString(), val);
+		}
 	}
 
 	@Override
@@ -47,10 +55,17 @@ public class Scala_VarStatement extends TokenSequence
 		TypeEnum type = transformer.findAssignMetric(id);
 		AbstractType newType = generator.transformType(type, null, null);
 
-		AbstractExpression initial = transformer.transformExpression(generator, value);
+		AbstractExpression initial = null;
+		if (init != null && init.isPresent())
+		{
+			initial = transformer.transformExpression(generator, init.value);
+		}
 
 		String name = id.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
+		int asgs = transformer._metrics.countAssignments(name, null);
+		StaticEnum isConst = StaticEnum.NONE;
+		if (asgs == 1) isConst = StaticEnum.CONST;			
+		AbstractStatement stmt = generator.newDataDeclaration(isConst, name, null, newType, initial, this);
 		return stmt;
 	}
 }
