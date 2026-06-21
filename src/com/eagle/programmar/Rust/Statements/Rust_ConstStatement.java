@@ -8,6 +8,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Type;
+import com.eagle.programmar.Rust.Rust_Type.Rust_TypePrimitive;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
@@ -73,12 +74,12 @@ public class Rust_ConstStatement extends TokenSequence
 		return stmt;
 	}
 
-	public static Rust_ConstStatement newDataDeclaration(StaticEnum isStatic, String name, Rust_Expression unusedSize,
+	public static Rust_ConstStatement newConstDeclaration(StaticEnum isStatic, String name, Rust_Expression unusedSize,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
 		if (type == null)
 		{
-			throw new RuntimeException("Can't create data without a type, for " + name);
+			throw new RuntimeException("Can't create constant without a type, for " + name);
 		}
 
 		Rust_ConstStatement data = new Rust_ConstStatement();
@@ -98,6 +99,15 @@ public class Rust_ConstStatement extends TokenSequence
 			break;
 		default:
 			break;	// Nothing
+		}
+
+		if (type.getWhich() instanceof Rust_TypePrimitive)
+		{
+			Rust_TypePrimitive prim = (Rust_TypePrimitive) type.getWhich();
+			if (prim.PRIMITIVE.getValue().equals("String"))
+			{
+				data.type = Rust_Type.newPrimitiveType("&str");
+			}
 		}
 
 		// Set the initial value, if any

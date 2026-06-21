@@ -196,25 +196,8 @@ public class Rust_Generator
 	{
 		if (stmt == null) return;
 
-		boolean saveInClass = false;
 		AbstractToken which = stmt.getWhich();
-		if (which instanceof Rust_LetStatement)
-		{
-			if (_currentFunction == null)
-			{
-				saveInClass = true;
-			}
-			else if (_currentFunction.id.getValue().equals("main"))
-			{
-				saveInClass = true;
-			}
-		}
-		else if (which instanceof Rust_ConstStatement)
-		{
-			saveInClass = true;
-		}
-		
-		if (saveInClass)
+		if (which instanceof Rust_ConstStatement)
 		{
 			Rust_Statement newStmt = null;
 			if (stmt.getWhich() instanceof Rust_LetStatement)
@@ -224,7 +207,7 @@ public class Rust_Generator
 				Rust_LetStatement letStmt = (Rust_LetStatement) stmt.getWhich();
 				if (letStmt.init != null && letStmt.colonType != null)
 				{
-					Rust_ConstStatement staticStmt = Rust_ConstStatement.newDataDeclaration(
+					Rust_ConstStatement staticStmt = Rust_ConstStatement.newConstDeclaration(
 							StaticEnum.STATIC, letStmt.var.var.getValue(), null,
 							letStmt.colonType.type, letStmt.init.expr,
 							letStmt.getTransformationSource());
@@ -293,15 +276,9 @@ public class Rust_Generator
 	public Rust_Statement newDataDeclaration(StaticEnum isStatic, String name, Rust_Expression size,
 			Rust_Type type, Rust_Expression initial, AbstractToken source)
 	{
-//		if (_metrics != null)
-//		{
-//			int assignments = _metrics.countAssignments(name, null);
-//			if (assignments == 1) isStatic = StaticEnum.CONST;
-//		}
-		
 		if (isStatic == StaticEnum.CONST)
 		{
-			return wrapStatement(Rust_ConstStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
+			return wrapStatement(Rust_ConstStatement.newConstDeclaration(isStatic, name, size, type, initial, source));
 		}
 		return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
