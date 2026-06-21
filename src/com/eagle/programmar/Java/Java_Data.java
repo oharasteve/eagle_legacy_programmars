@@ -126,7 +126,11 @@ public class Java_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, initialValue.expression);
 		}
-		return generator.newDataDeclaration(StaticEnum.STATIC, name, null, newType, initial, this);
+		
+		int asgs = transformer._metrics.countAssignments(name, null);
+		StaticEnum isConst = StaticEnum.NONE;
+		if (asgs == 1) isConst = StaticEnum.CONST;			
+		return generator.newDataDeclaration(isConst, name, null, newType, initial, this);
 	}
 
 	public static Java_Data newDataDeclaration(StaticEnum isStatic, String name, Java_Expression size, Java_Type type,
