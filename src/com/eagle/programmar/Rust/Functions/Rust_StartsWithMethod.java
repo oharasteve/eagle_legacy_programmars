@@ -61,6 +61,14 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 		startsExpr.dot = new PunctuationPeriod();
 		startsExpr.leftParen = new PunctuationLeftParen();
 		startsExpr.arg = patt;
+		
+		// Dang, Rust is fussy. Hard to tell when it wants .toString() on Strings or &str's
+		if (patt.getWhich() instanceof Rust_ToStringMethod)
+		{
+			Rust_ToStringMethod toStr = (Rust_ToStringMethod) patt.getWhich();
+			startsExpr.arg = toStr.left;
+		}
+		
 		if (sc != null)
 		{
 			// Rust does not support str.StartsWith("patt",sc)
