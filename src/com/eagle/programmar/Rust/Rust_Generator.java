@@ -196,33 +196,13 @@ public class Rust_Generator
 	{
 		if (stmt == null) return;
 
-		AbstractToken which = stmt.getWhich();
-		if (which instanceof Rust_ConstStatement)
+		if (stmt.getWhich() instanceof Rust_ConstStatement)
 		{
-			Rust_Statement newStmt = null;
-			if (stmt.getWhich() instanceof Rust_LetStatement)
-			{
-				// Have to convert it over to 'static' data
-				// "`let` cannot be used for global variables"
-				Rust_LetStatement letStmt = (Rust_LetStatement) stmt.getWhich();
-				if (letStmt.init != null && letStmt.colonType != null)
-				{
-					Rust_ConstStatement staticStmt = Rust_ConstStatement.newConstDeclaration(
-							StaticEnum.STATIC, letStmt.var.var.getValue(), null,
-							letStmt.colonType.type, letStmt.init.expr,
-							letStmt.getTransformationSource());
-					newStmt = wrapStatement(staticStmt);
-				}
-			}
-			
-			if (newStmt != null)
-			{
-				// Put it in program, not in the 'main' method
-				Rust_TopElement element = new Rust_TopElement();
-				element.setWhich(newStmt);
-				_program.addTopElement(element);
-				return;
-			}
+			// Put it in program, not in the 'main' method
+			Rust_TopElement element = new Rust_TopElement();
+			element.setWhich(stmt);
+			_program.addTopElement(element);
+			return;
 		}
 
 		checkFunction();
