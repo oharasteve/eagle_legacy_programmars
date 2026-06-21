@@ -57,7 +57,10 @@ public class Scala_ValStatement extends TokenSequence
 		AbstractExpression initial = transformer.transformExpression(generator, initValue);
 
 		String name = id.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
+		int asgs = transformer._metrics.countAssignments(name, null);
+		StaticEnum isConst = StaticEnum.NONE;
+		if (asgs == 1) isConst = StaticEnum.CONST;			
+		AbstractStatement stmt = generator.newDataDeclaration(isConst, name, null, newType, initial, this);
 		return stmt;
 	}
 }
