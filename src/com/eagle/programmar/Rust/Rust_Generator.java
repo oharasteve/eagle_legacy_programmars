@@ -152,7 +152,7 @@ public class Rust_Generator
 		{
 			_currentFunction = new Rust_Function();
 			_currentFunction.id = new Rust_Function_Definition();
-			_currentFunction.id.setValue("main");
+			_currentFunction.id.setValue(mainName());
 			_currentFunction.leftParen = new PunctuationLeftParen();
 			_currentFunction.rightParen = new PunctuationRightParen();
 			
@@ -179,7 +179,7 @@ public class Rust_Generator
 	public void addMethodParameter(Rust_Type type, String name)
 	{
 		// Don't add args to "fn main()"
-		if (!_currentFunction.id.getValue().equals("main"))
+		if (!_currentFunction.id.getValue().equals(mainName()))
 		{
 			_currentFunction.addFunctionParameter(type, name);
 		}

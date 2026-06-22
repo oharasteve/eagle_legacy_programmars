@@ -161,7 +161,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			CSharp_Type mainType = CSharp_Type.newPrimitiveType("void");
 			_currentMethod = new CSharp_Method();
 			_currentMethod.newCSharpMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
-					mainType, "Main");
+					mainType, mainName());
 			_currentClass.addMethod(_currentMethod);
 
 			CSharp_Type paramType = CSharp_Type.transformTypeArray(TypeEnum.STRING);
@@ -200,7 +200,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 		if (stmt == null) return;
 		checkClass();
 
-		// Cannot put data into the 'main' method when it was declared in a global area
+		// Cannot put data into the 'Main' method when it was declared in a global area
 		if (stmt.getWhich() instanceof CSharp_Data)
 		{
 			boolean saveInClass = false;
@@ -208,7 +208,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 			{
 				saveInClass = true;
 			}
-			else if (_currentMethod.id.getValue().equals("Main"))
+			else if (_currentMethod.id.getValue().equals(mainName()))
 			{
 				saveInClass = true;
 			}
@@ -218,7 +218,7 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 				CSharp_Data data = (CSharp_Data) stmt.getWhich();
 				data.addModifier("static");
 
-				// Put it in top-level class, not the 'main' method
+				// Put it in top-level class, not the 'Main' method
 				CSharp_ClassElement element = new CSharp_ClassElement();
 				element.setWhich(stmt);
 				_currentClass.elements.addToken(element);

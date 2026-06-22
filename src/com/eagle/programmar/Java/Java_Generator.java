@@ -164,7 +164,7 @@ public class Java_Generator
 			Java_Type mainType = Java_Type.newPrimitiveType("void");
 			_currentMethod = new Java_Method();
 			_currentMethod.newJavaMethod(PrivacyEnum.PUBLIC, StaticEnum.STATIC,
-					mainType, "main");
+					mainType, mainName());
 			_currentClass.addMethod(_currentMethod);
 
 			Java_Type paramType = Java_Type.transformTypeArray(TypeEnum.STRING);
@@ -214,7 +214,7 @@ public class Java_Generator
 			else if (_currentMethod.typeAndName.getWhich() instanceof Java_MethodType)
 			{
 				Java_MethodType methType = (Java_MethodType) _currentMethod.typeAndName.getWhich();
-				if (methType.methodName.getValue().equals("main"))
+				if (methType.methodName.getValue().equals(mainName()))
 				{
 					saveInClass = true;
 				}

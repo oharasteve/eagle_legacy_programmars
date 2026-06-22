@@ -125,7 +125,11 @@ public class CSharp_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, dataBody.initialValue.expression);
 		}
-		return generator.newDataDeclaration(StaticEnum.STATIC, name, null, newType, initial, dataBody);
+		
+		int asgs = transformer._metrics.countAssignments(name, null);
+		StaticEnum isConst = StaticEnum.NONE;
+		if (asgs == 1) isConst = StaticEnum.CONST;			
+		return generator.newDataDeclaration(isConst, name, null, newType, initial, dataBody);
 	}
 
 	public static CSharp_Data newDataDeclaration(StaticEnum isStatic, String name, CSharp_Expression size,
