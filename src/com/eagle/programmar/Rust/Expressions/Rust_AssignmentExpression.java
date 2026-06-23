@@ -125,9 +125,17 @@ public class Rust_AssignmentExpression extends PrecedenceOperator
 		asgExpr.var = Rust_Generator.wrapExpression(varExpr);
 		asgExpr.operator.setValue(punct);
 		
-		if (expression.getWhich() instanceof Rust_Literal)
+		AbstractToken which = expression.getWhich();
+		if (which instanceof Rust_Literal)
 		{
+			// Add .to_string()
 			asgExpr.expr = Rust_ToStringMethod.generateString(TypeEnum.STRING, expression, source);
+		}
+		else if (oper != AssignmentEnum.EQUALS && which instanceof Rust_ToStringMethod)
+		{
+			// Remove .to_string() See why I hate Rust?
+			Rust_ToStringMethod toStr = (Rust_ToStringMethod) which;
+			asgExpr.expr = toStr.left;
 		}
 		else
 		{
