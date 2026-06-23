@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -57,7 +58,15 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 			Rust_Expression sc, SubstringSCEnum whichSC, AbstractToken source)
 	{
 		Rust_StartsWithMethod startsExpr = new Rust_StartsWithMethod();
-		startsExpr.left = expr;
+		if (expr.getWhich() instanceof Rust_ParenthesizedExpression)
+		{
+			Rust_ParenthesizedExpression paren = (Rust_ParenthesizedExpression) expr.getWhich();
+			startsExpr.left = paren.expressions.first();	// Remove extra set of parens
+		}
+		else
+		{
+			startsExpr.left = expr;
+		}
 		startsExpr.dot = new PunctuationPeriod();
 		startsExpr.leftParen = new PunctuationLeftParen();
 		startsExpr.arg = patt;
