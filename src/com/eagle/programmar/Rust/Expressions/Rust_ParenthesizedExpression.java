@@ -44,6 +44,11 @@ public class Rust_ParenthesizedExpression extends PrimaryOperator
 
 	public static Rust_Expression generateParentheses(Rust_Expression theExpr, AbstractToken source)
 	{
+		if (theExpr.getWhich() instanceof Rust_ParenthesizedExpression)
+		{
+			// Never need ((x+y))
+			return theExpr;
+		}
 		Rust_ParenthesizedExpression par = new Rust_ParenthesizedExpression();
 		par.leftParen = new PunctuationLeftParen();
 		par.expressions = new SeparatedList<Rust_Expression, PunctuationComma>();

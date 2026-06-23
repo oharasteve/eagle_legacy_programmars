@@ -69,11 +69,10 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			break;
 		}
 		
-		range.lowExpression = Rust_AsExpression.generateAsExpr(range.lowExpression, usize, source);
 		range.highExpression = null;
 		if (whichEC == SubstringECEnum.JUST_ONE)
 		{
-			return range.lowExpression;
+			return Rust_AsExpression.generateAsExpr(range.lowExpression, usize, source);
 		}
 		
 		switch (whichEC)
@@ -134,6 +133,8 @@ public class Rust_RangeExpression extends PrecedenceOperator implements EagleRun
 			}
 		}
 
+		range.lowExpression = Rust_AsExpression.generateAsExpr(range.lowExpression, usize, source);
+		range.lowExpression = Rust_ParenthesizedExpression.generateParentheses(range.lowExpression, null);
 		return Rust_Generator.wrapExpression(range);
 	}
 }
