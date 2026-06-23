@@ -97,7 +97,10 @@ public class C_Data extends TokenChooser
 			{
 				initial = transformer.transformExpression(generator, initialValue.expression);
 			}
-			result.add(generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this));
+			int asgs = transformer._metrics.countAssignments(name, null);
+			StaticEnum isConst = StaticEnum.NONE;
+			if (asgs == 1) isConst = StaticEnum.CONST;			
+			result.add(generator.newDataDeclaration(isConst, name, null, newType, initial, this));
 
 			for (C_MoreIdentifiers more : moreIds._elements)
 			{
@@ -107,7 +110,10 @@ public class C_Data extends TokenChooser
 				{
 					initial = transformer.transformExpression(generator, more.initialValue.expression);
 				}
-				result.add(generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this));
+				asgs = transformer._metrics.countAssignments(name, null);
+				isConst = StaticEnum.NONE;
+				if (asgs == 1) isConst = StaticEnum.CONST;			
+				result.add(generator.newDataDeclaration(isConst, name, null, newType, initial, this));
 			}
 
 			return result;
