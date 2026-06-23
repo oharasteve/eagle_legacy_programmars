@@ -3,18 +3,18 @@
 
 package com.eagle.programmar.Eaglish;
 
+import com.eagle.programmar.Eaglish.Data.Eaglish_Array_Data;
+import com.eagle.programmar.Eaglish.Data.Eaglish_Integer_Data;
+import com.eagle.programmar.Eaglish.Data.Eaglish_String_Data;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Add_Statement;
-import com.eagle.programmar.Eaglish.Statements.Eaglish_Array_Data;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Break_For;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Call_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_For_Block;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Function;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_If_Block;
-import com.eagle.programmar.Eaglish.Statements.Eaglish_Integer_Data;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Print_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Return_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Set_Statement;
-import com.eagle.programmar.Eaglish.Statements.Eaglish_String_Data;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_Subtract_Statement;
 import com.eagle.programmar.Eaglish.Statements.Eaglish_While_Block;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_CommentEoln;
