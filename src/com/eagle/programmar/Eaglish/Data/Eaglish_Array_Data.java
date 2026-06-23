@@ -1,7 +1,7 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Mar 16, 2024
 
-package com.eagle.programmar.Eaglish.Statements;
+package com.eagle.programmar.Eaglish.Data;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,6 @@ import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
 import com.eagle.tokens.SeparatedList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -23,12 +22,11 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Array_Data extends TokenSequence
+public class Eaglish_Array_Data extends Eaglish_Data
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword ARRAY = new Eaglish_Keyword("ARRAY");
@@ -36,7 +34,7 @@ public class Eaglish_Array_Data extends TokenSequence
 	public @S(30) @OPT Eaglish_Array_InitialValues init;
 	public @S(40) Eaglish_EndOfLine eoln;
 
-	public static class Eaglish_Array_InitialValues extends TokenSequence
+	public static class Eaglish_Array_InitialValues extends Eaglish_Data
 	{
 		public @S(10) PunctuationEquals equals;
 		public @S(20) SeparatedList<Eaglish_Expression, PunctuationComma> values;
@@ -81,6 +79,6 @@ public class Eaglish_Array_Data extends TokenSequence
 			}
 			initial = generator.newArrayExpression(vals, ARRAY);
 		}
-		return generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
+		return super.transformData(transformer, generator, name, newType, initial);
 	}
 }

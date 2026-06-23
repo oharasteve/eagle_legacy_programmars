@@ -1,40 +1,30 @@
 // Copyright Eagle Legacy Modernization LLC, 2010-date
 // Original author: Steven A. O'Hara, Mar 16, 2024
 
-package com.eagle.programmar.Eaglish.Statements;
+package com.eagle.programmar.Eaglish.Data;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
-import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.programmar.Eaglish.Symbols.Eaglish_Variable_Definition;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_EndOfLine;
 import com.eagle.programmar.Eaglish.Terminals.Eaglish_Keyword;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class Eaglish_Integer_Data extends TokenSequence
+public class Eaglish_Integer_Data extends Eaglish_Data
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) Eaglish_Keyword INTEGER = new Eaglish_Keyword("INTEGER");
 	public @S(20) Eaglish_Variable_Definition var;
-	public @S(30) @OPT Eaglish_Integer_InitialValue init;
+	public @S(30) @OPT Eaglish_InitialValue init;
 	public @S(40) Eaglish_EndOfLine eoln;
-
-	public static class Eaglish_Integer_InitialValue extends TokenSequence
-	{
-		public @S(10) PunctuationEquals equals;
-		public @S(20) Eaglish_Expression expression;
-	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -58,6 +48,6 @@ public class Eaglish_Integer_Data extends TokenSequence
 		{
 			initial = transformer.transformExpression(generator, init.expression);
 		}
-		return generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
+		return super.transformData(transformer, generator, name, newType, initial);
 	}
 }
