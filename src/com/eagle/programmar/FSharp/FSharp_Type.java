@@ -3,19 +3,31 @@
 
 package com.eagle.programmar.FSharp;
 
+import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.programmar.FSharp.Terminals.FSharp_KeywordChoice;
-import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 
-public class FSharp_Type extends TokenChooser implements AbstractType
+public class FSharp_Type extends TokenSequence implements AbstractType
 {
-	public @CHOICE FSharp_KeywordChoice XXTYPES = new FSharp_KeywordChoice("bool", "int", "string");
+	public @S(10) FSharp_KeywordChoice PRIMITIVE = new FSharp_KeywordChoice("bool", "int", "string");
+	public @S(20) @OPT FSharp_Keyword ARRAY = new FSharp_Keyword("array");
 
-	public static TypeEnum findType(FSharp_Type type)
+	public TypeEnum findType()
 	{
-		FSharp_KeywordChoice typeName = (FSharp_KeywordChoice) type.getWhich();
-		switch (typeName.getValue())
+		if (ARRAY != null && ARRAY.isPresent())
+		{
+			switch (PRIMITIVE.getValue())
+			{
+			case "string":
+				return TypeEnum.ARRAY;
+			default:
+				return TypeEnum.VOID;
+			}
+		}
+		
+		switch (PRIMITIVE.getValue())
 		{
 		case "bool":
 			return TypeEnum.BOOLEAN;

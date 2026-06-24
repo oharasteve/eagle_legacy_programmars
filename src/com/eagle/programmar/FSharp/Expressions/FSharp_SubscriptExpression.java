@@ -32,7 +32,7 @@ public class FSharp_SubscriptExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) FSharp_Expression expr = new FSharp_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
+	public @S(20) @OPT PunctuationPeriod dot;
 	public @S(30) PunctuationLeftBracket leftBracket;
 	public @S(40) FSharp_RangeExpr subscr;
 	public @S(50) PunctuationRightBracket rightBracket;

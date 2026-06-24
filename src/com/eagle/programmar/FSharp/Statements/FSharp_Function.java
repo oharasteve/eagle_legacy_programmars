@@ -9,7 +9,6 @@ import java.util.Collection;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.metrics.ReturnMetrics;
 import com.eagle.programmar.FSharp.FSharp_Element;
@@ -38,7 +37,6 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
@@ -110,7 +108,7 @@ public class FSharp_Function extends TokenSequence
 		TypeEnum typRet = TypeEnum.VOID;
 		if (returnType != null && returnType.isPresent())
 		{
-			typRet = FSharp_Type.findType(returnType.type);
+			typRet = returnType.type.findType();
 		}
 		if (typRet == TypeEnum.VOID)
 		{
@@ -146,8 +144,6 @@ public class FSharp_Function extends TokenSequence
 				generator.addMethodParameter(paramType, param.var.getValue());
 			}
 		}
-
-		addLocalVars(transformer, generator);
 
 		for (FSharp_Element elt : statements._elements)
 		{
@@ -188,45 +184,5 @@ public class FSharp_Function extends TokenSequence
 		}
 
 		generator.doneMethod();
-	}
-
-	private boolean isFuncParam(String name)
-	{
-		if (params != null && params.isPresent())
-		{
-			int numParams = params.getPrimaryCount();
-			for (int i = 0; i < numParams; i++)
-			{
-				FSharp_FunctionParam param = params.getPrimaryElement(i);
-				if (param.var.getValue().equalsIgnoreCase(name))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	// Are there any local variables we need to declare?
-	private void addLocalVars(EagleTransformer transformer,
-			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
-	{
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typ = met.uniqueType();
-			if (typ != TypeEnum.VOID)
-			{
-				if (!isFuncParam(met._symbolName))
-				{
-					// System.err.println("****** Found var " + met._symbolName);
-					AbstractType absType = generator.transformType(typ, null, this);
-					AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE,
-							met._symbolName, null, absType, null, this);
-					generator.addStatement(dataStmt, this);
-				}
-			}
-		}
 	}
 }

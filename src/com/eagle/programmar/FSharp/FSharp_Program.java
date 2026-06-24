@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.FSharp;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement;
 import com.eagle.programmar.FSharp.FSharp_Element.FSharp_Statement_List;
 import com.eagle.programmar.FSharp.Statements.FSharp_Function;
@@ -26,8 +24,6 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -100,22 +96,22 @@ public class FSharp_Program extends AbstractLanguage
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
-				AbstractExpression initExpr = null;
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-						null, abstrType, initExpr, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
+//		// Are there any global variables we need to declare?
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typE = met.uniqueType();
+//			if (typE != TypeEnum.VOID)
+//			{
+//				AbstractType abstrType = generator.transformType(typE, null, this);
+//				AbstractExpression initExpr = null;
+//				// System.err.println("****** Found var " + met._symbolName);
+//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
+//						null, abstrType, initExpr, this);
+//				generator.addStatement(dataStmt, this);
+//			}
+//		}
 
 		// Transform all the Function definitions and global data
 		for (FSharp_Element elt : elements._elements)

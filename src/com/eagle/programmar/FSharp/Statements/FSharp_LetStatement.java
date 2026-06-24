@@ -19,8 +19,8 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.StaticEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -54,10 +54,17 @@ public class FSharp_LetStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression subscrExpr = null;
 		AbstractExpression value = transformer.transformExpression(generator, expression);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(variable.id.getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, AssignmentEnum.EQUALS, value, this);
-		return generator.newExpressionStatement(asgExpr, this);
+		TypeEnum type = null;
+		if (varType != null && varType.isPresent())
+		{
+			type = varType.type.findType();
+		}
+		String name = variable.id.getValue();
+		int asgs = transformer._metrics.countAssignments(name, null);
+		StaticEnum isConst = StaticEnum.NONE;
+		if (asgs == 1) isConst = StaticEnum.CONST;			
+		AbstractType newType = generator.transformType(type, null, null);
+		return generator.newDataDeclaration(isConst, name, null, newType, value, this);
 	}
 }
