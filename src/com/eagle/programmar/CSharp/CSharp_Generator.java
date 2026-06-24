@@ -451,6 +451,20 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	}
 
 	@Override
+	public CSharp_Expression newConcatExpression(ArrayList<CSharp_Expression> pieces, AbstractToken source)
+	{
+		int numPieces = pieces.size();
+		if (numPieces == 0) return null;
+		CSharp_Expression result = pieces.get(0);
+		for (int i = 1; i < numPieces; i++)
+		{
+			CSharp_Expression piece = pieces.get(i);
+			result = CSharp_AdditiveExpression.generateAdditive(null, result, AdditiveEnum.PLUS, piece, null);
+		}
+		return result;
+	}
+
+	@Override
 	public CSharp_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			CSharp_Expression subscript, AssignmentEnum oper, CSharp_Expression expression,
 			AbstractToken source)

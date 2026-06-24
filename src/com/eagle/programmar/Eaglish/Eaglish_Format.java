@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Eaglish;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -10,7 +12,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Eaglish_Format
@@ -69,15 +70,14 @@ public class Eaglish_Format
 	public static AbstractExpression compile(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator, String fmt, AbstractToken source)
 	{
-		AbstractExpression result = null;
-
-		int nc = fmt.length();
-		if (nc == 0)
+		if (fmt.indexOf("^") < 0)
 		{
-			return generator.newLiteralExpression("", null);
+			return generator.newLiteralExpression(fmt, source);
 		}
 
+		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
 		int sc = 0;
+		int nc = fmt.length();
 		while (sc < nc)
 		{
 			// Pull in a text string
@@ -92,14 +92,7 @@ public class Eaglish_Format
 			{
 				// Grab next literal piece
 				AbstractExpression piece1 = generator.newLiteralExpression(fmt.substring(sc, ec), null);
-				if (result == null)
-				{
-					result = piece1;
-				}
-				else
-				{
-					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, piece1, null);
-				}
+				pieces.add(piece1);
 			}
 
 			if (nextInsertion < 0)
@@ -120,19 +113,11 @@ public class Eaglish_Format
 				throw new RuntimeException("Unable to parse expression " + expr);
 			}
 			AbstractExpression newExpr = transformer.transformExpression(generator, expr);
-			// Always wrap in a str() function for now
-			AbstractExpression strExpr = generator.newStringFunction(null, newExpr, null);
-			if (result == null)
-			{
-				result = strExpr;
-			}
-			else
-			{
-				result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, strExpr, null);
-			}
+			// AbstractExpression strExpr = generator.newStringFunction(null, newExpr, null);
+			pieces.add(newExpr);
 			sc = endInsertion + 1;
 		}
 
-		return result;
+		return generator.newConcatExpression(pieces, source);
 	}
 }

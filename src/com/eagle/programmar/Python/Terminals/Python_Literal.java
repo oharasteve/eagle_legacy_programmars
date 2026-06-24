@@ -3,12 +3,16 @@
 
 package com.eagle.programmar.Python.Terminals;
 
+import java.util.ArrayList;
+
+import com.eagle.io.EaglePrinter;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Expressions.Python_Literals;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
 public class Python_Literal extends TerminalLiteralToken
@@ -108,6 +112,44 @@ public class Python_Literal extends TerminalLiteralToken
 		return lit;
 	}
 
+	public Python_Expression generateConcatLiteral(ArrayList<Python_Expression> pieces, AbstractToken source)
+	{
+		StringBuffer sb = new StringBuffer();
+		EaglePrinter prt = new EaglePrinter();
+		for (Python_Expression piece : pieces)
+		{
+			AbstractToken which1 = piece.getWhich();
+//			if (which1 instanceof Python_Str_Function)
+//			{
+//				Python_Str_Function strFn = (Python_Str_Function) which1;
+//				which1 = strFn.expression.getWhich();
+//			}
+//
+			if (which1 instanceof Python_Literals)
+			{
+				Python_Literals lits = (Python_Literals) which1;
+				for (Python_Literal lit : lits.literals._elements)
+				{
+					sb.append(lit.removeQuotes());
+				}
+			}
+			else
+			{
+				sb.append("{");
+				sb.append(prt.writeToken(which1));
+				sb.append("}");
+			}
+		}
+		
+		Python_Literal lit = new Python_Literal();
+		lit.setValue("f'" + sb.toString() + "'");
+		Python_Literals lits = new Python_Literals();
+		lits.literals = new TokenList<Python_Literal>();
+		lits.literals.addToken(lit);
+		lits.setTransformationSource(source);
+		return Python_Generator.wrapExpression(lits);
+	}
+	
 	public static Python_Expression generateLiteralExpression(String value, AbstractToken source)
 	{
 		Python_Literals literals = Python_Literals.generateLiterals(value, source);

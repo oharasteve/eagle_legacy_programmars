@@ -444,6 +444,13 @@ public class Python_Generator
 	}
 
 	@Override
+	public Python_Expression newConcatExpression(ArrayList<Python_Expression> pieces, AbstractToken source)
+	{
+		Python_Literal lit = new Python_Literal();
+		return lit.generateConcatLiteral(pieces, source);
+	}
+
+	@Override
 	public Python_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Python_Expression subscript, AssignmentEnum oper, Python_Expression expression,
 			AbstractToken source)

@@ -68,10 +68,13 @@ public class Rust_FormatFunction extends PrimaryOperator
 		func.argList.addPrimaryElement(fmt);
 		func.rightParen = new PunctuationRightParen();
 		
-		for (Rust_Expression arg : args)
+		if (args != null)
 		{
-			func.argList.addSecondaryElement(new PunctuationComma());
-			func.argList.addPrimaryElement(arg);
+			for (Rust_Expression arg : args)
+			{
+				func.argList.addSecondaryElement(new PunctuationComma());
+				func.argList.addPrimaryElement(arg);
+			}
 		}
 		
 		func.setTransformationSource(source);

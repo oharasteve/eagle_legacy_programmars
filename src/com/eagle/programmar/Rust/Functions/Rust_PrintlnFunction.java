@@ -81,9 +81,23 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 		// Simple case -> println!("str");
 		if (line != null)
 		{
-			if (line.getWhich() instanceof Rust_Literal)
+			AbstractToken which = line.getWhich();
+			if (which instanceof Rust_Literal)
 			{
 				print.argList.addPrimaryElement(line);
+			}
+			else if (which instanceof Rust_FormatFunction)
+			{
+				// println!(format!("{stuff}",args)) is silly
+				// Remove the format! and transfer its args to println!
+				Rust_FormatFunction fmtFunc = (Rust_FormatFunction) which;
+				print.argList.addPrimaryElement(fmtFunc.argList.first());
+				int numArgs = fmtFunc.argList.getPrimaryCount();
+				for (int i = 1; i < numArgs; i++)
+				{
+					print.argList.addSecondaryElement(new PunctuationComma());
+					print.argList.addPrimaryElement(fmtFunc.argList.getPrimaryElement(i));
+				}
 			}
 			else
 			{

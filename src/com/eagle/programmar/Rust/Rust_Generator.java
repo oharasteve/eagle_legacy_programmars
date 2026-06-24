@@ -447,6 +447,13 @@ public class Rust_Generator
 	}
 
 	@Override
+	public Rust_Expression newConcatExpression(ArrayList<Rust_Expression> pieces, AbstractToken source)
+	{
+		Rust_Literal lit = new Rust_Literal();
+		return lit.generateConcatLiteral(pieces, source);
+	}
+	
+	@Override
 	public Rust_Expression newAssignmentExpression(String name, SubscriptEnum offset,
 			Rust_Expression subscript, AssignmentEnum oper, Rust_Expression expression, AbstractToken source)
 	{

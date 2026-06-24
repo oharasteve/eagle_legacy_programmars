@@ -465,6 +465,20 @@ public class Java_Generator
 	}
 
 	@Override
+	public Java_Expression newConcatExpression(ArrayList<Java_Expression> pieces, AbstractToken source)
+	{
+		int numPieces = pieces.size();
+		if (numPieces == 0) return null;
+		Java_Expression result = pieces.get(0);
+		for (int i = 1; i < numPieces; i++)
+		{
+			Java_Expression piece = pieces.get(i);
+			result = Java_AdditiveExpression.generateAdditive(null, result, AdditiveEnum.PLUS, piece, null);
+		}
+		return result;
+	}
+	
+	@Override
 	public AbstractExpression newHashAssignment(String name, Java_Expression subscript,
 			Java_Expression expression, AbstractToken source)
 	{
