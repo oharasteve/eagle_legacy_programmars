@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Rust.Expressions;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
@@ -58,12 +60,14 @@ public class Rust_VariableExpression extends PrimaryOperator
 		
 		if (offset == SubscriptEnum.IT_IS_A_HASHMAP)
 		{
-			throw new RuntimeException("Need to implement HashMap");
-//			Rust_MethodInvocation invoke = new Rust_MethodInvocation();
-//			Rust_Variable var = Rust_Variable.newVariable(name + ".get");
-//			ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
-//			args.add(subscrExpr);
-//			return invoke.generateInvocation(var, args, source);
+			// use std::collections::HashMap;
+			// let mut hm = HashMap::new();
+			// hm.insert("key", "value");
+			// let value = hm.get("key")
+			Rust_Variable varGet = Rust_Variable.generateVariable(name + ".get");
+			ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
+			args.add(subscrExpr);
+			return Rust_FunctionCall.generateInvocation(null, varGet, args, null, source);
 		}
 
 		Rust_Expression subExpr = null;
