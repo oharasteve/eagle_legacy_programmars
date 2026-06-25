@@ -104,7 +104,11 @@ public class Fortran_Data extends TokenSequence
 			
 			if (! skipVariable)
 			{
-				AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, varDef.getValue(),
+				String name = varDef.getValue();
+//				int asgs = transformer._metrics.countAssignments(name, null);
+				StaticEnum isConst = StaticEnum.NONE;
+//				if (asgs == 1) isConst = StaticEnum.CONST;			
+				AbstractStatement stmt = generator.newDataDeclaration(isConst, name,
 						null, newType, null, varDef);
 				result.add(stmt);
 			}
