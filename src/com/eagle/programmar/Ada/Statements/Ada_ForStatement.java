@@ -26,6 +26,7 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.RelationalEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -159,7 +160,7 @@ public class Ada_ForStatement extends TokenSequence
 		}
 
 		AbstractVariable varName = generator.newVariable(var.vars.first().getValue());
-		return generator.newForRangeStatement(varName, null, initExpr,
+		return generator.newForRangeStatement(varName, TypeEnum.INTEGER, initExpr,
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 }
