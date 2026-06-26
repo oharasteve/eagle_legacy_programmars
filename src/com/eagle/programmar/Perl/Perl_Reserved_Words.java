@@ -10,6 +10,7 @@ public class Perl_Reserved_Words
 			"and",
 			"case", // I added
 			"cmp",
+			"const",
 			"continue",
 			"default", // I added
 			"die", // I added

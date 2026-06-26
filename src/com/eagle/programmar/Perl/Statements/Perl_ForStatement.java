@@ -185,6 +185,6 @@ public class Perl_ForStatement extends TokenSequence
 		AbstractExpression termExpr = transformer.transformExpression(generator, forLikeC.testExpr);
 		AbstractExpression delta = transformer.transformExpression(generator, forLikeC.incrExpr);
 		AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
-		return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+		return generator.newForLoopStatement1(asgExpr, null, termExpr, delta, newAction, this);
 	}
 }
