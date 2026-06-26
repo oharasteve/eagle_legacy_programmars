@@ -28,6 +28,7 @@ import com.eagle.programmar.Python.Terminals.Python_Punctuation;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -196,13 +197,17 @@ public class Python_Function extends TokenSequence
 				TypeEnum metricArg1 = argTypes.get(0);
 				paramType1 = generator.transformType(metricArg1, null, paramVar1);
 			}
-			if (!(paramVar1.getWhich() instanceof Python_Variable_Definition))
+			AbstractToken which = paramVar1.getWhich();
+			if (which != null)
 			{
-				throw new RuntimeException("Unable to handle " + paramVar1.getWhich());
+				if (!(which instanceof Python_Variable_Definition))
+				{
+					throw new RuntimeException("Unable to handle " + which);
+				}
+				Python_Variable_Definition varDef1 = (Python_Variable_Definition) which;
+				// System.err.println("****** paramType = " + paramType1 + " value = " + varDef1.getValue());
+				generator.addMethodParameter(paramType1, varDef1.getValue());
 			}
-			Python_Variable_Definition varDef1 = (Python_Variable_Definition) paramVar1.getWhich();
-			// System.err.println("****** paramType = " + paramType1 + " value = " + varDef1.getValue());
-			generator.addMethodParameter(paramType1, varDef1.getValue());
 
 			if (header.params.params.moreParams != null)
 			{

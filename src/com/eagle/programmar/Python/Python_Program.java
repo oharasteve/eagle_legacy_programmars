@@ -12,9 +12,14 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
+import com.eagle.programmar.Python.Python_Variable.Python_SelfOrVariable;
+import com.eagle.programmar.Python.Python_VariableList.Python_Just_Var;
+import com.eagle.programmar.Python.Python_VariableList.Python_VariableOrList;
+import com.eagle.programmar.Python.Statements.Python_Assignment;
 import com.eagle.programmar.Python.Statements.Python_Function;
 import com.eagle.programmar.Python.Statements.Python_StatementBlock.Python_SameLineStatement;
 import com.eagle.programmar.Python.Symbols.Python_Function_Definition;
+import com.eagle.programmar.Python.Symbols.Python_Identifier_Reference;
 import com.eagle.programmar.Python.Terminals.Python_Comment;
 import com.eagle.programmar.Python.Terminals.Python_EndOfLine;
 import com.eagle.tokens.AbstractToken;
@@ -124,25 +129,26 @@ public abstract class Python_Program extends AbstractLanguage
 			}
 		}
 
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
+// Not using this any more. Switched to putting everything inside a function (called testem)
+//		// Are there any global variables we need to declare?
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typE = met.uniqueType();
+//			if (typE != TypeEnum.VOID)
+//			{
+//				AbstractType abstrType = generator.transformType(typE, null, this);
+//
+//				// System.err.println("****** Found var " + met._symbolName);
+//				AbstractExpression initExpr = null;
+//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
+//						null, abstrType, initExpr, this);
+//				generator.addStatement(dataStmt, this);
+//			}
+//		}
 
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractExpression initExpr = null;
-				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-						null, abstrType, initExpr, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
-
-		// Transform all the logic, etc.
+		// Transform all the global variables, logic, etc.
 		for (Python_ComplexStatement stmt4 : entries._elements)
 		{
 			AbstractToken which4 = stmt4.statementOrComment.getWhich();
@@ -153,12 +159,52 @@ public abstract class Python_Program extends AbstractLanguage
 				for (int i = 0; i < numStmts5; i++)
 				{
 					Python_Statement stmt6 = stmt5.statements.getPrimaryElement(i);
-					Collection<AbstractStatement> newStmts6 = transformer.transformStatement(generator, stmt6);
-					if (newStmts6 != null)
+					if (stmt6.getWhich() instanceof Python_Assignment)
 					{
-						for (AbstractStatement newStmt6 : newStmts6)
+						Python_Assignment asg = (Python_Assignment) stmt6.getWhich();
+						
+						// Painful extracting the variable name
+						Python_VariableOrList varList = asg.varList.vars.first();
+						if (!(varList.getWhich() instanceof Python_Just_Var))
 						{
-							generator.addStatement(newStmt6, stmt6);
+							throw new RuntimeException("Unexpected variable: " + varList);
+						}
+						Python_Just_Var justVar = (Python_Just_Var) varList.getWhich();
+						Python_SelfOrVariable theVar = justVar.variable.first().variable.var;
+						if (!(theVar.getWhich() instanceof Python_Identifier_Reference))
+						{
+							throw new RuntimeException("Identifier required: " + theVar);
+						}
+						Python_Identifier_Reference id = (Python_Identifier_Reference) theVar.getWhich();
+						String varName = id.getValue();
+						
+						// Challenging to determine variable type
+						String scopeStr = this._currentLine + "-" + this._endLine;
+						AbstractType abstrType = null;
+						ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+						for (AssignMetrics met : asgMetrics)
+						{
+							if (met._symbolName.equals(varName))
+							{
+								TypeEnum typE = met.uniqueType();
+								abstrType = generator.transformType(typE, null, this);
+								break;
+							}
+						}
+						
+						AbstractExpression initExpr = transformer.transformExpression(generator, asg.expression);
+						AbstractStatement newStmt = generator.newDataDeclaration(StaticEnum.CONST, varName, null, abstrType, initExpr, this);
+						generator.addStatement(newStmt, stmt6);
+					}
+					else
+					{
+						Collection<AbstractStatement> newStmts6 = transformer.transformStatement(generator, stmt6);
+						if (newStmts6 != null)
+						{
+							for (AbstractStatement newStmt6 : newStmts6)
+							{
+								generator.addStatement(newStmt6, stmt6);
+							}
 						}
 					}
 				}
