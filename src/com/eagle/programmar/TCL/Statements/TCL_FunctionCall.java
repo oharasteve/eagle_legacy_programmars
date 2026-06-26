@@ -29,7 +29,7 @@ public class TCL_FunctionCall extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) TCL_Function_Reference function;
-	public @S(20) TokenList<TCL_Expression> callArguments;
+	public @S(20) @OPT TokenList<TCL_Expression> callArguments;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
