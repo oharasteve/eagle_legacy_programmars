@@ -174,7 +174,7 @@ public class Go_ForStatement extends TokenSequence
 				}
 			}
 
-			return generator.newForLoopStatement(asgExpr, termCond, incrExpr, whileTrue, this);
+			return generator.newForLoopStatement(asgExpr, null, termCond, incrExpr, whileTrue, this);
 		}
 
 		throw new RuntimeException("Cannot handle this type of for loop (yet): " + forWhat);

@@ -130,7 +130,7 @@ public class COBOL_PerformParagraph extends TokenSequence
 		// Four cases: both varying and while; just varying; just while; neither
 		if (initExpr != null)
 		{
-			return generator.newForLoopStatement1(initExpr, whileExpr, incrExpr, stmt, this);
+			return generator.newForLoopStatement1(initExpr, null, whileExpr, incrExpr, stmt, this);
 		}
 		if (whileExpr == null)
 		{

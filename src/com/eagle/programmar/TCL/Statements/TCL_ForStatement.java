@@ -138,6 +138,6 @@ public class TCL_ForStatement extends TokenSequence
 			}
 		}
 
-		return generator.newForLoopStatement(initExpr, termCond, incrExpr, whileTrue, this);
+		return generator.newForLoopStatement(initExpr, null, termCond, incrExpr, whileTrue, this);
 	}
 }

@@ -161,7 +161,7 @@ public class COBOL_PerformInline extends TokenSequence
 		// Four cases: both varying and while; just varying; just while; neither
 		if (initExpr != null)
 		{
-			return generator.newForLoopStatement(initExpr, whileExpr, incrExpr, stmts, this);
+			return generator.newForLoopStatement(initExpr, null, whileExpr, incrExpr, stmts, this);
 		}
 		if (whileExpr == null)
 		{

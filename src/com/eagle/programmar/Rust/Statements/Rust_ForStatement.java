@@ -172,17 +172,17 @@ public class Rust_ForStatement extends TokenSequence
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 
-	public static Rust_Statement generateForLoopOne(Rust_Expression initExpression,
+	public static Rust_Statement generateForLoopOne(Rust_Expression initExpression, TypeEnum type,
 			Rust_Expression condExpression, Rust_Expression incrExpression,
 			Rust_Statement action, AbstractToken source)
 	{
 		ArrayList<Rust_Statement> actions = new ArrayList<Rust_Statement>();
 		actions.add(action);
-		return generateForLoopMany(initExpression, condExpression, incrExpression,
+		return generateForLoopMany(initExpression, type, condExpression, incrExpression,
 				actions, source);
 	}
 
-	public static Rust_Statement generateForLoopMany(Rust_Expression initExpression,
+	public static Rust_Statement generateForLoopMany(Rust_Expression initExpression, TypeEnum type,
 			Rust_Expression condExpression, Rust_Expression incrExpression,
 			ArrayList<Rust_Statement> actions, AbstractToken source)
 	{

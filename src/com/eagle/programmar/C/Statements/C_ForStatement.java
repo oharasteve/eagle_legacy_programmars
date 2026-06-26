@@ -268,7 +268,7 @@ public class C_ForStatement extends TokenSequence
 				AbstractExpression termExpr = transformer.transformExpression(generator, loop.terminateCondition);
 				AbstractExpression delta = transformer.transformExpression(generator, loop.increment);
 				AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
-				return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+				return generator.newForLoopStatement1(asgExpr, null, termExpr, delta, newAction, this);
 			}
 		}
 

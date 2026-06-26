@@ -170,6 +170,10 @@ public class Python_Additive_Expression extends PrecedenceOperator
 	{
 		Python_Additive_Expression addExpr = new Python_Additive_Expression();
 		addExpr.left = leftExpr;
+		if (leftExpr.getWhich() instanceof Python_VariableExpression)
+		{
+			addExpr.left = Python_Str_Function.generateString(null, leftExpr, leftExpr);
+		}
 		addExpr.operator.setValue("+");
 		addExpr.right = Python_Str_Function.generateString(null, rightExpr, rightExpr);
 		addExpr.setTransformationSource(source);

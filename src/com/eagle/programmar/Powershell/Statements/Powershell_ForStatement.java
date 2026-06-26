@@ -159,6 +159,6 @@ public class Powershell_ForStatement extends TokenSequence
 					stmt.element.getWhich());
 			newActions.add(newAction);
 		}
-		return generator.newForLoopStatement(asgExpr, termExpr, delta, newActions, this);
+		return generator.newForLoopStatement(asgExpr, null, termExpr, delta, newActions, this);
 	}
 }

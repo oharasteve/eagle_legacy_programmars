@@ -87,5 +87,4 @@ public class Algol68_Data extends TokenSequence
 
 		return result;
 	}
-
 }

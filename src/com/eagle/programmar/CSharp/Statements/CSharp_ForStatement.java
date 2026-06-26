@@ -223,7 +223,7 @@ public class CSharp_ForStatement extends TokenSequence
 					AbstractExpression delta = transformer.transformExpression(generator,
 							increments.first());
 					AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
-					return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+					return generator.newForLoopStatement1(asgExpr, null, termExpr, delta, newAction, this);
 				}
 			}
 		}
@@ -231,7 +231,7 @@ public class CSharp_ForStatement extends TokenSequence
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 
-	public static CSharp_Statement generateForLoopOne(CSharp_Expression initExpression,
+	public static CSharp_Statement generateForLoopOne(CSharp_Expression initExpression, TypeEnum type,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			CSharp_Statement act, AbstractToken source)
 	{
@@ -259,12 +259,12 @@ public class CSharp_ForStatement extends TokenSequence
 		return CSharp_Generator.wrapStatement(forStmt);
 	}
 
-	public static CSharp_Statement generateForLoopMany(CSharp_Expression initExpression,
+	public static CSharp_Statement generateForLoopMany(CSharp_Expression initExpression, TypeEnum type,
 			CSharp_Expression condExpression, CSharp_Expression incrExpression,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
 		CSharp_Statement block = CSharp_StatementBlock.generateBlock(actions, source);
-		return generateForLoopOne(initExpression, condExpression, incrExpression,
+		return generateForLoopOne(initExpression, type, condExpression, incrExpression,
 				block, source);
 	}
 

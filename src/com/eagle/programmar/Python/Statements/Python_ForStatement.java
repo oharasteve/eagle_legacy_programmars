@@ -256,17 +256,17 @@ public class Python_ForStatement extends TokenSequence
 				relOp, termExpr, incrExpr, actionList, this);
 	}
 
-	public static Python_ComplexStatement generateForLoopOne(Python_Expression initExpression,
+	public static Python_ComplexStatement generateForLoopOne(Python_Expression initExpression, TypeEnum type,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			Python_ComplexStatement action, AbstractToken source)
 	{
 		ArrayList<Python_ComplexStatement> actions = new ArrayList<Python_ComplexStatement>();
 		actions.add(action);
-		return generateForLoopMany(initExpression, condExpression, incrExpression,
+		return generateForLoopMany(initExpression, type, condExpression, incrExpression,
 				actions, source);
 	}
 
-	public static Python_ComplexStatement generateForLoopMany(Python_Expression initExpression,
+	public static Python_ComplexStatement generateForLoopMany(Python_Expression initExpression, TypeEnum type,
 			Python_Expression condExpression, Python_Expression incrExpression,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{

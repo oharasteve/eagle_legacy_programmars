@@ -330,19 +330,19 @@ public class Python_Generator
 
 	@Override
 	public Python_ComplexStatement newForLoopStatement1(Python_Expression init,
-			Python_Expression term, Python_Expression incr, Python_ComplexStatement action,
-			AbstractToken source)
+			TypeEnum type, Python_Expression term, Python_Expression incr,
+			Python_ComplexStatement action, AbstractToken source)
 	{
-		return Python_ForStatement.generateForLoopOne(init, term,
+		return Python_ForStatement.generateForLoopOne(init, type, term,
 				incr, action, source);
 	}
 
 	@Override
-	public Python_ComplexStatement newForLoopStatement(Python_Expression init,
+	public Python_ComplexStatement newForLoopStatement(Python_Expression init, TypeEnum type,
 			Python_Expression term, Python_Expression incr,
 			ArrayList<Python_ComplexStatement> actions, AbstractToken source)
 	{
-		return Python_ForStatement.generateForLoopMany(init, term,
+		return Python_ForStatement.generateForLoopMany(init, type, term,
 				incr, actions, source);
 	}
 

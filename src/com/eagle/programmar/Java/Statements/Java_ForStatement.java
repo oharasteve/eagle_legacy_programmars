@@ -24,6 +24,7 @@ import com.eagle.programmar.Java.Expressions.Java_PostIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_PreIncrementExpression;
 import com.eagle.programmar.Java.Expressions.Java_RelationalExpression;
 import com.eagle.programmar.Java.Expressions.Java_VariableExpression;
+import com.eagle.programmar.Java.Symbols.Java_Identifier_Reference;
 import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_Keyword;
@@ -236,7 +237,7 @@ public class Java_ForStatement extends TokenSequence
 					AbstractExpression delta = transformer.transformExpression(generator,
 							increments.first());
 					AbstractStatement newAction = transformer.transformStatement1(generator, this.action);
-					return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+					return generator.newForLoopStatement1(asgExpr, null, termExpr, delta, newAction, this);
 				}
 			}
 		}
@@ -244,15 +245,49 @@ public class Java_ForStatement extends TokenSequence
 		throw new RuntimeException("Unable to handle for loop: " + this);
 	}
 
-	public static Java_Statement generateForLoopOne(Java_Expression initExpression,
+	public static Java_Statement generateForLoopOne(Java_Expression initExpression, TypeEnum type,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			Java_Statement act, AbstractToken source)
 	{
 		Java_ForStatement forStmt = new Java_ForStatement();
 		SeparatedList<Java_ForWhat, PunctuationComma> initializer = new SeparatedList<Java_ForWhat, PunctuationComma>();
+		
 		Java_ForWhat forWhat = new Java_ForWhat();
+		if (type == null)
+		{
+			forWhat.setWhich(initExpression);
+		}
+		else
+		{
+			if (!(initExpression.getWhich() instanceof Java_AssignmentExpression))
+			{
+				throw new RuntimeException("Unexpected for initializer: " + initExpression);
+			}
+			Java_AssignmentExpression asg = (Java_AssignmentExpression) initExpression.getWhich();
+			if (!(asg.var.getWhich() instanceof Java_VariableExpression))
+			{
+				throw new RuntimeException("Unexpected for variable: " + asg.var);
+			}
+			Java_VariableExpression varExp = (Java_VariableExpression) asg.var.getWhich();
+			if (!(varExp.variable.firstId.getWhich() instanceof Java_Identifier_Reference))
+			{
+				throw new RuntimeException("Unexpected for variable id: " + varExp.variable.firstId);
+			}
+			Java_Identifier_Reference id = (Java_Identifier_Reference) varExp.variable.firstId.getWhich();
+			
+			Java_ForWithType with = new Java_ForWithType();
+			with.variable = new Java_Variable_Definition();
+			with.variable.setValue(id.getValue());		// Clumsy, use string names to copy Ref to Def
+			with.varType = Java_Type.transformType(type, null, null);
+			
+			with.equalsInit = new Java_ForTypeInit();
+			with.equalsInit.equals = new PunctuationEquals();
+			with.equalsInit.initialExpr = asg.expr;
+			with.equalsInit.setPresent(true);
+			
+			forWhat.setWhich(with);
+		}
 		forWhat.setPresent(true);
-		forWhat.setWhich(initExpression);
 		initializer.addPrimaryElement(forWhat);
 
 		SeparatedList<Java_Expression, PunctuationComma> loopIncrements = new SeparatedList<Java_Expression, PunctuationComma>();
@@ -262,9 +297,7 @@ public class Java_ForStatement extends TokenSequence
 		forStmt.initial = new Java_ForInit();
 		forStmt.initial.setPresent(true);
 		forStmt.initial.what = new SeparatedList<Java_ForWhat, PunctuationComma>();
-		Java_ForWhat what = new Java_ForWhat();
-		what.setWhich(initExpression);
-		forStmt.initial.what.addPrimaryElement(what);
+		forStmt.initial.what.addPrimaryElement(forWhat);
 
 		forStmt.semicolon1 = new PunctuationSemicolon();
 		forStmt.terminateCondition = condExpression;
@@ -278,12 +311,12 @@ public class Java_ForStatement extends TokenSequence
 		return Java_Generator.wrapStatement(forStmt);
 	}
 
-	public static Java_Statement generateForLoopMany(Java_Expression initExpression,
+	public static Java_Statement generateForLoopMany(Java_Expression initExpression, TypeEnum type,
 			Java_Expression condExpression, Java_Expression incrExpression,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
 		Java_Statement block = Java_StatementBlock.generateBlock(actions, source);
-		return generateForLoopOne(initExpression, condExpression, incrExpression,
+		return generateForLoopOne(initExpression, type, condExpression, incrExpression,
 				block, source);
 	}
 

@@ -221,6 +221,6 @@ public class Algol68_ForStatement extends TokenSequence
 			}
 		}
 
-		return generator.newForLoopStatement(startExpr, stopExpr, byExpr, whileTrue, this);
+		return generator.newForLoopStatement(startExpr, null, stopExpr, byExpr, whileTrue, this);
 	}
 }

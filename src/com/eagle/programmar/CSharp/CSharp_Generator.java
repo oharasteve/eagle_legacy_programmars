@@ -310,18 +310,18 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 
 	@Override
 	public CSharp_Statement newForLoopStatement1(CSharp_Expression init,
-			CSharp_Expression term, CSharp_Expression incr, CSharp_Statement action,
-			AbstractToken source)
+			TypeEnum type, CSharp_Expression term, CSharp_Expression incr,
+			CSharp_Statement action, AbstractToken source)
 	{
-		return CSharp_ForStatement.generateForLoopOne(init, term, incr, action, source);
+		return CSharp_ForStatement.generateForLoopOne(init, type, term, incr, action, source);
 	}
 
 	@Override
-	public CSharp_Statement newForLoopStatement(CSharp_Expression init,
+	public CSharp_Statement newForLoopStatement(CSharp_Expression init, TypeEnum type,
 			CSharp_Expression term, CSharp_Expression incr,
 			ArrayList<CSharp_Statement> actions, AbstractToken source)
 	{
-		return CSharp_ForStatement.generateForLoopMany(init, term,
+		return CSharp_ForStatement.generateForLoopMany(init, type, term,
 				incr, actions, source);
 	}
 

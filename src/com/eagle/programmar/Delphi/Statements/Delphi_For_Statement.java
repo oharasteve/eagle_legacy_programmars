@@ -143,7 +143,7 @@ public class Delphi_For_Statement extends TokenSequence
 			throw new RuntimeException("Expected TO or DOWNTO, not " + toDownto);
 		}
 
-		return generator.newForLoopStatement1(asgExpr, term, delta,
-				newAction, this);
+		return generator.newForLoopStatement1(asgExpr, null, term,
+				delta, newAction, this);
 	}
 }

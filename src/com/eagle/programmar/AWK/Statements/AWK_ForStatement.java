@@ -161,6 +161,6 @@ public class AWK_ForStatement extends TokenSequence
 		AbstractExpression termExpr = transformer.transformExpression(generator, test);
 		AbstractExpression delta = transformer.transformExpression(generator, increment);
 		ArrayList<AbstractStatement> newActions = transformer.transformStatement(generator, block);
-		return generator.newForLoopStatement(asgExpr, termExpr, delta, newActions, this);
+		return generator.newForLoopStatement(asgExpr, null, termExpr, delta, newActions, this);
 	}
 }

@@ -326,19 +326,19 @@ public class Rust_Generator
 
 	@Override
 	public Rust_Statement newForLoopStatement1(Rust_Expression init,
-			Rust_Expression term, Rust_Expression incr, Rust_Statement action,
-			AbstractToken source)
+			TypeEnum type, Rust_Expression term, Rust_Expression incr,
+			Rust_Statement action, AbstractToken source)
 	{
-		return Rust_ForStatement.generateForLoopOne(init, term,
+		return Rust_ForStatement.generateForLoopOne(init, type, term,
 				incr, action, source);
 	}
 
 	@Override
-	public Rust_Statement newForLoopStatement(Rust_Expression init,
+	public Rust_Statement newForLoopStatement(Rust_Expression init, TypeEnum type,
 			Rust_Expression term, Rust_Expression incr,
 			ArrayList<Rust_Statement> actions, AbstractToken source)
 	{
-		return Rust_ForStatement.generateForLoopMany(init, term,
+		return Rust_ForStatement.generateForLoopMany(init, type, term,
 				incr, actions, source);
 	}
 

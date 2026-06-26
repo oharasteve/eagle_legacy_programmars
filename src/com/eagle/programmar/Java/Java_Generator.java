@@ -343,19 +343,19 @@ public class Java_Generator
 
 	@Override
 	public Java_Statement newForLoopStatement1(Java_Expression init,
-			Java_Expression term, Java_Expression incr, Java_Statement action,
-			AbstractToken source)
+			TypeEnum type, Java_Expression term, Java_Expression incr,
+			Java_Statement action, AbstractToken source)
 	{
-		return Java_ForStatement.generateForLoopOne(init, term,
+		return Java_ForStatement.generateForLoopOne(init, type, term,
 				incr, action, source);
 	}
 
 	@Override
-	public Java_Statement newForLoopStatement(Java_Expression init,
+	public Java_Statement newForLoopStatement(Java_Expression init, TypeEnum type,
 			Java_Expression term, Java_Expression incr,
 			ArrayList<Java_Statement> actions, AbstractToken source)
 	{
-		return Java_ForStatement.generateForLoopMany(init, term, incr, actions, source);
+		return Java_ForStatement.generateForLoopMany(init, type, term, incr, actions, source);
 	}
 
 	@Override

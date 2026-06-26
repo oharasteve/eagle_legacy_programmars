@@ -205,6 +205,6 @@ public class Javascript_ForStatement extends TokenSequence
 		AbstractExpression delta = transformer.transformExpression(generator,
 				forLoop.increment);
 		AbstractStatement newAction = transformer.transformStatement1(generator, this.action.statement);
-		return generator.newForLoopStatement1(asgExpr, termExpr, delta, newAction, this);
+		return generator.newForLoopStatement1(asgExpr, null, termExpr, delta, newAction, this);
 	}
 }
