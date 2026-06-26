@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.PHP;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.HTML.HTML_DocType;
 import com.eagle.programmar.HTML.HTML_Program;
 import com.eagle.programmar.HTML.HTML_Program.HTML_Element;
@@ -28,8 +26,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -140,6 +136,8 @@ public class PHP_Program extends AbstractLanguage
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+// Removed all this because we now have a testem() function so all these variables
+// are now local, and all the global variables are declared as such.
 //		// Are there any global variables we need to declare?
 //		String scopeStr = this._currentLine + "-" + this._endLine;
 //		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);

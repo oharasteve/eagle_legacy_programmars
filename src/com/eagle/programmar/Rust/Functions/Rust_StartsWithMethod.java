@@ -7,8 +7,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
@@ -72,12 +74,16 @@ public class Rust_StartsWithMethod extends PrecedenceOperator
 		startsExpr.arg = patt;
 		
 		// Dang, Rust is fussy. Hard to tell when it wants .toString() on Strings or &str's
-		if (patt.getWhich() instanceof Rust_ToStringMethod)
+		AbstractToken which = patt.getWhich();
+		if (which instanceof Rust_ToStringMethod)
 		{
-			Rust_ToStringMethod toStr = (Rust_ToStringMethod) patt.getWhich();
+			Rust_ToStringMethod toStr = (Rust_ToStringMethod) which;
 			startsExpr.arg = toStr.left;
 		}
-		
+		else if (which instanceof Rust_VariableExpression)
+		{
+			startsExpr.arg = Rust_BorrowExpression.generateBorrow(patt, null);
+		}
 		if (sc != null)
 		{
 			// Rust does not support str.StartsWith("patt",sc)

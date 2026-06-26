@@ -130,21 +130,24 @@ public class Javascript_Function extends TokenSequence
 		}
 
 		int argNumber = 1;
-		for (Javascript_MoreParameters next : implementation.params.moreParams._elements)
+		if (implementation.params != null && implementation.params.isPresent())
 		{
-			Javascript_FunctionParameter param2 = next.param;
-			AbstractToken which2 = param2.paramName.getWhich();
-			if (which2 instanceof Javascript_Variable_Definition)
+			for (Javascript_MoreParameters next : implementation.params.moreParams._elements)
 			{
-				if (argTypes != null)
+				Javascript_FunctionParameter param2 = next.param;
+				AbstractToken which2 = param2.paramName.getWhich();
+				if (which2 instanceof Javascript_Variable_Definition)
 				{
-					TypeEnum argType = argTypes.get(argNumber);
-					type = generator.transformType(argType, null, which1);
+					if (argTypes != null)
+					{
+						TypeEnum argType = argTypes.get(argNumber);
+						type = generator.transformType(argType, null, which1);
+					}
+					Javascript_Variable_Definition varDef2 = (Javascript_Variable_Definition) which2;
+					generator.addMethodParameter(type, varDef2.getValue());
 				}
-				Javascript_Variable_Definition varDef2 = (Javascript_Variable_Definition) which2;
-				generator.addMethodParameter(type, varDef2.getValue());
+				argNumber++;
 			}
-			argNumber++;
 		}
 
 		Javascript_FunctionBody impl = implementation.body;

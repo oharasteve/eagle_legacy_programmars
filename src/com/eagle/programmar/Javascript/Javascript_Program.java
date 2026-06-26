@@ -10,6 +10,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
+import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -18,6 +19,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
@@ -92,11 +94,19 @@ public class Javascript_Program extends AbstractLanguage
 				if (which2 instanceof Javascript_Data)
 				{
 					Javascript_Data data = (Javascript_Data) which2;
-					// transformStaticData ??
-					ArrayList<AbstractStatement> stmts3 = data.transformStatement(transformer, generator);
+					StaticEnum isConst = StaticEnum.NONE;
+					if (data.type.getWhich() instanceof Javascript_KeywordChoice)
+					{
+						Javascript_KeywordChoice kw = (Javascript_KeywordChoice) data.type.getWhich();
+						if (kw.getValue().equals("const"))
+						{
+						  isConst = StaticEnum.CONST;
+						}
+					}
+					ArrayList<AbstractStatement> stmts3 = data.transformStaticData(isConst, transformer, generator);
 					for (AbstractStatement stmt3 : stmts3)
 					{
-						generator.addStatement(stmt3, elt1);
+					  generator.addStatement(stmt3, elt1);
 					}
 				}
 				else

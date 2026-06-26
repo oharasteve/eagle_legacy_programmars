@@ -64,10 +64,13 @@ public class Javascript_FunctionCall extends PrimaryOperator
 
 		Javascript_FunctionParameters parameters = func.implementation.params;
 		int paramCount = 0;
-		if (parameters.param != null) paramCount = 1;
-		if (parameters.moreParams != null && parameters.moreParams.isPresent())
+		if (parameters != null && parameters.isPresent())
 		{
-			paramCount += parameters.moreParams.size();
+			if (parameters.param != null) paramCount = 1;
+			if (parameters.moreParams != null && parameters.moreParams.isPresent())
+			{
+				paramCount += parameters.moreParams.size();
+			}
 		}
 
 		if (argCount != paramCount)
