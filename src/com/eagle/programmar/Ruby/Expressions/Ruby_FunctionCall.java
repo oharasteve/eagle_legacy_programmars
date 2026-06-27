@@ -35,7 +35,7 @@ public class Ruby_FunctionCall extends PrimaryOperator
 {
 	public @S(10) Ruby_Variable funcName;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Ruby_Expression, PunctuationComma> arguments;
+	public @S(30) @OPT SeparatedList<Ruby_Expression, PunctuationComma> arguments;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override
@@ -53,7 +53,11 @@ public class Ruby_FunctionCall extends PrimaryOperator
 		Ruby_Function func = (Ruby_Function) fn;
 
 		// Make sure the function args match up
-		int argCount = arguments.getPrimaryCount();
+		int argCount = 0;
+		if (arguments != null && arguments.isPresent())
+		{
+			argCount = arguments.getPrimaryCount();
+		}
 		int paramCount = func.funcParamDefs.parameters.getPrimaryCount();
 		if (argCount != paramCount)
 		{

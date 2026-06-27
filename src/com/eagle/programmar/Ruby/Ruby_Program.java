@@ -77,22 +77,26 @@ public class Ruby_Program extends AbstractLanguage
 			}
 		}
 
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
-
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-						null, abstrType, null, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
+//		// Are there any global variables we need to declare?
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typE = met.uniqueType();
+//			if (typE != TypeEnum.VOID)
+//			{
+//				AbstractType abstrType = generator.transformType(typE, null, this);
+//
+//				String name = met._symbolName;
+//				// System.err.println("****** Found var " + name);
+//				int asgs = transformer._metrics.countAssignments(name, null);
+//				StaticEnum isConst = StaticEnum.NONE;
+//				if (asgs == 1) isConst = StaticEnum.CONST;			
+//				AbstractStatement dataStmt = generator.newDataDeclaration(isConst, name,
+//						null, abstrType, null, this);
+//				generator.addStatement(dataStmt, this);
+//			}
+//		}
 
 		// Second pass, transform all the data and logic
 		for (Ruby_Statement stmt : elements._elements)

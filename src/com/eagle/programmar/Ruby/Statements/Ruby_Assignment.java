@@ -3,10 +3,13 @@
 
 package com.eagle.programmar.Ruby.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleValue;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Ruby.Ruby_Expression;
 import com.eagle.programmar.Ruby.Ruby_Variable;
 import com.eagle.programmar.Ruby.Symbols.Ruby_Identifier_Reference;
@@ -19,7 +22,9 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -82,10 +87,29 @@ public class Ruby_Assignment extends TokenSequence
 //		{
 //			subscrExpr = transformer.transformExpression(generator, var.subscript.expr);
 //		}
+		String name = var.vars.first().getValue();
 		AbstractExpression value = transformer.transformExpression(generator, expr);
-		AbstractExpression asgExpr = generator.newAssignmentExpression(var.vars.first().getValue(),
+		if (var.dollar != null && var.dollar.isPresent())
+		{
+			// Leading $ means global variable
+
+			// Challenging to determine variable type
+			AbstractType abstrType = null;
+			ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findAllAssignments();
+			for (AssignMetrics met : asgMetrics)
+			{
+				if (met._symbolName.equals(name))
+				{
+					TypeEnum typE = met.uniqueType();
+					abstrType = generator.transformType(typE, null, this);
+					break;
+				}
+			}
+			
+			return generator.newDataDeclaration(StaticEnum.CONST, name, subscrExpr, abstrType, value, this);
+		}
+		AbstractExpression asgExpr = generator.newAssignmentExpression(name,
 				SubscriptEnum.FIRST_IS_ZERO, subscrExpr, asg, value, this);
-		AbstractStatement exprStmt = generator.newExpressionStatement(asgExpr, this);
-		return exprStmt;
+		return generator.newExpressionStatement(asgExpr, this);
 	}
 }

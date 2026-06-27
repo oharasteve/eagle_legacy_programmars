@@ -96,23 +96,6 @@ public class FSharp_Program extends AbstractLanguage
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-//		// Are there any global variables we need to declare?
-//		String scopeStr = this._currentLine + "-" + this._endLine;
-//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-//		for (AssignMetrics met : asgMetrics)
-//		{
-//			TypeEnum typE = met.uniqueType();
-//			if (typE != TypeEnum.VOID)
-//			{
-//				AbstractType abstrType = generator.transformType(typE, null, this);
-//				AbstractExpression initExpr = null;
-//				// System.err.println("****** Found var " + met._symbolName);
-//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-//						null, abstrType, initExpr, this);
-//				generator.addStatement(dataStmt, this);
-//			}
-//		}
-
 		// Transform all the Function definitions and global data
 		for (FSharp_Element elt : elements._elements)
 		{

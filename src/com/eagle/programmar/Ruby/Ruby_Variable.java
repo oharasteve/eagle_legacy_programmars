@@ -34,30 +34,6 @@ public class Ruby_Variable extends TokenSequence
 	{
 		Ruby_Identifier_Reference which = vars.first();
 		EagleValue value = interpreter.findSymbol(which.getValue());
-
-//		if (subscript != null && subscript.isPresent())
-//		{
-//			if (value instanceof EagleArray)
-//			{
-//				int subscr = interpreter.getIntValue(subscript.expr);
-//				EagleArray val = (EagleArray) value;
-//				interpreter.pushEagleValue(val.getValue(subscr));
-//				return;
-//			}
-//
-//			if (value instanceof EagleString && subscript.expr.getWhich() instanceof Ruby_RangeExpression)
-//			{
-//				Ruby_RangeExpression range = (Ruby_RangeExpression) subscript.expr.getWhich();
-//				String str = value.forceStringValue();
-//				int len = str.length();
-//				int sc = interpreter.getIntValue(range.left);
-//				int ec = interpreter.getIntValue(range.right) + 1;
-//				if (ec > len) ec = len;
-//				interpreter.pushStr(str.substring(sc, ec));
-//				return;
-//			}
-//		}
-
 		interpreter.pushEagleValue(value);
 	}
 }
