@@ -250,10 +250,6 @@ public class Perl_Function extends TokenSequence
 			TypeEnum typ = met.uniqueType();
 			if (typ != TypeEnum.VOID)
 			{
-				if (met._symbolName.equals("ok"))
-				{
-					System.out.println("**** HERE");
-				}
 				if (!isFuncParam(met._symbolName))
 				{
 					// System.err.println("****** Found var " + met._symbolName);

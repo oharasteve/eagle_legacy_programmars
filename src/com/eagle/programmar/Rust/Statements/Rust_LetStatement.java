@@ -65,20 +65,19 @@ public class Rust_LetStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		AbstractExpression initial = null;
 		if (init != null && init.isPresent())
 		{
-			// See if the Definition has some assignments in the metrics file
-			TypeEnum typ = transformer.findAssignMetric(var);
-			AbstractType newType = generator.transformType(typ, null, null);
-	
-			AbstractExpression initial = transformer.transformExpression(generator, init.expr);
-	
-			String name = var.var.getValue();
-			AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
-			return stmt;
+			initial = transformer.transformExpression(generator, init.expr);
 		}
-		
-		return null;
+
+		// See if the Definition has some assignments in the metrics file
+		TypeEnum typ = transformer.findAssignMetric(var.var);
+		AbstractType newType = generator.transformType(typ, null, null);
+
+		String name = var.var.getValue();
+		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, null, newType, initial, this);
+		return stmt;
 	}
 	
 	public static Rust_LetStatement newDataDeclaration(StaticEnum isStatic, String name,

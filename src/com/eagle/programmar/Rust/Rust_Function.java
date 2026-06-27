@@ -161,7 +161,7 @@ public class Rust_Function extends TokenSequence
 			}
 		}
 
-		///////// addLocalVars(transformer, generator);
+		// addLocalVars(transformer, generator);
 
 		Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, block);
 		if (newStmts != null)
@@ -174,6 +174,47 @@ public class Rust_Function extends TokenSequence
 
 		generator.doneMethod();
 	}
+
+//	private boolean isFuncParam(String name)
+//	{
+//		if (funcParamDefs != null && funcParamDefs.isPresent())
+//		{
+//			int numParams = funcParamDefs.getPrimaryCount();
+//			for (int i = 0; i < numParams; i++)
+//			{
+//				Rust_Parameter param = funcParamDefs.getPrimaryElement(i);
+//				Rust_Variable_Definition var = param.var;
+//				if (var.getValue().equalsIgnoreCase(name))
+//				{
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+//	}
+
+//	// Are there any local variables we need to declare?
+//	private void addLocalVars(EagleTransformer transformer,
+//			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+//	{
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typ = met.uniqueType();
+//			if (typ != TypeEnum.VOID)
+//			{
+//				if (!isFuncParam(met._symbolName))
+//				{
+//					// System.err.println("****** Found var " + met._symbolName);
+//					AbstractType absType = generator.transformType(typ, null, this);
+//					AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE,
+//							met._symbolName, null, absType, null, this);
+//					generator.addStatement(dataStmt, this);
+//				}
+//			}
+//		}
+//	}
 
 	public void newRustFunction(Rust_Type returnType, String methodName)
 	{
