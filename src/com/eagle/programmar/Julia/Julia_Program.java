@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.Julia;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Julia.Statements.Julia_Function;
 import com.eagle.programmar.Julia.Terminals.Julia_Comment;
 import com.eagle.programmar.Julia.Terminals.Julia_EOLN;
@@ -22,8 +20,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
@@ -123,29 +119,29 @@ public class Julia_Program extends AbstractLanguage
 			}
 		}
 
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
-
-				AbstractExpression initExpr = null;
-				if (typE == TypeEnum.HASH)
-				{
-					// Need to create an empty hashmap
-					initExpr = generator.newClassCreation(abstrType, null, this);
-				}
-
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-						null, abstrType, initExpr, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
+//		// Are there any global variables we need to declare?
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typE = met.uniqueType();
+//			if (typE != TypeEnum.VOID)
+//			{
+//				AbstractType abstrType = generator.transformType(typE, null, this);
+//
+//				AbstractExpression initExpr = null;
+//				if (typE == TypeEnum.HASH)
+//				{
+//					// Need to create an empty hashmap
+//					initExpr = generator.newClassCreation(abstrType, null, this);
+//				}
+//
+//				// System.err.println("****** Found var " + met._symbolName);
+//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
+//						null, abstrType, initExpr, this);
+//				generator.addStatement(dataStmt, this);
+//			}
+//		}
 
 		// Second pass, transform all the data and logic
 		for (Julia_Element elt : elements._elements)

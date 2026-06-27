@@ -34,7 +34,7 @@ public class Julia_FunctionCall extends PrimaryOperator
 {
 	public @S(10) Julia_Variable variable;
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<Julia_Expression, PunctuationComma> argList;
+	public @S(30) @OPT SeparatedList<Julia_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 
 	@Override
@@ -52,7 +52,11 @@ public class Julia_FunctionCall extends PrimaryOperator
 		Julia_Function func = (Julia_Function) fn;
 
 		// Make sure the function args match up
-		int argCount = argList.getPrimaryCount();
+		int argCount = 0;
+		if (argList != null && argList.isPresent())
+		{
+			argCount = argList.getPrimaryCount();
+		}
 		int paramCount = func.params.parameters.getPrimaryCount();
 		if (argCount != paramCount)
 		{
