@@ -113,7 +113,6 @@ public class Eaglish_Format
 				throw new RuntimeException("Unable to parse expression " + expr);
 			}
 			AbstractExpression newExpr = transformer.transformExpression(generator, expr);
-			// AbstractExpression strExpr = generator.newStringFunction(null, newExpr, null);
 			pieces.add(newExpr);
 			sc = endInsertion + 1;
 		}
