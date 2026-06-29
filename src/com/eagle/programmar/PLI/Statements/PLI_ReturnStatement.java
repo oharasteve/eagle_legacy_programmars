@@ -8,7 +8,9 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.PLI.PLI_Expression;
 import com.eagle.programmar.PLI.PLI_Procedure;
+import com.eagle.programmar.PLI.Expressions.PLI_ParenthesizedExpression;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
+import com.eagle.programmar.PLI.Terminals.PLI_Literal;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -17,6 +19,7 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleGenerator;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -57,6 +60,16 @@ public class PLI_ReturnStatement extends TokenSequence
 		if (expression != null && expression.isPresent())
 		{
 			retExpr = transformer.transformExpression(generator, expression);
+			AbstractToken which1 = expression.getWhich();
+			if (which1 instanceof PLI_ParenthesizedExpression)
+			{
+				PLI_ParenthesizedExpression paren = (PLI_ParenthesizedExpression) which1;
+				AbstractToken which2 = paren.expr.getWhich();
+				if (which2 instanceof PLI_Literal)
+				{
+					retExpr = generator.newStringFunction(TypeEnum.STRING, retExpr, this);
+				}
+			}
 		}
 		return generator.newReturnStatement(retExpr, this);
 	}

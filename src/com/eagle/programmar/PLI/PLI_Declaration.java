@@ -33,7 +33,9 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationStar;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.AssignmentEnum;
+import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
@@ -191,6 +193,13 @@ public class PLI_Declaration extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		return transData(StaticEnum.NONE, transformer, generator);
+	}
+	
+	// Called from above as well as from PLI_Program.java
+	public AbstractStatement transData(StaticEnum isConst, EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
 		for (int i = 0; i < items.getPrimaryCount(); i++)
 		{
 			PLI_Declare_Item item = items.getPrimaryElement(i);
@@ -204,6 +213,7 @@ public class PLI_Declaration extends TokenSequence
 					// Sorry, cannot redefine true or false
 					continue;
 				}
+				
 				AbstractExpression newVal;
 				if (item.initial != null && item.initial.isPresent())
 				{
@@ -224,9 +234,27 @@ public class PLI_Declaration extends TokenSequence
 								item.initial.exprs.first());
 					}
 
-					AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
-							SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, newVal, item.initial);
-					return generator.newExpressionStatement(asgExpr, item.initial);
+					if (isConst == StaticEnum.NONE)
+					{
+						AbstractExpression asgExpr = generator.newAssignmentExpression(varName,
+								SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, newVal, item.initial);
+						return generator.newExpressionStatement(asgExpr, item.initial);
+					}
+					else
+					{
+						TypeEnum newType;
+						if (item.type1 != null && item.type1.isPresent() &&
+								item.declareSize != null && item.declareSize.isPresent())
+						{
+							newType = TypeEnum.ARRAY;
+						}
+						else
+						{
+							newType = item.type1.findType();
+						}
+						AbstractType type = generator.transformType(newType, varName, this);
+						return generator.newDataDeclaration(isConst, varName, null, type, newVal, this);
+					}
 				}
 			}
 		}

@@ -46,7 +46,7 @@ public class Rust_ToStringMethod extends PrecedenceOperator
 		return theExpr;
 	}
 
-	public static Rust_Expression generateString(TypeEnum type, Rust_Expression expr, AbstractToken source)
+	public static Rust_Expression generateString(TypeEnum unused_type, Rust_Expression expr, AbstractToken source)
 	{
 		Rust_ToStringMethod strMeth = new Rust_ToStringMethod();
 		// Rust likes '&ok.to_string()' where 'ok' is an i32

@@ -3,11 +3,14 @@
 
 package com.eagle.programmar.PLI;
 
+import com.eagle.programmar.PLI.PLI_Type.PLI_BaseType.PLI_TypeCharacter;
+import com.eagle.programmar.PLI.PLI_Type.PLI_BaseType.PLI_TypeFixedBinary;
 import com.eagle.programmar.PLI.Terminals.PLI_BitLiteral;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
 import com.eagle.programmar.PLI.Terminals.PLI_Literal;
 import com.eagle.programmar.PLI.Terminals.PLI_Picture;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -16,6 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
+import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class PLI_Type extends TokenChooser
 {
@@ -159,5 +163,18 @@ public class PLI_Type extends TokenChooser
 				public @S(30) @OPT PLI_Expression size2;
 			}
 		}
+	}
+	
+	public TypeEnum findType()
+	{
+		AbstractToken which1 = this.getWhich();
+		if (which1 instanceof PLI_BaseType)
+		{
+			PLI_BaseType base = (PLI_BaseType) which1;
+			AbstractToken which2 = base.getWhich();
+			if (which2 instanceof PLI_TypeCharacter) return TypeEnum.STRING;
+			if (which2 instanceof PLI_TypeFixedBinary) return TypeEnum.INTEGER;
+		}
+		return TypeEnum.VOID;
 	}
 }

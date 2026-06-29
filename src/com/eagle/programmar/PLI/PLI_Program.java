@@ -3,13 +3,11 @@
 
 package com.eagle.programmar.PLI;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.PLI.PLI_Procedure.PLI_StatementOrComment;
 import com.eagle.programmar.PLI.Statements.PLI_PercentStatement;
 import com.eagle.programmar.PLI.Terminals.PLI_Comment;
@@ -22,7 +20,6 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleGenerator.StaticEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -121,7 +118,7 @@ public class PLI_Program extends AbstractLanguage
 			}
 		}
 
-		// Second pass, collect global variables
+		// Second pass, collect global variables inside the main procedure
 		for (PLI_Element element : elements._elements)
 		{
 			AbstractToken which1 = element.getWhich();
@@ -129,20 +126,15 @@ public class PLI_Program extends AbstractLanguage
 			{
 				PLI_Procedure proc = (PLI_Procedure) which1;
 
-				// Are there any global variables we need to declare?
-				String scopeStr = proc.getScope().getScopeName();
-				ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-				for (AssignMetrics met : asgMetrics)
+				// Look for global variables inside the outer proc
+				for (PLI_StatementOrComment stmt1 : proc.statements._elements)
 				{
-					TypeEnum typE = met.uniqueType();
-					if (typE != TypeEnum.VOID)
+					AbstractToken which2 = stmt1.getWhich();
+					if (which2 instanceof PLI_Declaration)
 					{
-						AbstractType abstrType = generator.transformType(typE, null, this);
-
-						// System.err.println("****** Found var " + met._symbolName);
-						AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-								null, abstrType, null, this);
-						generator.addStatement(dataStmt, this);
+						PLI_Declaration decl = (PLI_Declaration) which2;
+						AbstractStatement declStmt = decl.transData(StaticEnum.CONST, transformer, generator);
+						generator.addStatement(declStmt, this);
 					}
 				}
 			}
@@ -159,12 +151,15 @@ public class PLI_Program extends AbstractLanguage
 				for (PLI_StatementOrComment stmtOrComment : proc.statements._elements)
 				{
 					AbstractToken which2 = stmtOrComment.getWhich();
-					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which2);
-					if (newStmts != null)
+					if (!(which2 instanceof PLI_Declaration))
 					{
-						for (AbstractStatement newStmt : newStmts)
+						Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which2);
+						if (newStmts != null)
 						{
-							generator.addStatement(newStmt, stmtOrComment);
+							for (AbstractStatement newStmt : newStmts)
+							{
+								generator.addStatement(newStmt, stmtOrComment);
+							}
 						}
 					}
 				}
