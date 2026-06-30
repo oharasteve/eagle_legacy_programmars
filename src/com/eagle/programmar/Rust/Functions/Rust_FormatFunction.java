@@ -32,10 +32,10 @@ public class Rust_FormatFunction extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Rust_Keyword FORMAT = new Rust_Keyword("format");
-	public @S(20) Rust_Punctuation bang = new Rust_Punctuation("!");
-	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<Rust_Expression, PunctuationComma> argList;
-	public @S(50) PunctuationRightParen rightParen;
+	public @S(20) @NOSPACE Rust_Punctuation bang = new Rust_Punctuation("!");
+	public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+	public @S(40) @NOSPACE SeparatedList<Rust_Expression, PunctuationComma> argList;
+	public @S(50) @NOSPACE PunctuationRightParen rightParen;
 
 	private @SKIP ArgumentsMetrics _metrics = null;
 

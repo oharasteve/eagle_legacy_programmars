@@ -11,6 +11,8 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.TCL.TCL_Element.TCL_Statement;
+import com.eagle.programmar.TCL.Statements.TCL_SetStatement;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -92,20 +94,56 @@ public class TCL_Program extends AbstractLanguage
 		}
 
 		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
+		for (TCL_Element element : statements._elements)
 		{
-			TypeEnum typ = met.uniqueType();
-			if (typ != TypeEnum.VOID)
+			int nstmts = element.statements.getPrimaryCount();
+			for (int i = 0; i < nstmts; i++)
 			{
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractType absType = generator.transformType(typ, null, this);
-				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName, null, absType, null,
-						this);
-				generator.addStatement(dataStmt, this);
+				TCL_Statement base = element.statements.getPrimaryElement(i);
+				if (base.getWhich() instanceof TCL_SetStatement)
+				{
+					TCL_SetStatement setStmt = (TCL_SetStatement) base.getWhich();
+					String varName = setStmt.var.id.getValue();
+					
+					// Little tricky picking up the variable type
+					AbstractType varType = null;
+					String scopeStr = this._currentLine + "-" + this._endLine;
+					ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+					for (AssignMetrics met : asgMetrics)
+					{
+						if (met._symbolName.equals(varName))
+						{
+							TypeEnum typE = met.uniqueType();
+							if (typE != TypeEnum.VOID)
+							{
+								varType = generator.transformType(typE, null, this);
+							}
+							break;
+						}
+					}
+					
+					AbstractExpression initVal = transformer.transformExpression(generator, setStmt.expr);
+					AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.CONST,
+							varName, null, varType, initVal, this);
+					generator.addStatement(dataStmt, this);
+				}
 			}
 		}
+
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typ = met.uniqueType();
+//			if (typ != TypeEnum.VOID)
+//			{
+//				// System.err.println("****** Found var " + met._symbolName);
+//				AbstractType absType = generator.transformType(typ, null, this);
+//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName, null, absType, null,
+//						this);
+//				generator.addStatement(dataStmt, this);
+//			}
+//		}
 
 		// Second pass, transform all the data and logic
 		for (TCL_Element element : statements._elements)
@@ -114,12 +152,16 @@ public class TCL_Program extends AbstractLanguage
 			for (int i = 0; i < nstmts; i++)
 			{
 				TCL_Statement stmt = element.statements.getPrimaryElement(i);
-				Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, stmt.getWhich());
-				if (newStmts != null)
+				AbstractToken which = stmt.getWhich();
+				if (!(which instanceof TCL_SetStatement))
 				{
-					for (AbstractStatement newStmt : newStmts)
+					Collection<AbstractStatement> newStmts = transformer.transformStatement(generator, which);
+					if (newStmts != null)
 					{
-						generator.addStatement(newStmt, stmt);
+						for (AbstractStatement newStmt : newStmts)
+						{
+							generator.addStatement(newStmt, stmt);
+						}
 					}
 				}
 			}

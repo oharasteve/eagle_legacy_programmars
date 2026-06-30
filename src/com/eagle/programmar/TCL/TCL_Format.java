@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.TCL;
 
+import java.util.ArrayList;
+
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -10,8 +12,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
+import com.eagle.transform.EagleTransformer;
 
 public class TCL_Format
 {
@@ -78,18 +79,22 @@ public class TCL_Format
 		return sb.toString();
 	}
 
-	public static AbstractExpression compile(
+	public static AbstractExpression compile(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 			String fmt, AbstractToken source)
 	{
-		AbstractExpression result = null;
-
+		if (fmt.indexOf('[') < 0 && fmt.indexOf('$') < 0)
+		{
+			return generator.newLiteralExpression(fmt, source);
+		}
+		
 		int nc = fmt.length();
 		if (nc == 0)
 		{
 			return generator.newLiteralExpression("", null);
 		}
 
+		ArrayList<AbstractExpression> pieces = new ArrayList<AbstractExpression>();
 		int sc = 0;
 		char prev = ' ';
 		StringBuffer piece = new StringBuffer();
@@ -127,29 +132,17 @@ public class TCL_Format
 				if (piece.length() > 0)
 				{
 					AbstractExpression litExpr = generator.newLiteralExpression(piece.toString(), null);
-					if (result == null)
-					{
-						result = litExpr;
-					}
-					else
-					{
-						result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, litExpr, null);
-					}
-					piece = new StringBuffer();		// Start over
+					pieces.add(litExpr);
+					piece = new StringBuffer();
 				}
 
-				AbstractExpression varExpr = generator.newVariableExpression(var,
-						SubscriptEnum.FIRST_IS_ZERO, null, null);
-				// Always wrap in a str() function for now
-				AbstractExpression strExpr = generator.newStringFunction(null, varExpr, null);
-				if (result == null)
+				TCL_Expression expr = new TCL_Expression();
+				if (!generator._parser.parseLine(var, generator._parser._parser.getLanguage(), expr))
 				{
-					result = varExpr;
+					throw new RuntimeException("Unable to parse expression " + expr);
 				}
-				else
-				{
-					result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, strExpr, null);
-				}
+				AbstractExpression newExpr = transformer.transformExpression(generator, expr);
+				pieces.add(newExpr);
 			}
 			else if (ch != '\\' || prev == '\\')
 			{
@@ -163,16 +156,9 @@ public class TCL_Format
 		if (piece.length() > 0)
 		{
 			AbstractExpression litExpr = generator.newLiteralExpression(piece.toString(), null);
-			if (result == null)
-			{
-				result = litExpr;
-			}
-			else
-			{
-				result = generator.newAdditiveExpression(null, result, AdditiveEnum.PLUS, litExpr, null);
-			}
+			pieces.add(litExpr);
 		}
 
-		return result;
+		return generator.newConcatExpression(pieces, source);
 	}
 }

@@ -7,8 +7,13 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Rust_Type;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_BorrowExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
@@ -71,7 +76,9 @@ public class Rust_FindMethod extends PrimaryOperator
 		{
 			indexMeth.subscript = new Rust_FindSubscript();
 			indexMeth.subscript.leftBracket = new PunctuationLeftBracket();
-			indexMeth.subscript.sc = sc;
+			Rust_Type usize = Rust_Type.newPrimitiveType("usize");
+			indexMeth.subscript.sc = Rust_AsExpression.generateAsExpr(sc, usize, source);
+			indexMeth.subscript.sc = Rust_ParenthesizedExpression.generateParentheses(indexMeth.subscript.sc, null);
 			indexMeth.subscript.rightBracket = new PunctuationRightBracket();
 			indexMeth.subscript.setPresent(true);
 		}
@@ -79,6 +86,10 @@ public class Rust_FindMethod extends PrimaryOperator
 		indexMeth.dot = new PunctuationPeriod();
 		indexMeth.leftParen = new PunctuationLeftParen();
 		indexMeth.pattern = patt;
+		if (patt.getWhich() instanceof Rust_VariableExpression)
+		{
+			indexMeth.pattern = Rust_BorrowExpression.generateBorrow(patt, source);
+		}
 		indexMeth.rightParen = new PunctuationRightParen();
 
 		indexMeth.setTransformationSource(source);

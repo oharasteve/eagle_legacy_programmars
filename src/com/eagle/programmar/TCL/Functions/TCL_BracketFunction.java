@@ -32,7 +32,7 @@ public class TCL_BracketFunction extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftBracket leftBracket;
 	public @S(20) TCL_Function_Reference function;
-	public @S(30) TokenList<TCL_Expression> callArguments;
+	public @S(30) @OPT TokenList<TCL_Expression> callArguments;
 	public @S(40) PunctuationRightBracket rightBracket;
 
 	@Override
@@ -49,7 +49,11 @@ public class TCL_BracketFunction extends PrimaryOperator
 		TCL_Procedure proc = (TCL_Procedure) fn;
 
 		// Make sure the function args match up
-		int argCount = callArguments.size();
+		int argCount = 0;
+		if (callArguments != null && callArguments.isPresent())
+		{
+			argCount = callArguments.size();
+		}
 		int paramCount = proc.vars.size();
 		if (argCount != paramCount)
 		{

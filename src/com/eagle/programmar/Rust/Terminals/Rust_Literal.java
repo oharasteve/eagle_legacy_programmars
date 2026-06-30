@@ -55,7 +55,7 @@ public class Rust_Literal extends TerminalLiteralToken
 			if (which instanceof Rust_Literal)
 			{
 				Rust_Literal lit = (Rust_Literal) which;
-				sb.append(lit.removeQuotes());
+				sb.append(lit.removeQuotes().replaceAll("\\\"", "\\\\\""));
 			}
 			else
 			{
