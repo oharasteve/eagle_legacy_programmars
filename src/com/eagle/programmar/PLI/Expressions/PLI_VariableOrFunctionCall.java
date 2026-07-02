@@ -39,7 +39,7 @@ public class PLI_VariableOrFunctionCall extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		String name = id.getValue();
-		if (subscript != null && subscript.isPresent())
+		if (subscript != null && subscript.args != null && subscript.args.isPresent())
 		{
 			int argCount = subscript.args.getPrimaryCount();
 
