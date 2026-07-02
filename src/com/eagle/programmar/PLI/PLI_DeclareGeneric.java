@@ -35,7 +35,7 @@ public class PLI_DeclareGeneric extends TokenSequence
 
 	public static class PLI_WhenType extends TokenChooser
 	{
-		public @CHOICE PLI_Type type;
+		public @CHOICE PLI_Type XXtype;
 		
 		public @CHOICE static class PLI_WhenTypeList extends TokenSequence
 		{

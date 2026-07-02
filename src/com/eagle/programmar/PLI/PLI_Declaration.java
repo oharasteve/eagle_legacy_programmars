@@ -106,7 +106,7 @@ public class PLI_Declaration extends TokenSequence
 
 		public static class PLI_Declare_Size_OneDimension extends TokenChooser
 		{
-			public @LAST PLI_Expression exprTo;
+			public @LAST PLI_Expression XXexprTo;
 			
 			public @CHOICE static class PLI_ParenStar extends TokenSequence
 			{
