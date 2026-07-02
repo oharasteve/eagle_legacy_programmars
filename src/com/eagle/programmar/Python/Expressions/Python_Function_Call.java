@@ -61,12 +61,19 @@ public class Python_Function_Call extends PrimaryOperator
 		Python_Function func = (Python_Function) fn;
 
 		// Make sure the function args match up
-		int argCount = argList.getPrimaryCount();
-		int paramCount = 0;
-		if (func.header.params.params != null && func.header.params.params.isPresent()) paramCount++;
-		if (func.header.params.params.moreParams != null && func.header.params.params.moreParams.isPresent())
+		int argCount = 0;
+		if (argList != null && argList.isPresent())
 		{
-			paramCount += func.header.params.params.moreParams.size();
+			argCount = argList.getPrimaryCount();
+		}
+		int paramCount = 0;
+		if (func.header.params.params != null && func.header.params.params.isPresent())
+		{
+			paramCount++;
+			if (func.header.params.params.moreParams != null && func.header.params.params.moreParams.isPresent())
+			{
+				paramCount += func.header.params.params.moreParams.size();
+			}
 		}
 		if (argCount != paramCount)
 		{
@@ -78,20 +85,23 @@ public class Python_Function_Call extends PrimaryOperator
 
 		// Now assign all the parameters
 		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
-		Python_Parameter param = func.header.params.params.param;
-		for (int i = 0; i < argCount; i++)
+		if (func.header.params.params != null)
 		{
-			Python_Expression expr = argList.getPrimaryElement(i);
-			if (i > 0)
+			Python_Parameter param = func.header.params.params.param;
+			for (int i = 0; i < argCount; i++)
 			{
-				param = func.header.params.params.moreParams._elements.get(i - 1).param;
-			}
-			if (param.getWhich() instanceof Python_Variable_Definition)
-			{
-				Python_Variable_Definition def = (Python_Variable_Definition) param.getWhich();
-				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(def, def.getValue(), val);
-				argTypes.add(val.getType());
+				Python_Expression expr = argList.getPrimaryElement(i);
+				if (i > 0)
+				{
+					param = func.header.params.params.moreParams._elements.get(i - 1).param;
+				}
+				if (param.getWhich() instanceof Python_Variable_Definition)
+				{
+					Python_Variable_Definition def = (Python_Variable_Definition) param.getWhich();
+					EagleValue val = interpreter.getEagleValue(expr);
+					interpreter.setSymbol(def, def.getValue(), val);
+					argTypes.add(val.getType());
+				}
 			}
 		}
 

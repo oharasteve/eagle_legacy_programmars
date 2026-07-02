@@ -45,8 +45,16 @@ public class TCL_FunctionCall extends TokenSequence
 		TCL_Procedure proc = (TCL_Procedure) fn;
 
 		// Make sure the function args match up
-		int argCount = callArguments.size();
-		int paramCount = proc.vars.size();
+		int argCount = 0;
+		if (callArguments != null && callArguments.isPresent())
+		{
+			argCount = callArguments.size();
+		}
+		int paramCount = 0;
+		if (proc.vars != null)
+		{
+			paramCount = proc.vars.size();
+		}
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(

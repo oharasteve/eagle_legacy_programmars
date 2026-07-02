@@ -57,7 +57,11 @@ public class Julia_FunctionCall extends PrimaryOperator
 		{
 			argCount = argList.getPrimaryCount();
 		}
-		int paramCount = func.params.parameters.getPrimaryCount();
+		int paramCount = 0;
+		if (func.params.parameters != null && func.params.parameters.isPresent())
+		{
+			paramCount = func.params.parameters.getPrimaryCount();
+		}
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(

@@ -34,7 +34,8 @@ public class Haskell_ParenthesizedExpression extends PrimaryOperator
 	public void interpret(EagleInterpreter interpreter)
 	{
 		// See if we are calling a "prefix notation" function, like (myfunc 1 2 3)
-		int nValues = expressions.size();
+		int nValues = 0;
+		if (expressions != null) nValues = expressions.size();
 		Haskell_Expression first = null;
 		if (nValues >= 1)
 		{

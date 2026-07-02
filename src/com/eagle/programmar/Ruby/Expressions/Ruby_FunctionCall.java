@@ -58,7 +58,11 @@ public class Ruby_FunctionCall extends PrimaryOperator
 		{
 			argCount = arguments.getPrimaryCount();
 		}
-		int paramCount = func.funcParamDefs.parameters.getPrimaryCount();
+		int paramCount = 0;
+		if (func.funcParamDefs.parameters != null && func.funcParamDefs.isPresent())
+		{
+			paramCount = func.funcParamDefs.parameters.getPrimaryCount();
+		}
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
