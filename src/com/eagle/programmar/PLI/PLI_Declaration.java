@@ -106,6 +106,8 @@ public class PLI_Declaration extends TokenSequence
 
 		public static class PLI_Declare_Size_OneDimension extends TokenChooser
 		{
+			public @LAST PLI_Expression exprTo;
+			
 			public @CHOICE static class PLI_ParenStar extends TokenSequence
 			{
 				public @S(10) PunctuationStar star;
@@ -240,21 +242,19 @@ public class PLI_Declaration extends TokenSequence
 								SubscriptEnum.FIRST_IS_ZERO, null, AssignmentEnum.EQUALS, newVal, item.initial);
 						return generator.newExpressionStatement(asgExpr, item.initial);
 					}
+
+					TypeEnum newType;
+					if (item.type1 != null && item.type1.isPresent() &&
+							item.declareSize != null && item.declareSize.isPresent())
+					{
+						newType = TypeEnum.ARRAY;
+					}
 					else
 					{
-						TypeEnum newType;
-						if (item.type1 != null && item.type1.isPresent() &&
-								item.declareSize != null && item.declareSize.isPresent())
-						{
-							newType = TypeEnum.ARRAY;
-						}
-						else
-						{
-							newType = item.type1.findType();
-						}
-						AbstractType type = generator.transformType(newType, varName, this);
-						return generator.newDataDeclaration(isConst, varName, null, type, newVal, this);
+						newType = item.type1.findType();
 					}
+					AbstractType type = generator.transformType(newType, varName, this);
+					return generator.newDataDeclaration(isConst, varName, null, type, newVal, this);
 				}
 			}
 		}
