@@ -110,7 +110,11 @@ public class VB_CallStatement extends TokenSequence
 		String name = subName.getValue();
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
-		int argCount = callArguments.arguments.getPrimaryCount();
+		int argCount = 0;
+		if (callArguments.arguments != null && callArguments.arguments.isPresent())
+		{
+			argCount = callArguments.arguments.getPrimaryCount();
+		}
 		for (int i = 0; i < argCount; i++)
 		{
 			VB_Expression arg = callArguments.arguments.getPrimaryElement(i);

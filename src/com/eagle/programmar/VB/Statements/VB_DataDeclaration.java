@@ -127,7 +127,13 @@ public class VB_DataDeclaration extends TokenSequence
 		}
 
 		String name = var.getValue();
-		AbstractStatement stmt = generator.newDataDeclaration(StaticEnum.NONE, name, size, newType, initial, this);
+		StaticEnum isConst = StaticEnum.NONE;
+		if (modifier.getValue().equalsIgnoreCase("const"))
+		{
+			isConst = StaticEnum.CONST;
+		}
+		AbstractStatement stmt = generator.newDataDeclaration(isConst,
+				name, size, newType, initial, this);
 		result.add(stmt);
 
 		if (moreVariables != null && moreVariables.isPresent())
