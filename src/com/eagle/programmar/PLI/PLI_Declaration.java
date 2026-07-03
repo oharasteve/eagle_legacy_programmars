@@ -107,11 +107,7 @@ public class PLI_Declaration extends TokenSequence
 		public static class PLI_Declare_Size_OneDimension extends TokenChooser
 		{
 			public @LAST PLI_Expression XXexprTo;
-			
-			public @CHOICE static class PLI_ParenStar extends TokenSequence
-			{
-				public @S(10) PunctuationStar star;
-			}
+			public @CHOICE PunctuationStar star;
 
 			public @CHOICE static class PLI_Declare_Array extends TokenSequence
 			{
