@@ -58,11 +58,15 @@ public class VB_CallStatement extends TokenSequence
 
 		// Make sure the function args match up
 		int argCount = 0;
-		if (callArguments.arguments != null)
+		if (callArguments != null && callArguments.arguments != null && callArguments.arguments.isPresent())
 		{
 			argCount = callArguments.arguments.getPrimaryCount();
 		}
-		int paramCount = subr.params.params.getPrimaryCount();
+		int paramCount = 0;
+		if (subr.params.params != null && subr.params.params.isPresent())
+		{
+			paramCount = subr.params.params.getPrimaryCount();
+		}
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(

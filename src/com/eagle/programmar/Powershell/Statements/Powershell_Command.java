@@ -102,7 +102,7 @@ public class Powershell_Command extends TokenSequence
 				argCount = argList.size();
 			}
 			int paramCount = 0;
-			if (func.params.params != null && func.params.params.isPresent())
+			if (func.params != null && func.params.params != null && func.params.params.isPresent())
 			{
 				paramCount = func.params.params.getPrimaryCount();
 			}
