@@ -3,13 +3,12 @@
 
 package com.eagle.programmar.Powershell;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
+import com.eagle.programmar.Powershell.Commands.Powershell_SetVariable;
 import com.eagle.programmar.Powershell.Statements.Powershell_Function;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
@@ -18,8 +17,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -62,10 +59,15 @@ public class Powershell_Program extends AbstractLanguage
 		// First pass, just collect all the FUNCTION definitions
 		for (Powershell_Element stmt : statements._elements)
 		{
-			if (stmt.element.getWhich() instanceof Powershell_Function)
+			AbstractToken which = stmt.element.getWhich();
+			if (which instanceof Powershell_Function)
 			{
 				Powershell_Function fn = (Powershell_Function) stmt.element.getWhich();
 				interpreter.addFunction(fn.id.getValue(), fn);
+			}
+			else if (which instanceof Powershell_SetVariable)
+			{
+				interpreter.tryToInterpret(stmt.element);
 			}
 		}
 
@@ -91,25 +93,25 @@ public class Powershell_Program extends AbstractLanguage
 			}
 		}
 
-		// Are there any global variables we need to declare?
-		String scopeStr = this._currentLine + "-" + this._endLine;
-		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-		for (AssignMetrics met : asgMetrics)
-		{
-			TypeEnum typE = met.uniqueType();
-			if (typE != TypeEnum.VOID)
-			{
-				AbstractType abstrType = generator.transformType(typE, null, this);
+//		// Are there any global variables we need to declare?
+//		String scopeStr = this._currentLine + "-" + this._endLine;
+//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
+//		for (AssignMetrics met : asgMetrics)
+//		{
+//			TypeEnum typE = met.uniqueType();
+//			if (typE != TypeEnum.VOID)
+//			{
+//				AbstractType abstrType = generator.transformType(typE, null, this);
+//
+//				// System.err.println("****** Found var " + met._symbolName);
+//				AbstractExpression initExpr = null;
+//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
+//						null, abstrType, initExpr, this);
+//				generator.addStatement(dataStmt, this);
+//			}
+//		}
 
-				// System.err.println("****** Found var " + met._symbolName);
-				AbstractExpression initExpr = null;
-				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-						null, abstrType, initExpr, this);
-				generator.addStatement(dataStmt, this);
-			}
-		}
-
-		// Transform all the global data and logic, etc.
+		// Transform all the data and logic, etc.
 		for (Powershell_Element stmt : statements._elements)
 		{
 			AbstractToken whichStmt = stmt.element.getWhich();

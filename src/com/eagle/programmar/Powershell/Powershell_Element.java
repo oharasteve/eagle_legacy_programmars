@@ -6,6 +6,7 @@ package com.eagle.programmar.Powershell;
 import com.eagle.programmar.CMD.CMD_Syntax;
 import com.eagle.programmar.CMD.Statements.CMD_FindStr_Statement;
 import com.eagle.programmar.CMD.Statements.CMD_Xcopy_Statement;
+import com.eagle.programmar.Powershell.Commands.Powershell_SetVariable;
 import com.eagle.programmar.Powershell.Statements.Powershell_BeginBlock;
 import com.eagle.programmar.Powershell.Statements.Powershell_BreakStatement;
 import com.eagle.programmar.Powershell.Statements.Powershell_Command;
@@ -51,6 +52,7 @@ public class Powershell_Element extends TokenSequence
 		public @CHOICE Powershell_Function XXfunctionDefinition;
 		public @CHOICE Powershell_ProcessBlock XXprocessBlock;
 		public @CHOICE Powershell_ReturnStatement XXreturnStatement;
+		public @CHOICE Powershell_SetVariable XXsetVariable;
 		public @CHOICE Powershell_StartJob XXstartJob;
 		public @CHOICE Powershell_SwitchStatement XXswitchStatement;
 		public @CHOICE Powershell_ThrowStatement XXthrowStatement;
@@ -62,7 +64,7 @@ public class Powershell_Element extends TokenSequence
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_Xcopy_Statement XXxcopyStatement;
 		public @CHOICE @SYNTAX(CMD_Syntax.class) CMD_FindStr_Statement XXfindstrStatement;
 
-		public @CHOICE Powershell_Command XXcommand;
+		public @LAST Powershell_Command XXcommand;
 		public @LAST Powershell_ExpressionStatement XXexpressionStatement;
 	}
 }

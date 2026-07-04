@@ -71,9 +71,7 @@ public class Powershell_Expression extends PrecedenceChooser
 	public @P(20) Powershell_Literal literal;
 
 	///////////////////////////////////////////////////////////////////////////
-	// Primary Expressions
-
-	// Powershell Commands
+	// Primary Expressions and Powershell Commands
 	public @P(100) Powershell_TestPath testPathCommand;
 	public @P(110) Powershell_GetChildItem getChildItemCommand;
 	public @P(120) Powershell_GetContent getContentCommand;

@@ -11,7 +11,7 @@ public class Powershell_Identifier extends TerminalIdentifierToken
 	@Override
 	public boolean parse(EagleFileReader lines)
 	{
-		if (!genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_-", false, false)) return false;
+		if (!genericIdentifier(lines, ALPHAS + "_", ALPHAS + DIGITS + "_-", true, false)) return false;
 		removeTrailingHyphens();
 		return true;
 	}

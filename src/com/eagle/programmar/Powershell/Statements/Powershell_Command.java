@@ -96,8 +96,16 @@ public class Powershell_Command extends TokenSequence
 
 			// Call the function
 			// Make sure the function args match up
-			int argCount = argList.size();
-			int paramCount = func.params.params.getPrimaryCount();
+			int argCount = 0;
+			if (argList != null && argList.isPresent())
+			{
+				argCount = argList.size();
+			}
+			int paramCount = 0;
+			if (func.params.params != null && func.params.params.isPresent())
+			{
+				paramCount = func.params.params.getPrimaryCount();
+			}
 			if (argCount != paramCount)
 			{
 				throw new RuntimeException(
