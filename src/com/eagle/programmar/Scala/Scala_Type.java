@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Scala;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.Scala.Terminals.Scala_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
@@ -12,8 +14,6 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Scala_Type extends TokenChooser
 {

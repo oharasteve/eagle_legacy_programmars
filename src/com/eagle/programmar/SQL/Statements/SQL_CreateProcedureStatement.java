@@ -6,6 +6,7 @@ package com.eagle.programmar.SQL.Statements;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -33,7 +34,6 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -99,7 +99,7 @@ public class SQL_CreateProcedureStatement extends TokenSequence
 	{
 		String newName = procName.getValue();
 		generator.addMethod(null, newName, this);
-		generator.setMethodName(newName);
+		generator.addMethodName(newName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found SQL procedure " + newName);

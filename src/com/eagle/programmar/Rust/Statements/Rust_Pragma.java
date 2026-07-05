@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Rust.Statements;
 
+import com.eagle.generate.PragmaEnum;
 import com.eagle.programmar.Rust.Rust_Statement;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
@@ -12,7 +13,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.PragmaEnum;
 
 public class Rust_Pragma extends TokenSequence
 {

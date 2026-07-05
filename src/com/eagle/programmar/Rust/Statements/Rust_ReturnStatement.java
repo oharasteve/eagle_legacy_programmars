@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Rust.Statements;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -19,10 +21,8 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rust_ReturnStatement extends TokenSequence
 		implements EagleRunnableWithResult, AbstractStatement, EagleTransformableStatement

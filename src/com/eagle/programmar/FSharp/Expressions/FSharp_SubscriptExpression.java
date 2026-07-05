@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.FSharp.Expressions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
@@ -21,10 +25,6 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 

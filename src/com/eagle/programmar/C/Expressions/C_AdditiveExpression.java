@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.C.Expressions;
 
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -15,11 +20,6 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 

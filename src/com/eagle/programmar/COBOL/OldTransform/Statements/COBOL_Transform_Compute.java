@@ -4,6 +4,7 @@
 package com.eagle.programmar.COBOL.OldTransform.Statements;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.AssignmentEnum;
 import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL;
 import com.eagle.programmar.COBOL.Statements.COBOL_ComputeStatement;
 import com.eagle.tokens.interfaces.AbstractClass;
@@ -12,7 +13,6 @@ import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
 
 public class COBOL_Transform_Compute<Lang extends AbstractLanguage, Cls extends AbstractClass, Stmt extends AbstractStatement, Meth extends AbstractMethod, Expr extends AbstractExpression, Var extends AbstractVariable, Type extends AbstractType>
 {

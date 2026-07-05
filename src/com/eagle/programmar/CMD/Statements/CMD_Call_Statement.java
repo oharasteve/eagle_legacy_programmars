@@ -5,6 +5,7 @@ package com.eagle.programmar.CMD.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -23,7 +24,6 @@ import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class CMD_Call_Statement extends TokenSequence implements AbstractStatement, EagleRunnable
 {

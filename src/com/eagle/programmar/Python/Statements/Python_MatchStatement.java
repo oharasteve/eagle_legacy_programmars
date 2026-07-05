@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.programmar.Python.Python_ComplexStatement;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
 import com.eagle.programmar.Python.Python_Expression;
@@ -21,7 +22,6 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationVerticalBar;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Python_MatchStatement extends TokenSequence
 {

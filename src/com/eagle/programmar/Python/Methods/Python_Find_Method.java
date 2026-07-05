@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Python.Methods;
 
+import com.eagle.generate.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -16,7 +17,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Python_Find_Method extends PrimaryOperator
 		implements EagleRunnable

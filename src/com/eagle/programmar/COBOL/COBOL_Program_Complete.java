@@ -4,6 +4,7 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_DataSection;
@@ -18,7 +19,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 

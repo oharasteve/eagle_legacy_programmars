@@ -5,8 +5,8 @@ package com.eagle.programmar.SQL;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.math.EagleValue;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_Table extends EagleValue
 {

@@ -6,6 +6,8 @@ package com.eagle.programmar.COBOL.OldTransform.Statements;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.RelationalEnum;
 import com.eagle.programmar.COBOL.COBOL_Statement;
 import com.eagle.programmar.COBOL.COBOL_Variable.COBOL_UserVariable;
 import com.eagle.programmar.COBOL.OldTransform.Transform_COBOL;
@@ -20,8 +22,6 @@ import com.eagle.tokens.interfaces.AbstractMethod;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.RelationalEnum;
 
 public class COBOL_Transform_Add<Lang extends AbstractLanguage, Cls extends AbstractClass, Stmt extends AbstractStatement, Meth extends AbstractMethod, Expr extends AbstractExpression, Var extends AbstractVariable, Type extends AbstractType>
 {

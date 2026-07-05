@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.CSharp.Expressions;
 
+import com.eagle.generate.ShiftEnum;
 import com.eagle.programmar.CSharp.CSharp_Expression;
 import com.eagle.programmar.CSharp.CSharp_Generator;
 import com.eagle.programmar.CSharp.Terminals.CSharp_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.transform.EagleGenerator.ShiftEnum;
 
 public class CSharp_ShiftExpression extends PrecedenceOperator
 {

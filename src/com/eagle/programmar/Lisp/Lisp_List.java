@@ -5,6 +5,7 @@ package com.eagle.programmar.Lisp;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -16,7 +17,6 @@ import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Lisp_List extends TokenSequence implements EagleRunnable
 {

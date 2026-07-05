@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Fortran;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Keyword;
 import com.eagle.programmar.Fortran.Terminals.Fortran_KeywordChoice;
 import com.eagle.programmar.Fortran.Terminals.Fortran_Number;
@@ -17,8 +19,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Fortran_Type extends TokenSequence
 {

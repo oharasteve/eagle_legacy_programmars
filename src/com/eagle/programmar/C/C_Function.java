@@ -5,6 +5,8 @@ package com.eagle.programmar.C;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -39,8 +41,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -269,7 +269,7 @@ public class C_Function extends TokenSequence
 
 		AbstractType newReturnType = generator.transformType(retType, null, id);
 		generator.addMethod(newReturnType, fnName, this);
-		generator.setMethodName(fnName);
+		generator.addMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("*** Found C function " + fnName);

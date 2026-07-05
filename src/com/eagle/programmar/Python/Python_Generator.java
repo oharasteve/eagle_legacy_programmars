@@ -6,6 +6,23 @@ package com.eagle.programmar.Python;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.BitwiseEnum;
+import com.eagle.generate.BuiltInEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.IncrementEnum;
+import com.eagle.generate.LogicalOrEnum;
+import com.eagle.generate.MultiplicativeEnum;
+import com.eagle.generate.NegativeEnum;
+import com.eagle.generate.PragmaEnum;
+import com.eagle.generate.RelationalEnum;
+import com.eagle.generate.ShiftEnum;
+import com.eagle.generate.StaticEnum;
+import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Python.Python_ComplexStatement.Python_Statement;
@@ -62,7 +79,6 @@ import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
 
 public class Python_Generator
 		extends EagleGenerator<Python_ComplexStatement, Python_Expression, Python_Variable, Python_Type>

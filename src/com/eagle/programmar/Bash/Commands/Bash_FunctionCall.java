@@ -5,6 +5,7 @@ package com.eagle.programmar.Bash.Commands;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
@@ -20,7 +21,6 @@ import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Bash_FunctionCall extends TokenSequence implements EagleRunnable
 {

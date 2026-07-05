@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.C;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Terminals.C_Keyword;
@@ -24,7 +25,6 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class C_Type extends TokenSequence implements AbstractType
 {

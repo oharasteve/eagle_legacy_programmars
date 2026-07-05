@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp.Methods;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -18,9 +21,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 

@@ -5,6 +5,7 @@ package com.eagle.programmar.Python.Functions;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.MinMaxEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Python.Python_Expression;
@@ -16,7 +17,6 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.MinMaxEnum;
 
 public class Python_MinMax_Function extends PrimaryOperator implements EagleRunnable
 {

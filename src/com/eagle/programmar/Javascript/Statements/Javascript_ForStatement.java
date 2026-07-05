@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Javascript.Statements;
 
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -32,9 +35,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 

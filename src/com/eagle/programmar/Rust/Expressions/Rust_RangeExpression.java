@@ -3,6 +3,11 @@
 
 package com.eagle.programmar.Rust.Expressions;
 
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.MinMaxEnum;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleRange;
@@ -16,11 +21,6 @@ import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.MinMaxEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Rust_RangeExpression extends PrecedenceOperator implements EagleRunnable
 {

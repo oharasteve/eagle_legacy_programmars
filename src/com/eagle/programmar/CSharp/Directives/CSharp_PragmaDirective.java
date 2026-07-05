@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.CSharp.Directives;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.PragmaEnum;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CSharp.CSharp_Expression;
@@ -21,9 +24,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.PragmaEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 

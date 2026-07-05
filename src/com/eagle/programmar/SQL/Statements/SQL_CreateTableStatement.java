@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.SQL.Statements;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Table;
@@ -22,7 +23,6 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_CreateTableStatement extends TokenSequence implements EagleRunnable
 {

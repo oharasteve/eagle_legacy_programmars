@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Rust.Functions;
 
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.SubstringSCEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Rust.Rust_Expression;
@@ -25,8 +27,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
 
 public class Rust_FindMethod extends PrimaryOperator
 		implements EagleRunnable

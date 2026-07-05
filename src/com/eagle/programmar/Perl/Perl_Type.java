@@ -3,13 +3,13 @@
 
 package com.eagle.programmar.Perl;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.Perl.Symbols.Perl_Variable_Definition;
 import com.eagle.programmar.Perl.Terminals.Perl_KeywordChoice;
 import com.eagle.programmar.Perl.Terminals.Perl_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Perl_Type extends TokenChooser
 {

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Eaglish.Data;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.StaticEnum;
 import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -10,8 +12,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationEquals;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleTransformer;
 
 public abstract class Eaglish_Data extends TokenSequence

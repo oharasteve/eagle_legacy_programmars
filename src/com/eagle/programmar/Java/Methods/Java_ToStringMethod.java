@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java.Methods;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -17,7 +18,6 @@ import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Java_ToStringMethod extends PrecedenceOperator
 		implements EagleRunnable

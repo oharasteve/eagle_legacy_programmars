@@ -5,6 +5,8 @@ package com.eagle.programmar.Javascript;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -30,8 +32,6 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -110,7 +110,7 @@ public class Javascript_Function extends TokenSequence
 		}
 
 		generator.addMethod(newReturnType, newName, this);
-		generator.setMethodName(newName);
+		generator.addMethodName(newName);
 
 		// Pick up metrics, if known
 		ArrayList<TypeEnum> argTypes = transformer.findArgumentsMetric(implementation.id);

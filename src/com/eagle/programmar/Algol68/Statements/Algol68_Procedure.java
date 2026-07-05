@@ -5,6 +5,8 @@ package com.eagle.programmar.Algol68.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -33,8 +35,6 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -115,7 +115,7 @@ public class Algol68_Procedure extends TokenSequence
 			newName = generator.mainName();
 		}
 		generator.addMethod(newReturnType, newName, this);
-		generator.setMethodName(id.getValue());
+		generator.addMethodName(id.getValue());
 		if (VERBOSE)
 		{
 			System.out.println("** Found Algol68 function " + id.getValue());

@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Algol68;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.Algol68.Terminals.Algol68_KeywordChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class Algol68_Type extends TokenChooser
 {

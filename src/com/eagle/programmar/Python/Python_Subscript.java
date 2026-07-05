@@ -3,6 +3,12 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
@@ -20,12 +26,6 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
-import com.eagle.transform.EagleGenerator.SubstringECEnum;
-import com.eagle.transform.EagleGenerator.SubstringSCEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformer;
 
 public class Python_Subscript extends TokenSequence

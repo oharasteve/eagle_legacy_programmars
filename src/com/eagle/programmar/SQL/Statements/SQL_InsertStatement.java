@@ -5,6 +5,7 @@ package com.eagle.programmar.SQL.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleInteger;
@@ -22,7 +23,6 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 {

@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Java.Functions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.MultiplicativeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -16,10 +18,8 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.MultiplicativeEnum;
 
 public class Java_MathFloorModFunc extends TokenSequence
 		implements EagleRunnable, EagleTransformableExpression

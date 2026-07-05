@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.PLI.Terminals;
 
+import com.eagle.generate.BuiltInEnum;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
@@ -12,8 +14,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.BuiltInEnum;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 

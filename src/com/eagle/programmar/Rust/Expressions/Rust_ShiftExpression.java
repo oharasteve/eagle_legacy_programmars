@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Rust.Expressions;
 
+import com.eagle.generate.ShiftEnum;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.transform.EagleGenerator.ShiftEnum;
 
 public class Rust_ShiftExpression extends PrecedenceOperator
 {

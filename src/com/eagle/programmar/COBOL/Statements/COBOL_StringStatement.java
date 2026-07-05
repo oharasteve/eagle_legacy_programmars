@@ -5,6 +5,11 @@ package com.eagle.programmar.COBOL.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
@@ -28,11 +33,6 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 

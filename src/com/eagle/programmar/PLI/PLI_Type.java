@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.PLI;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.PLI.Terminals.PLI_BitLiteral;
 import com.eagle.programmar.PLI.Terminals.PLI_Keyword;
 import com.eagle.programmar.PLI.Terminals.PLI_KeywordChoice;
@@ -17,7 +18,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class PLI_Type extends TokenSequence
 {

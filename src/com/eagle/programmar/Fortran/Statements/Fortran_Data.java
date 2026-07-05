@@ -5,6 +5,8 @@ package com.eagle.programmar.Fortran.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Fortran.Fortran_Type;
@@ -20,10 +22,8 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatementList;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.StaticEnum;
 
 public class Fortran_Data extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList

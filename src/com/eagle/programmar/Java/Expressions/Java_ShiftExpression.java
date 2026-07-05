@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Java.Expressions;
 
+import com.eagle.generate.ShiftEnum;
 import com.eagle.programmar.Java.Java_Expression;
 import com.eagle.programmar.Java.Java_Generator;
 import com.eagle.programmar.Java.Terminals.Java_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.transform.EagleGenerator.ShiftEnum;
 
 public class Java_ShiftExpression extends PrecedenceOperator
 {

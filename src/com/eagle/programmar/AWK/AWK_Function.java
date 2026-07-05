@@ -5,6 +5,9 @@ package com.eagle.programmar.AWK;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.StaticEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -34,9 +37,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.StaticEnum;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -109,7 +109,7 @@ public class AWK_Function extends TokenSequence
 
 		String fnName = id.getValue();
 		generator.addMethod(newReturnType, fnName, this);
-		generator.setMethodName(fnName);
+		generator.addMethodName(fnName);
 		if (VERBOSE)
 		{
 			System.out.println("** Found AWK function " + fnName);

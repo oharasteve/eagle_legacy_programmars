@@ -3,6 +3,8 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Python_Variable;
@@ -11,8 +13,6 @@ import com.eagle.programmar.Python.Terminals.Python_Keyword;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Python_Assignment_Expression extends PrecedenceOperator
 {

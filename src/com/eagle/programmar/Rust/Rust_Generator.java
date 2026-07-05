@@ -6,6 +6,23 @@ package com.eagle.programmar.Rust;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.BitwiseEnum;
+import com.eagle.generate.BuiltInEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.IncrementEnum;
+import com.eagle.generate.LogicalOrEnum;
+import com.eagle.generate.MultiplicativeEnum;
+import com.eagle.generate.NegativeEnum;
+import com.eagle.generate.PragmaEnum;
+import com.eagle.generate.RelationalEnum;
+import com.eagle.generate.ShiftEnum;
+import com.eagle.generate.StaticEnum;
+import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.Rust.Rust_Program.Rust_TopElement;
@@ -63,7 +80,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
 
 public class Rust_Generator
 		extends EagleGenerator<Rust_Statement, Rust_Expression, Rust_Variable, Rust_Type>

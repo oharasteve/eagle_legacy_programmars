@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.Powershell;
 
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.math.EagleValue;
 import com.eagle.tokens.AbstractToken;
@@ -10,9 +13,6 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.AdditiveEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class Powershell_Format
 {

@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.TCL.Statements;
 
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleString;
@@ -15,11 +18,8 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
-import com.eagle.transform.EagleGenerator.AssignmentEnum;
-import com.eagle.transform.EagleGenerator.SubscriptEnum;
 
 public class TCL_AppendStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement

@@ -5,6 +5,9 @@ package com.eagle.programmar.Java;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.PrivacyEnum;
+import com.eagle.generate.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -40,9 +43,6 @@ import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator;
-import com.eagle.transform.EagleGenerator.PrivacyEnum;
-import com.eagle.transform.EagleGenerator.StaticEnum;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -312,7 +312,7 @@ public class Java_Method extends TokenSequence
 		}
 
 		generator.addMethod(newReturnType, newName, this);
-		generator.setMethodName(newName);
+		generator.addMethodName(newName);
 
 		Java_ParameterList params = methodType.parameters;
 		if (params != null && params.isPresent())

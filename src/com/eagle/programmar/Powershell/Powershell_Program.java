@@ -6,6 +6,7 @@ package com.eagle.programmar.Powershell;
 import java.util.Collection;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Powershell.Commands.Powershell_SetVariable;
@@ -16,7 +17,6 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
@@ -51,7 +51,7 @@ public class Powershell_Program extends AbstractLanguage
 	public @S(30) @OPT Powershell_CmdletBinding cmdletBinding;
 	public @S(40) @OPT Powershell_Parameters parameters;
 	public @S(50) @OPT TokenList<Powershell_CommentEoln> comments2;
-	public @S(60) @OPT TokenList<Powershell_Element> statements;
+	public @S(60) TokenList<Powershell_Element> statements;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
@@ -93,7 +93,7 @@ public class Powershell_Program extends AbstractLanguage
 			}
 		}
 
-//		// Are there any global variables we need to declare?
+//		// Are there any global "script:emsg" variables we need to declare?
 //		String scopeStr = this._currentLine + "-" + this._endLine;
 //		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
 //		for (AssignMetrics met : asgMetrics)

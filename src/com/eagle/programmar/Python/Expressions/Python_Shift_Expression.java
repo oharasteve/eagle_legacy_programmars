@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.Python.Expressions;
 
+import com.eagle.generate.ShiftEnum;
 import com.eagle.programmar.Python.Python_Expression;
 import com.eagle.programmar.Python.Python_Generator;
 import com.eagle.programmar.Python.Terminals.Python_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.transform.EagleGenerator.ShiftEnum;
 
 public class Python_Shift_Expression extends PrecedenceOperator
 {

@@ -5,6 +5,7 @@ package com.eagle.programmar.Java.Functions;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.MinMaxEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Expression;
@@ -15,7 +16,6 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator.MinMaxEnum;
 
 public class Java_MathMinMaxFunc extends PrimaryOperator
 		implements EagleRunnable

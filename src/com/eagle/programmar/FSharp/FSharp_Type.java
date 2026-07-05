@@ -3,11 +3,11 @@
 
 package com.eagle.programmar.FSharp;
 
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
 import com.eagle.programmar.FSharp.Terminals.FSharp_KeywordChoice;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractType;
-import com.eagle.transform.EagleGenerator.TypeEnum;
 
 public class FSharp_Type extends TokenSequence implements AbstractType
 {

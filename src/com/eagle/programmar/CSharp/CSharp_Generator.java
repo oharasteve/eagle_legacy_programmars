@@ -6,6 +6,24 @@ package com.eagle.programmar.CSharp;
 import java.util.ArrayList;
 
 import com.eagle.core.AbstractLanguage;
+import com.eagle.generate.AdditiveEnum;
+import com.eagle.generate.AssignmentEnum;
+import com.eagle.generate.BitwiseEnum;
+import com.eagle.generate.BuiltInEnum;
+import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.IncrementEnum;
+import com.eagle.generate.LogicalOrEnum;
+import com.eagle.generate.MultiplicativeEnum;
+import com.eagle.generate.NegativeEnum;
+import com.eagle.generate.PragmaEnum;
+import com.eagle.generate.PrivacyEnum;
+import com.eagle.generate.RelationalEnum;
+import com.eagle.generate.ShiftEnum;
+import com.eagle.generate.StaticEnum;
+import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.SubstringECEnum;
+import com.eagle.generate.SubstringSCEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
@@ -59,7 +77,6 @@ import com.eagle.programmar.CSharp.Terminals.CSharp_Number;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TerminalToken;
 import com.eagle.tokens.interfaces.AbstractExpression;
-import com.eagle.transform.EagleGenerator;
 
 public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Expression, CSharp_Variable, CSharp_Type>
 {

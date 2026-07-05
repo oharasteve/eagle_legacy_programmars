@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Java;
 
+import com.eagle.generate.PrivacyEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Java.Java_Method.Java_Constructor;
@@ -23,7 +24,6 @@ import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
-import com.eagle.transform.EagleGenerator.PrivacyEnum;
 
 public class Java_Class extends TokenSequence implements EagleRunnable, AbstractClass
 {

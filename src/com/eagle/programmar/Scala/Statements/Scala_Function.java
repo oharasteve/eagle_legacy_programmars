@@ -5,6 +5,7 @@ package com.eagle.programmar.Scala.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -29,7 +30,6 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
-import com.eagle.transform.EagleGenerator;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
@@ -113,7 +113,7 @@ public class Scala_Function extends TokenSequence
 			newName = generator.mainName();
 		}
 		generator.addMethod(newReturnType, newName, this);
-		generator.setMethodName(id.getValue());
+		generator.addMethodName(id.getValue());
 		if (VERBOSE)
 		{
 			System.out.println("** Found Scala function " + id.getValue());
