@@ -14,6 +14,7 @@ import com.eagle.programmar.Fortran.Statements.Fortran_IfStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_Implicit;
 import com.eagle.programmar.Fortran.Statements.Fortran_PrintStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_ProgramBlock;
+import com.eagle.programmar.Fortran.Statements.Fortran_SelectStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_Subroutine;
 import com.eagle.programmar.Fortran.Statements.Fortran_WhileStatement;
 import com.eagle.programmar.Fortran.Statements.Fortran_WriteStatement;
@@ -32,6 +33,7 @@ public class Fortran_Statement extends TokenChooser
 	public @CHOICE Fortran_Implicit XXimplicit;
 	public @CHOICE Fortran_PrintStatement XXprintStatement;
 	public @CHOICE Fortran_ProgramBlock XXprogramBlock;
+	public @CHOICE Fortran_SelectStatement XXselectStatement;
 	public @CHOICE Fortran_Subroutine XXsubroutine;
 	public @CHOICE Fortran_WriteStatement XXwriteStatement;
 	public @CHOICE Fortran_WhileStatement XXwhileStatement;
