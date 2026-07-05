@@ -37,7 +37,9 @@ public class Fortran_Syntax extends EagleSyntax
 
 	private static final String[] RESERVED_WORDS = new String[] {
 			"call",
+			"case",
 			"common",
+			"default",
 			"else",
 			"end",
 			"exit",
@@ -46,6 +48,7 @@ public class Fortran_Syntax extends EagleSyntax
 			"implicit",
 			"print",
 			"program",
+			"select",
 			"subroutine",
 			"then",
 			"write",
