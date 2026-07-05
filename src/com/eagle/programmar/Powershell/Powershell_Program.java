@@ -3,12 +3,17 @@
 
 package com.eagle.programmar.Powershell;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.StaticEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.AssignMetrics;
 import com.eagle.programmar.Powershell.Commands.Powershell_SetVariable;
 import com.eagle.programmar.Powershell.Statements.Powershell_Function;
 import com.eagle.tokens.AbstractToken;
@@ -93,24 +98,6 @@ public class Powershell_Program extends AbstractLanguage
 			}
 		}
 
-//		// Are there any global "script:emsg" variables we need to declare?
-//		String scopeStr = this._currentLine + "-" + this._endLine;
-//		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findVarsInScope(scopeStr);
-//		for (AssignMetrics met : asgMetrics)
-//		{
-//			TypeEnum typE = met.uniqueType();
-//			if (typE != TypeEnum.VOID)
-//			{
-//				AbstractType abstrType = generator.transformType(typE, null, this);
-//
-//				// System.err.println("****** Found var " + met._symbolName);
-//				AbstractExpression initExpr = null;
-//				AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.NONE, met._symbolName,
-//						null, abstrType, initExpr, this);
-//				generator.addStatement(dataStmt, this);
-//			}
-//		}
-
 		// Transform all the data and logic, etc.
 		for (Powershell_Element stmt : statements._elements)
 		{
@@ -125,6 +112,34 @@ public class Powershell_Program extends AbstractLanguage
 			}
 		}
 
+		// Are there any global "script:emsg" variables we need to declare?
+		ArrayList<AssignMetrics> asgMetrics = transformer._metrics.findAllAssignments();
+		HashSet<String> didAlready = new HashSet<String>();
+		for (AssignMetrics met : asgMetrics)
+		{
+			if (met._scopeStart == 0)
+			{
+				String name = met._symbolName;
+				if (!generator.isKnownConstant(name))
+				{
+					if (!didAlready.contains(name))
+					{
+						TypeEnum typE = met.uniqueType();
+						if (typE != TypeEnum.VOID)
+						{
+							AbstractType abstrType = generator.transformType(typE, null, this);
+							// System.err.println("****** Found global var " + name);
+							AbstractExpression initExpr = null;
+							AbstractStatement dataStmt = generator.newDataDeclaration(StaticEnum.STATIC, name,
+									null, abstrType, initExpr, this);
+							generator.addStatement(dataStmt, this);
+						}
+						didAlready.add(name);
+					}
+				}
+			}
+		}
+		
 		return generator.getTransformedProgram();
 	}
 }

@@ -280,7 +280,15 @@ public class Python_Generator
 	public Python_ComplexStatement newDataDeclaration(StaticEnum isStatic, String name, Python_Expression size,
 			Python_Type type, Python_Expression initial, AbstractToken source)
 	{
-		return wrapStatement(Python_Data.newDataDeclaration(name, size, type, initial, source));
+		if (isStatic == StaticEnum.CONST)
+		{
+			addConstantName(name);
+		}
+		else if (isStatic == StaticEnum.STATIC)
+		{
+			if (isKnownConstant(name)) return null;
+		}
+		return wrapStatement(Python_Data.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 
 	@Override

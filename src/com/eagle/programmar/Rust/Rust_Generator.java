@@ -274,7 +274,12 @@ public class Rust_Generator
 	{
 		if (isStatic == StaticEnum.CONST)
 		{
+			addConstantName(name);
 			return wrapStatement(Rust_ConstStatement.newConstDeclaration(isStatic, name, size, type, initial, source));
+		}
+		if (isStatic == StaticEnum.STATIC)
+		{
+			if (isKnownConstant(name)) return null;
 		}
 		return wrapStatement(Rust_LetStatement.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}

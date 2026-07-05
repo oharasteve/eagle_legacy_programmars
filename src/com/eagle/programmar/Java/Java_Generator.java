@@ -298,6 +298,14 @@ public class Java_Generator
 	public Java_Statement newDataDeclaration(StaticEnum isStatic, String name, Java_Expression size,
 			Java_Type type, Java_Expression initial, AbstractToken source)
 	{
+		if (isStatic == StaticEnum.CONST)
+		{
+			addConstantName(name);
+		}
+		else if (isStatic == StaticEnum.STATIC)
+		{
+			if (isKnownConstant(name)) return null;
+		}
 		return wrapStatement(Java_Data.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 

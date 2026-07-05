@@ -3,6 +3,7 @@
 
 package com.eagle.programmar.Python;
 
+import com.eagle.generate.StaticEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -33,8 +34,8 @@ public class Python_Data extends TokenSequence implements EagleRunnable, Abstrac
 		interpreter.setSymbol(id, id.toString(), value);
 	}
 
-	public static Python_Data newDataDeclaration(String name, Python_Expression size, Python_Type type,
-			Python_Expression initial, AbstractToken source)
+	public static Python_Data newDataDeclaration(StaticEnum isStatic, String name, Python_Expression size,
+			Python_Type type, Python_Expression initial, AbstractToken source)
 	{
 		if (initial == null)
 		{

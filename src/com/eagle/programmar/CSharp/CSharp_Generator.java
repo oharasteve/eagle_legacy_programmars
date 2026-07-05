@@ -290,6 +290,14 @@ public class CSharp_Generator extends EagleGenerator<CSharp_Statement, CSharp_Ex
 	public CSharp_Statement newDataDeclaration(StaticEnum isStatic, String name, CSharp_Expression size, CSharp_Type type,
 			CSharp_Expression initial, AbstractToken source)
 	{
+		if (isStatic == StaticEnum.CONST)
+		{
+			addConstantName(name);
+		}
+		else if (isStatic == StaticEnum.STATIC)
+		{
+			if (isKnownConstant(name)) return null;
+		}
 		return wrapStatement(CSharp_Data.newDataDeclaration(isStatic, name, size, type, initial, source));
 	}
 
