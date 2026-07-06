@@ -51,8 +51,16 @@ public class SQL_FunctionCall extends PrimaryOperator
 		SQL_CreateFunctionStatement func = (SQL_CreateFunctionStatement) fn;
 
 		// Make sure the function args match up
-		int argCount = args.getPrimaryCount();
-		int paramCount = func.params.getPrimaryCount();
+		int argCount = 0;
+		if (args != null && args.isPresent())
+		{
+			argCount = args.getPrimaryCount();
+		}
+		int paramCount = 0;
+		if (func.params != null && func.params.isPresent())
+		{
+			paramCount = func.params.getPrimaryCount();
+		}
 		if (argCount != paramCount)
 		{
 			throw new RuntimeException(
