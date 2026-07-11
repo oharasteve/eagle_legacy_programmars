@@ -25,7 +25,7 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Fortran_SelectStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnableWithResult, EagleTransformableStatement
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) Fortran_Keyword SELECT1 = new Fortran_Keyword("SELECT");
 	public @S(20) Fortran_Keyword CASE = new Fortran_Keyword("CASE");

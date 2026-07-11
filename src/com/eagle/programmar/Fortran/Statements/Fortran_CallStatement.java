@@ -31,7 +31,7 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class Fortran_CallStatement extends TokenSequence
-		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
+		implements EagleRunnable, EagleTransformableStatement
 {
 	public @DOC("6j4m0vn7p/index.html") @S(10) Fortran_Keyword CALL = new Fortran_Keyword("CALL");
 	public @S(20) Fortran_Function_Reference variable;
