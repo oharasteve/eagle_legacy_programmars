@@ -224,7 +224,11 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				value = collectArrayValues();
 			}
-			else if (pic.startsWith("X") || pic.startsWith("Z") || pic.startsWith("9"))
+			else if (pic.startsWith("9"))
+			{
+				value = initInteger;
+			}
+			else if (pic.startsWith("X") || pic.startsWith("Z"))
 			{
 				value = initString;
 			}

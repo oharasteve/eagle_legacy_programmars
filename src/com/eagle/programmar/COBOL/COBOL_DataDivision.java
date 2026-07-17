@@ -64,14 +64,6 @@ public class COBOL_DataDivision extends TokenSequence
 		public @S(40) @OPT TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
 	}
 
-	public static class COBOL_LinkageSection extends TokenSequence
-	{
-		public @S(10) COBOL_Keyword LINKAGE = new COBOL_Keyword("LINKAGE");
-		public @S(20) COBOL_Keyword SECTION = new COBOL_Keyword("SECTION");
-		public @S(30) PunctuationPeriod dot;
-		public @S(40) TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
-	}
-
 	public static class COBOL_ReportSection extends TokenSequence
 	{
 		public @S(10) COBOL_Keyword REPORT = new COBOL_Keyword("REPORT");

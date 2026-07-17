@@ -21,7 +21,8 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.transform.EagleTransformer;
 
-public class COBOL_ProcedureDivision extends TokenSequence implements EagleRunnable
+public class COBOL_ProcedureDivision extends TokenSequence
+		implements EagleRunnable
 {
 	public @S(10) @OPT TokenList<COBOL_Comment> comments;
 

@@ -7,11 +7,17 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_DataDivision.COBOL_DataSection;
+import com.eagle.programmar.COBOL.COBOL_IdentificationDivision.COBOL_IdentificationPresent;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
+import com.eagle.programmar.COBOL.Symbols.COBOL_Program_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.scope.EagleScope;
+import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -23,7 +29,7 @@ import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
 public abstract class COBOL_Program_Complete extends COBOL_Program
-		implements EagleRunnable, EagleTransformableProgram
+		implements AbstractFunction, EagleRunnable, EagleTransformableProgram
 {
 	// Components of a complete COBOL Program
 	public @S(10) @OPT TokenList<COBOL_Comment> comments1;
@@ -36,7 +42,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 	public @S(80) @OPT COBOL_DataDivision dataDiv;
 	public @S(90) COBOL_ProcedureDivision procedureDiv;
 
-	public @S(100) @OPT TokenList<COBOL_Program_Free_Format> nestedPrograms;
+	public @S(100) @OPT TokenList<COBOL_Program_Fixed_Format> nestedPrograms;
 
 	public @S(110) @OPT COBOL_EndProgram endProgram;
 
@@ -56,6 +62,9 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		return _scope;
 	}
 
+	public @SKIP CallMetrics _callMetrics = null;
+	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+
 	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
 	{
 		super(name, syntax);
@@ -64,13 +73,42 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
+		COBOL_Program_Definition id = null;
+		if (identificationDiv != null && identificationDiv.isPresent())
+		{
+			AbstractToken which = identificationDiv.header.getWhich();
+			if (!(which instanceof COBOL_IdentificationPresent))
+			{
+				throw new RuntimeException("Program Id missing: " + which);
+			}
+			COBOL_IdentificationPresent present = (COBOL_IdentificationPresent) which;
+			if (present.programId != null && present.programId.isPresent())
+			{
+				id = present.programId.programDef;
+			}
+		}
+		if (id != null)
+		{
+			if (_callMetrics == null)
+			{
+				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
+			}
+			if (_argumentsMetrics == null)
+			{
+				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
+			}
+		}
+
 		// Pass 1 : Collect all the variables in Working Storage
 		collectDataVariables(interpreter);
 
 		// Pass 2 : Collect all the paragraph names
 		collectParagraphNames(interpreter);
 
-		// Pass 3 -- now run it
+		// Pass 3 : Collect all the subprograms
+		collectSubprograms(interpreter);
+		
+		// Pass 4 -- now run it
 		interpreter.callingFunction("main", this);
 		interpreter.tryToInterpret(procedureDiv);
 		interpreter.completedFunction("main", this);
@@ -96,6 +134,31 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 				{
 					String paragraphName = paragraph.paragraphHeaders._elements.get(0).paragraphName.getValue();
 					interpreter.addFunction(paragraphName, paragraph);
+				}
+			}
+		}
+	}
+	
+	private void collectSubprograms(EagleInterpreter interpreter)
+	{
+		if (nestedPrograms != null && nestedPrograms.isPresent())
+		{
+			for (COBOL_Program_Complete subProg : nestedPrograms._elements)
+			{
+				if (subProg.identificationDiv != null && subProg.identificationDiv.isPresent())
+				{
+					AbstractToken which = subProg.identificationDiv.header.getWhich();
+					if (!(which instanceof COBOL_IdentificationPresent))
+					{
+						throw new RuntimeException("Program Id missing: " + which);
+					}
+					COBOL_IdentificationPresent present = (COBOL_IdentificationPresent) which;
+					if (present.programId != null && present.programId.isPresent())
+					{
+						COBOL_Program_Definition id = present.programId.programDef;
+						// System.out.println("****** Found subprogram named " + id);
+						interpreter.addFunction(id.getValue(), subProg);
+					}
 				}
 			}
 		}
