@@ -177,20 +177,8 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 					break;
 				}
 			}
-
-			boolean skipArg = false;
-			if (expr.getWhich() instanceof COBOL_VariableExpression)
-			{
-				COBOL_VariableExpression varExpr = (COBOL_VariableExpression) expr.getWhich();
-				String varName = varExpr.variable.id.getValue();
-				if (!interpreter._symbolTable.isSymbolDefined(varName))
-				{
-					// Must be a BY REFERENCE variable with no prior value
-					skipArg = true;
-				}
-			}
-			
-			if (!skipArg)
+		
+			try
 			{
 				EagleValue newVal = interpreter.getEagleValue(expr);
 				if (varType == TypeEnum.INTEGER && !newVal.isInteger())
@@ -204,6 +192,11 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 				
 				interpreter.setSymbol(param, param.getValue(), newVal);
 				argTypes.add(newVal.getType());
+			}
+			catch (Exception ex)
+			{
+				// Presumably / Hopefully a BY REFERENCE variable with no current value
+				argTypes.add(TypeEnum.VOID);
 			}
 		}
 
