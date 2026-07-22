@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.COBOL.Statements;
 
+import java.util.ArrayList;
+
+import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.SwitchMetrics;
@@ -16,9 +19,15 @@ import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleTransformableStatement;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
-		implements EagleRunnableWithResult
+		implements EagleRunnableWithResult, EagleTransformableStatement
 {
 	public @S(10) @DOC("rlpseval.htm") COBOL_Keyword EVALUATE = new COBOL_Keyword("EVALUATE");
 	public @S(20) COBOL_Expression keyExpr;
@@ -118,5 +127,60 @@ public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 		}
 
 		return result;
+	}
+
+	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractExpression newValue = transformer.transformExpression(generator, keyExpr);
+
+		ArrayList<AbstractStatement> defaultActionList = null;
+		
+		ArrayList<ArrayList<AbstractExpression>> allCases = new ArrayList<ArrayList<AbstractExpression>>();
+		ArrayList<ArrayList<AbstractStatement>> allActions = new ArrayList<ArrayList<AbstractStatement>>();
+		for (int i = 0; i < whens.size(); i++)
+		{
+			COBOL_EvaluateWhenClause when = whens._elements.get(i);
+			AbstractToken which = when.value.getWhich();
+			if (which instanceof COBOL_EvaluateExpression)
+			{
+				COBOL_EvaluateExpression evalExpr = (COBOL_EvaluateExpression) which;
+				
+				ArrayList<AbstractExpression> caseList = new ArrayList<AbstractExpression>();
+				AbstractExpression newExpr2 = transformer.transformExpression(generator, evalExpr.expr);
+				caseList.add(newExpr2);
+				allCases.add(caseList);
+
+				ArrayList<AbstractStatement> actionList = new ArrayList<AbstractStatement>();
+				for (COBOL_StatementOrComment stmt1 : when.statements._elements)
+				{
+					ArrayList<AbstractStatement> transStmts = transformer.transformStatement(generator, stmt1);
+					for (AbstractStatement stmt2 : transStmts)
+					{
+						actionList.add(stmt2);
+					}
+					actionList.add(generator.newBreakStatement(this));
+				}
+				allActions.add(actionList);
+			}
+			else if (which instanceof COBOL_Keyword)
+			{
+				// Has to be "OTHER"
+				defaultActionList = new ArrayList<AbstractStatement>();
+				for (COBOL_StatementOrComment stmt3 : when.statements._elements)
+				{
+					for (AbstractStatement stmt4 : transformer.transformStatement(generator, stmt3))
+					{
+						defaultActionList.add(stmt4);
+					}
+					defaultActionList.add(generator.newBreakStatement(this));
+				}
+			}
+			else throw new RuntimeException("Unable to handle: " + which);
+		}
+
+		AbstractStatement stmt = generator.newSwitchStatement(newValue, allCases, allActions, defaultActionList, this);
+		return stmt;
 	}
 }

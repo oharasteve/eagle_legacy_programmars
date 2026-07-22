@@ -99,6 +99,12 @@ public class Rust_MatchStatement extends TokenSequence implements AbstractStatem
 					block1.statements.addToken(stmt1);
 				}
 			}
+			
+			// Try to remove useless { braces }
+			if (block1.statements.size() == 1)
+			{
+				caseClause1.statement = block1.statements.first();
+			}
 
 			Rust_MatchClause matchClause = new Rust_MatchClause();
 			matchClause.setWhich(caseClause1);
@@ -118,6 +124,12 @@ public class Rust_MatchStatement extends TokenSequence implements AbstractStatem
 				{
 					block2.statements.addToken(stmt2);
 				}
+			}
+			
+			// Try to remove useless { braces } on default
+			if (block2.statements.size() == 1)
+			{
+				defaultClause.statement = block2.statements.first();
 			}
 		}
 

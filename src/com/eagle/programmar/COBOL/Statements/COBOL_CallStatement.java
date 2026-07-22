@@ -21,6 +21,7 @@ import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_LinkageSection;
 import com.eagle.programmar.COBOL.COBOL_Program_Complete;
 import com.eagle.programmar.COBOL.COBOL_Statement;
+import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Expressions.COBOL_VariableExpression;
 import com.eagle.programmar.COBOL.Picture.COBOL_PictureClause;
@@ -259,24 +260,31 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		throw new RuntimeException("*************LATER GATOR*************");
-//		String name = subName.getValue();
-//		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-//		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
-//		int argCount = 0;
-//		if (callArguments.arguments != null && callArguments.arguments.isPresent())
-//		{
-//			argCount = callArguments.arguments.getPrimaryCount();
-//		}
-//		for (int i = 0; i < argCount; i++)
-//		{
-//			COBOL_Expression arg = callArguments.arguments.getPrimaryElement(i);
-//			AbstractExpression newArg = transformer.transformExpression(generator, arg);
-//			args.add(newArg);
-//		}
-//
-//		AbstractVariable var = generator.newVariable(name);
-//		AbstractExpression expr = generator.newMethodInvocation(var, args, types, subName);
-//		return generator.newExpressionStatement(expr, subName);
+		if (!(callWhat.getWhich() instanceof COBOL_Literal))
+		{
+			throw new RuntimeException("Can only CALL literals");
+		}
+		COBOL_Literal lit = (COBOL_Literal) callWhat.getWhich();
+		String name = COBOL_Variable.repairName(lit.removeQuotes());
+
+		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
+		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
+
+		int argCount = 0;
+		if (arguments != null && arguments.isPresent())
+		{
+			argCount = arguments.size();
+		}
+
+		for (int i = 0; i < argCount; i++)
+		{
+			COBOL_CallArgument arg = arguments._elements.get(i);
+			AbstractExpression newArg = transformer.transformExpression(generator, arg.expression);
+			args.add(newArg);
+		}
+
+		AbstractVariable var = generator.newVariable(name);
+		AbstractExpression expr = generator.newMethodInvocation(var, args, types, this);
+		return generator.newExpressionStatement(expr, this);
 	}
 }

@@ -168,11 +168,30 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		if (nestedPrograms != null && nestedPrograms.size() > 0)
+		{
+			for (COBOL_Program_Fixed_Format subProg : nestedPrograms._elements)
+			{
+				subProg.transformSubProgram(transformer, generator);
+			}
+		}
+		
+		if (dataDiv != null && dataDiv.isPresent())
+		{
+			dataDiv.transform(transformer, generator);
+		}
+		
+		procedureDiv.transform(transformer, generator);
+		return generator.getTransformedProgram();
+	}
+
+	public void transformSubProgram(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
 		if (dataDiv != null && dataDiv.isPresent())
 		{
 			dataDiv.transform(transformer, generator);
 		}
 		procedureDiv.transform(transformer, generator);
-		return generator.getTransformedProgram();
 	}
 }
