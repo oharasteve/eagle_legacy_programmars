@@ -156,9 +156,12 @@ public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 				for (COBOL_StatementOrComment stmt1 : when.statements._elements)
 				{
 					ArrayList<AbstractStatement> transStmts = transformer.transformStatement(generator, stmt1);
-					for (AbstractStatement stmt2 : transStmts)
+					if (transStmts != null)
 					{
-						actionList.add(stmt2);
+						for (AbstractStatement stmt2 : transStmts)
+						{
+							actionList.add(stmt2);
+						}
 					}
 					actionList.add(generator.newBreakStatement(this));
 				}

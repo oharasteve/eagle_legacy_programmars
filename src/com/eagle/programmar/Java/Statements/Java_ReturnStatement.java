@@ -57,7 +57,11 @@ public class Java_ReturnStatement extends TokenSequence
 	public AbstractStatement transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression expr = transformer.transformExpression(generator, expression);
+		AbstractExpression expr = null;
+		if (expression != null && expression.isPresent())
+		{
+			expr = transformer.transformExpression(generator, expression);
+		}
 		return generator.newReturnStatement(expr, this);
 	}
 

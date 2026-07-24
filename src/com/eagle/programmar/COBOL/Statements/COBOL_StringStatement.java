@@ -20,6 +20,7 @@ import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_Variable;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
+import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_HexNumber;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
@@ -43,8 +44,9 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 	public @S(20) TokenList<COBOL_StringWhat> elements;
 	public @S(30) COBOL_Keyword INTO = new COBOL_Keyword("INTO");
 	public @S(40) TokenList<COBOL_StringPiece> pieces;
-	public @S(50) @OPT COBOL_StringWith with;
-	public @S(60) @OPT COBOL_Keyword ENDSTRING = new COBOL_Keyword("END-STRING");
+	public @S(50) @OPT COBOL_Comment comment;
+	public @S(60) @OPT COBOL_StringWith with;
+	public @S(70) @OPT COBOL_Keyword ENDSTRING = new COBOL_Keyword("END-STRING");
 
 	public static class COBOL_StringWhat extends TokenSequence
 	{
