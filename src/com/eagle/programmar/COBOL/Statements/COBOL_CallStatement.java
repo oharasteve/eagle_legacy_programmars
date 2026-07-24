@@ -139,7 +139,6 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 			throw new RuntimeException(
 					"SubProg " + name + " expects #args = " + paramCount + ", but was given " + argCount);
 		}
-
 		interpreter.callingFunction(name, subProg);
 
 		// Now assign all the parameters
@@ -196,6 +195,7 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 			}
 			catch (Exception ex)
 			{
+				// System.out.println("*** " + ex.getMessage());
 				// Presumably / Hopefully a BY REFERENCE variable with no current value
 				argTypes.add(TypeEnum.VOID);
 			}
