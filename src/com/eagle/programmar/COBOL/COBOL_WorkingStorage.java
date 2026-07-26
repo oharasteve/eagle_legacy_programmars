@@ -49,7 +49,11 @@ public class COBOL_WorkingStorage extends TokenSequence implements EagleRunnable
 			if (which instanceof COBOL_DataDeclaration)
 			{
 				COBOL_DataDeclaration data = (COBOL_DataDeclaration) which;
-				data.transform(transformer, generator);
+				AbstractStatement stmt= data.transformData(transformer, generator);
+				if (stmt != null)
+				{
+					generator.addStatement(stmt, this);
+				}
 			}
 		}
 	}

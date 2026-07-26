@@ -6,6 +6,8 @@ package com.eagle.programmar.COBOL;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.COBOL.Statements.COBOL_GoBackStatement;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -31,7 +33,7 @@ public class COBOL_Sentence extends TokenSequence implements EagleRunnable
 		}
 	}
 
-	public void transform(EagleTransformer transformer,
+	public void transform(boolean skipGoBacks, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_StatementOrComment stmtOrComm : statements._elements)
@@ -39,9 +41,14 @@ public class COBOL_Sentence extends TokenSequence implements EagleRunnable
 			if (stmtOrComm.getWhich() instanceof COBOL_Statement)
 			{
 				COBOL_Statement stmt = (COBOL_Statement) stmtOrComm.getWhich();
-				if (stmt.getWhich() instanceof EagleTransformableStatement)
+				AbstractToken which = stmt.getWhich();
+				if (skipGoBacks && which instanceof COBOL_GoBackStatement)
 				{
-					EagleTransformableStatement trans = (EagleTransformableStatement) stmt.getWhich();
+					continue;
+				}
+				if (which instanceof EagleTransformableStatement)
+				{
+					EagleTransformableStatement trans = (EagleTransformableStatement) which;
 					AbstractStatement newStmt = trans.transformStatement(transformer, generator);
 					generator.addStatement(newStmt, stmt);
 				}

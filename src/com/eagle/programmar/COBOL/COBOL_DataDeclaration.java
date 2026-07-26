@@ -271,7 +271,7 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 		return array;
 	}
 
-	public void transform(EagleTransformer transformer,
+	public AbstractStatement transformData(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
@@ -303,10 +303,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						AbstractExpression redef = generator.newVariableExpression(redefWhat,
 								SubscriptEnum.FIRST_IS_ONE, null, this);
 						newType = generator.transformType(TypeEnum.ARRAY, varName, this);
-						AbstractStatement data = generator.newDataDeclaration(
+						return generator.newDataDeclaration(
 								StaticEnum.NONE, varName, null, newType, redef, this);
-						generator.addStatement(data, this);
-						return;
 					}
 					if (which instanceof COBOL_ValueClause)
 					{
@@ -340,10 +338,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			}
 			if (newType != null)
 			{
-				AbstractStatement data = generator.newDataDeclaration(
+				return generator.newDataDeclaration(
 						StaticEnum.NONE, varName, null, newType, expression, this);
-				generator.addStatement(data, this);
-				return;
 			}
 
 			// Maybe it is an array definition
@@ -363,10 +359,8 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 					AbstractExpression arrayExpr = generator.newArrayExpression(newValues, this);
 					newType = generator.transformType(TypeEnum.ARRAY, varName, this);
-					AbstractStatement data = generator.newDataDeclaration(
+					return generator.newDataDeclaration(
 							StaticEnum.NONE, varName, null, newType, arrayExpr, this);
-					generator.addStatement(data, this);
-					return;
 				}
 			}
 		}

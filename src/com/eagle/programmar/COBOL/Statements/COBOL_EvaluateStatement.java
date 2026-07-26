@@ -160,11 +160,14 @@ public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 					{
 						for (AbstractStatement stmt2 : transStmts)
 						{
-							actionList.add(stmt2);
+							if (!(stmt2 instanceof COBOL_Comment))
+							{
+								actionList.add(stmt2);
+							}
 						}
 					}
-					actionList.add(generator.newBreakStatement(this));
 				}
+				actionList.add(generator.newBreakStatement(this));
 				allActions.add(actionList);
 			}
 			else if (which instanceof COBOL_Keyword)

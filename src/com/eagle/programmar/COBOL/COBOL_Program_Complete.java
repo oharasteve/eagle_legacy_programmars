@@ -5,6 +5,8 @@ package com.eagle.programmar.COBOL;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.StaticEnum;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -181,7 +183,8 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 			dataDiv.transform(transformer, generator);
 		}
 		
-		procedureDiv.transform(transformer, generator);
+		boolean skipGoBack = false;		// Only needed in SubPrograms
+		procedureDiv.transform(skipGoBack, transformer, generator);
 		return generator.getTransformedProgram();
 	}
 
@@ -192,6 +195,72 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		{
 			dataDiv.transform(transformer, generator);
 		}
-		procedureDiv.transform(transformer, generator);
+
+		AbstractToken which0 = identificationDiv.header.getWhich();
+		if (!(which0 instanceof COBOL_IdentificationPresent))
+		{
+			throw new RuntimeException("SubProgram Id missing: " + which0);
+		}
+		COBOL_IdentificationPresent idPresent = (COBOL_IdentificationPresent) which0;
+		String funcName = null;
+		if (idPresent.programId != null && idPresent.programId.isPresent())
+		{
+			COBOL_Program_Definition id = idPresent.programId.programDef;
+			funcName = id.getValue();
+		}
+
+		// Collect parameters for the subprogram
+		// If exactly ONE is assigned inside the function, that becomes the return type
+		COBOL_LinkageSection linkage = null;
+		for (COBOL_DataSection section : dataDiv.sections._elements)
+		{
+			AbstractToken which1 = section.getWhich();
+			if (which1 instanceof COBOL_LinkageSection)
+			{
+				linkage = (COBOL_LinkageSection) which1;
+				linkage.collectParameters(funcName, generator);
+				break;
+			}
+		}
+		if (linkage == null)
+		{
+			throw new RuntimeException("Linkage section is required for subprogram " + funcName);
+		}
+		
+		// Need to create the function header
+		generator.addMethod(linkage.retType, funcName, idPresent);
+		for (int i = 0; i < linkage.paramTypes.size(); i++)
+		{
+			generator.addMethodParameter(linkage.paramTypes.get(i), linkage.paramNames.get(i));
+		}
+		
+		// Very tricky to convert a call-by-reference to a return value
+		if (linkage.retName != null)
+		{
+			AbstractStatement declareRet = generator.newDataDeclaration(StaticEnum.NONE,
+					linkage.retName, null, linkage.retType, null, null);
+			generator.addStatement(declareRet, null);
+		}
+		
+		// Very tricky to convert a call-by-reference to a return value
+		if (linkage.retName != null)
+		{
+			generator.newDataDeclaration(StaticEnum.NONE,
+					linkage.retName, null, linkage.retType, null, null);
+		}
+		
+		boolean skipGoBacks = (linkage.retName != null);
+		{
+			procedureDiv.transform(skipGoBacks, transformer, generator);
+		}
+
+		// Very tricky to convert a call-by-reference to a return value
+		if (linkage.retName != null)
+		{
+			AbstractExpression retExpr = generator.newVariableExpression(linkage.retName,
+					SubscriptEnum.FIRST_IS_ONE, null, null);
+			AbstractStatement retStmt = generator.newReturnStatement(retExpr, null);
+			generator.addStatement(retStmt, null);
+		}
 	}
 }

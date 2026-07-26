@@ -61,7 +61,7 @@ public class COBOL_Paragraph extends TokenSequence
 		}
 	}
 
-	public void transform(EagleTransformer transformer,
+	public void transform(boolean skipGoBacks, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String paraName = "paragraph_with_no_name";
@@ -81,7 +81,7 @@ public class COBOL_Paragraph extends TokenSequence
 			if (sentOrComm.getWhich() instanceof COBOL_Sentence)
 			{
 				COBOL_Sentence sent = (COBOL_Sentence) sentOrComm.getWhich();
-				sent.transform(transformer, generator);
+				sent.transform(skipGoBacks, transformer, generator);
 			}
 		}
 

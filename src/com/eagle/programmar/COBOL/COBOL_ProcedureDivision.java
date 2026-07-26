@@ -86,12 +86,12 @@ public class COBOL_ProcedureDivision extends TokenSequence
 		interpreter.tryToInterpret(sections.first());
 	}
 
-	public void transform(EagleTransformer transformer,
+	public void transform(boolean skipGoBacks, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_Section section : sections._elements)
 		{
-			section.transform(transformer, generator);
+			section.transform(skipGoBacks, transformer, generator);
 		}
 	}
 }
