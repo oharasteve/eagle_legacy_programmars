@@ -3,8 +3,6 @@
 
 package com.eagle.programmar.COBOL;
 
-import java.util.ArrayList;
-
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
@@ -24,6 +22,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
+import com.eagle.transform.EagleTransformer;
 
 public class COBOL_LinkageSection extends TokenSequence implements EagleRunnable
 {
@@ -33,12 +32,6 @@ public class COBOL_LinkageSection extends TokenSequence implements EagleRunnable
 	public @S(40) @OPT COBOL_Comment comment;
 	public @S(50) TokenList<COBOL_CopyOrDataDeclaration> dataDeclarations;
 	
-	// Fields used by processing SubProgram parameters
-	public @SKIP ArrayList<String> paramNames = new ArrayList<String>();
-	public @SKIP ArrayList<AbstractType> paramTypes = new ArrayList<AbstractType>();
-	public @SKIP String retName = null;
-	public @SKIP AbstractType retType = null;
-
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
@@ -48,11 +41,14 @@ public class COBOL_LinkageSection extends TokenSequence implements EagleRunnable
 		}
 	}
 	
-	public void collectParameters(String funcName,
+	public void collectParameters(String funcName, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
+		int declCount = 0;
 		for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)
 		{
+			declCount++;	// Careful, 1 is the FIRST, 0 means no return value
+
 			AbstractType paramType = null;
 			String paramName = null;
 			AbstractToken which2 = decl.getWhich();
@@ -96,20 +92,36 @@ public class COBOL_LinkageSection extends TokenSequence implements EagleRunnable
 					}
 					
 					boolean isModified = false;
-/////////////// MASSIVE HACK FOR NOW ////////////////////
-					if (funcName.indexOf("-func") > 0 && paramName.equals("rom"))
+					COBOL_Program_Complete complete = null;
+					COBOL_ProcedureDivision procDiv = null;
+					AbstractToken parent = this.getParent();
+					while (parent != null)
+					{
+						if (parent instanceof COBOL_Program_Complete)
+						{
+							complete = ((COBOL_Program_Complete) parent);
+							procDiv = complete.procedureDiv;
+							break;
+						}
+						parent = parent.getParent();
+					}
+					int assignments = transformer._metrics.countAssignments(paramName,
+							procDiv);
+					// System.out.println("****** " + paramName + " procDiv=" + procDiv.getStartLine() + " asg=" + assignments);
+					if (assignments > 0)
 					{
 						isModified = true;
 					}
-					if (isModified && retName == null)
+					if (isModified && complete._retName == null)
 					{
-						retType = paramType;
-						retName = paramName;
+						complete._retType = paramType;
+						complete._retName = paramName;
+						complete._retIndex = declCount;	// Which parameter is the Return, first is 1
 					}
 					else
 					{
-						paramTypes.add(paramType);
-						paramNames.add(paramName);
+						complete._paramTypes.add(paramType);
+						complete._paramNames.add(paramName);
 					}
 				}
 			}

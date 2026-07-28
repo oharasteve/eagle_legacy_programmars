@@ -5,7 +5,9 @@ package com.eagle.programmar.COBOL.Statements;
 
 import java.util.ArrayList;
 
+import com.eagle.generate.AssignmentEnum;
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.SubscriptEnum;
 import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -267,6 +269,22 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 		COBOL_Literal lit = (COBOL_Literal) callWhat.getWhich();
 		String name = COBOL_Variable.repairName(lit.removeQuotes());
 
+		// Hopefully, we found a SubProgram already with this name.
+		// Let's find it, and see what Return type it have, if any
+		AbstractToken parent = this.getParent();
+		int retIndex = 0;
+		while (parent != null)
+		{
+			if (parent instanceof COBOL_Program_Complete)
+			{
+				COBOL_Program_Complete complete = (COBOL_Program_Complete) parent;
+				COBOL_Program_Complete subProg = complete.findSubProgram(name);
+				retIndex = subProg._retIndex;	// 1 = first, 0 means none
+				break;
+			}
+			parent = parent.getParent();
+		}
+		
 		ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
 		ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 
@@ -278,13 +296,36 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 
 		for (int i = 0; i < argCount; i++)
 		{
-			COBOL_CallArgument arg = arguments._elements.get(i);
-			AbstractExpression newArg = transformer.transformExpression(generator, arg.expression);
-			args.add(newArg);
+			// Remember that 1 means first parameter is the RETURN value
+			if (i + 1 != retIndex)
+			{
+				COBOL_CallArgument arg = arguments._elements.get(i);
+				AbstractExpression newArg = transformer.transformExpression(generator,
+						arg.expression);
+				args.add(newArg);
+			}
 		}
 
 		AbstractVariable var = generator.newVariable(name);
 		AbstractExpression expr = generator.newMethodInvocation(var, args, types, this);
-		return generator.newExpressionStatement(expr, this);
+		if (retIndex == 0)
+		{
+			// No RETURN value from this CALL
+			return generator.newExpressionStatement(expr, this);
+		}
+		
+		// Change the CALL so it returns a value which means we need an assignment
+		COBOL_CallArgument retArg = arguments._elements.get(retIndex - 1);
+		AbstractToken which = retArg.expression.getWhich();
+		if (which instanceof COBOL_VariableExpression)
+		{
+			COBOL_VariableExpression varExpr = (COBOL_VariableExpression) which;
+			String retName = COBOL_Variable.repairName(varExpr.variable.id.getValue());
+			AbstractExpression asgExpr = generator.newAssignmentExpression(retName,
+					SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, expr, this);
+			return generator.newExpressionStatement(asgExpr, this);
+		}
+		
+		throw new RuntimeException("Return value from a function must be a variable");
 	}
 }

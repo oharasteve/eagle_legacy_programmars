@@ -65,16 +65,19 @@ public class COBOL_Paragraph extends TokenSequence
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		String paraName = "paragraph_with_no_name";
-		for (COBOL_ParagraphHeader header : paragraphHeaders._elements)
+		if (!skipGoBacks)
 		{
-			paraName = COBOL_Variable.repairName(header.paragraphName.getValue());
+			for (COBOL_ParagraphHeader header : paragraphHeaders._elements)
+			{
+				paraName = COBOL_Variable.repairName(header.paragraphName.getValue());
+			}
+			if (!paraName.equals("main"))
+			{
+				generator.addMethod(null, paraName, paragraphHeaders);
+			}
+	
+			findGlobalVariables(transformer, generator);
 		}
-		if (!paraName.equals("main"))
-		{
-			generator.addMethod(null, paraName, paragraphHeaders);
-		}
-
-		findGlobalVariables(transformer, generator);
 		
 		for (COBOL_SentenceOrComment sentOrComm : sentences._elements)
 		{
@@ -85,7 +88,7 @@ public class COBOL_Paragraph extends TokenSequence
 			}
 		}
 
-		if (!paraName.equals("main"))
+		if (!skipGoBacks && !paraName.equals("main"))
 		{
 			generator.doneMethod();
 		}

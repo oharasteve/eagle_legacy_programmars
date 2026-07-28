@@ -3,6 +3,9 @@
 
 package com.eagle.programmar.COBOL;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.StaticEnum;
@@ -18,6 +21,7 @@ import com.eagle.programmar.COBOL.Symbols.COBOL_Program_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.scope.EagleScope;
+import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
@@ -31,7 +35,8 @@ import com.eagle.transform.EagleTransformableProgram;
 import com.eagle.transform.EagleTransformer;
 
 public abstract class COBOL_Program_Complete extends COBOL_Program
-		implements AbstractFunction, EagleRunnable, EagleTransformableProgram
+		implements AbstractFunction, EagleRunnable,
+				EagleTransformableProgram, EagleScopeInterface
 {
 	// Components of a complete COBOL Program
 	public @S(10) @OPT TokenList<COBOL_Comment> comments1;
@@ -56,6 +61,13 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		public @S(40) PunctuationPeriod dot;
 	}
 
+	// Fields used by processing SubProgram parameters
+	public @SKIP ArrayList<String> _paramNames = new ArrayList<String>();
+	public @SKIP ArrayList<AbstractType> _paramTypes = new ArrayList<AbstractType>();
+	public @SKIP String _retName = null;
+	public @SKIP AbstractType _retType = null;
+	public @SKIP int _retIndex = 0;		// Which parameter got moved to RETURN value
+
 	private @SKIP EagleScope _scope = new EagleScope(this, COBOL_Syntax.IS_CASE_SENSITIVE);
 
 	@Override
@@ -66,29 +78,37 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 
 	public @SKIP CallMetrics _callMetrics = null;
 	public @SKIP ArgumentsMetrics _argumentsMetrics = null;
+	
+	public @SKIP COBOL_Program_Complete _parentProgram = null;
+	public @SKIP HashMap<String,COBOL_Program_Complete> _subPrograms =
+			new HashMap<String,COBOL_Program_Complete>();
 
 	public COBOL_Program_Complete(String name, COBOL_Syntax syntax)
 	{
 		super(name, syntax);
 	}
 
-	@Override
-	public void interpret(EagleInterpreter interpreter)
+	protected COBOL_Program_Definition getId()
 	{
-		COBOL_Program_Definition id = null;
 		if (identificationDiv != null && identificationDiv.isPresent())
 		{
 			AbstractToken which = identificationDiv.header.getWhich();
-			if (!(which instanceof COBOL_IdentificationPresent))
+			if (which instanceof COBOL_IdentificationPresent)
 			{
-				throw new RuntimeException("Program Id missing: " + which);
-			}
-			COBOL_IdentificationPresent present = (COBOL_IdentificationPresent) which;
-			if (present.programId != null && present.programId.isPresent())
-			{
-				id = present.programId.programDef;
+				COBOL_IdentificationPresent present = (COBOL_IdentificationPresent) which;
+				if (present.programId != null && present.programId.isPresent())
+				{
+					return present.programId.programDef;
+				}
 			}
 		}
+		return null;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		COBOL_Program_Definition id = getId();
 		if (id != null)
 		{
 			if (_callMetrics == null)
@@ -174,6 +194,12 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		{
 			for (COBOL_Program_Fixed_Format subProg : nestedPrograms._elements)
 			{
+				// Keep track of parent / child programs
+				subProg._parentProgram = this;
+				COBOL_Program_Definition progId = subProg.getId();
+				String id = COBOL_Variable.repairName(progId.getValue());
+				this._subPrograms.put(id, subProg);
+				
 				subProg.transformSubProgram(transformer, generator);
 			}
 		}
@@ -191,11 +217,6 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 	public void transformSubProgram(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		if (dataDiv != null && dataDiv.isPresent())
-		{
-			dataDiv.transform(transformer, generator);
-		}
-
 		AbstractToken which0 = identificationDiv.header.getWhich();
 		if (!(which0 instanceof COBOL_IdentificationPresent))
 		{
@@ -218,7 +239,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 			if (which1 instanceof COBOL_LinkageSection)
 			{
 				linkage = (COBOL_LinkageSection) which1;
-				linkage.collectParameters(funcName, generator);
+				linkage.collectParameters(funcName, transformer, generator);
 				break;
 			}
 		}
@@ -228,39 +249,57 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		}
 		
 		// Need to create the function header
-		generator.addMethod(linkage.retType, funcName, idPresent);
-		for (int i = 0; i < linkage.paramTypes.size(); i++)
+		String fixName = COBOL_Variable.repairName(funcName);
+		generator.addMethod(_retType, fixName, idPresent);
+		for (int i = 0; i < _paramTypes.size(); i++)
 		{
-			generator.addMethodParameter(linkage.paramTypes.get(i), linkage.paramNames.get(i));
+			generator.addMethodParameter(_paramTypes.get(i), _paramNames.get(i));
 		}
 		
 		// Very tricky to convert a call-by-reference to a return value
-		if (linkage.retName != null)
+		if (_retName != null)
 		{
 			AbstractStatement declareRet = generator.newDataDeclaration(StaticEnum.NONE,
-					linkage.retName, null, linkage.retType, null, null);
+					_retName, null, _retType, null, null);
 			generator.addStatement(declareRet, null);
-		}
-		
-		// Very tricky to convert a call-by-reference to a return value
-		if (linkage.retName != null)
-		{
 			generator.newDataDeclaration(StaticEnum.NONE,
-					linkage.retName, null, linkage.retType, null, null);
+					_retName, null, _retType, null, null);
 		}
 		
-		boolean skipGoBacks = (linkage.retName != null);
+		if (dataDiv != null && dataDiv.isPresent())
+		{
+			dataDiv.transform(transformer, generator);
+		}
+
+		boolean skipGoBacks = (_retName != null);
 		{
 			procedureDiv.transform(skipGoBacks, transformer, generator);
 		}
 
 		// Very tricky to convert a call-by-reference to a return value
-		if (linkage.retName != null)
+		if (_retName != null)
 		{
-			AbstractExpression retExpr = generator.newVariableExpression(linkage.retName,
+			AbstractExpression retExpr = generator.newVariableExpression(_retName,
 					SubscriptEnum.FIRST_IS_ONE, null, null);
 			AbstractStatement retStmt = generator.newReturnStatement(retExpr, null);
 			generator.addStatement(retStmt, null);
 		}
+		
+		generator.doneMethod();
+	}
+	
+	public COBOL_Program_Complete findSubProgram(String fixedName)
+	{
+		COBOL_Program_Complete top = this;
+		while (top._parentProgram != null)
+		{
+			top = top._parentProgram;
+		}
+		
+		if (top._subPrograms.containsKey(fixedName))
+		{
+			return top._subPrograms.get(fixedName);
+		}
+		throw new RuntimeException("Unable to find SubProgram named " + fixedName);
 	}
 }
