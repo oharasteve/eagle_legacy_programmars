@@ -4,8 +4,10 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
@@ -56,5 +58,20 @@ public class COBOL_WorkingStorage extends TokenSequence implements EagleRunnable
 				}
 			}
 		}
+	}
+
+	public TypeEnum findDefinitionType(COBOL_Identifier_Reference id)
+	{
+		for (COBOL_CopyOrDataDeclaration decl : dataDeclarations._elements)
+		{
+			AbstractToken which = decl.getWhich();
+			if (which instanceof COBOL_DataDeclaration)
+			{
+				COBOL_DataDeclaration data = (COBOL_DataDeclaration) which;
+				TypeEnum type = data.findDefinitionType(id);
+				if (type != TypeEnum.OTHER) return type;
+			}
+		}
+		return TypeEnum.OTHER;	// Can't find it
 	}
 }

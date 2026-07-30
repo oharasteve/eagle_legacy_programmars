@@ -367,4 +367,46 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 
 		throw new RuntimeException("Unable to process: " + this);
 	}
+
+	public TypeEnum findDefinitionType(COBOL_Identifier_Reference id)
+	{
+		if (fieldName.getWhich() instanceof COBOL_Data_Definition)
+		{
+			COBOL_Data_Definition dataDef = (COBOL_Data_Definition) fieldName.getWhich();
+			if (dataDef.getValue().equals(id.getValue()))
+			{
+				// Found it, finally!!
+				String pic = null;
+				if (clauses != null)
+				{
+					for (COBOL_DataClause clause : clauses._elements)
+					{
+						AbstractToken which = clause.getWhich();
+						if (which instanceof COBOL_PictureClause)
+						{
+							COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+							pic = picClause.picture.getValue().toUpperCase();
+						}
+						if (which instanceof COBOL_Usage)
+						{
+							COBOL_Usage usage = (COBOL_Usage) which;
+							if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+							{
+								return TypeEnum.INTEGER;
+							}
+						}
+					}
+				}
+				
+				if (pic != null)
+				{
+					if (pic.startsWith("9") || pic.startsWith("X") || pic.startsWith("Z"))
+					{
+						return TypeEnum.STRING;
+					}
+				}
+			}
+		}
+		return TypeEnum.OTHER;	// Can't find it
+	}
 }

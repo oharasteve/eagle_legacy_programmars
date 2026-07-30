@@ -10,6 +10,7 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.StaticEnum;
 import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
@@ -308,5 +309,14 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 			return top._subPrograms.get(fixedName);
 		}
 		throw new RuntimeException("Unable to find SubProgram named " + fixedName);
+	}
+	
+	public TypeEnum findDefinitionType(COBOL_Identifier_Reference id)
+	{
+		if (dataDiv != null && dataDiv.isPresent())
+		{
+			return dataDiv.findDefinitionType(id);
+		}
+		return TypeEnum.OTHER;	// Can't find it
 	}
 }

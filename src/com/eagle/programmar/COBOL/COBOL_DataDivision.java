@@ -4,7 +4,9 @@
 package com.eagle.programmar.COBOL;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
+import com.eagle.programmar.COBOL.Symbols.COBOL_Identifier_Reference;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -84,5 +86,19 @@ public class COBOL_DataDivision extends TokenSequence
 				work.transform(transformer, generator);
 			}
 		}
+	}
+
+	public TypeEnum findDefinitionType(COBOL_Identifier_Reference id)
+	{
+		for (COBOL_DataSection section : sections._elements)
+		{
+			AbstractToken which = section.getWhich();
+			if (which instanceof COBOL_WorkingStorage)
+			{
+				COBOL_WorkingStorage work = (COBOL_WorkingStorage) which;
+				return work.findDefinitionType(id);
+			}
+		}
+		return TypeEnum.OTHER;	 // Can't find it
 	}
 }

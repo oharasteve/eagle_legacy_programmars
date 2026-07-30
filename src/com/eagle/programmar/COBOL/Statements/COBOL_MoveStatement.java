@@ -6,6 +6,7 @@ package com.eagle.programmar.COBOL.Statements;
 import com.eagle.generate.AssignmentEnum;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.SubscriptEnum;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
@@ -79,7 +80,7 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 		}
 		if (!(var.getWhich() instanceof COBOL_UserVariable))
 		{
-			throw new RuntimeException("Can only ADD to a Variable: " + this);
+			throw new RuntimeException("Can only MOVE to a Variable: " + this);
 		}
 		COBOL_UserVariable userVar = (COBOL_UserVariable) var.getWhich();
 		if (userVar.subscript != null && userVar.subscript.size() > 0)
@@ -90,8 +91,25 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 		{
 			throw new RuntimeException("Can't handle field OF variable: " + this);
 		}
-
+		
 		AbstractExpression value = transformer.transformExpression(generator, expr);
+
+		// COBOL automatically MOVE's COMP variables to string-y numbers
+		// E.g., if AMT is PIC 9(5) USAGE COMP.
+		//    and PRT-AMT is PIC ZZZZ9.
+		// then MOVE AMT TO PRT-AMT works.
+		// But that really is a move from an int to a string
+if (userVar.id.getValue().startsWith("print"))
+{
+	System.out.println("**************************************** " + userVar.id.getValue());
+}
+		TypeEnum asgType = transformer._metrics.findAssignMetric(userVar);
+		TypeEnum defType = userVar.findDefinitionType();
+		if (asgType == TypeEnum.INTEGER && defType == TypeEnum.STRING)
+		{
+			value = generator.newStringFunction(asgType, value, null);
+		}
+
 		AbstractExpression asgExpr = generator.newAssignmentExpression(
 				COBOL_Variable.repairName(userVar.id.getValue()),
 				SubscriptEnum.FIRST_IS_ONE, null, AssignmentEnum.EQUALS, value, this);
