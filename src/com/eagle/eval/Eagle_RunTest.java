@@ -191,7 +191,7 @@ public abstract class Eagle_RunTest extends TestCase
 			}
 			System.out.println(cmd);
 			pb.redirectErrorStream(true);
-			Process p = Runtime.getRuntime().exec(cmd);
+			Process p = pb.start();
 			int result = p.waitFor();
 			System.out.println("Ran diff on " + sourceName + " return status = " + result);
 			assertEquals("Output diff status for " + sourceName, 0, result);
