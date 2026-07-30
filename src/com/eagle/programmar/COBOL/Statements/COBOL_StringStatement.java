@@ -5,7 +5,6 @@ package com.eagle.programmar.COBOL.Statements;
 
 import java.util.ArrayList;
 
-import com.eagle.generate.AdditiveEnum;
 import com.eagle.generate.AssignmentEnum;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.SubscriptEnum;
@@ -185,7 +184,7 @@ public class COBOL_StringStatement extends COBOL_AbstractStatement
 					types._type2 = metrics.get(i);
 				}
 
-				newExpr = generator.newAdditiveExpression(types, newExpr, AdditiveEnum.PLUS, nextExpr, what);
+				newExpr = generator.newAppendExpression(newExpr, nextExpr, what);
 			}
 
 			i++;

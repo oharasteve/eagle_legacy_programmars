@@ -13,7 +13,9 @@ import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
+import com.eagle.programmar.Rust.Functions.Rust_ToOwnedMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
+import com.eagle.programmar.Rust.Functions.Rust_TrimMethod;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Number;
 import com.eagle.programmar.Rust.Terminals.Rust_PunctuationChoice;
@@ -175,6 +177,10 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		else if (leftWhich instanceof Rust_Literal)
 		{
 			add.left = Rust_ToStringMethod.generateString(TypeEnum.STRING, add.left, add.left);
+		}
+		else if (leftWhich instanceof Rust_TrimMethod)
+		{
+			add.left = Rust_ToOwnedMethod.generateOwned(add.left, add.left);
 		}
 
 		if (rightWhich instanceof Rust_VariableExpression)

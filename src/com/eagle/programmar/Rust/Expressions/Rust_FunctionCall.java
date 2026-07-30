@@ -17,6 +17,7 @@ import com.eagle.programmar.Rust.Rust_Function.Rust_Parameter;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Rust_Variable;
 import com.eagle.programmar.Rust.Symbols.Rust_Identifier_Reference;
+import com.eagle.programmar.Rust.Terminals.Rust_Literal;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractFunction;
 import com.eagle.tokens.AbstractToken;
@@ -153,7 +154,7 @@ public class Rust_FunctionCall extends PrimaryOperator
 			return generator.newMethodInvocation(var, args, types, id);
 		}
 
-		// Dang. Scale uses () for both arrays and function calls
+		// Dang. Rust uses () for both arrays and function calls
 		// It is not a function, so must be an array
 		AbstractExpression index = transformer.transformExpression(generator,
 				argList.first());
@@ -202,7 +203,7 @@ public class Rust_FunctionCall extends PrimaryOperator
 					invoke.argList.addSecondaryElement(new PunctuationComma());
 				}
 				
-				if (type == TypeEnum.STRING)
+				if (type == TypeEnum.STRING && !(arg.getWhich() instanceof Rust_Literal))
 				{
 					arg = Rust_BorrowExpression.generateBorrow(arg, null);
 				}

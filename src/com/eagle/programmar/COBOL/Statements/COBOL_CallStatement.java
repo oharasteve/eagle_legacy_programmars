@@ -296,7 +296,7 @@ public class COBOL_CallStatement extends COBOL_AbstractStatement
 
 		for (int i = 0; i < argCount; i++)
 		{
-			// Remember that 1 means first parameter is the RETURN value
+			// Remember that 1 means first parameter is the RETURN value, 2=second, etc
 			if (i + 1 != retIndex)
 			{
 				COBOL_CallArgument arg = arguments._elements.get(i);

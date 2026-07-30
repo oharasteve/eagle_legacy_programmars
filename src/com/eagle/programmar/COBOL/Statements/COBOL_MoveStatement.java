@@ -99,10 +99,6 @@ public class COBOL_MoveStatement extends COBOL_AbstractStatement
 		//    and PRT-AMT is PIC ZZZZ9.
 		// then MOVE AMT TO PRT-AMT works.
 		// But that really is a move from an int to a string
-if (userVar.id.getValue().startsWith("print"))
-{
-	System.out.println("**************************************** " + userVar.id.getValue());
-}
 		TypeEnum asgType = transformer._metrics.findAssignMetric(userVar);
 		TypeEnum defType = userVar.findDefinitionType();
 		if (asgType == TypeEnum.INTEGER && defType == TypeEnum.STRING)

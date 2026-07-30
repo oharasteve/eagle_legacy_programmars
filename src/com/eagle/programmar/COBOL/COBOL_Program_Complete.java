@@ -106,8 +106,7 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		return null;
 	}
 	
-	@Override
-	public void interpret(EagleInterpreter interpreter)
+	private COBOL_Program_Definition initProgram(EagleInterpreter interpreter)
 	{
 		COBOL_Program_Definition id = getId();
 		if (id != null)
@@ -121,6 +120,13 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 			}
 		}
+		return id;
+	}
+	
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		initProgram(interpreter);
 
 		// Pass 1 : Collect all the variables in Working Storage
 		collectDataVariables(interpreter);
@@ -168,21 +174,9 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		{
 			for (COBOL_Program_Complete subProg : nestedPrograms._elements)
 			{
-				if (subProg.identificationDiv != null && subProg.identificationDiv.isPresent())
-				{
-					AbstractToken which = subProg.identificationDiv.header.getWhich();
-					if (!(which instanceof COBOL_IdentificationPresent))
-					{
-						throw new RuntimeException("Program Id missing: " + which);
-					}
-					COBOL_IdentificationPresent present = (COBOL_IdentificationPresent) which;
-					if (present.programId != null && present.programId.isPresent())
-					{
-						COBOL_Program_Definition id = present.programId.programDef;
-						// System.out.println("****** Found subprogram named " + id);
-						interpreter.addFunction(id.getValue(), subProg);
-					}
-				}
+				COBOL_Program_Definition id = subProg.initProgram(interpreter);
+				// System.out.println("****** Found subprogram named " + id);
+				interpreter.addFunction(id.getValue(), subProg);
 			}
 		}
 	}
