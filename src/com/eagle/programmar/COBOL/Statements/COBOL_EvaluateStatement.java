@@ -12,7 +12,6 @@ import com.eagle.metrics.SwitchMetrics;
 import com.eagle.programmar.COBOL.COBOL_AbstractStatement;
 import com.eagle.programmar.COBOL.COBOL_Expression;
 import com.eagle.programmar.COBOL.COBOL_StatementOrComment;
-import com.eagle.programmar.COBOL.Statements.COBOL_EvaluateStatement.COBOL_EvaluateWhat.COBOL_EvaluateExpression;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
 import com.eagle.tokens.AbstractToken;
@@ -36,21 +35,22 @@ public class COBOL_EvaluateStatement extends COBOL_AbstractStatement
 	public @S(50) TokenList<COBOL_EvaluateWhenClause> whens;
 	public @S(60) @OPT COBOL_Keyword ENDEVALUATE = new COBOL_Keyword("END-EVALUATE");
 
+	public static class COBOL_EvaluateExpression extends TokenSequence
+	{
+		public @S(10) COBOL_Expression expr;
+		public @S(20) @OPT COBOL_EvaluateThru thru;
+
+		public static class COBOL_EvaluateThru extends TokenSequence
+		{
+			public @S(10) COBOL_Keyword THRU = new COBOL_Keyword("THRU");
+			public @S(20) COBOL_Expression expr;
+		}
+	}
+
 	public static class COBOL_EvaluateWhat extends TokenChooser
 	{
 		public @FIRST COBOL_Keyword XXOTHER = new COBOL_Keyword("OTHER");
-
-		public @CHOICE static class COBOL_EvaluateExpression extends TokenSequence
-		{
-			public @S(10) COBOL_Expression expr;
-			public @S(20) @OPT COBOL_EvaluateThru thru;
-
-			public static class COBOL_EvaluateThru extends TokenSequence
-			{
-				public @S(10) COBOL_Keyword THRU = new COBOL_Keyword("THRU");
-				public @S(20) COBOL_Expression expr;
-			}
-		}
+		public @CHOICE COBOL_EvaluateExpression XXevaluateExpression;
 	}
 
 	public static class COBOL_EvaluateAlsoClause extends TokenSequence
