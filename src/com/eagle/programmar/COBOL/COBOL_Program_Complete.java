@@ -200,21 +200,28 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 				String id = COBOL_Variable.repairName(progId.getValue());
 				this._subPrograms.put(id, subProg);
 				
-				subProg.transformSubProgram(transformer, generator);
+				subProg.transformSubProgram(id, transformer, generator);
 			}
 		}
 		
+		generator.addMethod(null, generator.mainName(), this);
+		generator.addMainArgs();
+
 		if (dataDiv != null && dataDiv.isPresent())
 		{
 			dataDiv.transform(transformer, generator);
 		}
 		
 		boolean skipGoBack = false;		// Only needed in SubPrograms
-		procedureDiv.transform(skipGoBack, transformer, generator);
+		procedureDiv.transform(skipGoBack, null, transformer, generator);
+		
+		generator.doneMethod();
+		generator.addCallToMain();
+
 		return generator.getTransformedProgram();
 	}
 
-	public void transformSubProgram(EagleTransformer transformer,
+	public void transformSubProgram(String programId, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractToken which0 = identificationDiv.header.getWhich();
@@ -270,10 +277,10 @@ public abstract class COBOL_Program_Complete extends COBOL_Program
 		{
 			dataDiv.transform(transformer, generator);
 		}
-
+		
 		boolean skipGoBacks = (_retName != null);
 		{
-			procedureDiv.transform(skipGoBacks, transformer, generator);
+			procedureDiv.transform(skipGoBacks, programId, transformer, generator);
 		}
 
 		// Very tricky to convert a call-by-reference to a return value

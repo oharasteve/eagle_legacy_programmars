@@ -105,8 +105,7 @@ public class COBOL_LinkageSection extends TokenSequence implements EagleRunnable
 						}
 						parent = parent.getParent();
 					}
-					int assignments = transformer._metrics.countAssignments(paramName,
-							procDiv);
+					int assignments = transformer._metrics.countAssignments(paramName, procDiv);
 					// System.out.println("****** " + paramName + " procDiv=" + procDiv.getStartLine() + " asg=" + assignments);
 					if (assignments > 0)
 					{

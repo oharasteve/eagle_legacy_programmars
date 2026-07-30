@@ -37,12 +37,12 @@ public class COBOL_Section extends TokenSequence implements EagleRunnable
 		interpreter.tryToInterpret(paragraphs.first());
 	}
 
-	public void transform(boolean skipGoBacks, EagleTransformer transformer,
+	public void transform(boolean skipGoBacks, String programId, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		for (COBOL_Paragraph para : paragraphs._elements)
 		{
-			para.transform(skipGoBacks, transformer, generator);
+			para.transform(skipGoBacks, programId, transformer, generator);
 		}
 	}
 }

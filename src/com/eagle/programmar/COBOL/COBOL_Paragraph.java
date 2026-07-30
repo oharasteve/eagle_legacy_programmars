@@ -3,19 +3,15 @@
 
 package com.eagle.programmar.COBOL;
 
-import java.util.HashSet;
-
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.metrics.AssignMetrics;
 import com.eagle.metrics.CallMetrics;
 import com.eagle.programmar.COBOL.COBOL_ScreenSection.COBOL_ScreenDeclaration;
 import com.eagle.programmar.COBOL.COBOL_WorkingStorage.COBOL_CopyOrDataDeclaration;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Paragraph_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.tokens.AbstractFunction;
-import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -61,22 +57,15 @@ public class COBOL_Paragraph extends TokenSequence
 		}
 	}
 
-	public void transform(boolean skipGoBacks, EagleTransformer transformer,
+	public void transform(boolean skipGoBacks, String programId, EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		String paraName = "paragraph_with_no_name";
-		if (!skipGoBacks)
+		String paraName = programId;	// null means top level, not a subprogrm
+		if (paraName != null && paragraphHeaders != null && paragraphHeaders.size() > 0)
 		{
-			for (COBOL_ParagraphHeader header : paragraphHeaders._elements)
-			{
-				paraName = COBOL_Variable.repairName(header.paragraphName.getValue());
-			}
-			if (!paraName.equals("main"))
-			{
-				generator.addMethod(null, paraName, paragraphHeaders);
-			}
-	
-			findGlobalVariables(transformer, generator);
+			COBOL_ParagraphHeader header = paragraphHeaders.first();
+			paraName = COBOL_Variable.repairName(header.paragraphName.getValue());
+			generator.addMethod(null, paraName, paragraphHeaders);
 		}
 		
 		for (COBOL_SentenceOrComment sentOrComm : sentences._elements)
@@ -88,44 +77,9 @@ public class COBOL_Paragraph extends TokenSequence
 			}
 		}
 
-		if (!skipGoBacks && !paraName.equals("main"))
+		if (!skipGoBacks && paraName != null)
 		{
 			generator.doneMethod();
-		}
-	}
-
-	private void findGlobalVariables(EagleTransformer transformer,
-			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
-	{
-		// Why isn't there a pointer up to the COBOL_Program at the top of the tree?
-		AbstractToken parent = this.getParent();
-		COBOL_Program_Complete prog = null;
-		while (parent != null)
-		{
-			if (parent instanceof COBOL_Program_Complete)
-			{
-				prog = (COBOL_Program_Complete) parent;
-				break;
-			}
-			parent = parent.getParent();
-		}
-		if (prog == null) return;
-		
-		HashSet<String> added = new HashSet<String>();
-		for (AssignMetrics var : transformer._metrics.findAllAssignments())
-		{
-			int line = var._startingLine;
-			// System.err.println("****** " + line + " " + this._currentLine + "-" + this._endLine);
-			if (line >= this._currentLine && line <= this._endLine)
-			{
-				String varName = var._symbolName;
-				if (! added.contains(varName))
-				{
-					AbstractStatement newStmt = generator.newGlobalVariable(varName, null);
-					generator.addStatement(newStmt, null);
-					added.add(varName);
-				}
-			}
 		}
 	}
 }
