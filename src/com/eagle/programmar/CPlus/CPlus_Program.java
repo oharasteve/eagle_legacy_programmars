@@ -20,12 +20,12 @@ import com.eagle.tokens.TokenList;
 
 public class CPlus_Program extends C_Program
 {
-	public static final String CPP = "Cpp";
+	public static final String CPlus = "CPlus";
 //	private static C_Expression _fakeExpr = null;
 
 	public CPlus_Program()
 	{
-		super(CPP, new CPlus_Syntax());
+		super(CPlus, new CPlus_Syntax());
 
 //		// Can't easily have CPlus_Expression extend C_Expression. It's that old robot leg problem.
 //		if (_fakeExpr == null)
@@ -51,8 +51,8 @@ public class CPlus_Program extends C_Program
 	@Override
 	public void findLanguageOverrides(EagleOverrideManager overrider)
 	{
-		// overrider.override(C_Expression.class, CPlus_Expression.class); // Times out
-		// at 60 seconds. Why?
+		// overrider.override(C_Expression.class, CPlus_Expression.class);
+		//   Times out at 60 seconds. Why?
 		overrider.override(C_Literal.class, CPlus_Literal.class);
 	}
 

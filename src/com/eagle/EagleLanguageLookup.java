@@ -89,7 +89,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(COBOL_Partial_Fixed_Format.COBOLPartial, COBOL_Partial_Fixed_Format.class);
 		add(COBOL_Program_Fixed_Format.COBOLFixed, COBOL_Program_Fixed_Format.class, ".cob");
 		add(COBOL_Program_Free_Format.COBOLFree, COBOL_Program_Free_Format.class, ".cbl");
-		add(CPlus_Program.CPP, CPlus_Program.class, ".cc", ".cpp", ".hh");
+		add(CPlus_Program.CPlus, CPlus_Program.class, ".cc", ".cpp", ".hh");
 		add(CSharp_Program.CSHARP, CSharp_Program.class, ".cs");
 		add(CSS_Program.CSS, CSS_Program.class, ".css");
 		add(Delphi_Configuration.DELPHIConfig, Delphi_Configuration.class);
