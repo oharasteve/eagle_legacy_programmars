@@ -6,9 +6,9 @@ package com.eagle.programmar.CSS.Values;
 import com.eagle.programmar.CSS.Terminals.CSS_KeywordChoice;
 import com.eagle.programmar.CSS.Terminals.CSS_Number;
 import com.eagle.programmar.CSS.Terminals.CSS_Punctuation;
+import com.eagle.programmar.CSS.Terminals.CSS_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CSS_NumericValue extends TokenSequence
 {
@@ -24,7 +24,7 @@ public class CSS_NumericValue extends TokenSequence
 
 	public static class CSS_SlashNumber extends TokenSequence
 	{
-		public @S(10) PunctuationSlash slash;
+		public @S(10) CSS_PunctuationChoice slash = new CSS_PunctuationChoice("/", "-");
 		public @S(20) CSS_Number number;
 		public @S(30) @OPT CSS_NumericSuffix suffix;
 	}

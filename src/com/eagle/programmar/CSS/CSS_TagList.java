@@ -7,6 +7,7 @@ import com.eagle.programmar.CSS.Symbols.CSS_Class_Definition;
 import com.eagle.programmar.CSS.Terminals.CSS_Identifier;
 import com.eagle.programmar.CSS.Terminals.CSS_Keyword;
 import com.eagle.programmar.CSS.Terminals.CSS_KeywordChoice;
+import com.eagle.programmar.CSS.Terminals.CSS_Number;
 import com.eagle.programmar.CSS.Terminals.CSS_Punctuation;
 import com.eagle.programmar.CSS.Terminals.CSS_PunctuationChoice;
 import com.eagle.tokens.TokenChooser;
@@ -82,6 +83,7 @@ public class CSS_TagList extends TokenSequence
 
 			public static class CSS_ColonArgument extends TokenChooser
 			{
+				public @CHOICE CSS_Number XXnum;
 				public @CHOICE CSS_Identifier XXid;
 
 				public @CHOICE static class CSS_ColonArgBrackets extends TokenSequence
