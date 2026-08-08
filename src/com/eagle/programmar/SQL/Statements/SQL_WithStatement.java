@@ -15,11 +15,17 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class SQL_WithStatement extends TokenSequence
 {
 	public @S(10) SQL_Keyword WITH = new SQL_Keyword("WITH");
-	public @S(20) SQL_Identifier_Reference name;
-	public @S(30) PunctuationLeftParen leftParen;
-	public @S(40) SeparatedList<SQL_Identifier_Reference, PunctuationComma> params;
-	public @S(50) PunctuationRightParen rightParen;
-	public @S(60) SQL_Keyword AS = new SQL_Keyword("AS");
-	public @S(70) SQL_Expression expr;
-	public @S(80) SQL_SelectStatement selectStmt;
+	public @S(20) @OPT SQL_Keyword RECURSIVE = new SQL_Keyword("RECURSIVE");
+	public @S(30) SeparatedList<SQL_WithWhat,PunctuationComma> withs;
+	public @S(40) SQL_SelectStatement selectStmt;
+	
+	public static class SQL_WithWhat extends TokenSequence
+	{
+		public @S(10) SQL_Identifier_Reference name;
+		public @S(20) PunctuationLeftParen leftParen;
+		public @S(30) SeparatedList<SQL_Identifier_Reference, PunctuationComma> params;
+		public @S(40) PunctuationRightParen rightParen;
+		public @S(50) SQL_Keyword AS = new SQL_Keyword("AS");
+		public @S(60) SQL_Expression expr;
+	}
 }
