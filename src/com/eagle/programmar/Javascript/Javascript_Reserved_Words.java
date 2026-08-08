@@ -9,7 +9,7 @@ public class Javascript_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"abstract",
 			// "arguments", // I removed
-			// "async", // I added
+			"async", // I added
 			"await", // I added
 			"boolean",
 			"break",

@@ -9,6 +9,6 @@ public class Javascript_Number extends TerminalNumberToken
 {
 	public Javascript_Number()
 	{
-		super("eE", null, true, false, '?');
+		super("eE", "n", true, false, '?');
 	}
 }

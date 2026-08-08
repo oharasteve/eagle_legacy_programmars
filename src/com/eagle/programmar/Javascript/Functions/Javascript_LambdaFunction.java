@@ -4,6 +4,7 @@
 package com.eagle.programmar.Javascript.Functions;
 
 import com.eagle.programmar.Javascript.Javascript_Element;
+import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
@@ -13,6 +14,7 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
@@ -25,13 +27,26 @@ public class Javascript_LambdaFunction extends PrimaryOperator
 
 	public static class Javascript_LambdaParams extends TokenChooser
 	{
-		public @CHOICE Javascript_Variable_Definition XXparam;
+		public @CHOICE Javascript_LambdaParam XXparam;
 
 		public @CHOICE static class Javascript_LambdaManyParams extends TokenSequence
 		{
 			public @S(10) PunctuationLeftParen leftParen;
-			public @S(20) @OPT SeparatedList<Javascript_Variable_Definition, PunctuationComma> params;
+			public @S(20) @OPT SeparatedList<Javascript_LambdaParam, PunctuationComma> params;
 			public @S(30) PunctuationRightParen rightParen;
+		}
+	}
+	
+	public static class Javascript_LambdaParam extends TokenSequence
+	{
+		public @S(10) @OPT Javascript_Punctuation rest = new Javascript_Punctuation("...");		
+		public @S(20) Javascript_Variable_Definition param;
+		public @S(30) @OPT Javascript_LambdaInitValue init;
+
+		public static class Javascript_LambdaInitValue extends TokenSequence
+		{
+			public @S(10) PunctuationEquals equals;
+			public @S(20) Javascript_Expression initValue;
 		}
 	}
 

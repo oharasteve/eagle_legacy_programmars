@@ -9,6 +9,6 @@ public class Javascript_HexNumber extends TerminalHexNumberToken
 {
 	public Javascript_HexNumber()
 	{
-		super("0x", "Ll", false);
+		super("0x", "Lln", false);
 	}
 }

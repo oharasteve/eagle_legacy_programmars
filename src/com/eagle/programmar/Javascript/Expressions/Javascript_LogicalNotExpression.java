@@ -7,7 +7,7 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_Expression;
-import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
+import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -19,7 +19,7 @@ import com.eagle.transform.EagleTransformer;
 public class Javascript_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) Javascript_Punctuation notOperator = new Javascript_Punctuation('!');
+	public @S(10) Javascript_PunctuationChoice notOperator = new Javascript_PunctuationChoice("!", "!!");
 	public @S(20) Javascript_Expression expr;
 
 	@Override

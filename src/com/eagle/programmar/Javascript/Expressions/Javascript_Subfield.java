@@ -4,12 +4,12 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.programmar.Javascript.Javascript_Expression;
+import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.punctuation.PunctuationPeriod;
 
 public class Javascript_Subfield extends PrecedenceOperator
 {
 	public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) PunctuationPeriod dot;
+	public @S(20) Javascript_PunctuationChoice dot = new Javascript_PunctuationChoice(".", "?.");
 	public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 }

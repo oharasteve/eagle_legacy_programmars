@@ -25,7 +25,12 @@ public class Javascript_EqualityExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("!==", "===", "==", "!=");
+	public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(
+			"!==",
+			"===",
+			"==",
+			"!=",
+			"??=");
 	public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(40) @OPT Javascript_Comment comment;
 
