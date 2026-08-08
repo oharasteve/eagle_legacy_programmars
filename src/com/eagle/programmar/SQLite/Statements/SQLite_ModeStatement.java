@@ -15,7 +15,7 @@ public class SQLite_ModeStatement extends TokenSequence
 	
 	public static class SQLite_ModeWhich extends TokenChooser
 	{
-		public @CHOICE SQL_KeywordChoice LIST = new SQL_KeywordChoice(
+		public @CHOICE SQL_KeywordChoice XXLIST = new SQL_KeywordChoice(
 				"list",
 				"quote",
 				"tty");
@@ -27,7 +27,7 @@ public class SQLite_ModeStatement extends TokenSequence
 			
 			public static class SQLite_ModeBoxOption extends TokenChooser
 			{
-				public @CHOICE SQL_Keyword RESET = new SQL_Keyword("-reset");
+				public @CHOICE SQL_Keyword XXRESET = new SQL_Keyword("-reset");
 				
 				public @CHOICE static class SQLite_ModeBoxEscape extends TokenSequence
 				{
