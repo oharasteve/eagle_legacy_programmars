@@ -23,7 +23,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 public class SQL_CreateTableField extends TokenSequence
 {
 	public @S(10) SQL_Field_Definition fieldName;
-	public @S(20) SQL_Type fieldType;
+	public @S(20) @OPT SQL_Type fieldType;
 	public @S(30) @OPT TokenList<SQL_FieldOption> fieldOptions;
 
 	public static class SQL_FieldOption extends TokenChooser

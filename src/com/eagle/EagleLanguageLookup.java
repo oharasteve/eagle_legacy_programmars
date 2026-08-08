@@ -57,6 +57,7 @@ import com.eagle.programmar.Rexx.Rexx_Program;
 import com.eagle.programmar.Ruby.Ruby_Program;
 import com.eagle.programmar.Rust.Rust_Program;
 import com.eagle.programmar.SQL.SQL_Program;
+import com.eagle.programmar.SQLite.SQLite_Program;
 import com.eagle.programmar.Scala.Scala_Program;
 import com.eagle.programmar.TCL.TCL_Program;
 import com.eagle.programmar.VB.VB_Program;
@@ -129,6 +130,7 @@ public class EagleLanguageLookup extends LanguageLookup
 		add(Rust_Program.RUST, Rust_Program.class, ".rs", ".rust");
 		add(Scala_Program.SCALA, Scala_Program.class, ".scala");
 		add(SQL_Program.SQL, SQL_Program.class, ".sql");
+		add(SQLite_Program.SQLITE, SQLite_Program.class);
 		add(TCL_Program.TCL, TCL_Program.class, ".tcl");
 		add(VB_Program.VB, VB_Program.class, ".vb", ".vba", ".vbs");
 		add(XML_Program.XML, XML_Program.class, ".xml", ".xsd");
