@@ -42,7 +42,7 @@ public class CMD_Expression extends PrecedenceChooser
 	//
 
 	///////////////////////////////////////////////
-	// Terminals -- Identical to CMD_BasicExpression
+	// Terminals
 
 	public @P(10) CMD_Number number;
 	public @P(20) CMD_Literal literal;
@@ -50,7 +50,7 @@ public class CMD_Expression extends PrecedenceChooser
 	public @P(40) CMD_Filename filename;
 
 	///////////////////////////////////////////////
-	// Primary expressions -- Identical to CMD_BasicExpression
+	// Primary expressions
 
 	public @P(100) CMD_ParenthesizedExpression parensExpression;
 	public @P(110) CMD_NegativeExpression negativeExpression;
@@ -61,7 +61,7 @@ public class CMD_Expression extends PrecedenceChooser
 	public @P(160) CMD_BangExpression bangExpression;
 
 	///////////////////////////////////////////////
-	// Binary expressions -- Missing in CMD_BasicExpression
+	// Binary expressions
 
 	public @P(1000) CMD_MultiplicativeExpression multiplicativeExpression;
 	public @P(1010) CMD_AdditiveExpression additiveExpression;

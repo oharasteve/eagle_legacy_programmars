@@ -26,7 +26,8 @@ public class CMD_Syntax extends EagleSyntax
 				"==",
 				"&&",
 				">>",
-				"||"
+				"||",
+				"%*"
 		};
 
 		addReservedWords(new String[] {

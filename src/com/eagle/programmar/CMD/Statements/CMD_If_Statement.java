@@ -18,19 +18,31 @@ import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.punctuation.PunctuationSlash;
 
 public class CMD_If_Statement extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) @DOC("if.mspx") CMD_Keyword IF = new CMD_Keyword("if");
-	public @S(20) @OPT CMD_Keyword NOT = new CMD_Keyword("not");
-	public @S(30) CMD_IfWhat what;
-	public @S(40) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
-	public @S(50) CMD_Statement stmt;
-	public @S(60) @OPT CMD_IfElseClause elseClause;
+	public @S(20) @OPT TokenList<CMD_If_Option> opts;
+	public @S(30) @OPT CMD_Keyword NOT = new CMD_Keyword("not");
+	public @S(40) CMD_IfWhat what;
+	public @S(50) @OPT CMD_Punctuation at = new CMD_Punctuation('@');
+	public @S(60) CMD_Statement stmt;
+	public @S(70) @OPT CMD_IfElseClause elseClause;
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
+
+	public static class CMD_If_Option extends TokenChooser
+	{
+		public @CHOICE static class CMD_If_Option_I extends TokenSequence
+		{
+			public @S(10) PunctuationSlash slash;
+			public @S(20) CMD_Keyword I = new CMD_Keyword("i");
+		}
+	}
 
 	public static class CMD_IfElseClause extends TokenSequence
 	{

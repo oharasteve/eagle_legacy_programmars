@@ -6,6 +6,7 @@ package com.eagle.programmar.CMD.Statements;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.Symbols.CMD_Variable_Definition;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
+import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -21,6 +22,7 @@ public class CMD_NMake_Statement extends TokenSequence implements AbstractStatem
 	public static class CMD_NMake_Parameter extends TokenChooser
 	{
 		public @CHOICE CMD_Expression XXtarget;
+		public @CHOICE CMD_Punctuation pctStar = new CMD_Punctuation("%*");
 
 		public @CHOICE static class CMD_NMake_Option_I extends TokenSequence
 		{
