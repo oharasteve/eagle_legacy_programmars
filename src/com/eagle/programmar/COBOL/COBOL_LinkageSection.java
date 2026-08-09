@@ -14,6 +14,7 @@ import com.eagle.programmar.COBOL.Picture.COBOL_Usage;
 import com.eagle.programmar.COBOL.Symbols.COBOL_Data_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -79,9 +80,14 @@ public class COBOL_LinkageSection extends TokenSequence implements EagleRunnable
 							if (which4 instanceof COBOL_Usage)
 							{
 								COBOL_Usage usage = (COBOL_Usage) which4;
-								if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+								AbstractToken which5 = usage.usage.getWhich();
+								if (which5 instanceof COBOL_KeywordChoice)
 								{
-									isComp = true;
+									COBOL_KeywordChoice kw = (COBOL_KeywordChoice) which5;
+									if (kw.getValue().toUpperCase().startsWith("COMP"))
+									{
+										isComp = true;
+									}
 								}
 							}
 						}

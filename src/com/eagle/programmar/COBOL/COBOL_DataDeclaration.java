@@ -34,6 +34,7 @@ import com.eagle.programmar.COBOL.Symbols.COBOL_Index_Definition;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Comment;
 import com.eagle.programmar.COBOL.Terminals.COBOL_CommentToEndOfLine;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Keyword;
+import com.eagle.programmar.COBOL.Terminals.COBOL_KeywordChoice;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Level;
 import com.eagle.programmar.COBOL.Terminals.COBOL_Literal;
 import com.eagle.tokens.AbstractToken;
@@ -166,28 +167,33 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				for (COBOL_DataClause clause : clauses._elements)
 				{
-					AbstractToken which = clause.getWhich();
-					if (which instanceof COBOL_PictureClause)
+					AbstractToken which1 = clause.getWhich();
+					if (which1 instanceof COBOL_PictureClause)
 					{
-						COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+						COBOL_PictureClause picClause = (COBOL_PictureClause) which1;
 						pic = picClause.picture.getValue().toUpperCase();
 					}
-					if (which instanceof COBOL_RedefinesClause)
+					if (which1 instanceof COBOL_RedefinesClause)
 					{
-						COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which;
+						COBOL_RedefinesClause redefinesClause = (COBOL_RedefinesClause) which1;
 						redefines = redefinesClause.id.getValue();
 					}
-					if (which instanceof COBOL_Usage)
+					if (which1 instanceof COBOL_Usage)
 					{
-						COBOL_Usage usage = (COBOL_Usage) which;
-						if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+						COBOL_Usage usage = (COBOL_Usage) which1;
+						AbstractToken which2 = usage.usage.getWhich();
+						if (which2 instanceof COBOL_KeywordChoice)
 						{
-							isComp = true;
+							COBOL_KeywordChoice kw = (COBOL_KeywordChoice) which2;
+							if (kw.getValue().toUpperCase().startsWith("COMP"))
+							{
+								isComp = true;
+							}
 						}
 					}
-					if (which instanceof COBOL_ValueClause)
+					if (which1 instanceof COBOL_ValueClause)
 					{
-						COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
+						COBOL_ValueClause valueClause = (COBOL_ValueClause) which1;
 						COBOL_Picture_Value picValue = valueClause.values.first();
 						if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
 						{
@@ -285,10 +291,10 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 			{
 				for (COBOL_DataClause clause : clauses._elements)
 				{
-					AbstractToken which = clause.getWhich();
-					if (which instanceof COBOL_PictureClause)
+					AbstractToken which1 = clause.getWhich();
+					if (which1 instanceof COBOL_PictureClause)
 					{
-						COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+						COBOL_PictureClause picClause = (COBOL_PictureClause) which1;
 						String pic = picClause.picture.getValue().toUpperCase();
 						if (pic.startsWith("9") || pic.startsWith("X") || pic.startsWith("Z"))
 						{
@@ -296,9 +302,9 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 							// Will get replaced by INTEGER if USAGE COMP is present
 						}
 					}
-					if (which instanceof COBOL_RedefinesClause)
+					if (which1 instanceof COBOL_RedefinesClause)
 					{
-						COBOL_RedefinesClause redefClause = (COBOL_RedefinesClause) which;
+						COBOL_RedefinesClause redefClause = (COBOL_RedefinesClause) which1;
 						String redefWhat = redefClause.id.getValue();
 						AbstractExpression redef = generator.newVariableExpression(redefWhat,
 								SubscriptEnum.FIRST_IS_ONE, null, this);
@@ -306,9 +312,9 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 						return generator.newDataDeclaration(
 								StaticEnum.NONE, varName, null, newType, redef, this);
 					}
-					if (which instanceof COBOL_ValueClause)
+					if (which1 instanceof COBOL_ValueClause)
 					{
-						COBOL_ValueClause valueClause = (COBOL_ValueClause) which;
+						COBOL_ValueClause valueClause = (COBOL_ValueClause) which1;
 						COBOL_Picture_Value picValue = valueClause.values.first();
 						if (picValue.getWhich() instanceof COBOL_Picture_Value_Number)
 						{
@@ -321,12 +327,17 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 							expression = generator.newLiteralExpression(lit.literal.getValue(), lit);
 						}
 					}
-					if (which instanceof COBOL_Usage)
+					if (which1 instanceof COBOL_Usage)
 					{
-						COBOL_Usage usage = (COBOL_Usage) which;
-						if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+						COBOL_Usage usage = (COBOL_Usage) which1;
+						AbstractToken which2 = usage.usage.getWhich();
+						if (which2 instanceof COBOL_KeywordChoice)
 						{
-							isComp = true;
+							COBOL_KeywordChoice kw = (COBOL_KeywordChoice) which2;
+							if (kw.getValue().toUpperCase().startsWith("COMP"))
+							{
+								isComp = true;
+							}
 						}
 					}
 				}
@@ -381,18 +392,23 @@ public class COBOL_DataDeclaration extends TokenSequence implements EagleRunnabl
 				{
 					for (COBOL_DataClause clause : clauses._elements)
 					{
-						AbstractToken which = clause.getWhich();
-						if (which instanceof COBOL_PictureClause)
+						AbstractToken which1 = clause.getWhich();
+						if (which1 instanceof COBOL_PictureClause)
 						{
-							COBOL_PictureClause picClause = (COBOL_PictureClause) which;
+							COBOL_PictureClause picClause = (COBOL_PictureClause) which1;
 							pic = picClause.picture.getValue().toUpperCase();
 						}
-						if (which instanceof COBOL_Usage)
+						if (which1 instanceof COBOL_Usage)
 						{
-							COBOL_Usage usage = (COBOL_Usage) which;
-							if (usage.type.getValue().toUpperCase().startsWith("COMP"))
+							COBOL_Usage usage = (COBOL_Usage) which1;
+							AbstractToken which2 = usage.usage.getWhich();
+							if (which2 instanceof COBOL_KeywordChoice)
 							{
-								return TypeEnum.INTEGER;
+								COBOL_KeywordChoice kw = (COBOL_KeywordChoice) which2;
+								if (kw.getValue().toUpperCase().startsWith("COMP"))
+								{
+									return TypeEnum.INTEGER;
+								}
 							}
 						}
 					}
