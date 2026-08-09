@@ -91,6 +91,7 @@ public class SQL_Reserved_Words
 			"INTERVAL",
 			"INTO",
 			"JOIN", // I added
+			"KEY", // I added
 			"LEADING",
 			"LEFT",
 			"LIKE",
