@@ -22,7 +22,7 @@ public class CMD_NMake_Statement extends TokenSequence implements AbstractStatem
 	public static class CMD_NMake_Parameter extends TokenChooser
 	{
 		public @CHOICE CMD_Expression XXtarget;
-		public @CHOICE CMD_Punctuation pctStar = new CMD_Punctuation("%*");
+		public @CHOICE CMD_Punctuation XXpctStar = new CMD_Punctuation("%*");
 
 		public @CHOICE static class CMD_NMake_Option_I extends TokenSequence
 		{

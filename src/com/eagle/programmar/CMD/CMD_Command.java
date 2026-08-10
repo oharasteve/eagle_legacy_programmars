@@ -20,7 +20,7 @@ public class CMD_Command extends TokenSequence implements EagleRunnableWithResul
 	public @S(30) CMD_Statement command;
 	public @S(40) @OPT TokenList<CMD_Redirect> redirects;
 	public @S(50) @OPT TokenList<CMD_More_Statements> moreStatements;
-	public @S(60) CMD_EndOfLine eoln2;
+	public @S(60) @OPT CMD_EndOfLine eoln2;
 
 	public static class CMD_Redirect extends TokenChooser
 	{

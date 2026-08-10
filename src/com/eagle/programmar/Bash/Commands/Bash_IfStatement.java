@@ -19,14 +19,15 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 public class Bash_IfStatement extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("#Conditional-Constructs") Bash_Keyword IF = new Bash_Keyword("if");
-	public @S(20) Bash_Condition condition;
-	public @S(30) Bash_EndOfLine eoln1;
-	public @S(40) Bash_Keyword THEN = new Bash_Keyword("then");
-	public @S(50) @OPT Bash_EndOfLine eoln2;
-	public @S(60) TokenList<Bash_Element> statements;
-	public @S(70) @OPT TokenList<Bash_If_Elif> elseIfBlock;
-	public @S(80) @OPT Bash_If_Else elseBlock;
-	public @S(90) Bash_Keyword FI = new Bash_Keyword("fi");
+	public @S(20) @OPT Bash_Keyword TEST = new Bash_Keyword("test");
+	public @S(30) Bash_Condition condition;
+	public @S(40) Bash_EndOfLine eoln1;
+	public @S(50) Bash_Keyword THEN = new Bash_Keyword("then");
+	public @S(60) @OPT Bash_EndOfLine eoln2;
+	public @S(70) TokenList<Bash_Element> statements;
+	public @S(80) @OPT TokenList<Bash_If_Elif> elseIfBlock;
+	public @S(90) @OPT Bash_If_Else elseBlock;
+	public @S(100) Bash_Keyword FI = new Bash_Keyword("fi");
 
 	private @SKIP ArrayList<IfCondMetrics> _metrics = null;
 
