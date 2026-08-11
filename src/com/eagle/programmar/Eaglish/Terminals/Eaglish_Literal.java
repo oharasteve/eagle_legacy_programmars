@@ -5,11 +5,12 @@ package com.eagle.programmar.Eaglish.Terminals;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.programmar.Eaglish.Eaglish_Format;
+import com.eagle.programmar.Eaglish.Eaglish_Expression;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.terminals.TerminalLiteralExpression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -25,7 +26,8 @@ public class Eaglish_Literal extends TerminalLiteralToken
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String result = Eaglish_Format.format(interpreter, removeQuotes());
+		String result = TerminalLiteralExpression.format(interpreter,
+				Eaglish_Expression.class, removeQuotes(), '\\', '^', '^');
 		interpreter.pushStr(result);
 	}
 
@@ -33,12 +35,8 @@ public class Eaglish_Literal extends TerminalLiteralToken
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		if (_txt.indexOf('^') >= 0)
-		{
-			return Eaglish_Format.compile(transformer, generator, removeQuotes(), this);
-		}
-
-		// Plain ol' literal
-		return generator.newLiteralExpression(removeQuotes(), this);
+		AbstractExpression result = TerminalLiteralExpression.compile(transformer, generator,
+				Eaglish_Expression.class,removeQuotes(), '\\', '^', '^', this);
+		return result;
 	}
 }
