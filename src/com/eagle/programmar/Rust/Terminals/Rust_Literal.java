@@ -36,6 +36,11 @@ public class Rust_Literal extends TerminalLiteralToken
 
 	public Rust_Expression generateConcatLiteral(ArrayList<Rust_Expression> pieces, AbstractToken source)
 	{
+		if (pieces.size() == 1)
+		{
+			return pieces.get(0);
+		}
+		
 		StringBuffer sb = new StringBuffer();
 		EaglePrinter prt = new EaglePrinter();
 		for (Rust_Expression piece : pieces)

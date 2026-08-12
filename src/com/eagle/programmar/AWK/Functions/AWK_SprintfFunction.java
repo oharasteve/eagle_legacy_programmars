@@ -9,12 +9,14 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleValue;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.AWK.AWK_ArgumentList;
 import com.eagle.programmar.AWK.AWK_ArgumentList.AWK_MoreArguments;
-import com.eagle.programmar.AWK.AWK_Format;
+import com.eagle.programmar.AWK.AWK_Expression;
+import com.eagle.programmar.AWK.Expressions.AWK_String;
 import com.eagle.programmar.AWK.Terminals.AWK_Keyword;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -22,6 +24,8 @@ import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.terminals.TerminalLiteralExpression;
+import com.eagle.tokens.terminals.TerminalLiteralExpression.LiteralPiece;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
@@ -42,20 +46,16 @@ public class AWK_SprintfFunction extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, SPRINTF.getValue(), SPRINTF);
 		}
-		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
-
-		StringBuffer sb = new StringBuffer();
-		// sb.append(interpreter.getStrValue(argList.expr)); // Skip the format for now
+		
+		String fmt = interpreter.getStrValue(argList.expr);
+		ArrayList<PrecedenceChooser> args = new ArrayList<PrecedenceChooser>();
 		for (AWK_MoreArguments more : argList.more._elements)
 		{
-			EagleValue val = interpreter.getEagleValue(more.expr);
-			String result = val.forceStringValue();
-			argTypes.add(val.getType());
-			sb.append(result);
+			args.add(more.expr);
 		}
-		interpreter.pushStr(sb.toString());
-
-		_metrics.calledWith(argTypes);
+		ArrayList<LiteralPiece> pieces = TerminalLiteralExpression.parsePercent(fmt, '%', "ds", args);
+		String result = TerminalLiteralExpression.evaluateLiteral(interpreter, _metrics, AWK_Expression.class, pieces);
+		interpreter.pushStr(result);
 	}
 
 	@Override
@@ -63,6 +63,23 @@ public class AWK_SprintfFunction extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(SPRINTF);
-		return AWK_Format.transform(transformer, generator, argList.expr, argList.more, metrics);
+		
+		AbstractToken which = argList.expr.getWhich(); 
+		if (!(which instanceof AWK_String))
+		{
+			throw new RuntimeException("Format must be a literal, not " + which);
+		}
+		AWK_String str = (AWK_String) which;
+		String fmt = str.literal.removeQuotes();
+
+		ArrayList<PrecedenceChooser> args = new ArrayList<PrecedenceChooser>();
+		for (AWK_MoreArguments more : argList.more._elements)
+		{
+			args.add(more.expr);
+		}
+		ArrayList<LiteralPiece> pieces = TerminalLiteralExpression.parsePercent(fmt, '%', "ds", args);
+		AbstractExpression result = TerminalLiteralExpression.compileLiteral(transformer, generator, metrics,
+				AWK_Expression.class, pieces, this);
+		return result;
 	}
 }

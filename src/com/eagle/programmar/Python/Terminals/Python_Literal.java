@@ -114,17 +114,16 @@ public class Python_Literal extends TerminalLiteralToken
 
 	public Python_Expression generateConcatLiteral(ArrayList<Python_Expression> pieces, AbstractToken source)
 	{
+		if (pieces.size() == 1)
+		{
+			return pieces.get(0);
+		}
+		
 		StringBuffer sb = new StringBuffer();
 		EaglePrinter prt = new EaglePrinter();
 		for (Python_Expression piece : pieces)
 		{
 			AbstractToken which1 = piece.getWhich();
-//			if (which1 instanceof Python_Str_Function)
-//			{
-//				Python_Str_Function strFn = (Python_Str_Function) which1;
-//				which1 = strFn.expression.getWhich();
-//			}
-//
 			if (which1 instanceof Python_Literals)
 			{
 				Python_Literals lits = (Python_Literals) which1;
