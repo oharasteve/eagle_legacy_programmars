@@ -36,7 +36,7 @@ public class Eaglish_Literal extends TerminalLiteralToken
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression result = TerminalLiteralExpression.compile(transformer, generator,
-				Eaglish_Expression.class,removeQuotes(), '\\', '^', '^', this);
+				Eaglish_Expression.class, removeQuotes(), '\\', '^', '^', this);
 		return result;
 	}
 }
