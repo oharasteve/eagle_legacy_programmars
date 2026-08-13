@@ -15,6 +15,7 @@ import com.eagle.programmar.C.Statements.C_GotoStatement;
 import com.eagle.programmar.C.Statements.C_IfStatement;
 import com.eagle.programmar.C.Statements.C_PrintfStatement;
 import com.eagle.programmar.C.Statements.C_ReturnStatement;
+import com.eagle.programmar.C.Statements.C_SnprintfStatement;
 import com.eagle.programmar.C.Statements.C_StatementBlock;
 import com.eagle.programmar.C.Statements.C_SwitchStatement;
 import com.eagle.programmar.C.Statements.C_WhileStatement;
@@ -48,6 +49,7 @@ public class C_Statement extends TokenChooser implements AbstractStatement
 	public @CHOICE C_IfStatement XXifStatement;
 	public @CHOICE C_PrintfStatement XXprintfStatement;
 	public @CHOICE C_ReturnStatement XXreturnStatement;
+	public @CHOICE C_SnprintfStatement XXsnprintfStatement;
 	public @CHOICE C_SwitchStatement XXswitchStatement;
 	public @CHOICE C_WhileStatement XXwhileStatement;
 

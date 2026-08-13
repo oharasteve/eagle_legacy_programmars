@@ -5,7 +5,6 @@ package com.eagle.programmar.Rust.Terminals;
 
 import java.util.ArrayList;
 
-import com.eagle.io.EaglePrinter;
 import com.eagle.programmar.Rust.Rust_Expression;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Expressions.Rust_ParenthesizedExpression;
@@ -42,7 +41,7 @@ public class Rust_Literal extends TerminalLiteralToken
 		}
 		
 		StringBuffer sb = new StringBuffer();
-		EaglePrinter prt = new EaglePrinter();
+		ArrayList<Rust_Expression> args = new ArrayList<Rust_Expression>();
 		for (Rust_Expression piece : pieces)
 		{
 			AbstractToken which = piece.getWhich();
@@ -64,16 +63,15 @@ public class Rust_Literal extends TerminalLiteralToken
 			}
 			else
 			{
-				sb.append("{");
-				sb.append(prt.writeToken(which));
-				sb.append("}");
+				sb.append("{}");
+				args.add(piece);
 			}
 		}
 		
 		this.setValue("\"" + sb.toString() + "\"");
 		this.setTransformationSource(source);
 		Rust_Expression fmtExpr = Rust_Generator.wrapExpression(this);
-		return Rust_FormatFunction.generateFormat(fmtExpr, null, source);
+		return Rust_FormatFunction.generateFormat(fmtExpr, args, source);
 	}
 	
 	public static Rust_Expression generateLiteralExpression(String value, AbstractToken source)
