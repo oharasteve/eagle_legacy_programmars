@@ -11,11 +11,11 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.C.C_Expression;
-import com.eagle.programmar.C.C_Format;
 import com.eagle.programmar.C.Terminals.C_Keyword;
 import com.eagle.programmar.C.Terminals.C_KeywordChoice;
-import com.eagle.tokens.PrimaryOperator;
+import com.eagle.programmar.C.Terminals.C_LiteralExpression;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -27,14 +27,14 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
-public class C_FprintfStatement extends PrimaryOperator
-		implements EagleRunnable, EagleTransformableStatement
+public class C_FprintfStatement extends TokenSequence
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) C_Keyword FPRINTF = new C_Keyword("fprintf");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) C_KeywordChoice STDOUT = new C_KeywordChoice("stdout", "stderr");
 	public @S(40) PunctuationComma comma;
-	public @S(50) SeparatedList<C_Expression, PunctuationComma> args;
+	public @S(50) SeparatedList<C_Expression, PunctuationComma> argList;
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) PunctuationSemicolon semicolon;
 
@@ -49,15 +49,15 @@ public class C_FprintfStatement extends PrimaryOperator
 		}
 		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
 
-		String formatted = C_Format.format(interpreter, args, argTypes);
+		String val = C_LiteralExpression.interpret(interpreter, argList, _metrics);
 		_metrics.calledWith(argTypes);
 		switch (STDOUT.toString())
 		{
 		case "stdout":
-			System.out.println(formatted);
+			System.out.println(val);
 			return;
 		case "stderr":
-			System.err.println(formatted);
+			System.err.println(val);
 			return;
 		}
 	}
@@ -80,7 +80,7 @@ public class C_FprintfStatement extends PrimaryOperator
 		}
 
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(FPRINTF);
-		AbstractExpression line = C_Format.transform(transformer, generator, args, metrics);
+		AbstractExpression line = C_LiteralExpression.transform(transformer, generator, argList, metrics, this);
 		return generator.newPrintStatement1(line, TypeEnum.STRING, true, toErr, this);
 	}
 }

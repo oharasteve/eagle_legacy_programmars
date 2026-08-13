@@ -11,8 +11,8 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.C.C_Expression;
-import com.eagle.programmar.C.C_Format;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_LiteralExpression;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -27,11 +27,11 @@ import com.eagle.transform.EagleTransformableStatement;
 import com.eagle.transform.EagleTransformer;
 
 public class C_PrintfStatement extends TokenSequence
-		implements EagleRunnable, EagleTransformableStatement
+		implements AbstractStatement, EagleRunnable, EagleTransformableStatement
 {
 	public @S(10) C_Keyword PRINTF = new C_Keyword("printf");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) SeparatedList<C_Expression, PunctuationComma> args;
+	public @S(30) SeparatedList<C_Expression, PunctuationComma> argList;
 	public @S(40) PunctuationRightParen rightParen;
 	public @S(50) PunctuationSemicolon semicolon;
 
@@ -44,11 +44,8 @@ public class C_PrintfStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTF.getValue(), PRINTF);
 		}
-		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
-
-		String formatted = C_Format.format(interpreter, args, argTypes);
-		_metrics.calledWith(argTypes);
-		System.out.print(formatted);
+		String val = C_LiteralExpression.interpret(interpreter, argList, _metrics);
+		System.out.print(val);
 	}
 
 	@Override
@@ -56,7 +53,7 @@ public class C_PrintfStatement extends TokenSequence
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTF);
-		AbstractExpression line = C_Format.transform(transformer, generator, args, metrics);
-		return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
+		AbstractExpression line = C_LiteralExpression.transform(transformer, generator, argList, metrics, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, false, false, this);
 	}
 }
