@@ -13,12 +13,12 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefunFunction.Lisp_ParamDef;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_List extends TokenSequence implements EagleRunnable
+public class Lisp_List extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @OPT TokenList<Lisp_Expression> exprs;

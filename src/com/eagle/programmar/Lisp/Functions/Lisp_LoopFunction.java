@@ -15,6 +15,7 @@ import com.eagle.programmar.Lisp.Loops.Lisp_LoopUnconditionalReturn;
 import com.eagle.programmar.Lisp.Loops.Lisp_LoopWith;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -22,7 +23,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_LoopFunction extends TokenSequence implements AbstractStatement
+public class Lisp_LoopFunction extends PrimaryOperator implements AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_loop.htm") Lisp_Keyword LOOP = new Lisp_Keyword("loop");

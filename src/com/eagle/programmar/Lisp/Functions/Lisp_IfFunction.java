@@ -5,12 +5,12 @@ package com.eagle.programmar.Lisp.Functions;
 
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_IfFunction extends TokenSequence implements AbstractStatement
+public class Lisp_IfFunction extends PrimaryOperator implements AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_if.htm") Lisp_Keyword IF = new Lisp_Keyword("if");

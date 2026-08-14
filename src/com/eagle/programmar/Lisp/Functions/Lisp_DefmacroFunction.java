@@ -6,12 +6,12 @@ package com.eagle.programmar.Lisp.Functions;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Function_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_DefmacroFunction extends TokenSequence
+public class Lisp_DefmacroFunction extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defmac.htm") Lisp_Keyword DEFMACRO = new Lisp_Keyword("defmacro");

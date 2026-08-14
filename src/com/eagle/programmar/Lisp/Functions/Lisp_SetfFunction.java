@@ -9,12 +9,12 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_SetfFunction extends TokenSequence implements EagleRunnable, AbstractStatement
+public class Lisp_SetfFunction extends PrimaryOperator implements EagleRunnable, AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_KeywordChoice SETF = new Lisp_KeywordChoice("setf");

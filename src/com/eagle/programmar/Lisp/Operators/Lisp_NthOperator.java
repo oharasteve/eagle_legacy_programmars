@@ -7,16 +7,17 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
-import com.eagle.programmar.Lisp.Lisp_List;
 import com.eagle.programmar.Lisp.Lisp_Expression;
+import com.eagle.programmar.Lisp.Lisp_List;
 import com.eagle.programmar.Lisp.Lisp_Variable;
+import com.eagle.programmar.Lisp.Functions.Lisp_VariableExpression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Identifier_Reference;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_NthOperator extends TokenSequence implements EagleRunnable
+public class Lisp_NthOperator extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_Keyword NTH = new Lisp_Keyword("NTH");
@@ -36,9 +37,10 @@ public class Lisp_NthOperator extends TokenSequence implements EagleRunnable
 			return;
 		}
 
-		if (list.getWhich() instanceof Lisp_Variable)
+		if (list.getWhich() instanceof Lisp_VariableExpression)
 		{
-			Lisp_Variable var = (Lisp_Variable) list.getWhich();
+			Lisp_VariableExpression varExpr = (Lisp_VariableExpression) list.getWhich();
+			Lisp_Variable var = varExpr.var;
 			if (var.getWhich() instanceof Lisp_Identifier_Reference)
 			{
 				Lisp_Identifier_Reference id = (Lisp_Identifier_Reference) var.getWhich();

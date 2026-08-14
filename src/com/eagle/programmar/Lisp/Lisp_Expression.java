@@ -3,10 +3,6 @@
 
 package com.eagle.programmar.Lisp;
 
-import com.eagle.interpret.EagleInterpreter;
-import com.eagle.interpret.EagleRunnable;
-import com.eagle.math.EagleArray;
-import com.eagle.math.EagleString;
 import com.eagle.programmar.Lisp.Functions.Lisp_CondFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefmacroFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_DefparameterFunction;
@@ -19,6 +15,7 @@ import com.eagle.programmar.Lisp.Functions.Lisp_LoopFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_PrintFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_ReturnFunction;
 import com.eagle.programmar.Lisp.Functions.Lisp_SetfFunction;
+import com.eagle.programmar.Lisp.Functions.Lisp_VariableExpression;
 import com.eagle.programmar.Lisp.Operators.Lisp_AdditionOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_AndOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_Builtins;
@@ -34,19 +31,20 @@ import com.eagle.programmar.Lisp.Operators.Lisp_RemainderOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_SubseqOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_TruncateOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_ZeropOperator;
+import com.eagle.programmar.Lisp.Specials.Lisp_Ampersand;
+import com.eagle.programmar.Lisp.Specials.Lisp_CharString;
+import com.eagle.programmar.Lisp.Specials.Lisp_Colon;
+import com.eagle.programmar.Lisp.Specials.Lisp_Comma;
+import com.eagle.programmar.Lisp.Specials.Lisp_Hash;
+import com.eagle.programmar.Lisp.Specials.Lisp_QuoteList;
+import com.eagle.programmar.Lisp.Specials.Lisp_Tick;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Character;
-import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Literal;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Number;
-import com.eagle.programmar.Lisp.Terminals.Lisp_Punctuation;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
-import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.punctuation.PunctuationColon;
-import com.eagle.tokens.punctuation.PunctuationComma;
-import com.eagle.tokens.punctuation.PunctuationEquals;
 
 public class Lisp_Expression extends PrecedenceChooser
 {
@@ -66,107 +64,63 @@ public class Lisp_Expression extends PrecedenceChooser
 		super(_operators, allowed, token.getClass());
 	}
 
-	public @CHOICE Lisp_Number XXnumber;
-	public @CHOICE Lisp_Literal XXliteral;
-	public @CHOICE Lisp_Character XXcharacter;
+	//
+	// Note: All fields should stay in @P(#) order. The # determines operator
+	// precedence.
+	//
 
-	public @CHOICE Lisp_PunctuationChoice XXoperator = new Lisp_PunctuationChoice(
+	///////////////////////////////////////////////
+	// Terminals
+
+	public @P(10) Lisp_Number number;
+	public @P(20) Lisp_Literal literal;
+	public @P(30) Lisp_Character character;
+	public @P(40) Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(
 			".", "?", "<", "<=", "=", ">=", ">");
 
-	public @LAST Lisp_Variable XXvar;
-	public @LAST Lisp_List XXlist;
+	///////////////////////////////////////////////
+	// Primary expressions
 
 	// These all have actions
-	public @CHOICE Lisp_CondFunction XXcondFunction;
-	public @CHOICE Lisp_DefmacroFunction XXdefMacro;
-	public @CHOICE Lisp_DefparameterFunction XXdefParameter;
-	public @CHOICE Lisp_DefunFunction XXdefFunction;
-	public @CHOICE Lisp_DoFunction XXdoFunction;
-	public @CHOICE Lisp_FormatFunction XXformatFunction;
-	public @CHOICE Lisp_IfFunction XXifFunction;
-	public @CHOICE Lisp_LetFunction XXletFunction;
-	public @CHOICE Lisp_LoopFunction XXloopFunction;
-	public @CHOICE Lisp_PrintFunction XXprintFunction;
-	public @CHOICE Lisp_SetfFunction XXsetfFunction;
-	public @CHOICE Lisp_ReturnFunction XXreturnFunction;
+	public @P(100) Lisp_CondFunction condFunction;
+	public @P(110) Lisp_DefmacroFunction defMacro;
+	public @P(120) Lisp_DefparameterFunction defParameter;
+	public @P(130) Lisp_DefunFunction defFunction;
+	public @P(140) Lisp_DoFunction doFunction;
+	public @P(150) Lisp_FormatFunction formatFunction;
+	public @P(160) Lisp_IfFunction ifFunction;
+	public @P(170) Lisp_LetFunction letFunction;
+	public @P(180) Lisp_LoopFunction loopFunction;
+	public @P(190) Lisp_PrintFunction printFunction;
+	public @P(200) Lisp_SetfFunction setfFunction;
+	public @P(210) Lisp_ReturnFunction returnFunction;
 
 	// There are just computations / calculations
-	public @CHOICE Lisp_AdditionOperator XXadditionOperator;
-	public @CHOICE Lisp_AndOperator XXandOperator;
-	public @CHOICE Lisp_Builtins XXbuiltins;
-	public @CHOICE Lisp_ConcatenateOperator XXconcatenateOperator;
-	public @CHOICE Lisp_IncrementOperator XXincrementOperator;
-	public @CHOICE Lisp_LengthOperator XXlengthOperator;
-	public @CHOICE Lisp_MultiplicationOperator XXmultiplicationOperator;
-	public @CHOICE Lisp_NotOperator XXnotOperator;
-	public @CHOICE Lisp_NthOperator XXnthOperator;
-	public @CHOICE Lisp_OrOperator XXorOperator;
-	public @CHOICE Lisp_RelationalOperator XXrelationalOperator;
-	public @CHOICE Lisp_RemainderOperator XXmodulusOperator;
-	public @CHOICE Lisp_SubseqOperator XXsubseqOperator;
-	public @CHOICE Lisp_TruncateOperator XXtruncateOperator;
-	public @CHOICE Lisp_ZeropOperator XXzeropOperator;
+	public @P(220) Lisp_AdditionOperator additionOperator;
+	public @P(230) Lisp_AndOperator andOperator;
+	public @P(240) Lisp_Builtins builtins;
+	public @P(250) Lisp_ConcatenateOperator concatenateOperator;
+	public @P(260) Lisp_IncrementOperator incrementOperator;
+	public @P(270) Lisp_LengthOperator lengthOperator;
+	public @P(280) Lisp_MultiplicationOperator multiplicationOperator;
+	public @P(290) Lisp_NotOperator notOperator;
+	public @P(300) Lisp_NthOperator nthOperator;
+	public @P(310) Lisp_OrOperator orOperator;
+	public @P(320) Lisp_RelationalOperator relationalOperator;
+	public @P(330) Lisp_RemainderOperator modulusOperator;
+	public @P(340) Lisp_SubseqOperator subseqOperator;
+	public @P(350) Lisp_TruncateOperator truncateOperator;
+	public @P(360) Lisp_ZeropOperator zeropOperator;
 
-	public @CHOICE static class Lisp_Ampersand extends TokenSequence
-	{
-		public @S(10) Lisp_Punctuation ampersand = new Lisp_Punctuation('&');
-		public @S(20) Lisp_Expression expr;
-	}
-
-	public @CHOICE static class Lisp_Colon extends TokenSequence
-	{
-		public @S(10) PunctuationColon colon;
-		public @S(20) Lisp_Expression expr;
-	}
-
-	public @CHOICE static class Lisp_Comma extends TokenSequence
-	{
-		public @S(10) PunctuationComma comma;
-		public @S(20) @OPT Lisp_Punctuation at = new Lisp_Punctuation('@');
-		public @S(30) Lisp_Expression expr;
-	}
-
-	public @CHOICE static class Lisp_Hash extends TokenSequence
-	{
-		public @S(10) Lisp_Punctuation hash = new Lisp_Punctuation('#');
-		public @S(20) Lisp_Expression expr;
-	}
-
-	public @CHOICE static class Lisp_QuoteList extends TokenSequence implements EagleRunnable
-	{
-		public @S(10) Lisp_Punctuation quote = new Lisp_Punctuation('\'');
-		public @S(20) Lisp_Expression expr;
-
-		@Override
-		public void interpret(EagleInterpreter interpreter)
-		{
-			if (expr.getWhich() instanceof Lisp_List)
-			{
-				EagleArray array = new EagleArray();
-				Lisp_List list = (Lisp_List) expr.getWhich();
-				for (Lisp_Expression item : list.exprs._elements)
-				{
-					String value = interpreter.getStrValue(item);
-					array.addValue(new EagleString(value));
-				}
-
-				interpreter.pushEagleValue(array);
-			}
-		}
-	}
-
-	public @CHOICE static class Lisp_Tick extends TokenSequence
-	{
-		public @S(10) Lisp_Punctuation tick = new Lisp_Punctuation('`');
-		public @S(20) Lisp_Expression expr;
-	}
-
-	public @CHOICE static class Lisp_CharString extends TokenSequence
-	{
-		public @S(10) Lisp_KeywordChoice charString = new Lisp_KeywordChoice("char", "string");
-		public @S(20) @OPT Lisp_Punctuation not = new Lisp_Punctuation('/');
-		public @S(30) @OPT Lisp_Punctuation less = new Lisp_Punctuation('<');
-		public @S(40) @OPT Lisp_Punctuation greater = new Lisp_Punctuation('>');
-		public @S(50) @OPT PunctuationEquals equals;
-	}
+	// These are ... just funny Lisp things
+	public @P(370) Lisp_Ampersand ampersandList;
+	public @P(380) Lisp_Colon colonList;
+	public @P(390) Lisp_Comma commaList;
+	public @P(400) Lisp_Hash hashList;
+	public @P(410) Lisp_QuoteList quoteList;
+	public @P(420) Lisp_Tick tickList;
+	public @P(430) Lisp_CharString charList;
+	
+	public @P(440) Lisp_VariableExpression var;
+	public @P(450) Lisp_List list;
 }

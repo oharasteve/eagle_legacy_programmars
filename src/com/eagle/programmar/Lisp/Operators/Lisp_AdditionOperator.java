@@ -7,12 +7,12 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_AdditionOperator extends TokenSequence implements EagleRunnable
+public class Lisp_AdditionOperator extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_PunctuationChoice PLUS = new Lisp_PunctuationChoice("+", "++", "+++", "-");

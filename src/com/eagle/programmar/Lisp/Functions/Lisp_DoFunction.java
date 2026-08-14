@@ -11,13 +11,15 @@ import com.eagle.metrics.ForLoopMetrics;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Variable_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_DoFunction extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Lisp_DoFunction extends PrimaryOperator
+		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) PunctuationLeftParen leftParen1;
 	public @S(20) @DOC("s_do.htm") Lisp_Keyword DO = new Lisp_Keyword("do");

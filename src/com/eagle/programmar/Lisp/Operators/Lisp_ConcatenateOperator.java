@@ -8,12 +8,12 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Lisp_Type;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
-import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_ConcatenateOperator extends TokenSequence implements EagleRunnable
+public class Lisp_ConcatenateOperator extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) Lisp_Keyword CONCATENATE = new Lisp_Keyword("CONCATENATE");

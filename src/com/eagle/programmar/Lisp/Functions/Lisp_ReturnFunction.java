@@ -8,12 +8,12 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_ReturnFunction extends TokenSequence implements AbstractStatement, EagleRunnableWithResult
+public class Lisp_ReturnFunction extends PrimaryOperator implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_return.htm") Lisp_Keyword RETURN = new Lisp_Keyword("return");

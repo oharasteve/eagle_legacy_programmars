@@ -26,7 +26,7 @@ public class Lisp_LiteralExpression extends TerminalLiteralExpression
 			ArgumentsMetrics metrics)
 	{
 		String fmt = interpreter.getStrValue(argList.first());
-		fmt = fmt.replaceAll("~%", "\n");
+		fmt = fmt.replaceAll("~%", "");
 		ArrayList<PrecedenceChooser> args = new ArrayList<PrecedenceChooser>();
 		int numArgs = argList.size();
 		for (int i = 1; i < numArgs; i++)
@@ -37,7 +37,7 @@ public class Lisp_LiteralExpression extends TerminalLiteralExpression
 		return evaluateLiteral(interpreter, metrics, Lisp_Expression.class, pieces);
 	}
 	
-	public static AbstractExpression transform(EagleTransformer transformer,
+	public static AbstractExpression UNUSED_UNTESTED_transform(EagleTransformer transformer,
 		EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
 		TokenList<Lisp_Expression> argList, ArrayList<TypeEnum> metrics, AbstractToken source)
 	{

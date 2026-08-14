@@ -16,6 +16,7 @@ import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractFunction;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -28,9 +29,9 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
 
-public class Lisp_DefunFunction extends TokenSequence
+public class Lisp_DefunFunction extends PrimaryOperator
 		implements EagleRunnable, AbstractFunction, EagleScopeInterface,
-		EagleTransformableFunction
+				EagleTransformableFunction
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defun.htm") Lisp_Keyword DEFUN = new Lisp_Keyword("defun");

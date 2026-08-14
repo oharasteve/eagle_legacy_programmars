@@ -10,13 +10,15 @@ import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Terminals.Lisp_KeywordChoice;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_CondFunction extends TokenSequence implements EagleRunnableWithResult, AbstractStatement
+public class Lisp_CondFunction extends PrimaryOperator 
+		implements EagleRunnableWithResult, AbstractStatement
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("s_cond.htm") Lisp_KeywordChoice COND = new Lisp_KeywordChoice("cond");

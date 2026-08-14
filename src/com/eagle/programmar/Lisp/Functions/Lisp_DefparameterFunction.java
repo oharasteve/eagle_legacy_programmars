@@ -6,11 +6,11 @@ package com.eagle.programmar.Lisp.Functions;
 import com.eagle.programmar.Lisp.Lisp_Expression;
 import com.eagle.programmar.Lisp.Symbols.Lisp_Parameter_Definition;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Keyword;
-import com.eagle.tokens.TokenSequence;
+import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Lisp_DefparameterFunction extends TokenSequence
+public class Lisp_DefparameterFunction extends PrimaryOperator
 {
 	public @S(10) PunctuationLeftParen leftParen;
 	public @S(20) @DOC("m_defpar.htm") Lisp_Keyword DEFPARAMETER = new Lisp_Keyword("defparameter");
