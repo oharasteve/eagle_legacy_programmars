@@ -11,9 +11,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.FSharp.FSharp_Expression;
-import com.eagle.programmar.FSharp.FSharp_Format;
 import com.eagle.programmar.FSharp.Terminals.FSharp_EndOfLine;
 import com.eagle.programmar.FSharp.Terminals.FSharp_Keyword;
+import com.eagle.programmar.FSharp.Terminals.FSharp_LiteralExpression;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -27,7 +27,7 @@ public class FSharp_PrintfnStatement extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatement
 {
 	public @S(10) @DOC("plaintext-formatting") FSharp_Keyword PRINTFN = new FSharp_Keyword("printfn");
-	public @S(20) TokenList<FSharp_Expression> arguments;
+	public @S(20) TokenList<FSharp_Expression> argList;
 	public @S(30) FSharp_EndOfLine eoln;
 
 	private @SKIP ArgumentsMetrics _metrics = null;
@@ -39,11 +39,8 @@ public class FSharp_PrintfnStatement extends TokenSequence
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTFN.getValue(), PRINTFN);
 		}
-		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
-
-		String formatted = FSharp_Format.format(interpreter, arguments, argTypes);
-		_metrics.calledWith(argTypes);
-		System.out.println(formatted);
+		String val = FSharp_LiteralExpression.interpret(interpreter, argList, _metrics);
+		System.out.println(val);
 	}
 
 	@Override
@@ -51,7 +48,7 @@ public class FSharp_PrintfnStatement extends TokenSequence
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTFN);
-		AbstractExpression fullExpr = FSharp_Format.transform(transformer, generator, arguments, metrics);
-		return generator.newPrintStatement1(fullExpr, TypeEnum.STRING,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              true, false, this);
+		AbstractExpression line = FSharp_LiteralExpression.transform(transformer, generator, argList, metrics, this);
+		return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 	}
 }
