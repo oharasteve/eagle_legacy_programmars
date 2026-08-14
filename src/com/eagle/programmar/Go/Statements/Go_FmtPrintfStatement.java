@@ -11,10 +11,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Go.Go_Expression;
-import com.eagle.programmar.Go.Go_Format;
 import com.eagle.programmar.Go.Terminals.Go_EOLN;
 import com.eagle.programmar.Go.Terminals.Go_Keyword;
 import com.eagle.programmar.Go.Terminals.Go_KeywordChoice;
+import com.eagle.programmar.Go.Terminals.Go_LiteralExpression;
 import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -35,7 +35,7 @@ public class Go_FmtPrintfStatement extends TokenSequence
 	public @S(20) PunctuationPeriod dot;
 	public @S(30) Go_KeywordChoice PRINTF = new Go_KeywordChoice("Printf", "Println");
 	public @S(40) PunctuationLeftParen leftParen;
-	public @S(50) SeparatedList<Go_Expression, PunctuationComma> arguments;
+	public @S(50) SeparatedList<Go_Expression, PunctuationComma> argList;
 	public @S(60) PunctuationRightParen rightParen;
 	public @S(70) Go_EOLN eoln;
 
@@ -52,15 +52,11 @@ public class Go_FmtPrintfStatement extends TokenSequence
 		switch(PRINTF.getValue())
 		{
 		case "Printf":
-			String formatted = Go_Format.format(interpreter, arguments, _metrics);
-			if (formatted.endsWith("\\n"))
-			{
-				formatted = formatted.substring(0, formatted.length() - 2);
-			}
-			System.out.println(formatted);
+			String value = Go_LiteralExpression.interpret(interpreter, argList, _metrics);
+			System.out.print(value);
 			break;
 		case "Println":
-			String line = interpreter.getStrValue(arguments.first());
+			String line = interpreter.getStrValue(argList.first());
 			System.out.println(line);
 			break;
 		default:
@@ -76,10 +72,10 @@ public class Go_FmtPrintfStatement extends TokenSequence
 		switch(PRINTF.getValue())
 		{
 		case "Printf":
-			AbstractExpression fullExpr = Go_Format.transform(transformer, generator, arguments, metrics);
-			return generator.newPrintStatement1(fullExpr, TypeEnum.STRING, true, false, this);
+			AbstractExpression value = Go_LiteralExpression.transform(transformer, generator, argList, metrics, this);
+			return generator.newPrintStatement1(value, TypeEnum.STRING, false, false, this);
 		case "Println":
-			AbstractExpression line = transformer.transformExpression(generator, arguments.first());
+			AbstractExpression line = transformer.transformExpression(generator, argList.first());
 			return generator.newPrintStatement1(line, TypeEnum.STRING, true, false, this);
 		}
 		return null;
