@@ -11,10 +11,10 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
-import com.eagle.programmar.Rust.Rust_Format;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_KeywordChoice;
 import com.eagle.programmar.Rust.Terminals.Rust_Literal;
+import com.eagle.programmar.Rust.Terminals.Rust_LiteralExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -56,7 +56,7 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 		{
 			_metrics = new ArgumentsMetrics(interpreter._metrics, PRINTLN.getValue(), PRINTLN);
 		}
-		String result = Rust_Format.format(interpreter, argList, _metrics);
+		String result = Rust_LiteralExpression.interpret(interpreter, argList, _metrics);
 		System.out.println(result);
 	}
 
@@ -65,7 +65,7 @@ public class Rust_PrintlnFunction extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(PRINTLN);
-		AbstractExpression value = Rust_Format.compile(transformer, generator, argList, metrics);
+		AbstractExpression value = Rust_LiteralExpression.transform(transformer, generator, argList, metrics, this);
 		return generator.newPrintFunction1(value, TypeEnum.STRING, true, false, this);
 	}
 

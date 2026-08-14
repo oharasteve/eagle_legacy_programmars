@@ -11,9 +11,9 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Rust.Rust_Expression;
-import com.eagle.programmar.Rust.Rust_Format;
 import com.eagle.programmar.Rust.Rust_Generator;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
+import com.eagle.programmar.Rust.Terminals.Rust_LiteralExpression;
 import com.eagle.programmar.Rust.Terminals.Rust_Punctuation;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.PrimaryOperator;
@@ -47,7 +47,7 @@ public class Rust_FormatFunction extends PrimaryOperator
 			_metrics = new ArgumentsMetrics(interpreter._metrics, FORMAT.getValue(), FORMAT);
 		}
 
-		String result = Rust_Format.format(interpreter, argList, _metrics);
+		String result = Rust_LiteralExpression.interpret(interpreter, argList, _metrics);
 		interpreter.pushStr(result);
 	}
 
@@ -56,7 +56,7 @@ public class Rust_FormatFunction extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		ArrayList<TypeEnum> metrics = transformer.findArgumentsMetric(FORMAT);
-		return Rust_Format.compile(transformer, generator, argList, metrics);
+		return Rust_LiteralExpression.transform(transformer, generator, argList, metrics, this);
 	}
 
 	public static Rust_Expression generateFormat(Rust_Expression fmt,
