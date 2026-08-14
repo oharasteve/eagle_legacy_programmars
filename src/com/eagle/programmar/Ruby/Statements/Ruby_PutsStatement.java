@@ -3,15 +3,18 @@
 
 package com.eagle.programmar.Ruby.Statements;
 
+import java.util.ArrayList;
+
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Ruby.Ruby_Expression;
-import com.eagle.programmar.Ruby.Ruby_Format;
 import com.eagle.programmar.Ruby.Terminals.Ruby_EOLN;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Keyword;
 import com.eagle.programmar.Ruby.Terminals.Ruby_Literal;
+import com.eagle.programmar.Ruby.Terminals.Ruby_LiteralExpression;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -32,8 +35,8 @@ public class Ruby_PutsStatement extends TokenSequence
 	{
 		if (expr.getWhich() instanceof Ruby_Literal)
 		{
-			Ruby_Literal format = (Ruby_Literal) expr.getWhich();
-			String formatted = Ruby_Format.format(interpreter, format.getValue());
+			ArgumentsMetrics metrics = null;
+			String formatted = Ruby_LiteralExpression.interpret(interpreter, expr, metrics);
 			System.out.println(formatted);
 		}
 		else
@@ -49,8 +52,9 @@ public class Ruby_PutsStatement extends TokenSequence
 	{
 		if (expr.getWhich() instanceof Ruby_Literal)
 		{
-			Ruby_Literal format = (Ruby_Literal) expr.getWhich();
-			AbstractExpression newLine = Ruby_Format.compile(generator, format.getValue(), this);
+			ArrayList<TypeEnum> metrics = null;
+			AbstractExpression newLine = Ruby_LiteralExpression.transform(transformer,
+					generator, expr, metrics, this);
 			return generator.newPrintStatement1(newLine, TypeEnum.STRING, true, false, this);
 		}
 
