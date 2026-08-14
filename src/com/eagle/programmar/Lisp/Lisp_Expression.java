@@ -40,14 +40,32 @@ import com.eagle.programmar.Lisp.Terminals.Lisp_Literal;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Number;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Punctuation;
 import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
-import com.eagle.tokens.TokenChooser;
+import com.eagle.tokens.PrecedenceChooser;
+import com.eagle.tokens.PrecedenceOperator;
+import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationEquals;
 
-public class Lisp_Expression extends TokenChooser
+public class Lisp_Expression extends PrecedenceChooser
 {
+	// Don't really use Precedence at all in Lisp
+	// This (Operator stuff) is here for Lisp_LiteralExpression
+	// To handle (FORMAT T '~A~d~%' 'txt' 5) things
+	
+	private static OperatorList _operators = new OperatorList();
+
+	public Lisp_Expression()
+	{
+		super(_operators);
+	}
+
+	public Lisp_Expression(PrecedenceOperator token, AllowedPrecedence allowed)
+	{
+		super(_operators, allowed, token.getClass());
+	}
+
 	public @CHOICE Lisp_Number XXnumber;
 	public @CHOICE Lisp_Literal XXliteral;
 	public @CHOICE Lisp_Character XXcharacter;
