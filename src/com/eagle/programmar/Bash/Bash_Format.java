@@ -8,7 +8,7 @@ import com.eagle.math.EagleValue;
 
 public class Bash_Format
 {
-	public static String format(EagleInterpreter interpreter, String fmt)
+	public static String formatBashDollar(EagleInterpreter interpreter, String fmt)
 	{
 		if (fmt.startsWith("'"))
 		{

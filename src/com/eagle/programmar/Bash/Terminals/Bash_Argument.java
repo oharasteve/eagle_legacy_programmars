@@ -10,9 +10,9 @@ import com.eagle.parsers.EagleLineReader;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 
-public class Bash_EchoWhat extends TerminalLiteralToken implements EagleRunnable
+public class Bash_Argument extends TerminalLiteralToken implements EagleRunnable
 {
-	public Bash_EchoWhat()
+	public Bash_Argument()
 	{
 		super("'\"", true, '\\', false, false);
 	}

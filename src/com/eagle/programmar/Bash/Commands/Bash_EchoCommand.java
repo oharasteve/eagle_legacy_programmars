@@ -5,10 +5,13 @@ package com.eagle.programmar.Bash.Commands;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.Bash.Bash_Format;
+import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.programmar.Bash.Commands.Bash_Function.Bash_Function_Explicit;
-import com.eagle.programmar.Bash.Terminals.Bash_EchoWhat;
+import com.eagle.programmar.Bash.Terminals.Bash_Argument;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_LiteralExpression;
+import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -20,6 +23,12 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 	public @S(20) @OPT TokenList<Bash_EchoOption> options;
 	public @S(30) @OPT Bash_EchoWhat what;
 
+	public static class Bash_EchoWhat extends TokenChooser
+	{
+		public @FIRST Bash_Expression XXexpr;
+		public @CHOICE Bash_Argument XXargument;
+	}
+	
 	public static class Bash_EchoOption extends TokenChooser
 	{
 		public @CHOICE Bash_Keyword XXopt = new Bash_Keyword("-n");
@@ -28,8 +37,24 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String line = interpreter.getStrValue(what);
-		String formatted = Bash_Format.format(interpreter, line);
+		ArgumentsMetrics metrics = null;
+		String fmt;
+		AbstractToken which = what.getWhich();
+		if (which instanceof Bash_Expression)
+		{
+			Bash_Expression expr = (Bash_Expression) which;
+			fmt = interpreter.getStrValue(expr);
+		}
+		else if (which instanceof Bash_Argument)
+		{
+			Bash_Argument arg = (Bash_Argument) which;
+			fmt = arg.getValue();
+		}
+		else
+		{
+			throw new RuntimeException("Unexpected echo value: " + which);
+		}
+		String value = Bash_LiteralExpression.interpret(interpreter, fmt, metrics);
 
 		// if we are in a Function, it goes into a string and does not get printed
 		Bash_Function_Explicit func = (Bash_Function_Explicit) interpreter.getCurrentFunction();
@@ -53,22 +78,22 @@ public class Bash_EchoCommand extends TokenSequence implements EagleRunnable, Ab
 
 			if (doNewLine)
 			{
-				System.out.println(formatted);
+				System.out.println(value);
 			}
 			else
 			{
-				System.out.print(formatted);
+				System.out.print(value);
 			}
 		}
 		else
 		{
 			if (func._echoOutputs == null)
 			{
-				func._echoOutputs = formatted;
+				func._echoOutputs = value;
 			}
 			else
 			{
-				func._echoOutputs += "\n" + formatted;
+				func._echoOutputs += "\n" + value;
 			}
 		}
 	}
