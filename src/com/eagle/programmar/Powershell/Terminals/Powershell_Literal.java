@@ -3,9 +3,12 @@
 
 package com.eagle.programmar.Powershell.Terminals;
 
+import java.util.ArrayList;
+
 import com.eagle.generate.EagleGenerator;
+import com.eagle.generate.TypeEnum;
 import com.eagle.interpret.EagleInterpreter;
-import com.eagle.programmar.Powershell.Powershell_Format;
+import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -19,13 +22,14 @@ public class Powershell_Literal extends TerminalLiteralToken
 {
 	public Powershell_Literal()
 	{
-		super("\"'", true, '`', true, false);	// Careful with the funny backtick
+		super("\"'", true, '`', true, false);	// Careful with the funny back-tick
 	}
 	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String result = Powershell_Format.format(interpreter, removeQuotes());
+		ArgumentsMetrics metrics = null;
+		String result = Powershell_LiteralExpression.interpret(interpreter, removeQuotes(), metrics);
 		interpreter.pushStr(result);
 	}
 
@@ -33,6 +37,7 @@ public class Powershell_Literal extends TerminalLiteralToken
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		return Powershell_Format.compile(generator, removeQuotes(), this);
+		ArrayList<TypeEnum> metrics = null;
+		return Powershell_LiteralExpression.transform(transformer, generator, this, metrics, this);
 	}
 }

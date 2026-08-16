@@ -11,7 +11,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.metrics.ArgumentsMetrics;
 import com.eagle.programmar.Bash.Bash_Expression;
 import com.eagle.tokens.AbstractToken;
-import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -33,25 +32,18 @@ public class Bash_LiteralExpression extends TerminalLiteralExpression
 			return fmt;
 		}
 
-		ArrayList<LiteralPiece> pieces = parseBashDollar(fmt);
+		ArrayList<LiteralPiece> pieces = parseBashDollar(fmt, '\\', '$', '{', '}');
 		return evaluateLiteral(interpreter, metrics, Bash_Expression.class, pieces);
 	}
 	
 	public static AbstractExpression UNUSED_UNTESTED_transform(EagleTransformer transformer,
 		EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator,
-		TokenList<Bash_Expression> argList, ArrayList<TypeEnum> metrics, AbstractToken source)
+		Bash_Literal lit, ArrayList<TypeEnum> metrics, AbstractToken source)
 	{
-		Bash_Expression expr = argList.first();
-		AbstractToken which = expr.getWhich();
-		if (!(which instanceof Bash_Literal))
-		{
-			throw new RuntimeException("Format must be a literal, not " + which);
-		}
-		Bash_Literal str = (Bash_Literal) which;
-		String fmt = str.getValue();
+		String fmt = lit.getValue();
 		if (fmt.startsWith("'"))
 		{
-			return generator.newLiteralExpression(fmt.substring(1, fmt.length() - 2), source);
+			return generator.newLiteralExpression(fmt.substring(1, fmt.length() - 1), source);
 		}
 		if (fmt.indexOf('$') < 0)
 		{
@@ -59,10 +51,10 @@ public class Bash_LiteralExpression extends TerminalLiteralExpression
 		}
 		if (fmt.startsWith("\""))
 		{
-			fmt = fmt.substring(1, fmt.length() - 2);
+			fmt = fmt.substring(1, fmt.length() - 1);
 		}
 
-		ArrayList<LiteralPiece> pieces = parseBashDollar(fmt);
+		ArrayList<LiteralPiece> pieces = parseBashDollar(fmt, '\\', '$', '{', '}');
 		AbstractExpression result = TerminalLiteralExpression.compileLiteral(transformer, generator, metrics,
 				Bash_Expression.class, pieces, source);
 		return result;
