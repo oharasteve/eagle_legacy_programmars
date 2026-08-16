@@ -12,7 +12,7 @@ import com.eagle.programmar.Lisp.Lisp_List;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Lisp_QuoteList extends PrimaryOperator  implements EagleRunnable
+public class Lisp_QuoteList extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Lisp_Punctuation quote = new Lisp_Punctuation('\'');
 	public @S(20) Lisp_Expression expr;

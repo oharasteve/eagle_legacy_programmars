@@ -20,6 +20,7 @@ import com.eagle.programmar.Lisp.Operators.Lisp_AdditionOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_AndOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_Builtins;
 import com.eagle.programmar.Lisp.Operators.Lisp_ConcatenateOperator;
+import com.eagle.programmar.Lisp.Operators.Lisp_DotOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_IncrementOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_LengthOperator;
 import com.eagle.programmar.Lisp.Operators.Lisp_MultiplicationOperator;
@@ -37,14 +38,15 @@ import com.eagle.programmar.Lisp.Specials.Lisp_Colon;
 import com.eagle.programmar.Lisp.Specials.Lisp_Comma;
 import com.eagle.programmar.Lisp.Specials.Lisp_Hash;
 import com.eagle.programmar.Lisp.Specials.Lisp_QuoteList;
+import com.eagle.programmar.Lisp.Specials.Lisp_QuoteOperator;
 import com.eagle.programmar.Lisp.Specials.Lisp_Tick;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Character;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Literal;
 import com.eagle.programmar.Lisp.Terminals.Lisp_Number;
-import com.eagle.programmar.Lisp.Terminals.Lisp_PunctuationChoice;
 import com.eagle.tokens.PrecedenceChooser;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.PrecedenceOperator.AllowedPrecedence;
+import com.eagle.tokens.punctuation.PunctuationQuestionMark;
 
 public class Lisp_Expression extends PrecedenceChooser
 {
@@ -63,7 +65,7 @@ public class Lisp_Expression extends PrecedenceChooser
 	{
 		super(_operators, allowed, token.getClass());
 	}
-
+	
 	//
 	// Note: All fields should stay in @P(#) order. The # determines operator
 	// precedence.
@@ -75,8 +77,7 @@ public class Lisp_Expression extends PrecedenceChooser
 	public @P(10) Lisp_Number number;
 	public @P(20) Lisp_Literal literal;
 	public @P(30) Lisp_Character character;
-	public @P(40) Lisp_PunctuationChoice operator = new Lisp_PunctuationChoice(
-			".", "?", "<", "<=", "=", ">=", ">");
+	public @P(40) PunctuationQuestionMark question;
 
 	///////////////////////////////////////////////
 	// Primary expressions
@@ -95,7 +96,7 @@ public class Lisp_Expression extends PrecedenceChooser
 	public @P(200) Lisp_SetfFunction setfFunction;
 	public @P(210) Lisp_ReturnFunction returnFunction;
 
-	// There are just computations / calculations
+	// These are just computations / calculations
 	public @P(220) Lisp_AdditionOperator additionOperator;
 	public @P(230) Lisp_AndOperator andOperator;
 	public @P(240) Lisp_Builtins builtins;
@@ -118,9 +119,10 @@ public class Lisp_Expression extends PrecedenceChooser
 	public @P(390) Lisp_Comma commaList;
 	public @P(400) Lisp_Hash hashList;
 	public @P(410) Lisp_QuoteList quoteList;
-	public @P(420) Lisp_Tick tickList;
-	public @P(430) Lisp_CharString charList;
-	
-	public @P(440) Lisp_VariableExpression var;
-	public @P(450) Lisp_List list;
+	public @P(420) Lisp_QuoteOperator operatorList;
+	public @P(430) Lisp_Tick tickList;
+	public @P(440) Lisp_CharString charList;
+	public @P(450) Lisp_DotOperator dotOperator;
+	public @P(460) Lisp_VariableExpression var;
+	public @P(470) Lisp_List list;
 }

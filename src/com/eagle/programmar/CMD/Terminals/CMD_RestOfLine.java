@@ -19,20 +19,40 @@ public class CMD_RestOfLine extends TokenRestOfLine implements EagleRunnable
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
 
+		// Skip leading spaces
+		while (_currentChar < recLen && rec.charAt(_currentChar) == ' ') _currentChar++;
+
 		int rParen = rec.indexOf(')', _currentChar);
 		if (rParen > 0)
 		{
-			// But don't consider ^)
-			char prev = rec.charAt(rParen - 1);
-			if (prev != '^')
+			int sc = _currentChar;
+			int parens = 0;		// +1 for ) and -1 for (
+			while (sc < recLen)
 			{
-				// Treat ) as end-of-line
-				recLen = rParen - 1;
+				char ch = rec.charAt(sc);
+				if (ch == '(')
+				{
+					parens--;
+				}
+				else if (ch == ')')
+				{
+					parens++;
+					if (parens > 0)
+					{
+						recLen = sc - 1;
+						break;
+					}
+				}
+				else if (parens == 0 && ch == '&')
+				{
+					recLen = sc - 1;
+					break;
+				}
+				sc++;
 			}
 		}
 		
 		// No ), go all the way to the end
-		while (_currentChar < recLen && rec.charAt(_currentChar) == ' ') _currentChar++;
 		foundIt(_currentLine, recLen);
 		_txt = rec.substring(_currentChar, recLen);
 		return true;
