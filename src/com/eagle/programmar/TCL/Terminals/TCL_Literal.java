@@ -3,14 +3,18 @@
 
 package com.eagle.programmar.TCL.Terminals;
 
+import java.util.ArrayList;
+
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
-import com.eagle.programmar.TCL.TCL_Format;
+import com.eagle.metrics.ArgumentsMetrics;
+import com.eagle.programmar.TCL.TCL_Expression;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.terminals.TerminalLiteralExpression.LiteralPiece;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
@@ -26,14 +30,25 @@ public class TCL_Literal extends TerminalLiteralToken
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String result = TCL_Format.format(interpreter, removeQuotes());
-		interpreter.pushStr(result);
+		String value = removeQuotes();
+		if (value.indexOf('[') >= 0 || value.indexOf('$') >= 0)
+		{
+			ArgumentsMetrics metrics = null;
+			ArrayList<LiteralPiece> pieces = TCL_LiteralExpression.parseBracketDollar(value);
+			value = TCL_LiteralExpression.evaluateLiteral(interpreter, metrics, TCL_Expression.class, pieces);
+		}
+		interpreter.pushStr(value);
 	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		return TCL_Format.compile(transformer, generator, removeQuotes(), this);
+		String value = removeQuotes();
+		if (value.indexOf('[') < 0 && value.indexOf('$') < 0)
+		{
+			return generator.newLiteralExpression(value, this);
+		}
+		return TCL_LiteralExpression.transform(transformer, generator, value, this);
 	}
 }
