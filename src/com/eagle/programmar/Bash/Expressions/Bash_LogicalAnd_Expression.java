@@ -22,13 +22,13 @@ public class Bash_LogicalAnd_Expression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Bash_AndOperator operator;
+	public @S(20) Bash_AndExpr_Operator operator;
 	public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 
-	public static class Bash_AndOperator extends TokenChooser
+	public static class Bash_AndExpr_Operator extends TokenChooser
 	{
-		public @CHOICE Bash_Punctuation amps = new Bash_Punctuation("&&");
-		public @CHOICE Bash_Keyword A = new Bash_Keyword("-a");
+		public @CHOICE Bash_Punctuation XXamps = new Bash_Punctuation("&&");
+		public @CHOICE Bash_Keyword XXA = new Bash_Keyword("-a");
 	}
 	
 	@Override

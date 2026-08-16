@@ -25,10 +25,10 @@ public class Bash_LogicalOrCondition extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Bash_Condition left = new Bash_Condition(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Bash_OrOperator oper;
+	public @S(20) Bash_OrCond_Operator oper;
 	public @S(30) Bash_Condition right = new Bash_Condition(this, AllowedPrecedence.HIGHER);
 
-	public static class Bash_OrOperator extends TokenChooser
+	public static class Bash_OrCond_Operator extends TokenChooser
 	{
 		public @CHOICE Bash_Punctuation XXbars = new Bash_Punctuation("||");
 		

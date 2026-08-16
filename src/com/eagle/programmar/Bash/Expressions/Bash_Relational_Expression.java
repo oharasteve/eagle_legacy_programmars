@@ -31,7 +31,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator
 
 	public static class Bash_RelOp extends TokenChooser
 	{
-		public @CHOICE Bash_PunctuationChoice XXstrOp = new Bash_PunctuationChoice("=", "==", "!=", "<", ">", "<=", ">=");
+		public @CHOICE Bash_PunctuationChoice XXstrOp = new Bash_PunctuationChoice("==", "!=", "<", ">", "<=", ">=");
 		public @CHOICE Bash_KeywordChoice XXnumOp = new Bash_KeywordChoice("-eq", "-ne", "-lt", "-gt", "-le", "-ge");
 	}
 
@@ -56,7 +56,7 @@ public class Bash_Relational_Expression extends PrecedenceOperator
 			String rightStr = rightValue.forceStringValue();
 			switch (oper)
 			{
-			case "=", "==":
+			case "==":
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
 			case "!=":

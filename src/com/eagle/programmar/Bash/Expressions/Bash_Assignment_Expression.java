@@ -13,24 +13,30 @@ import com.eagle.tokens.PrecedenceOperator;
 
 public class Bash_Assignment_Expression extends PrecedenceOperator implements EagleRunnable
 {
-	public @S(10) Bash_Variable left;
+	public @S(10) Bash_Expression left = new Bash_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) Bash_PunctuationChoice equals = new Bash_PunctuationChoice("=");
 	public @S(30) Bash_Expression right = new Bash_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (!(right.getWhich() instanceof Bash_Expression))
+		if (!(left.getWhich() instanceof Bash_VariableExpression))
 		{
 			throw new RuntimeException("Unexpected assignment expression: " + right.getWhich());
 		}
-		Bash_Expression expr = (Bash_Expression) right.getWhich();
+		Bash_VariableExpression varExp = (Bash_VariableExpression) left.getWhich();
+		Bash_Variable var = varExp.variable;
+//		if (!(right.getWhich() instanceof Bash_Expression))
+//		{
+//			throw new RuntimeException("Unexpected assignment expression: " + right.getWhich());
+//		}
+//		Bash_Expression expr = (Bash_Expression) right.getWhich();
 
 		switch (equals.getValue())
 		{
 		case "=":
-			EagleValue val = interpreter.getEagleValue(expr);
-			interpreter.setSymbol(left, left.id.getValue(), val);
+			EagleValue val = interpreter.getEagleValue(right);
+			interpreter.setSymbol(var, var.id.getValue(), val);
 			break;
 		default:
 			throw new RuntimeException("Unexpected assignment operator: " + equals.getValue());

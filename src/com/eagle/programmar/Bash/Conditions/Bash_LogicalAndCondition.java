@@ -24,10 +24,10 @@ public class Bash_LogicalAndCondition extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Bash_Condition left = new Bash_Condition(this, AllowedPrecedence.ATLEAST);
-	public @S(20) Bash_AndOperator oper;
+	public @S(20) Bash_AndCond_Operator oper;
 	public @S(30) Bash_Condition right = new Bash_Condition(this, AllowedPrecedence.HIGHER);
 	
-	public static class Bash_AndOperator extends TokenChooser
+	public static class Bash_AndCond_Operator extends TokenChooser
 	{
 		public @CHOICE Bash_Punctuation XXampersands = new Bash_Punctuation("&&");
 		
