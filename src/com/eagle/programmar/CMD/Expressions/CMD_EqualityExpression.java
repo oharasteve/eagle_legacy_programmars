@@ -11,8 +11,8 @@ import com.eagle.math.EagleValue;
 import com.eagle.metrics.Operator2Metrics;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.programmar.CMD.CMD_Expression;
-import com.eagle.programmar.CMD.CMD_Format;
 import com.eagle.programmar.CMD.Terminals.CMD_KeywordChoice;
+import com.eagle.programmar.CMD.Terminals.CMD_LiteralExpression;
 import com.eagle.programmar.CMD.Terminals.CMD_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 import com.eagle.tokens.TokenChooser;
@@ -52,9 +52,10 @@ public class CMD_EqualityExpression extends PrecedenceOperator
 		_metrics.operated(leftValue.getType(), rightValue.getType());
 
 		String leftStr = leftValue.forceStringValue();
-		String leftVal = CMD_Format.format(interpreter, leftStr);
+		String leftVal = CMD_LiteralExpression.interpret(interpreter, leftStr);
 		String rightStr = rightValue.forceStringValue();
-		String rightVal = CMD_Format.format(interpreter, rightStr);
+		String rightVal = CMD_LiteralExpression.interpret(interpreter, rightStr);
+		
 		switch (oper.toLowerCase())
 		{
 		case "equ", "==":

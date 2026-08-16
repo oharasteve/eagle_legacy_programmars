@@ -7,7 +7,6 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.parsers.EagleFileReader;
 import com.eagle.parsers.EagleLineReader;
-import com.eagle.programmar.CMD.CMD_Format;
 import com.eagle.tokens.TokenRestOfLine;
 
 public class CMD_RestOfLine extends TokenRestOfLine implements EagleRunnable
@@ -42,8 +41,7 @@ public class CMD_RestOfLine extends TokenRestOfLine implements EagleRunnable
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		String val = this.getValue();
-		String formatted = CMD_Format.format(interpreter, val);
+		String formatted = CMD_LiteralExpression.interpret(interpreter, this.getValue());
 		interpreter.pushStr(formatted);
 	}
 }

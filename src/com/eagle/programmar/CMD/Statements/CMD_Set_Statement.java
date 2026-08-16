@@ -9,9 +9,9 @@ import com.eagle.math.EagleInteger;
 import com.eagle.math.EagleString;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMD.CMD_Expression;
-import com.eagle.programmar.CMD.CMD_Format;
 import com.eagle.programmar.CMD.CMD_Variable;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
+import com.eagle.programmar.CMD.Terminals.CMD_LiteralExpression;
 import com.eagle.programmar.CMD.Terminals.CMD_PunctuationChoice;
 import com.eagle.programmar.CMD.Terminals.CMD_RestOfLine;
 import com.eagle.tokens.AbstractToken;
@@ -77,7 +77,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 		{
 			CMD_Set_Regular cmd = (CMD_Set_Regular) which;
 			String name = getName(interpreter, cmd.var);
-			String formatted = CMD_Format.format(interpreter, cmd.value.getValue());
+			String formatted = CMD_LiteralExpression.interpret(interpreter, cmd.value.getValue());
 			interpreter.setSymbol(cmd.var, name, new EagleString(formatted));
 		}
 		else if (which instanceof CMD_Set_Assigment)
