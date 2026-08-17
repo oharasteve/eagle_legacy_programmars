@@ -18,7 +18,7 @@ public class SQLite_TestCaseStatement extends TokenSequence
 	
 	public static class SQLite_TestCaseOption extends TokenChooser
 	{
-		public @CHOICE SQL_Keyword SETUP = new SQL_Keyword("setup");
+		public @CHOICE SQL_Keyword XXSETUP = new SQL_Keyword("setup");
 
 		public @CHOICE static class SQLite_TestCaseError extends TokenSequence
 		{

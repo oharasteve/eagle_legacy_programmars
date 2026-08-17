@@ -50,8 +50,9 @@ public class CSS_Program extends AbstractLanguage
 
 	public static class CSS_Body extends TokenSequence
 	{
-		public @S(10) @OPT TokenList<CSS_TagList> tags;
-		public @S(20) @OPT PunctuationStar star;
+		public @S(10) @OPT CSS_Selectors_Group selectors;
+//		public @S(10) @OPT TokenList<CSS_TagList> tags;
+//		public @S(20) @OPT PunctuationStar star;
 		public @S(30) PunctuationLeftBrace leftBrace;
 		public @S(40) @OPT TokenList<CSS_Item> items;
 		public @S(50) @OPT CSS_BackslashZero zero;

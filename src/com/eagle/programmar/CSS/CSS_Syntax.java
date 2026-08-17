@@ -21,15 +21,13 @@ public class CSS_Syntax extends EagleSyntax
 		_isCaseSensitive = IS_CASE_SENSITIVE;
 		_continuationChar = null;
 		_extraCharacters = "";
-		_punctuationExceptions = new String[] {
-				"::", "--"
-		};
+		_punctuationExceptions = new String[] { "--", "~=", "|=", "^=", "$=", "*=" };
 		_commentInstance = new CSS_Comment();
 
 		addReservedWords(RESERVED_WORDS);
 	}
 
 	private static final String[] RESERVED_WORDS = new String[] {
-			"media", "-moz-document", "namespace", "not", "rgb", "rgba", "rotate", "url-prefix"
+			"media", "-moz-document", "namespace", "rgb", "rgba", "rotate", "url-prefix"
 	};
 }

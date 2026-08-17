@@ -22,6 +22,7 @@ import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.tokens.punctuation.PunctuationStar;
 
+
 public class CSS_TagList extends TokenSequence
 {
 	public @S(10) @OPT CSS_Punctuation at = new CSS_Punctuation('@');
