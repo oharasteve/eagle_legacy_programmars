@@ -31,7 +31,7 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 	public @S(30) SQL_Keyword INTO = new SQL_Keyword("INTO");
 	public @S(40) SQL_Identifier_Reference table;
 	public @S(50) SQL_InsertClause clause;
-	public @S(60) PunctuationSemicolon semicolon;
+	public @S(60) @OPT PunctuationSemicolon semicolon;
 
 	public static class SQL_OrReplace extends TokenSequence
 	{
@@ -43,12 +43,13 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 	{
 		public @CHOICE SQL_InsertSet XXinsertSet;
 		public @CHOICE SQL_InsertValues XXinsertValues;
+		public @CHOICE SQL_SelectStatement XXinsertSelect;
 	}
 
 	public static class SQL_InsertSet extends TokenSequence
 	{
 		public @S(10) SQL_Keyword SET = new SQL_Keyword("SET");
-		public @S(20) SeparatedList<SQL_InsertAssignment, PunctuationComma> assignments;
+		public @S(20) SQL_InsertAssignment assignment;
 
 		public static class SQL_InsertAssignment extends TokenSequence
 		{
@@ -62,9 +63,14 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 	{
 		public @S(10) @OPT SQL_InsertNames insertNames;
 		public @S(20) SQL_Keyword VALUES = new SQL_Keyword("VALUES");
-		public @S(30) PunctuationLeftParen leftParen;
-		public @S(40) SeparatedList<SQL_Expression, PunctuationComma> values;
-		public @S(50) PunctuationRightParen rightParen;
+		public @S(30) SeparatedList<SQL_InsertRow, PunctuationComma> rows;
+		
+		public static class SQL_InsertRow extends TokenSequence
+		{
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) SeparatedList<SQL_Expression, PunctuationComma> columns;
+			public @S(30) PunctuationRightParen rightParen;
+		}
 
 		public static class SQL_InsertNames extends TokenSequence
 		{
@@ -91,7 +97,7 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 			throw new RuntimeException("Can only handle Insert values");
 		}
 		SQL_InsertValues insert = (SQL_InsertValues) clause.getWhich();
-		int numValues = insert.values.getPrimaryCount();
+		int numValues = insert.rows.first().columns.getPrimaryCount();
 		int numColumns = stable.getNumberColumns();
 		if (numValues != numColumns)
 		{
@@ -102,7 +108,7 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 		ArrayList<EagleValue> values = new ArrayList<EagleValue>();
 		for (int col = 0; col < numValues; col++)
 		{
-			SQL_Expression expr = insert.values.getPrimaryElement(col);
+			SQL_Expression expr = insert.rows.first().columns.getPrimaryElement(col);
 			TypeEnum type = stable.getColumnType(col);
 			switch (type)
 			{

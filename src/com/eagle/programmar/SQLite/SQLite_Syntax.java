@@ -26,7 +26,8 @@ public class SQLite_Syntax extends EagleSyntax
 		_punctuationExceptions = new String[] {
 				"!=", "<=", ">=", "=>",
 				"||", "&&",
-				"/*", "//"
+				"/*", "//",
+				"<<"
 		};
 
 		addReservedWords(SQL_Reserved_Words.RESERVED_WORDS);

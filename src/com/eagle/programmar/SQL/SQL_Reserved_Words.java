@@ -130,6 +130,7 @@ public class SQL_Reserved_Words
 			"PRECISION",
 			"PRESERVE",
 			"PRIMARY",
+			"REGEXP",
 			"RESET",
 			"REUSE",
 			"RIGHT",

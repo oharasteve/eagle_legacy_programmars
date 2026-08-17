@@ -17,7 +17,7 @@ public class SQL_HexString extends TerminalLiteralToken
 		EagleLineReader rec = lines.get(_currentLine);
 		int recLen = rec.length();
 		if (_currentChar + 2 >= recLen) return false;
-		if (rec.charAt(_currentChar) != 'X') return false;
+		if (Character.toUpperCase(rec.charAt(_currentChar)) != 'X') return false;
 		if (rec.charAt(_currentChar + 1) != '\'') return false;
 
 		int endChar = _currentChar + 2;

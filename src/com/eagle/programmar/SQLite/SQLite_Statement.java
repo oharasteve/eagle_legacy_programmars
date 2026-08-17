@@ -5,7 +5,9 @@ package com.eagle.programmar.SQLite;
 
 import com.eagle.programmar.SQLite.Statements.SQLite_CheckStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_ImportStatement;
+import com.eagle.programmar.SQLite.Statements.SQLite_ImposterStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_IntCkStatement;
+import com.eagle.programmar.SQLite.Statements.SQLite_LimitStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_ModeStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_OpenStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_TestCaseStatement;
@@ -23,7 +25,9 @@ public class SQLite_Statement extends TokenSequence
 	{
 		public @CHOICE SQLite_CheckStatement XXcheckStmt;
 		public @CHOICE SQLite_ImportStatement XXimportStmt;
+		public @CHOICE SQLite_ImposterStatement XXimposterStmt;
 		public @CHOICE SQLite_IntCkStatement XXintckStmt;
+		public @CHOICE SQLite_LimitStatement XXlimitStmt;
 		public @CHOICE SQLite_ModeStatement XXmodeStmt;
 		public @CHOICE SQLite_OpenStatement XXopenStmt;
 		public @CHOICE SQLite_TestCaseStatement XXtestCaseStmt;
