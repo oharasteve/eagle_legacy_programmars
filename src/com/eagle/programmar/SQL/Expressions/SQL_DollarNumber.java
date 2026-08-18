@@ -3,12 +3,12 @@
 
 package com.eagle.programmar.SQL.Expressions;
 
-import com.eagle.programmar.SQL.SQL_Variable;
+import com.eagle.programmar.SQL.Terminals.SQL_Number;
 import com.eagle.programmar.SQL.Terminals.SQL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
 
-public class SQL_DollarVariable extends PrimaryOperator
+public class SQL_DollarNumber extends PrimaryOperator
 {
 	public @S(10) SQL_Punctuation dollar = new SQL_Punctuation('$');
-	public @S(20) SQL_Variable variable;
+	public @S(20) SQL_Number number;
 }

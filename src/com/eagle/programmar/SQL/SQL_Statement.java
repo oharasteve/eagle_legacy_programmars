@@ -7,6 +7,7 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
 import com.eagle.programmar.SQL.Statements.SQL_AlterStatement;
+import com.eagle.programmar.SQL.Statements.SQL_AnalyzeStatement;
 import com.eagle.programmar.SQL.Statements.SQL_AtAtStatement;
 import com.eagle.programmar.SQL.Statements.SQL_BeginStatement;
 import com.eagle.programmar.SQL.Statements.SQL_CallStatement;
@@ -49,6 +50,7 @@ public class SQL_Statement extends TokenChooser
 	public @FIRST SQL_Comment XXcomment;
 	
 	public @CHOICE SQL_AlterStatement XXalterStmt;
+	public @CHOICE SQL_AnalyzeStatement XXanalyzeStmt;
 	public @CHOICE SQL_AtAtStatement XXatAtStmt;
 	public @CHOICE SQL_BeginStatement XXbeginStmt;
 	public @CHOICE SQL_CallStatement XXcallStmt;

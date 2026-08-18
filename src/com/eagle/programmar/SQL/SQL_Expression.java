@@ -7,6 +7,7 @@ import com.eagle.programmar.SQL.Expressions.SQL_AdditiveExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Builtin;
 import com.eagle.programmar.SQL.Expressions.SQL_CastExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_CurrentTimeStamp;
+import com.eagle.programmar.SQL.Expressions.SQL_DollarNumber;
 import com.eagle.programmar.SQL.Expressions.SQL_DollarVariable;
 import com.eagle.programmar.SQL.Expressions.SQL_ExistsExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_FunctionCall;
@@ -78,13 +79,14 @@ public class SQL_Expression extends PrecedenceChooser
 	public @P(190) SQL_ExistsExpression existsExpression;
 	public @P(200) SQL_FunctionCall functionCallExpression;
 	public @P(210) SQL_CastExpression castExpression;
-	public @P(220) SQL_DollarVariable dollarVariable;
-	public @P(230) SQL_VariableExpression variableExpression;
-	public @P(240) SQL_Star star;
-	public @P(250) SQL_InnerSelect innerSelect;
-	public @P(260) SQL_InnerValues innerValues;
-	public @P(270) SQL_InnerWith innerWith;
-	public @P(280) SQL_Parentheses parentheses;
+	public @P(220) SQL_DollarNumber dollarNumber;
+	public @P(230) SQL_DollarVariable dollarVariable;
+	public @P(240) SQL_VariableExpression variableExpression;
+	public @P(250) SQL_Star star;
+	public @P(260) SQL_InnerSelect innerSelect;
+	public @P(270) SQL_InnerValues innerValues;
+	public @P(280) SQL_InnerWith innerWith;
+	public @P(290) SQL_Parentheses parentheses;
 
 	///////////////////////////////////////////////
 	// Binary expressions
