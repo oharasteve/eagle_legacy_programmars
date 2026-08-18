@@ -27,14 +27,15 @@ public class CMD_RestOfLine extends TokenRestOfLine implements EagleRunnable
 		{
 			int sc = _currentChar;
 			int parens = 0;		// +1 for ) and -1 for (
+			char prev = '?';
 			while (sc < recLen)
 			{
 				char ch = rec.charAt(sc);
-				if (ch == '(')
+				if (ch == '(' && prev != '^')
 				{
 					parens--;
 				}
-				else if (ch == ')')
+				else if (ch == ')' && prev != '^')
 				{
 					parens++;
 					if (parens > 0)
@@ -43,12 +44,13 @@ public class CMD_RestOfLine extends TokenRestOfLine implements EagleRunnable
 						break;
 					}
 				}
-				else if (parens == 0 && ch == '&')
+				else if (parens == 0 && ch == '&' && prev == ' ')
 				{
 					recLen = sc - 1;
 					break;
 				}
 				sc++;
+				prev = ch;
 			}
 		}
 		

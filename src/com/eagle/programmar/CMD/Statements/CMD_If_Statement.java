@@ -7,12 +7,10 @@ import java.util.ArrayList;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
-import com.eagle.math.EagleValue;
 import com.eagle.metrics.IfCondMetrics;
 import com.eagle.programmar.CMD.CMD_Expression;
 import com.eagle.programmar.CMD.CMD_Label;
 import com.eagle.programmar.CMD.CMD_Statement;
-import com.eagle.programmar.CMD.CMD_Variable;
 import com.eagle.programmar.CMD.Terminals.CMD_EndOfLine;
 import com.eagle.programmar.CMD.Terminals.CMD_Keyword;
 import com.eagle.programmar.CMD.Terminals.CMD_Number;
@@ -63,7 +61,7 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 	public static class CMD_IfDefined extends TokenSequence
 	{
 		public @S(10) CMD_Keyword DEFINED = new CMD_Keyword("defined");
-		public @S(20) CMD_Variable var;
+		public @S(20) CMD_Expression expr;
 	}
 
 	public static class CMD_IfErrorLevel extends TokenSequence
@@ -105,8 +103,15 @@ public class CMD_If_Statement extends TokenSequence implements EagleRunnableWith
 		else if (what.getWhich() instanceof CMD_IfDefined)
 		{
 			CMD_IfDefined defined = (CMD_IfDefined) what.getWhich();
-			EagleValue val = interpreter.findSymbol(defined.var.id.getValue());
-			passTest = val != null;
+			try
+			{
+				String val = interpreter.getStrValue(defined.expr);
+				passTest = val != null;
+			}
+			catch (Exception ex)
+			{
+				passTest = false;
+			}
 		}
 		else if (what.getWhich() instanceof CMD_Expression)
 		{

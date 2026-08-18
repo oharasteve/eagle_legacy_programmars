@@ -60,7 +60,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 
 	private static String getName(EagleInterpreter interpreter, CMD_Variable var)
 	{
-		String name = var.id.getValue();
+		String name = var.ids.first().getValue();
 		if (var.subscript != null && var.subscript.isPresent())
 		{
 			int sub = interpreter.getIntValue(var.subscript.expr);
@@ -92,7 +92,7 @@ public class CMD_Set_Statement extends TokenSequence implements EagleRunnable, A
 				break;
 			case "+=":
 				int intVal = interpreter.getIntValue(setA.expr);
-				EagleValue oldVar = interpreter.findSymbol(setA.var.id.getValue());
+				EagleValue oldVar = interpreter.findSymbol(setA.var.ids.first().getValue());
 				EagleInteger newValue = new EagleInteger(intVal + oldVar.forceIntegerValue());
 				interpreter.setSymbol(setA.var, name, newValue);
 				break;
