@@ -28,14 +28,16 @@ public class SQL_SelectClause extends TokenChooser
 	{
 		public @S(10) SQL_Keyword FROM = new SQL_Keyword("FROM");
 		public @S(20) SQL_Identifier_Reference table;
-		public @S(30) @OPT SQL_Table_Definition tableName;
-		public @S(40) @OPT TokenList<SQL_SelectFromMore> more;
+		public @S(30) @OPT SQL_Keyword AS = new SQL_Keyword("AS");
+		public @S(40) @OPT SQL_Table_Definition tableName;
+		public @S(50) @OPT TokenList<SQL_SelectFromMore> more;
 
 		public static class SQL_SelectFromMore extends TokenSequence
 		{
 			public @S(10) PunctuationComma comma;
 			public @S(20) SQL_Identifier_Reference table;
-			public @S(30) @OPT SQL_Table_Definition tableName;
+			public @S(30) @OPT SQL_Keyword AS = new SQL_Keyword("AS");
+			public @S(40) @OPT SQL_Table_Definition tableName;
 		}
 	}
 

@@ -7,8 +7,10 @@ import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.SQL.SQL_Expression;
+import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_Punctuation;
 import com.eagle.tokens.PrimaryOperator;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -19,9 +21,15 @@ import com.eagle.transform.EagleTransformer;
 public class SQL_LogicalNotExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
-	public @S(10) SQL_Punctuation notOperator = new SQL_Punctuation('!');
+	public @S(10) SQL_LogicalNotOper notOperator;
 	public @S(20) SQL_Expression expr;
 
+	public static class SQL_LogicalNotOper extends TokenChooser
+	{
+		public @CHOICE SQL_Punctuation XXbang = new SQL_Punctuation('!');
+		public @CHOICE SQL_Keyword XXNOT = new SQL_Keyword("NOT");
+	}
+	
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
