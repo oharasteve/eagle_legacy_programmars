@@ -3,11 +3,13 @@
 
 package com.eagle.programmar.Bash.Commands;
 
+import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Bash_EndOfLine;
 import com.eagle.programmar.Bash.Bash_Expression;
-import com.eagle.programmar.Bash.Bash_Element;
 import com.eagle.programmar.Bash.Terminals.Bash_Identifier;
 import com.eagle.programmar.Bash.Terminals.Bash_Keyword;
+import com.eagle.programmar.Bash.Terminals.Bash_Number;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractStatement;
@@ -28,25 +30,35 @@ public class Bash_CaseCommand extends TokenSequence implements AbstractStatement
 	public @S(70) Bash_Keyword ESAC = new Bash_Keyword("esac");
 	public @S(80) Bash_EndOfLine eoln2;
 
-	public static class Bash_CaseClause extends TokenSequence
+	public static class Bash_CaseClause extends TokenChooser
 	{
-		public @S(10) PunctuationLeftBracket leftBracket;
-		public @S(20) Bash_Identifier regex;
-		public @S(30) PunctuationRightBracket rightBracket;
-		public @S(40) PunctuationRightParen rightParen;
-		public @S(50) Bash_Element stmt;
-		public @S(60) PunctuationSemicolon semicolon1;
-		public @S(70) @OPT PunctuationSemicolon semicolon2;
-		public @S(80) Bash_EndOfLine eoln;
-	}
+		public @CHOICE static class Bash_CaseRegex extends TokenSequence
+		{
+			public @S(10) PunctuationLeftBracket leftBracket;
+			public @S(20) Bash_Identifier regex;
+			public @S(30) PunctuationRightBracket rightBracket;
+			public @S(40) Bash_CaseAction action;
+		}
 
+		public @CHOICE static class Bash_CaseNumber extends TokenSequence
+		{
+			public @S(10) Bash_Number number;
+			public @S(20) Bash_CaseAction action;
+		}
+	}
+	
 	public static class Bash_CaseDefault extends TokenSequence
 	{
 		public @S(10) PunctuationStar star;
-		public @S(20) PunctuationRightParen rightParen;
-		public @S(30) Bash_Element stmt;
-		public @S(40) PunctuationSemicolon semicolon1;
-		public @S(50) @OPT PunctuationSemicolon semicolon2;
-		public @S(60) Bash_EndOfLine eoln;
+		public @S(20) Bash_CaseAction action;
+	}
+	
+	public static class Bash_CaseAction extends TokenSequence
+	{
+		public @S(10) PunctuationRightParen rightParen;
+		public @S(20) Bash_Element stmt;
+		public @S(30) PunctuationSemicolon semicolon1;
+		public @S(40) @OPT PunctuationSemicolon semicolon2;
+		public @S(50) Bash_EndOfLine eoln;
 	}
 }

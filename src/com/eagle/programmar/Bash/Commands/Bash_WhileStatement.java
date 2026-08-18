@@ -19,12 +19,13 @@ public class Bash_WhileStatement extends TokenSequence
 		implements AbstractStatement, EagleRunnableWithResult
 {
 	public @S(10) @DOC("#Looping-Constructs") Bash_Keyword WHILE = new Bash_Keyword("while");
-	public @S(20) Bash_Condition condition;
-	public @S(30) Bash_EndOfLine eoln1;
-	public @S(40) Bash_Keyword DO = new Bash_Keyword("do");
-	public @S(50) @OPT Bash_EndOfLine eoln2;
-	public @S(60) TokenList<Bash_Element> statements;
-	public @S(70) Bash_Keyword DONE = new Bash_Keyword("done");
+	public @S(20) @OPT Bash_Keyword TEST = new Bash_Keyword("test");
+	public @S(30) Bash_Condition condition;
+	public @S(40) Bash_EndOfLine eoln1;
+	public @S(50) Bash_Keyword DO = new Bash_Keyword("do");
+	public @S(60) @OPT Bash_EndOfLine eoln2;
+	public @S(70) TokenList<Bash_Element> statements;
+	public @S(80) Bash_Keyword DONE = new Bash_Keyword("done");
 
 	private @SKIP ForLoopMetrics _metrics = null;
 
