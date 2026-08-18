@@ -33,7 +33,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 	{
 		public @CHOICE SQL_KeywordChoice XXLIKE = new SQL_KeywordChoice("LIKE", "IN", "IS");
 		public @CHOICE SQL_PunctuationChoice XXoperator = new SQL_PunctuationChoice(
-				"=", "!=", "<", ">", "<=", ">=");
+				"=", "!=", "<>", "<", ">", "<=", ">=");
 	}
 
 	private @SKIP Operator2Metrics _metrics = null;
@@ -60,7 +60,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 			case "=":
 				interpreter.pushBool(leftStr.equals(rightStr));
 				return;
-			case "!=":
+			case "!=", "<>":
 				interpreter.pushBool(!leftStr.equals(rightStr));
 				return;
 			}
@@ -74,7 +74,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 			case "=":
 				interpreter.pushBool(leftInt == rightInt);
 				return;
-			case "!=":
+			case "!=", "<>":
 				interpreter.pushBool(leftInt != rightInt);
 				return;
 			case "<":
@@ -110,7 +110,7 @@ public class SQL_RelationalExpression extends PrecedenceOperator
 		{
 		case "=", "IS":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.EQUALS, rightExpr, this);
-		case "!=":
+		case "!=", "<>":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.NOT_EQUALS, rightExpr, this);
 		case "<":
 			return generator.newRelationalExpression(types, leftExpr, RelationalEnum.LESS_THAN, rightExpr, this);

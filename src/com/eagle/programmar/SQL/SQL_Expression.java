@@ -19,6 +19,7 @@ import com.eagle.programmar.SQL.Expressions.SQL_MultiplicativeExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_NegativeExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Parentheses;
 import com.eagle.programmar.SQL.Expressions.SQL_RelationalExpression;
+import com.eagle.programmar.SQL.Expressions.SQL_ShiftExpression;
 import com.eagle.programmar.SQL.Expressions.SQL_Star;
 import com.eagle.programmar.SQL.Expressions.SQL_VariableExpression;
 import com.eagle.programmar.SQL.Functions.SQL_BuiltinFunction;
@@ -26,6 +27,7 @@ import com.eagle.programmar.SQL.Functions.SQL_ConcatFunction;
 import com.eagle.programmar.SQL.Functions.SQL_LeftFunction;
 import com.eagle.programmar.SQL.Functions.SQL_LengthFunction;
 import com.eagle.programmar.SQL.Functions.SQL_SubstringFunction;
+import com.eagle.programmar.SQL.Terminals.SQL_HexNumber;
 import com.eagle.programmar.SQL.Terminals.SQL_HexString;
 import com.eagle.programmar.SQL.Terminals.SQL_Literal;
 import com.eagle.programmar.SQL.Terminals.SQL_Number;
@@ -55,9 +57,10 @@ public class SQL_Expression extends PrecedenceChooser
 	///////////////////////////////////////////////
 	// Terminals
 
-	public @P(10) SQL_Number number;
-	public @P(20) SQL_Literal literal;
-	public @P(30) SQL_HexString hex;
+	public @P(10) SQL_HexNumber hexNum;
+	public @P(20) SQL_Number number;
+	public @P(30) SQL_Literal literal;
+	public @P(40) SQL_HexString hexStr;
 
 	///////////////////////////////////////////////
 	// Primary expressions
@@ -86,7 +89,8 @@ public class SQL_Expression extends PrecedenceChooser
 
 	public @P(1000) SQL_MultiplicativeExpression multiplicativeExpression;
 	public @P(1010) SQL_AdditiveExpression additiveExpression;
-	public @P(1020) SQL_RelationalExpression relationalExpression;
-	public @P(1030) SQL_LogicalAndExpression andExpression;
-	public @P(1040) SQL_LogicalOrExpression orExpression;
+	public @P(1020) SQL_ShiftExpression shiftExpression;
+	public @P(1030) SQL_RelationalExpression relationalExpression;
+	public @P(1040) SQL_LogicalAndExpression andExpression;
+	public @P(1050) SQL_LogicalOrExpression orExpression;
 }

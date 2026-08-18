@@ -10,6 +10,7 @@ import com.eagle.programmar.SQLite.Statements.SQLite_IntCkStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_LimitStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_ModeStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_OpenStatement;
+import com.eagle.programmar.SQLite.Statements.SQLite_ParamStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_TestCaseStatement;
 import com.eagle.programmar.SQLite.Statements.SQLite_TestCtrlStatement;
 import com.eagle.programmar.SQLite.Terminals.SQLite_EndOfLine;
@@ -30,6 +31,7 @@ public class SQLite_Statement extends TokenSequence
 		public @CHOICE SQLite_LimitStatement XXlimitStmt;
 		public @CHOICE SQLite_ModeStatement XXmodeStmt;
 		public @CHOICE SQLite_OpenStatement XXopenStmt;
+		public @CHOICE SQLite_ParamStatement XXparamStmt;
 		public @CHOICE SQLite_TestCaseStatement XXtestCaseStmt;
 		public @CHOICE SQLite_TestCtrlStatement XXtestCtrlStmt;
 	}

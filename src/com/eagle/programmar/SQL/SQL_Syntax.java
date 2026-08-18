@@ -23,7 +23,9 @@ public class SQL_Syntax extends EagleSyntax
 		_extraCharacters = "_";
 		_commentInstance = new SQL_Comment();
 		_punctuationExceptions = new String[] {
-				"!=", "<=", ">=", "=>", "||", "&&", "/*", "//"
+				"!=", "<=", ">=", "=>",
+				"||", "&&", "/*", "//",
+				"<<", ">>", "<>"
 		};
 
 		addReservedWords(SQL_Reserved_Words.RESERVED_WORDS);

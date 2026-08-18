@@ -8,6 +8,7 @@ import com.eagle.programmar.SQL.Symbols.SQL_Identifier_Reference;
 import com.eagle.programmar.SQL.Symbols.SQL_Table_Definition;
 import com.eagle.programmar.SQL.Terminals.SQL_Keyword;
 import com.eagle.programmar.SQL.Terminals.SQL_Literal;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -80,7 +81,7 @@ public class SQL_SelectClause extends TokenChooser
 	{
 		public @S(10) SQL_Keyword GROUP = new SQL_Keyword("GROUP");
 		public @S(20) SQL_Keyword BY = new SQL_Keyword("BY");
-		public @S(30) SQL_Identifier_Reference name;
+		public @S(30) SeparatedList<SQL_Identifier_Reference, PunctuationComma> name;
 	}
 
 	public @CHOICE static class SQL_SelectRegex extends TokenSequence

@@ -9,6 +9,6 @@ public class SQL_Number extends TerminalNumberToken
 {
 	public SQL_Number()
 	{
-		super("Ee", null, true, false, '?');
+		super("Ee", null, true, true, '_');
 	}
 }

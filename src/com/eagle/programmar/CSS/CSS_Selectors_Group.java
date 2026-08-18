@@ -14,7 +14,6 @@ import com.eagle.tokens.SeparatedList;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
-import com.eagle.tokens.TokenSequence.S;
 import com.eagle.tokens.punctuation.PunctuationColon;
 import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -145,28 +144,22 @@ public class CSS_Selectors_Group extends TokenSequence
 				public @S(30) @OPT TokenList<CSS_SubsequentSelector> more;
 			}
 			
-			public @CHOICE static class CSS_Compound_Universal extends TokenSequence
-			{
-				public @S(10) CSS_UniversalSelector type;
-				public @S(20) @OPT TokenList<CSS_SubsequentSelector> more;
-			}
-			
 			public @CHOICE static class CSS_Compound_Subsequent extends TokenSequence
 			{
 				public @S(10) TokenList<CSS_SubsequentSelector> more;
 			}
 		}
 		
+		public static class CSS_IdentOrStar extends TokenChooser
+		{
+			public @CHOICE CSS_Identifier_Reference XXid;
+			public @CHOICE PunctuationStar XXstar;
+		}
+
 		public static class CSS_TypeSelector extends TokenSequence
 		{
 			public @S(10) @OPT CSS_NameSpace_Prefix prefix;
-			public @S(20) CSS_Identifier_Reference id;
-		}
-		
-		public static class CSS_UniversalSelector extends TokenSequence
-		{
-			public @S(10) @OPT CSS_NameSpace_Prefix prefix;
-			public @S(20) PunctuationStar star;
+			public @S(20) CSS_IdentOrStar id;
 		}
 		
 		public static class CSS_SubsequentSelector extends TokenChooser
@@ -175,7 +168,7 @@ public class CSS_Selectors_Group extends TokenSequence
 			public @CHOICE CSS_Class_Selector XXcls;
 			public @CHOICE CSS_Attribute_Selector XXattr;
 			public @CHOICE CSS_Pseudo_Class XXpseudo;
-			public @CHOICE CSS_KeywordChoice MEDIA = new CSS_KeywordChoice(
+			public @CHOICE CSS_KeywordChoice XXMEDIA = new CSS_KeywordChoice(
 					".media",
 					".media-body");
 		}
@@ -184,12 +177,6 @@ public class CSS_Selectors_Group extends TokenSequence
 		{
 			public @S(10) @OPT CSS_IdentOrStar id;
 			public @S(20) CSS_Punctuation bar = new CSS_Punctuation('|');
-			
-			public static class CSS_IdentOrStar extends TokenChooser
-			{
-				public @CHOICE CSS_Identifier_Reference XXid;
-				public @CHOICE PunctuationStar XXstar;
-			}
 		}
 		
 		public static class CSS_Id_Selector extends TokenSequence
