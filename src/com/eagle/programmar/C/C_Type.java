@@ -33,7 +33,7 @@ public class C_Type extends TokenSequence implements AbstractType
 	public @S(30) C_TypeBase base;
 	public @S(40) @OPT C_Generic generic;
 	public @S(50) @OPT C_TypeFunction function;
-	public @S(60) @OPT C_Keyword CONST = new C_Keyword("const");
+	public @S(60) @OPT C_KeywordChoice CONST = new C_KeywordChoice("const", "volatile");
 	public @S(70) @OPT TokenList<C_TypeStar> afterStars;
 
 	public static class C_TypeModifier extends TokenChooser

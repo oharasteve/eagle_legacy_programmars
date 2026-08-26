@@ -7,6 +7,8 @@ import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.programmar.CMacro.CMacro_StatementOrComment;
+import com.eagle.programmar.CMacro.CMacro_Syntax;
 import com.eagle.programmar.CSharp.CSharp_Class.CSharp_ClassElement;
 import com.eagle.programmar.CSharp.Directives.CSharp_Directive;
 import com.eagle.programmar.CSharp.Terminals.CSharp_Comment;
@@ -71,6 +73,7 @@ public class CSharp_Program extends AbstractLanguage
 		public @CHOICE @NEWLINE CSharp_Class XXclass;
 		public @CHOICE @NEWLINE CSharp_Annotation XXannotation;
 		public @CHOICE @NEWLINE CSharp_Directive XXdirective;
+		public @CHOICE @NEWLINE @SYNTAX(CMacro_Syntax.class) CMacro_StatementOrComment XXmacro;
 	}
 
 	@Override

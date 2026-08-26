@@ -9,6 +9,6 @@ public class C_HexNumber extends TerminalHexNumberToken
 {
 	public C_HexNumber()
 	{
-		super("0x", "Ll", false);
+		super("0x", "LlUu", false);
 	}
 }

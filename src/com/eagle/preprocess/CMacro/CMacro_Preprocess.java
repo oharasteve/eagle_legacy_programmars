@@ -32,7 +32,7 @@ import com.eagle.tokens.terminals.TerminalEndOfLine;
 public class CMacro_Preprocess extends EagleInclude
 {
 	private static final boolean DEBUG = false;
-	private static final boolean VERBOSE = false;
+	public static final boolean VERBOSE = false;
 
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;

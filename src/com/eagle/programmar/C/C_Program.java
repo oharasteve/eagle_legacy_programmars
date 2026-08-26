@@ -48,7 +48,15 @@ public class C_Program extends AbstractLanguage
 	}
 
 	private static String[] primitives = new String[] {
-			"auto", "bool", "char", "double", "float", "int", "long", "short", "void"
+			"auto",
+			"bool",
+			"char",
+			"double",
+			"float",
+			"int",
+			"long",
+			"short",
+			"void"
 	};
 
 	// Careful, this gets added to in some projects

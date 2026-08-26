@@ -11,6 +11,7 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.TCL.TCL_Expression;
+import com.eagle.programmar.TCL.Terminals.TCL_Comment;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -26,8 +27,9 @@ public class TCL_ArrayExpression extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) PunctuationLeftBrace leftBrace;
-	public @S(20) TokenList<TCL_Expression> expressions;
-	public @S(30) PunctuationRightBrace rightBrace;
+	public @S(20) @OPT TokenList<TCL_Comment> comments;
+	public @S(30) TokenList<TCL_Expression> expressions;
+	public @S(40) PunctuationRightBrace rightBrace;
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)

@@ -62,9 +62,13 @@ public class CMacro_If_Statement extends TokenSequence implements CMacro_Process
 	@Override
 	public boolean processMacro(CMacro_Preprocess preprocessor)
 	{
+		if (CMacro_Preprocess.VERBOSE)
+		{
+			System.out.print("$$$$ " + expr.showText());
+			System.out.flush();
+		}
 		boolean isTrue = getBooleanValue(expr, preprocessor);
-		// System.out.println("$$$$$$$$$$$$$$$$$$ " + expr.showText() + " is " +
-		// isTrue);
+		if (CMacro_Preprocess.VERBOSE) System.out.println(" is " + isTrue);
 		TokenList<CMacro_Element> whichElements = null;
 		if (isTrue)
 		{

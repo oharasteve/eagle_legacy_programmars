@@ -14,6 +14,7 @@ import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.tokens.terminals.TerminalLiteralExpression;
 import com.eagle.tokens.terminals.TerminalLiteralExpression.LiteralPiece;
 import com.eagle.tokens.terminals.TerminalLiteralToken;
 import com.eagle.transform.EagleTransformableExpression;
@@ -35,7 +36,7 @@ public class TCL_Literal extends TerminalLiteralToken
 		{
 			ArgumentsMetrics metrics = null;
 			ArrayList<LiteralPiece> pieces = TCL_LiteralExpression.parseBracketDollar(value);
-			value = TCL_LiteralExpression.evaluateLiteral(interpreter, metrics, TCL_Expression.class, pieces);
+			value = TerminalLiteralExpression.evaluateLiteral(interpreter, metrics, TCL_Expression.class, pieces);
 		}
 		interpreter.pushStr(value);
 	}
