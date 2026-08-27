@@ -16,6 +16,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_FunctionAttributes extends TokenSequence
 {
@@ -25,6 +26,7 @@ public class C_FunctionAttributes extends TokenSequence
 	public @S(40) TokenList<C_FunctionAttribute> attributes;
 	public @S(50) PunctuationRightParen rightParen1;
 	public @S(60) PunctuationRightParen rightParen2;
+	public @S(70) @OPT PunctuationSemicolon semicolon;
 
 	public static class C_FunctionMessage extends TokenSequence
 	{

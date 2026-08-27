@@ -65,7 +65,7 @@ public class C_Type extends TokenSequence implements AbstractType
 	public static class C_TypeFunction extends TokenSequence
 	{
 		public @S(10) PunctuationLeftParen leftParen;
-		public @S(20) PunctuationStar star;
+		public @S(20) TokenList<PunctuationStar> stars;
 		public @S(30) PunctuationRightParen rightParen;
 		public @S(40) C_Function_ParameterDefs params;
 	}

@@ -13,7 +13,16 @@ public class CMacro_Pragma_Intrinsic extends TokenSequence
 {
 	public @S(10) CMacro_Keyword INTRINSIC = new CMacro_Keyword("intrinsic");
 	public @S(20) PunctuationLeftParen leftParen;
-	public @S(30) @OPT CMacro_KeywordChoice ROT = new CMacro_KeywordChoice("rotl", "rotr", "_rotl", "_rotr",
-			"_BitScanReverse", "_InterlockedCompareExchange", "_InterlockedCompareExchangePointer", "_umul128");
+	public @S(30) @OPT CMacro_KeywordChoice ROT = new CMacro_KeywordChoice(
+			"_byteswap_uint64",
+			"_byteswap_ulong",
+			"_byteswap_ushort",
+			"rotl", "_rotl",
+			"rotr", "_rotr",
+			"_BitScanReverse",
+			"_InterlockedCompareExchange",
+			"_InterlockedCompareExchangePointer",
+			"_ReadWriteBarrier",
+			"_umul128");
 	public @S(40) PunctuationRightParen rightParen;
 }

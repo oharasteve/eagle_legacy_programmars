@@ -68,6 +68,7 @@ public class C_Program extends AbstractLanguage
 			"inline",
 			"mutable",
 			"register",
+			"restrict", "__restrict",
 			"static",
 			"virtual",
 			"volatile",

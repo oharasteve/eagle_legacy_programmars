@@ -5,6 +5,7 @@ package com.eagle.programmar.CMacro.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
+import com.eagle.math.EagleValue;
 import com.eagle.programmar.CMacro.CMacro_Expression;
 import com.eagle.programmar.CMacro.Terminals.CMacro_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
@@ -18,14 +19,31 @@ public class CMacro_EqualityExpression extends PrecedenceOperator implements Eag
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		int leftVal = interpreter.getIntValue(left);
-		int rightVal = interpreter.getIntValue(right);
-		String oper = operator.getValue();
-		if (oper.equals("=="))
-			interpreter.pushBool(leftVal == rightVal);
-		else if (oper.equals("!="))
-			interpreter.pushBool(leftVal != rightVal);
+		EagleValue leftVal = interpreter.getEagleValue(left);
+		EagleValue rightVal = interpreter.getEagleValue(right);
+		if (leftVal.isInteger() && rightVal.isInteger())
+		{
+			int leftInt = interpreter.getIntValue(left);
+			int rightInt = interpreter.getIntValue(right);
+			String oper = operator.getValue();
+			if (oper.equals("=="))
+				interpreter.pushBool(leftInt == rightInt);
+			else if (oper.equals("!="))
+				interpreter.pushBool(leftInt != rightInt);
+			else
+				throw new RuntimeException("Unexpected integer operator: " + oper);
+		}
 		else
-			throw new RuntimeException("Unexpected operator: " + oper);
+		{
+			String leftStr = interpreter.getStrValue(left);
+			String rightStr = interpreter.getStrValue(right);
+			String oper = operator.getValue();
+			if (oper.equals("=="))
+				interpreter.pushBool(leftStr.equals(rightStr));
+			else if (oper.equals("!="))
+				interpreter.pushBool(! leftStr.equals(rightStr));
+			else
+				throw new RuntimeException("Unexpected string operator: " + oper);
+		}
 	}
 }

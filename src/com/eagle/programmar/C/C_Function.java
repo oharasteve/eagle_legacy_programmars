@@ -105,7 +105,7 @@ public class C_Function extends TokenSequence
 	{
 		public @S(10) @OPT C_Keyword CONST1 = new C_Keyword("const");
 		public @S(20) C_Type ctype;
-		public @S(30) @OPT C_KeywordChoice RESTRICT = new C_KeywordChoice("__restrict", "restrict");
+		public @S(30) @OPT C_KeywordChoice RESTRICT = new C_KeywordChoice(C_Program.getModifiers());
 		public @S(40) @OPT C_Variable_Definition id;
 		public @S(50) @OPT TokenList<C_Subscript> subscripts;
 		public @S(60) @OPT C_FunctionDefaultValue value;

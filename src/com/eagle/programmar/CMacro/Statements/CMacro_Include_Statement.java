@@ -14,6 +14,7 @@ import com.eagle.programmar.CMacro.Terminals.CMacro_IncludeSys;
 import com.eagle.programmar.CMacro.Terminals.CMacro_KeywordChoice;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Literal;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
+import com.eagle.programmar.CMacro.Terminals.CMacro_RestOfLine;
 import com.eagle.tokens.AbstractToken;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
@@ -31,6 +32,7 @@ public class CMacro_Include_Statement extends TokenSequence implements CMacro_Pr
 	{
 		public @CHOICE CMacro_Literal XXfilename;
 		public @CHOICE CMacro_IncludeSys XXsys;
+		public @LAST CMacro_RestOfLine XXremainder;	// Typically inside a #if that is false
 	}
 
 	@Override
