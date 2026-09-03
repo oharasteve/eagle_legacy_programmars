@@ -1,17 +1,15 @@
-// Copyright Eagle Legacy Modernization LLC, 2010-date
-// Original author: Steven A. O'Hara, Aug 27, 2026
+// Copyright Eagle Legacy Modernization, 2010-date
+// Original author: Steven A. O'Hara, TCL
 
 package com.eagle.programmar.TCL.Expressions;
 
+import com.eagle.generate.BitwiseEnum;
 import com.eagle.generate.EagleGenerator;
-import com.eagle.generate.LogicalOrEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.TCL.TCL_Expression;
-import com.eagle.programmar.TCL.Terminals.TCL_Keyword;
-import com.eagle.programmar.TCL.Terminals.TCL_Punctuation;
+import com.eagle.programmar.TCL.Terminals.TCL_PunctuationChoice;
 import com.eagle.tokens.PrecedenceOperator;
-import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.interfaces.AbstractExpression;
 import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
@@ -19,32 +17,31 @@ import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.transform.EagleTransformableExpression;
 import com.eagle.transform.EagleTransformer;
 
-public class TCL_LogicalOrExpression extends PrecedenceOperator
+public class TCL_BitwiseExpression extends PrecedenceOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) TCL_Expression left = new TCL_Expression(this, AllowedPrecedence.ATLEAST);
-	public @S(20) TCL_OrOperator orOper;
+	public @S(20) TCL_PunctuationChoice operator = new TCL_PunctuationChoice("&", "|", "^");
 	public @S(30) TCL_Expression right = new TCL_Expression(this, AllowedPrecedence.HIGHER);
-
-	public static class TCL_OrOperator extends TokenChooser
-	{
-		public @CHOICE TCL_Keyword XXOR = new TCL_Keyword("or");
-		public @CHOICE TCL_Punctuation XXorOper = new TCL_Punctuation("||");
-	}
 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		boolean leftValue = interpreter.getBoolValue(left);
-		if (leftValue)
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		switch (operator.toString())
 		{
-			// Short circuit, don't bother with RHS
-			interpreter.pushBool(true);
-		}
-		else
-		{
-			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(rightValue);
+		case "&":
+			interpreter.pushInt(leftValue & rightValue);
+			break;
+		case "|":
+			interpreter.pushInt(leftValue | rightValue);
+			break;
+		case "^":
+			interpreter.pushInt(leftValue ^ rightValue);
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + operator);
 		}
 	}
 
@@ -54,6 +51,21 @@ public class TCL_LogicalOrExpression extends PrecedenceOperator
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
-		return generator.newLogicalOrExpression(leftExpr, LogicalOrEnum.OR, rightExpr, this);
+		BitwiseEnum oper;
+		switch (operator.getValue())
+		{
+		case "&":
+			oper = BitwiseEnum.AND;
+			break;
+		case "|":
+			oper = BitwiseEnum.OR;
+			break;
+		case "^":
+			oper = BitwiseEnum.XOR;
+			break;
+		default:
+			throw new RuntimeException("Unable to handle " + operator);
+		}
+		return generator.newBitwiseExpression(leftExpr, oper, rightExpr, this);
 	}
 }
