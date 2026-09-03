@@ -32,15 +32,16 @@ public class Java_Data extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
 {
 	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotation1;
-	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;
+	public @S(20) @OPT TokenList<Java_DataModifier> modifiers1;
 	public @S(30) @OPT TokenList<Java_Annotation> annotation2;
-	public @S(40) Java_Type jtype;
-	public @S(50) Java_Variable_Definition id;
-	public @S(60) @OPT TokenList<Java_DataSubscript> subscripts;
-	public @S(70) @OPT Java_DataInitialValue initialValue;
-	public @S(80) @OPT TokenList<Java_MoreIdentifiers> moreIds;
-	public @S(90) @NOSPACE PunctuationSemicolon semicolon;
-	public @S(100) @OPT TokenList<Java_Comment> comments;
+	public @S(40) @OPT TokenList<Java_DataModifier> modifiers2;
+	public @S(50) Java_Type jtype;
+	public @S(60) Java_Variable_Definition id;
+	public @S(70) @OPT TokenList<Java_DataSubscript> subscripts;
+	public @S(80) @OPT Java_DataInitialValue initialValue;
+	public @S(90) @OPT TokenList<Java_MoreIdentifiers> moreIds;
+	public @S(100) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(110) @OPT TokenList<Java_Comment> comments;
 
 	public static class Java_DataSubscript extends TokenSequence
 	{
@@ -177,9 +178,20 @@ public class Java_Data extends TokenSequence
 
 	private boolean hasModifier(String which)
 	{
-		if (modifiers != null)
+		// This is really kludgy and fixable
+		if (modifiers1 != null)
 		{
-			for (Java_DataModifier mod : modifiers._elements)
+			for (Java_DataModifier mod : modifiers1._elements)
+			{
+				if (which.equals(mod.modifier.getValue()))
+				{
+					return true;
+				}
+			}
+		}
+		if (modifiers2 != null)
+		{
+			for (Java_DataModifier mod : modifiers2._elements)
 			{
 				if (which.equals(mod.modifier.getValue()))
 				{
@@ -194,14 +206,14 @@ public class Java_Data extends TokenSequence
 	{
 		Java_DataModifier mod = new Java_DataModifier();
 		mod.modifier.setValue(which);
-		if (modifiers == null)
+		if (modifiers1 == null)
 		{
-			modifiers = new TokenList<Java_DataModifier>();
-			modifiers.setPresent(true);
+			modifiers1 = new TokenList<Java_DataModifier>();
+			modifiers1.setPresent(true);
 		}
 		if (!hasModifier(which))
 		{
-			modifiers.addToken(mod);
+			modifiers1.addToken(mod);
 		}
 	}
 }
