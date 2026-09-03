@@ -23,6 +23,7 @@ import com.eagle.programmar.C.Symbols.C_Identifier_Reference;
 import com.eagle.programmar.C.Symbols.C_Variable_Definition;
 import com.eagle.programmar.C.Terminals.C_Comment;
 import com.eagle.programmar.C.Terminals.C_Keyword;
+import com.eagle.programmar.C.Terminals.C_PunctuationChoice;
 import com.eagle.scope.EagleScope;
 import com.eagle.scope.EagleScope.EagleScopeInterface;
 import com.eagle.tokens.AbstractToken;
@@ -77,6 +78,8 @@ public class C_ForStatement extends TokenSequence
 			public @FIRST C_ForWithType XXforWithType;
 			public @CHOICE C_ForWithoutType XXforWithoutType;
 			public @CHOICE C_PostIncrementVariable XXforPostIncrement;
+			public @CHOICE C_ForPreIncr XXpreIncr;
+			public @CHOICE C_ForPostIncr XXpostIncr;
 		}
 
 		public static class C_MoreLoopIncrements extends TokenSequence
@@ -113,8 +116,20 @@ public class C_ForStatement extends TokenSequence
 	public static class C_ForWithoutType extends TokenSequence
 	{
 		public @S(10) C_Variable variable;
-		public @S(20) PunctuationEquals equals;
+		public @S(20) C_PunctuationChoice equals = new C_PunctuationChoice("=", "+=", "-=");
 		public @S(30) C_Expression initialExpr;
+	}
+	
+	public static class C_ForPreIncr extends TokenSequence
+	{
+		public @S(10) C_PunctuationChoice incr = new C_PunctuationChoice("++", "--");
+		public @S(20) C_Variable variable;
+	}
+	
+	public static class C_ForPostIncr extends TokenSequence
+	{
+		public @S(10) C_Variable variable;
+		public @S(20) C_PunctuationChoice incr = new C_PunctuationChoice("++", "--");
 	}
 	
 	private @SKIP ForLoopMetrics _metrics = null;
