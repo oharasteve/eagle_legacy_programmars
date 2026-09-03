@@ -12,6 +12,7 @@ import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Export;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Intrinsic;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Mark;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Message;
+import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Optimize;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Pack;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_Region;
 import com.eagle.programmar.CMacro.Pragmas.CMacro_Pragma_RuntimeChecks;
@@ -26,9 +27,9 @@ import com.eagle.tokens.TokenSequence;
 
 //
 // Still a couple in Chromium:
-//             #pragma map    /chromium-main/third_party/protobuf/objectivec/GPBArray.h
-//             #pragma map    /chromium-main/third_party/protobuf/objectivec/GPBDictionary.h
-//             #pragma map    /chromium-main/third_party/protobuf/objectivec/GPBWellKnownTypes.h
+//   #pragma map              /chromium-main/third_party/protobuf/objectivec/GPBArray.h
+//   #pragma map              /chromium-main/third_party/protobuf/objectivec/GPBDictionary.h
+//   #pragma map              /chromium-main/third_party/protobuf/objectivec/GPBWellKnownTypes.h
 //   #pragma   data_seg(      /chromium-main/sandbox/win/tests/integration_tests/hooking_dll.cc
 //   #pragma   optimize(      /chromium-main/base/third_party/double_conversion/double-conversion/string-to-double.cc
 //   #pragma   push_macro     /chromium-main/ui/gl/init/gl_initializer_angle.cc
@@ -52,6 +53,7 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		public @CHOICE CMacro_Pragma_Intrinsic XXintrinsic;
 		public @CHOICE CMacro_Pragma_Mark XXmark;
 		public @CHOICE CMacro_Pragma_Message XXmessage;
+		public @CHOICE CMacro_Pragma_Optimize XXoptimize;;
 		public @CHOICE CMacro_Pragma_Pack XXpack;
 		public @CHOICE CMacro_Pragma_Region XXregion;
 		public @CHOICE CMacro_Pragma_RuntimeChecks XXruntimeChecks;

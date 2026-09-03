@@ -41,6 +41,10 @@ public class CMacro_Define_Statement extends TokenSequence
 		public String forceStringValue()
 		{
 			CMacro_Define_Statement token = (CMacro_Define_Statement) getTokenValue();
+			if (token.value == null || !token.value.isPresent())
+			{
+				return null;
+			}
 			return token.value.getValue();
 		}
 	}

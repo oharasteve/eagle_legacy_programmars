@@ -6,6 +6,7 @@ package com.eagle.preprocess.CMacro;
 import java.io.IOException;
 
 import com.eagle.core.EagleProject;
+import com.eagle.io.DumpTree;
 import com.eagle.math.EagleSymbolTable;
 import com.eagle.math.EagleToken;
 import com.eagle.parsers.EagleFileReader;
@@ -31,8 +32,10 @@ import com.eagle.tokens.terminals.TerminalEndOfLine;
 
 public class CMacro_Preprocess extends EagleInclude
 {
-	private static final boolean DEBUG = false;
 	public static final boolean VERBOSE = false;
+
+	private static final boolean DEBUG = false;
+	private static final boolean DUMP = false;
 
 	public FindIncludeFile _findInclude;
 	public ParserManager _parser;
@@ -66,8 +69,8 @@ public class CMacro_Preprocess extends EagleInclude
 		{
 			if (_project != null)
 			{
-				// The outermost #include file has already been repaired -- don't try to do it
-				// twice
+				// The outermost #include file has already been repaired --
+				// don't try to do it twice
 				_project.performRepairs(lines.getFileName(), lines);
 			}
 		}
@@ -98,8 +101,11 @@ public class CMacro_Preprocess extends EagleInclude
 			return null;
 		}
 
-//		DumpTree dump = new DumpTree();
-//		dump.dump(System.out, pgm, DumpTree.Width.WIDE, 0, true);
+		if (DUMP)
+		{
+			DumpTree dump = new DumpTree();
+			dump.dump(System.out, pgm, DumpTree.Width.WIDE, 0, true);
+		}
 
 		boolean changed = false;
 
@@ -112,7 +118,8 @@ public class CMacro_Preprocess extends EagleInclude
 			}
 			catch (Exception ex)
 			{
-				StringBuffer msg = new StringBuffer("Failed preprocessing ").append(element.getWhich()).append('\n');
+				StringBuffer msg = new StringBuffer("Failed preprocessing ");
+				msg.append(element.getWhich()).append('\n');
 				msg.append("File ").append(lines.getFileName());
 				msg.append(", line ").append(Integer.toString(element.getStartLine() + 1)).append('\n');
 				msg.append(lines.get(element.getStartLine()).toString()).append('\n');
@@ -199,7 +206,7 @@ public class CMacro_Preprocess extends EagleInclude
 
 	// Returns true always, even if nothing was changed in the file (not including
 	// the symbol table)
-	public boolean preprocessCMacroElement(ParserManager parser, CMacro_Element element)
+	public boolean preprocessCMacroElement(ParserManager unused_parser, CMacro_Element element)
 	{
 		// Ignore all the rest of the stuff
 		AbstractToken whichStatement = element.getWhich();
@@ -237,6 +244,8 @@ public class CMacro_Preprocess extends EagleInclude
 			CMacro_CommentLine comm = (CMacro_CommentLine) token;
 			oldLine = comm.comment.getValue();
 			if (DEBUG) System.out.println("******* Comment " + oldLine);
+			_newLines.add(oldLine, oldFileName, oldLineNumber);
+			return;		// Don't look for macros inside comments
 		}
 		else
 		{
@@ -442,12 +451,20 @@ public class CMacro_Preprocess extends EagleInclude
 
 		if (actualParams.length != paramCount)
 		{
-			System.err.println("*** Number of parameters for " + word + " does not match, actual=" + actualParams.length
-					+ ", expected=" + paramCount);
-			if (actualParamString.length() > 0) System.err.println("    Actual parameter string: " + actualParamString);
-			System.err.println("    Used at (or after) line " + (line + 1) + " of " + fname);
-			System.err.println("    #define is at line " + (defineStatement.getStartLine() + 1) + " of "
-					+ defineStatement.getFileName());
+			if (DEBUG)
+			{
+				System.err.println("*** Number of parameters for " + word + " does not match, actual=" + actualParams.length
+						+ ", expected=" + paramCount);
+				if (actualParamString.length() > 0) System.err.println("    Actual parameter string: " + actualParamString);
+				System.err.println("    Used at (or after) line " + (line + 1) + " of " + fname);
+				System.err.println("    #define is at line " + (defineStatement.getStartLine() + 1) + " of "
+						+ defineStatement.getFileName());
+			}
+			else
+			{
+				System.out.println("*** Number of parameters for " + word + " does not match, actual=" + actualParams.length
+						+ ", expected=" + paramCount + " at line " + (line + 1) + ".");
+			}
 			return null;
 		}
 

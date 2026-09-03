@@ -3,13 +3,23 @@
 
 package com.eagle.programmar.CMacro.Expressions;
 
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.CMacro.CMacro_Expression;
 import com.eagle.programmar.CMacro.Terminals.CMacro_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class CMacro_BitwiseAndExpression extends PrecedenceOperator
+public class CMacro_BitwiseAndExpression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) CMacro_Expression left = new CMacro_Expression(this, AllowedPrecedence.ATLEAST);
 	public @S(20) CMacro_Punctuation bitwiseAndOperator = new CMacro_Punctuation('&');
 	public @S(30) CMacro_Expression right = new CMacro_Expression(this, AllowedPrecedence.HIGHER);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		int leftValue = interpreter.getIntValue(left);
+		int rightValue = interpreter.getIntValue(right);
+		interpreter.pushInt(leftValue & rightValue);
+	}
 }
