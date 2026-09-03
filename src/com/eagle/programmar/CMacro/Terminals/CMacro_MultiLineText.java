@@ -35,17 +35,26 @@ public class CMacro_MultiLineText extends TerminalLiteralToken
 			}
 
 			boolean inQuotes = false;
+			char prevch = '?';	// Anything that won't match
 			for (int i = 0; i < recLen - 1; i++) // -1 so we don't run off the end
 			{
 				char ch = rec.charAt(i);
-				char nextch = rec.charAt(i + 1);
-				if (ch == '"') inQuotes = !inQuotes;
-				if (!inQuotes)
+				if (ch == '\\' && prevch == '\\')
 				{
-					if (ch == '/' && nextch == '*') inComment = true;
-					if (ch == '*' && nextch == '/') inComment = false;
-					if (!inComment && (ch == '/' && nextch == '/')) break;
+					ch = '?';	// Anything that won't match
 				}
+				else
+				{
+					char nextch = rec.charAt(i + 1);
+					if (ch == '"' && prevch != '\\') inQuotes = !inQuotes;
+					if (!inQuotes)
+					{
+						if (ch == '/' && nextch == '*') inComment = true;
+						if (ch == '*' && nextch == '/') inComment = false;
+						if (!inComment && (ch == '/' && nextch == '/')) break;
+					}
+				}
+				prevch = ch;
 			}
 
 			if (text.length() > 0) text.append('\n');
