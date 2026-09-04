@@ -177,15 +177,18 @@ public class Java_Data extends TokenSequence
 
 	private boolean hasModifier(String what)
 	{
-		for (Java_DataModifier mod : modifiers._elements)
+		if (modifiers != null)
 		{
-			AbstractToken whichMod = mod.getWhich();
-			if (whichMod instanceof Java_KeywordChoice)
+			for (Java_DataModifier mod : modifiers._elements)
 			{
-				Java_KeywordChoice kw = (Java_KeywordChoice) whichMod;
-				if (what.equals(kw.getValue()))
+				AbstractToken whichMod = mod.getWhich();
+				if (whichMod instanceof Java_KeywordChoice)
 				{
-					return true;
+					Java_KeywordChoice kw = (Java_KeywordChoice) whichMod;
+					if (what.equals(kw.getValue()))
+					{
+						return true;
+					}
 				}
 			}
 		}
