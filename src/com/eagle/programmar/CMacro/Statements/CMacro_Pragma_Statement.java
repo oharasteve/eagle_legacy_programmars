@@ -53,7 +53,7 @@ public class CMacro_Pragma_Statement extends TokenSequence implements CMacro_Pro
 		public @CHOICE CMacro_Pragma_Intrinsic XXintrinsic;
 		public @CHOICE CMacro_Pragma_Mark XXmark;
 		public @CHOICE CMacro_Pragma_Message XXmessage;
-		public @CHOICE CMacro_Pragma_Optimize XXoptimize;;
+		public @CHOICE CMacro_Pragma_Optimize XXoptimize;
 		public @CHOICE CMacro_Pragma_Pack XXpack;
 		public @CHOICE CMacro_Pragma_Region XXregion;
 		public @CHOICE CMacro_Pragma_RuntimeChecks XXruntimeChecks;

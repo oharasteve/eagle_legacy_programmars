@@ -49,7 +49,7 @@ public class SQL_InsertStatement extends TokenSequence implements EagleRunnable
 	public static class SQL_InsertSet extends TokenSequence
 	{
 		public @S(10) SQL_Keyword SET = new SQL_Keyword("SET");
-		public @S(20) SQL_InsertAssignment assignment;
+		public @S(20) SeparatedList<SQL_InsertAssignment, PunctuationComma> assignments;
 
 		public static class SQL_InsertAssignment extends TokenSequence
 		{

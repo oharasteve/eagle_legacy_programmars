@@ -14,6 +14,7 @@ import com.eagle.programmar.Java.Symbols.Java_Variable_Definition;
 import com.eagle.programmar.Java.Terminals.Java_Comment;
 import com.eagle.programmar.Java.Terminals.Java_KeywordChoice;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -31,16 +32,14 @@ import com.eagle.transform.EagleTransformer;
 public class Java_Data extends TokenSequence
 		implements EagleRunnable, AbstractStatement, EagleTransformableStatementList
 {
-	public @S(10) @OPT @NEWLINE TokenList<Java_Annotation> annotation1;
-	public @S(20) @OPT TokenList<Java_DataModifier> modifiers;
-	public @S(30) @OPT TokenList<Java_Annotation> annotation2;
-	public @S(40) Java_Type jtype;
-	public @S(50) Java_Variable_Definition id;
-	public @S(60) @OPT TokenList<Java_DataSubscript> subscripts;
-	public @S(70) @OPT Java_DataInitialValue initialValue;
-	public @S(80) @OPT TokenList<Java_MoreIdentifiers> moreIds;
-	public @S(90) @NOSPACE PunctuationSemicolon semicolon;
-	public @S(100) @OPT TokenList<Java_Comment> comments;
+	public @S(10) @OPT @NEWLINE TokenList<Java_DataModifier> modifiers;
+	public @S(20) Java_Type jtype;
+	public @S(30) Java_Variable_Definition id;
+	public @S(40) @OPT TokenList<Java_DataSubscript> subscripts;
+	public @S(50) @OPT Java_DataInitialValue initialValue;
+	public @S(60) @OPT TokenList<Java_MoreIdentifiers> moreIds;
+	public @S(70) @NOSPACE PunctuationSemicolon semicolon;
+	public @S(80) @OPT TokenList<Java_Comment> comments;
 
 	public static class Java_DataSubscript extends TokenSequence
 	{
@@ -48,9 +47,10 @@ public class Java_Data extends TokenSequence
 		public @S(20) PunctuationRightBracket rightBracket;
 	}
 
-	public static class Java_DataModifier extends TokenSequence
+	public static class Java_DataModifier extends TokenChooser
 	{
-		public @S(10) Java_KeywordChoice modifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @CHOICE Java_KeywordChoice XXmodifier = new Java_KeywordChoice(Java_Program.MODIFIERS);
+		public @CHOICE Java_Annotation XXannotation;
 	}
 
 	public static class Java_DataInitialValue extends TokenSequence implements EagleRunnable
@@ -175,32 +175,39 @@ public class Java_Data extends TokenSequence
 		return data;
 	}
 
-	private boolean hasModifier(String which)
+	private boolean hasModifier(String what)
 	{
 		if (modifiers != null)
 		{
 			for (Java_DataModifier mod : modifiers._elements)
 			{
-				if (which.equals(mod.modifier.getValue()))
+				AbstractToken whichMod = mod.getWhich();
+				if (whichMod instanceof Java_KeywordChoice)
 				{
-					return true;
+					Java_KeywordChoice kw = (Java_KeywordChoice) whichMod;
+					if (what.equals(kw.getValue()))
+					{
+						return true;
+					}
 				}
 			}
 		}
 		return false;
 	}
 
-	public void addModifier(String which)
+	public void addModifier(String what)
 	{
-		Java_DataModifier mod = new Java_DataModifier();
-		mod.modifier.setValue(which);
-		if (modifiers == null)
+		if (!hasModifier(what))
 		{
-			modifiers = new TokenList<Java_DataModifier>();
-			modifiers.setPresent(true);
-		}
-		if (!hasModifier(which))
-		{
+			Java_KeywordChoice kw = new Java_KeywordChoice();
+			kw.setValue(what);
+			Java_DataModifier mod = new Java_DataModifier();
+			mod.setWhich(kw);
+			if (modifiers == null)
+			{
+				modifiers = new TokenList<Java_DataModifier>();
+				modifiers.setPresent(true);
+			}
 			modifiers.addToken(mod);
 		}
 	}
