@@ -15,7 +15,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 
 public class C_Declaration extends TokenChooser
 {
-	private @SKIP static String[] declarations = new String[]
+	private static @SKIP String[] declarations = new String[]
 	{
 		"fallthrough", "__fallthrough__",
 		"maybe_unused",
