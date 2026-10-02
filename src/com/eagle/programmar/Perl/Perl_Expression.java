@@ -4,6 +4,8 @@
 package com.eagle.programmar.Perl;
 
 import com.eagle.programmar.Perl.Expressions.Perl_AdditiveExpression;
+import com.eagle.programmar.Perl.Expressions.Perl_NullCoalesceExpression;
+import com.eagle.programmar.Perl.Expressions.Perl_IncludeExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_AddressOfExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_ArrowExpression;
 import com.eagle.programmar.Perl.Expressions.Perl_AssignmentExpression;
@@ -111,6 +113,7 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(240) Perl_GrepExpression grepExpression;
 	public @P(250) Perl_ReadExpression readExpression;
 	public @P(260) Perl_BuiltIn builtIn;
+	public @P(265) Perl_IncludeExpression includeExpression;
 	public @P(270) Perl_RegExExpression regExExpression;
 	public @P(280) Perl_ArrayFunction arrayFunction;
 	public @P(290) Perl_IntValFunction intFunction;
@@ -148,6 +151,7 @@ public class Perl_Expression extends PrecedenceChooser
 	public @P(1130) Perl_BitwiseExpression bitwiseExpression;
 	public @P(1140) Perl_LogicalAndExpression logicalAndExpression;
 	public @P(1150) Perl_LogicalOrExpression logicalOrExpression;
+	public @P(1155) Perl_NullCoalesceExpression nullCoalesceExpression;
 	public @P(1160) Perl_TrueFalseExpression trueFalseExpression;
 	public @P(1170) Perl_RangeExpression rangeExpression;
 	public @P(1180) Perl_AssignmentExpression assignmentExpression;

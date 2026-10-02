@@ -4,6 +4,7 @@
 package com.eagle.programmar.Perl.Statements;
 
 import java.util.ArrayList;
+import com.eagle.tokens.punctuation.PunctuationComma;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.StaticEnum;
@@ -33,6 +34,15 @@ public class Perl_VarStatement extends TokenSequence
 	public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
 	public @S(30) Perl_Variable_Definition var;
 	public @S(40) @OPT Perl_Variable_Init init;
+	public @S(50) @OPT TokenList<Perl_MoreVars> moreVars; // static $a = null, $b = null; (Oct 2026)
+
+	public static class Perl_MoreVars extends TokenSequence
+	{
+		public @S(10) PunctuationComma comma;
+		public @S(20) @OPT Perl_Punctuation dollar = new Perl_Punctuation('$');
+		public @S(30) Perl_Variable_Definition var;
+		public @S(40) @OPT Perl_Variable_Init init;
+	}
 
 	public static class Perl_VarPrefix extends TokenSequence
 	{

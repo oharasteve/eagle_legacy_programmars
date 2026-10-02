@@ -24,7 +24,7 @@ public class Perl_Syntax extends EagleSyntax
 		_commentInstance = new Perl_Comment();
 		_punctuationExceptions = new String[] {
 				"..", "===", "!==", "::", "==", "->", "<=", ">=", "<<", ">>",
-				"!=", "=>", "=~", "?>", "//", "/*", "**"
+				"!=", "=>", "=~", "?>", "??", "//", "/*", "**"
 		};
 
 		addReservedWords(Perl_Reserved_Words.RESERVED_WORDS);

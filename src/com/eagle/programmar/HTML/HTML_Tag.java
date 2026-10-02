@@ -4,6 +4,8 @@
 package com.eagle.programmar.HTML;
 
 import com.eagle.programmar.Django.Django_Control;
+import com.eagle.programmar.PHP.PHP_Syntax;
+import com.eagle.programmar.PHP.PHP_Program.PHP_Section;
 import com.eagle.programmar.Django.Django_Insert;
 import com.eagle.programmar.Django.Terminals.Django_Comment;
 import com.eagle.programmar.HTML.Terminals.HTML_Identifier;
@@ -25,6 +27,7 @@ public class HTML_Tag extends TokenSequence
 	public static class HTML_TagElement extends TokenChooser
 	{
 		public @CHOICE HTML_Attribute XXattribute;
+		public @CHOICE @SYNTAX(PHP_Syntax.class) PHP_Section XXphp; // PHP in a tag (Oct 2026, shane branch)
 		public @CHOICE Django_Control XXcontrol;
 		public @CHOICE Django_Insert XXinsert;
 		public @CHOICE Django_Comment XXcomment;

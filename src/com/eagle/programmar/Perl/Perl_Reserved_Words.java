@@ -16,6 +16,7 @@ public class Perl_Reserved_Words
 			"die", // I added
 			"do",
 			"else",
+			"elseif", "endif", "endforeach", "endwhile", "endfor", "endswitch", // PHP alternative syntax (Oct 2026, shane branch)
 			"elsif",
 			"eq",
 			"exp",

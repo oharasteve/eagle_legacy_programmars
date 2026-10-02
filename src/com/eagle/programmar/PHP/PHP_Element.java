@@ -10,4 +10,5 @@ import com.eagle.tokens.TokenChooser;
 public class PHP_Element extends TokenChooser
 {
 	public @CHOICE @SYNTAX(Perl_Syntax.class) Perl_StatementOrComment XXstatement;
+	public @CHOICE @SYNTAX(Perl_Syntax.class) PHP_AltStatement XXalt;
 }

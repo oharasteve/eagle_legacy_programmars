@@ -53,6 +53,7 @@ public class PHP_Program extends AbstractLanguage
 		public @CHOICE @SYNTAX(HTML_Syntax.class) HTML_Program XXhtml;
 		public @CHOICE PHP_Section XXphp;
 		public @LAST PHP_IfBlock XXifBlock;
+		public @CHOICE PHP_AltBlock XXaltBlock;
 	}
 
 	public static class PHP_StartTag extends TokenSequence
