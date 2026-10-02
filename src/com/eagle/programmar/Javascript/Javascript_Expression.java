@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.programmar.Javascript.Expressions.Javascript_AdditiveExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_NonNullExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_AsExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_AssignmentExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_BitwiseAndExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_BitwiseNotExpression;
@@ -137,8 +139,10 @@ public class Javascript_Expression extends PrecedenceChooser
 	// Binary expressions
 
 	public @P(1000) Javascript_SubscriptExpression subscriptExpression;
+	public @P(1005) Javascript_NonNullExpression nonNullExpression;
 	public @P(1010) Javascript_Subfield subfield;
 	public @P(1011) Javascript_SubfieldKeyword subfieldKeyword;
+	public @P(1013) Javascript_AsExpression asExpression;
 	public @P(1020) Javascript_Power_Expression power_Expression;
 	public @P(1030) Javascript_MultiplicativeExpression multiplicativeExpression;
 	public @P(1040) Javascript_AdditiveExpression additiveExpression;

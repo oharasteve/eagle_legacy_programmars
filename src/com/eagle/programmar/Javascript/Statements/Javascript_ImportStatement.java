@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript.Statements;
 
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Literal;
 import com.eagle.tokens.SeparatedList;
@@ -17,6 +19,7 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Javascript_ImportStatement extends TokenSequence
 {
 	public @S(10) Javascript_Keyword IMPORT = new Javascript_Keyword("import");
+	public @S(15) @OPT Javascript_Keyword TYPE = new Javascript_Keyword("type"); // TypeScript
 	public @S(20) SeparatedList<Javascript_ImportElement, PunctuationComma> ids;
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 
@@ -31,12 +34,23 @@ public class Javascript_ImportStatement extends TokenSequence
 			public @CHOICE Javascript_Identifier_Reference XXtheirId;
 			public @CHOICE Javascript_Literal XXliteral;
 
+			public @CHOICE Javascript_Punctuation XXstar = new Javascript_Punctuation('*'); // import * as ns
 			public @CHOICE static class Javascript_ImportBraces extends TokenSequence
 			{
 				public @S(10) PunctuationLeftBrace leftBrace;
-				public @S(20) SeparatedList<Javascript_Identifier_Reference, PunctuationComma> id;
+				public @S(20) @OPT SeparatedList<Javascript_ImportSpecifier, PunctuationComma> id;
+				public @S(25) @OPT PunctuationComma trailingComma;
 				public @S(30) PunctuationRightBrace rightBrace;
 			}
+
+		}
+
+		/** [type] name [as alias] */
+		public static class Javascript_ImportSpecifier extends TokenSequence
+		{
+			public @S(10) @OPT Javascript_Keyword TYPE = new Javascript_Keyword("type");
+			public @S(20) Javascript_Field_Reference id;
+			public @S(30) @OPT Javascript_ImportAs alias;
 		}
 
 		public static class Javascript_ImportAs extends TokenSequence

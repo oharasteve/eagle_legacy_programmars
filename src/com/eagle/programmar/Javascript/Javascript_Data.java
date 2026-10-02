@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript;
 
 import java.util.ArrayList;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
+import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.StaticEnum;
@@ -34,6 +36,8 @@ public class Javascript_Data extends TokenSequence
 	public @S(5) @OPT Javascript_Keyword EXPORT = new Javascript_Keyword("export");
 	public @S(10) Javascript_Type type;
 	public @S(20) Javascript_DeclarationTarget target;
+	public @S(24) @OPT Javascript_Punctuation definite = new Javascript_Punctuation("!"); // TypeScript: let x!: T
+	public @S(26) @OPT TS_TypeAnnotation tsType;
 	public @S(30) @OPT Javascript_InitData init;
 	public @S(40) @OPT TokenList<Javascript_More_Variables> moreVars;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
@@ -65,6 +69,7 @@ public class Javascript_Data extends TokenSequence
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT TokenList<Javascript_Comment> comments;
 		public @S(30) Javascript_DeclarationTarget target;
+		public @S(35) @OPT TS_TypeAnnotation tsType;
 		public @S(40) @OPT Javascript_InitData init;
 	}
 

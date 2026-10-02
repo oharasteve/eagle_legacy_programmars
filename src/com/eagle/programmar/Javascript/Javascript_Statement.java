@@ -4,6 +4,7 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.programmar.Javascript.Statements.Javascript_BreakStatement;
+import com.eagle.programmar.Javascript.TypeScript.TS_Statements;
 import com.eagle.programmar.Javascript.Statements.Javascript_ContinueStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DoStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_DocumentWriteln;
@@ -25,6 +26,12 @@ import com.eagle.tokens.punctuation.PunctuationSemicolon;
 public class Javascript_Statement extends TokenChooser
 {
 	public @FIRST Javascript_StatementBlock XXblock;
+	public @CHOICE TS_Statements.TS_InterfaceStatement XXtsInterface;
+	public @CHOICE TS_Statements.TS_TypeAliasStatement XXtsTypeAlias;
+	public @CHOICE TS_Statements.TS_EnumStatement XXtsEnum;
+	public @CHOICE TS_Statements.TS_ModuleStatement XXtsModule;
+	public @CHOICE TS_Statements.TS_FunctionSignature XXtsFunctionSignature;
+	public @CHOICE TS_Statements.TS_DeclareStatement XXtsDeclare;
 	public @CHOICE Javascript_Data XXdata;
 	public @CHOICE @CURIOUS("Extra semicolon") PunctuationSemicolon XXsemicolon;
 

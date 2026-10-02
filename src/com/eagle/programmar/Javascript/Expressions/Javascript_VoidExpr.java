@@ -4,11 +4,12 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
+import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Number;
 import com.eagle.tokens.PrimaryOperator;
 
 public class Javascript_VoidExpr extends PrimaryOperator
 {
 	public @S(10) Javascript_Keyword VOID = new Javascript_Keyword("void");
-	public @S(20) Javascript_Number number;
+	public @S(20) Javascript_Expression expr; // was a number only; void read() is common (Oct 2026)
 }

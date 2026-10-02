@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
+import com.eagle.programmar.Javascript.Javascript_Pattern;
+import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
+import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.tokens.TokenChooser;
@@ -18,16 +21,23 @@ public class Javascript_FunctionParameters extends TokenSequence
 {
 	public @S(10) Javascript_FunctionParameter param;
 	public @S(20) @OPT TokenList<Javascript_MoreParameters> moreParams;
+	public @S(30) @OPT PunctuationComma trailingComma;
 
 	public static class Javascript_FunctionParameter extends TokenSequence
 	{
+		public @S(5) @OPT Javascript_KeywordChoice modifier = new Javascript_KeywordChoice("public", "private", "protected", "readonly", "override"); // TypeScript constructor parameters
+		public @S(6) @OPT Javascript_KeywordChoice modifier2 = new Javascript_KeywordChoice("readonly", "override");
 		public @S(10) @OPT Javascript_Punctuation rest = new Javascript_Punctuation("...");
 		public @S(20) Javascript_ParameterName paramName;
+		public @S(23) @OPT Javascript_Punctuation optional = new Javascript_Punctuation("?");
+		public @S(26) @OPT TS_TypeAnnotation tsType;
 		public @S(30) @OPT Javascript_ParameterInitValue value;
 
 		public static class Javascript_ParameterName extends TokenChooser
 		{
 			public @CHOICE Javascript_Variable_Definition XXid;
+			public @CHOICE Javascript_Pattern.Javascript_ObjectPattern XXobjectPattern; // destructured parameters (Oct 2026)
+			public @CHOICE Javascript_Pattern.Javascript_ArrayPattern XXarrayPattern;
 			public @CHOICE Javascript_Punctuation XXdollar = new Javascript_Punctuation('$');
 			
 			public @CHOICE static class Javascript_ParameterBraces extends TokenSequence

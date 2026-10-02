@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Functions;
 
 import com.eagle.programmar.Javascript.Javascript_Element;
+import com.eagle.programmar.Javascript.Javascript_Pattern;
+import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
+import com.eagle.programmar.Javascript.TypeScript.TS_Generics;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Javascript_FunctionBody;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
@@ -31,17 +34,28 @@ public class Javascript_LambdaFunction extends PrimaryOperator
 
 		public @CHOICE static class Javascript_LambdaManyParams extends TokenSequence
 		{
+			public @S(5) @OPT TS_Generics generics;
 			public @S(10) PunctuationLeftParen leftParen;
 			public @S(20) @OPT SeparatedList<Javascript_LambdaParam, PunctuationComma> params;
 			public @S(30) PunctuationRightParen rightParen;
+			public @S(40) @OPT TS_TypeAnnotation returns;
 		}
 	}
 	
 	public static class Javascript_LambdaParam extends TokenSequence
 	{
-		public @S(10) @OPT Javascript_Punctuation rest = new Javascript_Punctuation("...");		
-		public @S(20) Javascript_Variable_Definition param;
+		public @S(10) @OPT Javascript_Punctuation rest = new Javascript_Punctuation("...");
+		public @S(20) Javascript_LambdaParamName param;
+		public @S(23) @OPT Javascript_Punctuation optional = new Javascript_Punctuation("?");
+		public @S(26) @OPT TS_TypeAnnotation tsType;
 		public @S(30) @OPT Javascript_LambdaInitValue init;
+
+		public static class Javascript_LambdaParamName extends TokenChooser
+		{
+			public @CHOICE Javascript_Variable_Definition XXid;
+			public @CHOICE Javascript_Pattern.Javascript_ObjectPattern XXobjectPattern;
+			public @CHOICE Javascript_Pattern.Javascript_ArrayPattern XXarrayPattern;
+		}
 
 		public static class Javascript_LambdaInitValue extends TokenSequence
 		{

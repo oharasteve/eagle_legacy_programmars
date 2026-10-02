@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript;
 
 import java.util.ArrayList;
+import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
+import com.eagle.programmar.Javascript.TypeScript.TS_Generics;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.TypeEnum;
@@ -31,6 +33,7 @@ import com.eagle.tokens.interfaces.AbstractStatement;
 import com.eagle.tokens.interfaces.AbstractType;
 import com.eagle.tokens.interfaces.AbstractVariable;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 import com.eagle.transform.EagleTransformableFunction;
 import com.eagle.transform.EagleTransformer;
@@ -48,10 +51,12 @@ public class Javascript_Function extends TokenSequence
 	public static class Javascript_FunctionImplementation extends TokenSequence
 	{
 		public @S(10) @OPT Javascript_Function_Definition id;
+		public @S(15) @OPT TS_Generics generics;
 		public @S(20) PunctuationLeftParen leftParen;
 		public @S(30) @OPT Javascript_FunctionParameters params;
 		public @S(40) @OPT TokenList<Javascript_Comment> comments1;
 		public @S(50) PunctuationRightParen rightParen;
+		public @S(55) @OPT TS_TypeAnnotation returns;
 		public @S(60) @OPT TokenList<Javascript_Comment> comments2;
 		public @S(70) Javascript_FunctionBody body;
 	}

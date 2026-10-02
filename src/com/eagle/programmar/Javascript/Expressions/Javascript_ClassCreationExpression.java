@@ -12,5 +12,6 @@ public class Javascript_ClassCreationExpression extends PrimaryOperator
 {
 	public @S(10) Javascript_Keyword NEW = new Javascript_Keyword("new");
 	public @S(20) Javascript_Type jtype;
+	public @S(25) @OPT @NOSPACE com.eagle.programmar.Javascript.TypeScript.TS_TypeArguments typeArguments;
 	public @S(30) Javascript_ParenthesizedExpression arguments;
 }

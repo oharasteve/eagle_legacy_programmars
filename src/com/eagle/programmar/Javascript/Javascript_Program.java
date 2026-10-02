@@ -34,6 +34,12 @@ public class Javascript_Program extends AbstractLanguage
 		super(JAVASCRIPT, new Javascript_Syntax());
 	}
 
+	/** For a language that is these rules under another name and syntax: TypeScript (Oct 2026, shane branch). */
+	protected Javascript_Program(String name, Javascript_Syntax syntax)
+	{
+		super(name, syntax);
+	}
+
 	@Override
 	public String getDocRoot()
 	{

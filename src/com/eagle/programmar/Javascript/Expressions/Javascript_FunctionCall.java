@@ -4,6 +4,7 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import java.util.ArrayList;
+import com.eagle.programmar.Javascript.TypeScript.TS_TypeArguments;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.TypeEnum;
@@ -35,6 +36,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 		implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) Javascript_Variable functionName;
+	public @S(15) @OPT @NOSPACE TS_TypeArguments typeArguments;
 	public @S(20) Javascript_ParenthesizedExpression arguments;
 
 	@Override

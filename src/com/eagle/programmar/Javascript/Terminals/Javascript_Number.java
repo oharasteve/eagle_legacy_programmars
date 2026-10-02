@@ -9,6 +9,6 @@ public class Javascript_Number extends TerminalNumberToken
 {
 	public Javascript_Number()
 	{
-		super("eE", "n", true, false, '?');
+		super("eE", "n", true, true, '_'); // the underscore is ignorable: 60_000 (Oct 2026, shane branch)
 	}
 }
