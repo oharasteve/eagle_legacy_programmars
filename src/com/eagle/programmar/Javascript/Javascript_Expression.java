@@ -40,12 +40,14 @@ import com.eagle.programmar.Javascript.Expressions.Javascript_RelationalExpressi
 import com.eagle.programmar.Javascript.Expressions.Javascript_ShiftExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_SimpleArray;
 import com.eagle.programmar.Javascript.Expressions.Javascript_Subfield;
+import com.eagle.programmar.Javascript.Expressions.Javascript_SubfieldKeyword;
 import com.eagle.programmar.Javascript.Expressions.Javascript_SubscriptExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_TemplateExpr;
 import com.eagle.programmar.Javascript.Expressions.Javascript_TrueFalseExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_TypeOfExpr;
 import com.eagle.programmar.Javascript.Expressions.Javascript_VariableExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_VoidExpr;
+import com.eagle.programmar.Javascript.Functions.Javascript_AwaitExpr;
 import com.eagle.programmar.Javascript.Functions.Javascript_AwaitFunctionCall;
 import com.eagle.programmar.Javascript.Functions.Javascript_EvalFunction;
 import com.eagle.programmar.Javascript.Functions.Javascript_FunctionExpr;
@@ -108,6 +110,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	public @P(210) Javascript_ClassCreationWithSubscript classCreationWithSubscript;
 	public @P(220) Javascript_NewNoArgsExpression newNoArgsExpression;
 	public @P(230) Javascript_AwaitFunctionCall awaitFunctionCall;
+	public @P(235) Javascript_AwaitExpr awaitExpr;
 	public @P(240) Javascript_FunctionCall functionCall;
 	public @P(250) Javascript_PreIncrementExpression preIncrementExpression;
 	public @P(260) Javascript_PostIncrementExpression postIncrementExpression;
@@ -135,6 +138,7 @@ public class Javascript_Expression extends PrecedenceChooser
 
 	public @P(1000) Javascript_SubscriptExpression subscriptExpression;
 	public @P(1010) Javascript_Subfield subfield;
+	public @P(1011) Javascript_SubfieldKeyword subfieldKeyword;
 	public @P(1020) Javascript_Power_Expression power_Expression;
 	public @P(1030) Javascript_MultiplicativeExpression multiplicativeExpression;
 	public @P(1040) Javascript_AdditiveExpression additiveExpression;

@@ -13,6 +13,7 @@ import com.eagle.programmar.Javascript.Terminals.Javascript_Literal;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Number;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.SeparatedList;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -33,6 +34,13 @@ public class Javascript_ObjectLiteral extends PrimaryOperator
 
 	public static class Javascript_ObjectLiteralItem extends TokenChooser
 	{
+		/** ...expr inside an object literal (Oct 2026, shane branch). */
+		public @CHOICE static class Javascript_ObjectSpread extends TokenSequence
+		{
+			public @S(10) Javascript_Punctuation ellipsis = new Javascript_Punctuation("...");
+			public @S(20) Javascript_Expression expr;
+		}
+
 		public @CHOICE static class Javascript_ObjectFunction extends TokenSequence
 		{
 			public @S(10) @OPT TokenList<Javascript_Comment> comments;

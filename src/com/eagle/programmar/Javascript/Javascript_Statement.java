@@ -11,6 +11,7 @@ import com.eagle.programmar.Javascript.Statements.Javascript_ExpressionStmt;
 import com.eagle.programmar.Javascript.Statements.Javascript_ForEachStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ForStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_IfStatement;
+import com.eagle.programmar.Javascript.Statements.Javascript_ExportStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ImportStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_ReturnStatement;
 import com.eagle.programmar.Javascript.Statements.Javascript_StatementBlock;
@@ -36,6 +37,7 @@ public class Javascript_Statement extends TokenChooser
 	public @CHOICE Javascript_Function XXfunction;
 	public @CHOICE Javascript_IfStatement XXifStatement;
 	public @CHOICE Javascript_ImportStatement XXimportStatement;
+	public @CHOICE Javascript_ExportStatement XXexportStatement;
 	public @CHOICE Javascript_ReturnStatement XXreturnStatement;
 	public @CHOICE Javascript_SwitchStatement XXswitchStatement;
 	public @CHOICE Javascript_ThrowStatement XXthrowStatement;

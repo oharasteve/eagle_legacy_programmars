@@ -9,7 +9,10 @@ public class Javascript_Literal extends TerminalLiteralToken
 {
 	public Javascript_Literal()
 	{
-		super("`\"'", true, '\\', false, true);
+		// Backtick strings are template literals (Javascript_TemplateLiteral, through
+		// Javascript_TemplateExpr) since Oct 2026; matching them here as plain strings
+		// ended a template at its first nested backtick.
+		super("\"'", true, '\\', false, true);
 	}
 	
 //	@Override

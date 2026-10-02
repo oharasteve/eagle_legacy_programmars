@@ -7,10 +7,14 @@ import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
 import com.eagle.programmar.Javascript.Terminals.Javascript_PunctuationChoice;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
+import com.eagle.tokens.punctuation.PunctuationLeftBracket;
+import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -43,12 +47,31 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 	public static class Javascript_VariableQualifier extends TokenChooser
 	{
 		public @CHOICE Javascript_Subscript XXsubscript;
+		public @CHOICE Javascript_OptionalCall XXoptionalCall;
+		public @CHOICE Javascript_OptionalSubscript XXoptionalSubscript;
 
 		public @CHOICE static class Javascript_VarField extends TokenSequence
 		{
 			public @S(10) Javascript_PunctuationChoice dot = new Javascript_PunctuationChoice(".", "?.");
-			public @S(20) Javascript_Identifier_Reference id;
+			// A property may be a reserved word: promise.catch(...), obj.default
+			public @S(20) Javascript_Field_Reference id;
 		}
+	}
+
+	/** f?.(args), since Oct 2026 (shane branch). */
+	public static class Javascript_OptionalCall extends TokenSequence
+	{
+		public @S(10) Javascript_Punctuation question = new Javascript_Punctuation("?.");
+		public @S(20) Javascript_ParenthesizedExpression arguments;
+	}
+
+	/** a?.[key] */
+	public static class Javascript_OptionalSubscript extends TokenSequence
+	{
+		public @S(10) Javascript_Punctuation question = new Javascript_Punctuation("?.");
+		public @S(20) PunctuationLeftBracket leftBracket;
+		public @S(30) Javascript_Expression index;
+		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
 	@Override

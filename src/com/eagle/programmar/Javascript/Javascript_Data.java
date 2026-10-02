@@ -14,6 +14,7 @@ import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
 import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
@@ -30,6 +31,7 @@ import com.eagle.transform.EagleTransformer;
 public class Javascript_Data extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatementList
 {
+	public @S(5) @OPT Javascript_Keyword EXPORT = new Javascript_Keyword("export");
 	public @S(10) Javascript_Type type;
 	public @S(20) Javascript_DeclarationTarget target;
 	public @S(30) @OPT Javascript_InitData init;

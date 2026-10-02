@@ -9,7 +9,7 @@ public class Javascript_Reserved_Words
 	public static final String[] RESERVED_WORDS = new String[] {
 			"abstract",
 			// "arguments", // I removed
-			// "async", // I added
+			"async", // reserved again Oct 2026 (shane branch): async () => {} was read as a call to a function named async
 			"await", // I added
 			"boolean",
 			"break",

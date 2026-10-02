@@ -53,6 +53,8 @@ public class Javascript_LambdaFunction extends PrimaryOperator
 	public static class Javascript_LambdaBody extends TokenChooser
 	{
 		public @CHOICE Javascript_FunctionBody XXblock;
-		public @CHOICE Javascript_Element XXstmt;
+		// An expression, not a statement (changed Oct 2026, shane branch): a statement body
+		// swallowed the comma-separated properties that followed a lambda in an object literal.
+		public @CHOICE Javascript_Expression XXexpr;
 	}
 }

@@ -27,10 +27,15 @@ public class Javascript_TryStatement extends TokenSequence implements AbstractSt
 	public static class Javascript_CatchBlock extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword CATCH = new Javascript_Keyword("catch");
-		public @S(20) PunctuationLeftParen leftParen;
-		public @S(30) Javascript_Variable_Definition id;
-		public @S(40) PunctuationRightParen rightParen;
+		public @S(20) @OPT Javascript_CatchParameter parameter; // optional since ES2019 (Oct 2026, shane branch)
 		public @S(50) Javascript_Element catchStatement;
+
+		public static class Javascript_CatchParameter extends TokenSequence
+		{
+			public @S(10) PunctuationLeftParen leftParen;
+			public @S(20) Javascript_Variable_Definition id;
+			public @S(30) PunctuationRightParen rightParen;
+		}
 	}
 
 	public static class Javascript_FinallyBlock extends TokenSequence
