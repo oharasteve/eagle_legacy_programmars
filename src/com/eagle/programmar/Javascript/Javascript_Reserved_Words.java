@@ -40,7 +40,7 @@ public class Javascript_Reserved_Words
 			"instanceof",
 			"int",
 			"interface",
-			"length",
+			// "length", // removed Oct 2026: a variable may be called length; x.length is still Javascript_Length
 			"long",
 			"native",
 			"new",

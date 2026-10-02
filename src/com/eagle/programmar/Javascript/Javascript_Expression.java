@@ -29,6 +29,7 @@ import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalOrExpressio
 import com.eagle.programmar.Javascript.Expressions.Javascript_LogicalXorExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_MultiplicativeExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_NegativeExpression;
+import com.eagle.programmar.Javascript.Expressions.Javascript_NullishExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_NewNoArgsExpression;
 import com.eagle.programmar.Javascript.Expressions.Javascript_ObjectLiteral;
 import com.eagle.programmar.Javascript.Expressions.Javascript_Parenthesized_Expression;
@@ -147,6 +148,7 @@ public class Javascript_Expression extends PrecedenceChooser
 	public @P(1120) Javascript_BitwiseOrExpression inclusiveOrExpression;
 	public @P(1130) Javascript_LogicalAndExpression conditionalAndExpression;
 	public @P(1140) Javascript_LogicalOrExpression conditionalOrExpression;
+	public @P(1145) Javascript_NullishExpression nullishExpression;
 	public @P(1150) Javascript_TrueFalseExpression trueFalseExpression;
 	public @P(1160) Javascript_AssignmentExpression assignmentExpression;
 }

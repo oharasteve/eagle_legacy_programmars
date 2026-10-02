@@ -46,7 +46,7 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 
 		public @CHOICE static class Javascript_VarField extends TokenSequence
 		{
-			public @S(10) PunctuationPeriod dot;
+			public @S(10) Javascript_PunctuationChoice dot = new Javascript_PunctuationChoice(".", "?.");
 			public @S(20) Javascript_Identifier_Reference id;
 		}
 	}

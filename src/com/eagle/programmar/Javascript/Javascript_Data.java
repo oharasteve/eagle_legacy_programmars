@@ -13,6 +13,8 @@ import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Variable_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.tokens.TokenChooser;
 import com.eagle.tokens.TokenList;
 import com.eagle.tokens.TokenSequence;
 import com.eagle.tokens.interfaces.AbstractExpression;
@@ -29,10 +31,26 @@ public class Javascript_Data extends TokenSequence
 		implements EagleRunnable, EagleTransformableStatementList
 {
 	public @S(10) Javascript_Type type;
-	public @S(20) Javascript_Variable_Definition var;
+	public @S(20) Javascript_DeclarationTarget target;
 	public @S(30) @OPT Javascript_InitData init;
 	public @S(40) @OPT TokenList<Javascript_More_Variables> moreVars;
 	public @S(50) @OPT PunctuationSemicolon semicolon;
+
+	/** A name, or (since Oct 2026, shane branch) a destructuring pattern. */
+	public static class Javascript_DeclarationTarget extends TokenChooser
+	{
+		public @CHOICE Javascript_Variable_Definition XXid;
+		public @CHOICE Javascript_Pattern.Javascript_ObjectPattern XXobject;
+		public @CHOICE Javascript_Pattern.Javascript_ArrayPattern XXarray;
+	}
+
+	/** The declared name; a pattern is parsed but not yet interpreted or transformed. */
+	private static Javascript_Variable_Definition requireName(Javascript_DeclarationTarget target)
+	{
+		AbstractToken which = target.getWhich();
+		if (which instanceof Javascript_Variable_Definition) return (Javascript_Variable_Definition) which;
+		throw new RuntimeException("Destructuring declarations are parsed but not yet interpreted or transformed: " + which);
+	}
 
 	public static class Javascript_InitData extends TokenSequence
 	{
@@ -44,7 +62,7 @@ public class Javascript_Data extends TokenSequence
 	{
 		public @S(10) PunctuationComma comma;
 		public @S(20) @OPT TokenList<Javascript_Comment> comments;
-		public @S(30) Javascript_Variable_Definition var;
+		public @S(30) Javascript_DeclarationTarget target;
 		public @S(40) @OPT Javascript_InitData init;
 	}
 
@@ -54,7 +72,7 @@ public class Javascript_Data extends TokenSequence
 		if (init != null && init.isPresent())
 		{
 			EagleValue value = interpreter.getEagleValue(init.expr);
-			interpreter.setSymbol(var, var.toString(), value);
+			interpreter.setSymbol(requireName(target), requireName(target).toString(), value);
 		}
 
 		if (moreVars != null && moreVars.size() > 0)
@@ -64,7 +82,7 @@ public class Javascript_Data extends TokenSequence
 				if (more.init != null && more.init.isPresent())
 				{
 					EagleValue value = interpreter.getEagleValue(more.init.expr);
-					interpreter.setSymbol(more.var, more.var.toString(), value);
+					interpreter.setSymbol(requireName(more.target), requireName(more.target).toString(), value);
 				}
 			}
 		}
@@ -85,10 +103,10 @@ public class Javascript_Data extends TokenSequence
 		ArrayList<AbstractStatement> result = new ArrayList<AbstractStatement>();
 
 		// See if the Declaration has some assignments in the metrics file
-		TypeEnum typeEnum = transformer.findAssignMetric(var);
+		TypeEnum typeEnum = transformer.findAssignMetric(requireName(target));
 		AbstractType newType = generator.transformType(typeEnum, null, this);
 
-		String name1 = var.getValue();
+		String name1 = requireName(target).getValue();
 		AbstractExpression initial1 = null;
 		if (init != null && init.isPresent())
 		{
@@ -101,7 +119,7 @@ public class Javascript_Data extends TokenSequence
 		{
 			for (Javascript_More_Variables more : moreVars._elements)
 			{
-				String name2 = more.var.getValue();
+				String name2 = requireName(more.target).getValue();
 				AbstractExpression initial2 = null;
 				if (more.init != null && more.init.isPresent())
 				{
