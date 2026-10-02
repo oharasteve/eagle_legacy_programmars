@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.IncrementEnum;
 import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
@@ -28,31 +31,6 @@ public class Javascript_PostIncrementExpression extends PrimaryOperator
 	public @S(20) @NOSPACE Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice("++", "--");
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		if (var.firstId.getWhich() instanceof Javascript_Identifier_Reference)
-		{
-			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) var.firstId.getWhich();
-			EagleValue val = interpreter.findSymbol(id.getValue());
-			int prev = val.forceIntegerValue();
-			int curr;
-			switch (operator.getValue())
-			{
-			case "++":
-				curr = prev + 1;
-				break;
-			case "--":
-				curr = prev - 1;
-				break;
-			default:
-				throw new RuntimeException("Unexpected operator: " + operator);
-			}
-			interpreter.setSymbol(var, id.getValue(), new EagleInteger(curr));
-			interpreter.pushInt(prev);
-		}
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -71,5 +49,23 @@ public class Javascript_PostIncrementExpression extends PrimaryOperator
 		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) var.firstId.getWhich();
 		return generator.newPostIncrementExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, null, whichDirection, this);
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue prev = Javascript_Variable.evaluate(rt, var, null, 0);
+		EagleValue next = JsValues.num(JsValues.toNumber(prev) + ("++".equals(operator.getValue()) ? 1 : -1));
+		AbstractToken last = Javascript_Variable.lastQualifier(var);
+		if (last == null) rt.assign(var, Javascript_Variable.firstName(var), next);
+		else
+		{
+			EagleValue receiver = Javascript_Variable.evaluate(rt, var, null, 1);
+			if (last instanceof Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField)
+				rt.setProperty(receiver, ((Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField) last).id.getValue(), next);
+			else rt.setIndex(receiver, rt.eval(((com.eagle.programmar.Javascript.Javascript_Subscript) last).expr), next);
+		}
+		interpreter.pushEagleValue(prev);
 	}
 }

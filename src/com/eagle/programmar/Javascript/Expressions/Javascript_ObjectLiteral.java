@@ -4,6 +4,12 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.programmar.Javascript.Javascript_Expression;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Javascript_Function.Javascript_FunctionImplementation;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Field_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Comment;
@@ -22,7 +28,7 @@ import com.eagle.tokens.punctuation.PunctuationComma;
 import com.eagle.tokens.punctuation.PunctuationLeftBrace;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 
-public class Javascript_ObjectLiteral extends PrimaryOperator
+public class Javascript_ObjectLiteral extends PrimaryOperator implements EagleRunnable
 {
 	// Don't use @INDENT here. Messes up 'return' statements that return an object
 	// literal.
@@ -67,5 +73,37 @@ public class Javascript_ObjectLiteral extends PrimaryOperator
 				public @S(20) Javascript_Expression expr;
 			}
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		JsValues.JsObject o = new JsValues.JsObject();
+		{
+			for (int i = 0; i < JsRuntime.count(items); i++)
+			{
+				AbstractToken which = items.getPrimaryElement(i).getWhich();
+				if (which instanceof Javascript_ObjectLiteralItem.Javascript_ObjectSpread)
+				{
+					EagleValue from = rt.eval(((Javascript_ObjectLiteralItem.Javascript_ObjectSpread) which).expr);
+					if (from instanceof JsValues.JsObject) o.props.putAll(((JsValues.JsObject) from).props);
+				}
+				else if (which instanceof Javascript_ObjectLiteralItem.Javascript_ObjectFunction)
+				{
+					Javascript_ObjectLiteralItem.Javascript_ObjectFunction fn = (Javascript_ObjectLiteralItem.Javascript_ObjectFunction) which;
+					String name = fn.function.id != null && fn.function.id.isPresent() ? fn.function.id.getValue() : "anonymous";
+					o.set(name, new JsValues.JsFunction(name, fn.function, rt.env));
+				}
+				else if (which instanceof Javascript_ObjectLiteralItem.Javascript_ObjecLiteraltData)
+				{
+					Javascript_ObjectLiteralItem.Javascript_ObjecLiteraltData data = (Javascript_ObjectLiteralItem.Javascript_ObjecLiteraltData) which;
+					String key = JsRuntime.keyText(data.name.getWhich());
+					if (data.value != null && data.value.isPresent()) o.set(key, rt.eval(data.value.expr));
+					else o.set(key, rt.read(key));
+				}
+			}
+		}
+		interpreter.pushEagleValue(o);
 	}
 }

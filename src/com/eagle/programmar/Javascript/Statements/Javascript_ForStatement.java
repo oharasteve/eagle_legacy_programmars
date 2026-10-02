@@ -4,6 +4,10 @@
 package com.eagle.programmar.Javascript.Statements;
 
 import com.eagle.generate.AssignmentEnum;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.programmar.Javascript.Javascript_Data;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
@@ -81,69 +85,6 @@ public class Javascript_ForStatement extends TokenSequence
 		public @S(10) Javascript_Variable forVar;
 	}
 
-	@Override
-	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
-	{
-		AbstractToken which = forLoop.loopVar.getWhich();
-		Javascript_Variable forVar;
-		if (which instanceof Javascript_ForLoopVariableWithType)
-		{
-			Javascript_ForLoopVariableWithType withType = (Javascript_ForLoopVariableWithType) which;
-			forVar = withType.forVar;
-		}
-		else
-		{
-			Javascript_ForLoopVariableNoType noType = (Javascript_ForLoopVariableNoType) which;
-			forVar = noType.forVar;
-		}
-
-		if (forVar.firstId.getWhich() instanceof Javascript_Identifier_Reference)
-		{
-			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) forVar.firstId.getWhich();
-			EagleValue init = interpreter.getEagleValue(forLoop.initialize);
-			interpreter.setSymbol(this, id.getValue(), init);
-		}
-
-		if (_metrics == null)
-		{
-			_metrics = new ForLoopMetrics(interpreter._metrics, FOR);
-		}
-		ForLoopMetric metric = new ForLoopMetric();
-
-		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		while (true)
-		{
-			boolean keepGoing = interpreter.getBoolValue(forLoop.terminateCondition);
-			if (!keepGoing) break;
-
-			metric.iterate();
-			result = interpreter.tryToInterpret(action);
-			if (result == Eagle_Statement_Result.BREAK)
-			{
-				metric.broke();
-				result = Eagle_Statement_Result.NORMAL;
-				break;
-			}
-			else if (result == Eagle_Statement_Result.CONTINUE)
-			{
-				metric.continued();
-				result = Eagle_Statement_Result.NORMAL;
-			}
-			else if (result == Eagle_Statement_Result.RETURN)
-			{
-				break;
-			}
-
-			interpreter.tryToInterpret(forLoop.increment);
-		}
-
-		// Have to guess to see if it was backwards
-		boolean backwards = guessDirection(forLoop.terminateCondition, forLoop.increment);
-
-		_metrics.completedLoop(metric, backwards);
-		return result;
-	}
-
 	private static boolean guessDirection(Javascript_Expression testExpr, Javascript_Expression incrExpr)
 	{
 		AbstractToken which1 = incrExpr.getWhich();
@@ -206,5 +147,39 @@ public class Javascript_ForStatement extends TokenSequence
 				forLoop.increment);
 		AbstractStatement newAction = transformer.transformStatement1(generator, this.action.statement);
 		return generator.newForLoopStatement1(asgExpr, null, termExpr, delta, newAction, this);
+	}
+
+	@Override
+	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		if (forLoop.loopVar != null && forLoop.loopVar.isPresent())
+		{
+			AbstractToken which = forLoop.loopVar.getWhich();
+			Javascript_Variable forVar = which instanceof Javascript_ForLoopVariableWithType ? ((Javascript_ForLoopVariableWithType) which).forVar : ((Javascript_ForLoopVariableNoType) which).forVar;
+			EagleValue init = forLoop.initialize != null && forLoop.initialize.isPresent() ? rt.eval(forLoop.initialize) : JsValues.undefined();
+			if (which instanceof Javascript_ForLoopVariableWithType) rt.declare(this, Javascript_Variable.firstName(forVar), init);
+			else rt.assign(this, Javascript_Variable.firstName(forVar), init);
+			if (JsRuntime.has(forLoop.moreVariables))
+				for (Javascript_Data.Javascript_More_Variables more : forLoop.moreVariables._elements)
+					rt.bindPattern(more.target.getWhich(), more.init != null && more.init.isPresent() ? rt.eval(more.init.expr) : JsValues.undefined(), true);
+		}
+		if (_metrics == null) _metrics = new ForLoopMetrics(interpreter._metrics, FOR);
+		ForLoopMetric metric = new ForLoopMetric();
+		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
+		while (true)
+		{
+			if (forLoop.terminateCondition != null && forLoop.terminateCondition.isPresent() && !JsValues.truthy(rt.eval(forLoop.terminateCondition))) break;
+			metric.iterate();
+			result = interpreter.tryToInterpret(action);
+			if (result == Eagle_Statement_Result.BREAK) { metric.broke(); result = Eagle_Statement_Result.NORMAL; break; }
+			else if (result == Eagle_Statement_Result.CONTINUE) { metric.continued(); result = Eagle_Statement_Result.NORMAL; }
+			else if (result == Eagle_Statement_Result.RETURN) break;
+			if (forLoop.increment != null && forLoop.increment.isPresent()) rt.eval(forLoop.increment);
+			if (forLoop.extraIncrement != null && forLoop.extraIncrement.isPresent()) rt.eval(forLoop.extraIncrement);
+		}
+		boolean backwards = guessDirection(forLoop.terminateCondition, forLoop.increment);
+		_metrics.completedLoop(metric, backwards);
+		return result;
 	}
 }

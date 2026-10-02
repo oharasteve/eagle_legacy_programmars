@@ -4,6 +4,12 @@
 package com.eagle.programmar.Javascript.Functions;
 
 import com.eagle.programmar.Javascript.Javascript_Element;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Javascript_Pattern;
 import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
 import com.eagle.programmar.Javascript.TypeScript.TS_Generics;
@@ -21,7 +27,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_LambdaFunction extends PrimaryOperator
+public class Javascript_LambdaFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) @OPT Javascript_Keyword ASYNC = new Javascript_Keyword("async");
 	public @S(20) Javascript_LambdaParams params;
@@ -70,5 +76,14 @@ public class Javascript_LambdaFunction extends PrimaryOperator
 		// An expression, not a statement (changed Oct 2026, shane branch): a statement body
 		// swallowed the comma-separated properties that followed a lambda in an object literal.
 		public @CHOICE Javascript_Expression XXexpr;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		JsValues.JsFunction f = new JsValues.JsFunction("anonymous", this, rt.env);
+		f.boundThis = rt.thisValue(); // an arrow keeps the this of where it was written
+		interpreter.pushEagleValue(f);
 	}
 }

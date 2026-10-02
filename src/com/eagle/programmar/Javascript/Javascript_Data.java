@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript;
 
 import java.util.ArrayList;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
 
@@ -74,28 +76,6 @@ public class Javascript_Data extends TokenSequence
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		if (init != null && init.isPresent())
-		{
-			EagleValue value = interpreter.getEagleValue(init.expr);
-			interpreter.setSymbol(requireName(target), requireName(target).toString(), value);
-		}
-
-		if (moreVars != null && moreVars.size() > 0)
-		{
-			for (Javascript_More_Variables more : moreVars._elements)
-			{
-				if (more.init != null && more.init.isPresent())
-				{
-					EagleValue value = interpreter.getEagleValue(more.init.expr);
-					interpreter.setSymbol(requireName(more.target), requireName(more.target).toString(), value);
-				}
-			}
-		}
-	}
-
-	@Override
 	public ArrayList<AbstractStatement> transformStatement(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -139,5 +119,15 @@ public class Javascript_Data extends TokenSequence
 		}
 
 		return result;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		rt.bindPattern(target.getWhich(), init != null && init.isPresent() ? rt.eval(init.expr) : JsValues.undefined(), true);
+		if (JsRuntime.has(moreVars))
+			for (Javascript_More_Variables more : moreVars._elements)
+				rt.bindPattern(more.target.getWhich(), more.init != null && more.init.isPresent() ? rt.eval(more.init.expr) : JsValues.undefined(), true);
 	}
 }

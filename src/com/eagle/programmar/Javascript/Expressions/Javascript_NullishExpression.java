@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.interpret.EagleInterpreter;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleValue;
 import com.eagle.programmar.Javascript.Javascript_Expression;
@@ -19,24 +22,8 @@ public class Javascript_NullishExpression extends PrecedenceOperator implements 
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		// The left side unless it has no value (null, undefined, or a name the interpreter
-		// does not know); then the right side.
-		EagleValue leftValue = null;
-		try
-		{
-			leftValue = interpreter.getEagleValue(left);
-		}
-		catch (RuntimeException ex)
-		{
-			leftValue = null;
-		}
-		if (leftValue != null)
-		{
-			interpreter.pushEagleValue(leftValue);
-		}
-		else
-		{
-			interpreter.pushEagleValue(interpreter.getEagleValue(right));
-		}
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue a = rt.eval(left);
+		interpreter.pushEagleValue(JsValues.isNullish(a) ? rt.eval(right) : a);
 	}
 }

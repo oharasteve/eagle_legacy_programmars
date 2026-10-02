@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.RelationalEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -37,51 +40,6 @@ public class Javascript_EqualityExpression extends PrecedenceOperator
 	private @SKIP Operator2Metrics _metrics = null;
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		EagleValue leftValue = interpreter.getEagleValue(left);
-		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = operator.toString();
-
-		if (_metrics == null)
-		{
-			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
-		}
-		_metrics.operated(leftValue.getType(), rightValue.getType());
-
-		if (leftValue.isString() || rightValue.isString())
-		{
-			String leftStr = leftValue.forceStringValue();
-			String rightStr = rightValue.forceStringValue();
-			switch (oper)
-			{
-			case "==", "===":
-				interpreter.pushBool(leftStr.equals(rightStr));
-				return;
-			case "!=", "!==":
-				interpreter.pushBool(!leftStr.equals(rightStr));
-				return;
-			}
-		}
-		else
-		{
-			int leftInt = leftValue.forceIntegerValue();
-			int rightInt = rightValue.forceIntegerValue();
-			switch (oper)
-			{
-			case "==", "===":
-				interpreter.pushBool(leftInt == rightInt);
-				return;
-			case "!=", "!==":
-				interpreter.pushBool(leftInt != rightInt);
-				return;
-			}
-		}
-
-		throw new RuntimeException("Unexpected equality operator: " + oper);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -98,5 +56,19 @@ public class Javascript_EqualityExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected relational operator: " + operator);
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue a = rt.eval(left);
+		EagleValue b = rt.eval(right);
+		String oper = operator.toString();
+		if (_metrics == null) _metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
+		_metrics.operated(a.getType(), b.getType());
+		boolean strict = oper.length() == 3;
+		boolean equal = strict ? JsValues.strictEquals(a, b) : JsValues.looseEquals(a, b);
+		interpreter.pushBool(oper.startsWith("!") ? !equal : equal);
 	}
 }

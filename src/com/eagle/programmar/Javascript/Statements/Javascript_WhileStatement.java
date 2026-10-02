@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript.Statements;
 
 import java.util.ArrayList;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
@@ -46,7 +48,7 @@ public class Javascript_WhileStatement extends TokenSequence
 		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
 		while (true)
 		{
-			boolean keepGoing = interpreter.getBoolValue(condition);
+			boolean keepGoing = JsValues.truthy(JsRuntime.of(interpreter).eval(condition));
 			if (!keepGoing) break;
 
 			metric.iterate();

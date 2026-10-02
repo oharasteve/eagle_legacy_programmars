@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript;
 
 import java.util.ArrayList;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 
 import com.eagle.core.AbstractLanguage;
 import com.eagle.generate.EagleGenerator;
@@ -57,30 +60,6 @@ public class Javascript_Program extends AbstractLanguage
 	}
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		// First pass, just collect all the method definitions
-		for (Javascript_TopElement element : elements._elements)
-		{
-			if (element.getWhich() instanceof Javascript_Function)
-			{
-				Javascript_Function func = (Javascript_Function) element.getWhich();
-				Javascript_Function_Definition functionName = func.implementation.id;
-				if (functionName != null && functionName.isPresent())
-				{
-					interpreter.addFunction(functionName.getValue(), func);
-				}
-			}
-		}
-
-		// Second pass, run everything
-		for (Javascript_TopElement element : elements._elements)
-		{
-			interpreter.tryToInterpret(element);
-		}
-	}
-
-	@Override
 	public AbstractLanguage transformProgram(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -130,5 +109,13 @@ public class Javascript_Program extends AbstractLanguage
 		}
 
 		return generator.getTransformedProgram();
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		for (Javascript_TopElement element : elements._elements) rt.hoistOne(element.getWhich());
+		for (Javascript_TopElement element : elements._elements) interpreter.tryToInterpret(element);
 	}
 }

@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript.Statements;
 
 import java.util.ArrayList;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
@@ -67,7 +69,7 @@ public class Javascript_IfStatement extends TokenSequence
 		}
 
 		Javascript_Expression condition = conditions.first();
-		boolean cond = interpreter.getBoolValue(condition);
+		boolean cond = JsValues.truthy(JsRuntime.of(interpreter).eval(condition));
 		_metrics.get(0).completedIf(cond);
 		if (cond)
 		{

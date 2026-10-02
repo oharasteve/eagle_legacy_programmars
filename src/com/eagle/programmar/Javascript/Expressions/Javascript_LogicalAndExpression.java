@@ -4,6 +4,10 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_Expression;
@@ -24,27 +28,19 @@ public class Javascript_LogicalAndExpression extends PrecedenceOperator
 	public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		boolean leftValue = interpreter.getBoolValue(left);
-		if (leftValue)
-		{
-			boolean rightValue = interpreter.getBoolValue(right);
-			interpreter.pushBool(rightValue);
-		}
-		else
-		{
-			// Short circuit, don't bother with RHS
-			interpreter.pushBool(false);
-		}
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression leftExpr = transformer.transformExpression(generator, left);
 		AbstractExpression rightExpr = transformer.transformExpression(generator, right);
 		return generator.newLogicalAndExpression(leftExpr, rightExpr, this);
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue a = rt.eval(left);
+		interpreter.pushEagleValue(JsValues.truthy(a) ? rt.eval(right) : a);
 	}
 }

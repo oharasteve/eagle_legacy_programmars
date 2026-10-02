@@ -4,15 +4,27 @@
 package com.eagle.programmar.Javascript.Functions;
 
 import com.eagle.programmar.Javascript.Javascript_Expression;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_StringFunction extends PrimaryOperator
+public class Javascript_StringFunction extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Javascript_Keyword STRING = new Javascript_Keyword("String");
 	public @S(20) PunctuationLeftParen leftParen;
 	public @S(30) Javascript_Expression expr;
 	public @S(40) PunctuationRightParen rightParen;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.pushEagleValue(JsValues.str(JsValues.toText(JsRuntime.of(interpreter).eval(expr))));
+	}
 }

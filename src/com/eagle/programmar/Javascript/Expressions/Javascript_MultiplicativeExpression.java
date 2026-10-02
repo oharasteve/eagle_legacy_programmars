@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.MultiplicativeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -29,36 +32,6 @@ public class Javascript_MultiplicativeExpression extends PrecedenceOperator
 	private @SKIP Operator2Metrics _metrics = null;
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		EagleValue leftValue = interpreter.getEagleValue(left);
-		EagleValue rightValue = interpreter.getEagleValue(right);
-		String oper = operator.toString();
-
-		if (_metrics == null)
-		{
-			_metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
-		}
-		_metrics.operated(leftValue.getType(), rightValue.getType());
-
-		int leftInt = leftValue.forceIntegerValue();
-		int rightInt = rightValue.forceIntegerValue();
-		switch (oper)
-		{
-		case "*":
-			interpreter.pushInt(leftInt * rightInt);
-			return;
-		case "/":
-			interpreter.pushInt(leftInt / rightInt);
-			return;
-		case "%":
-			interpreter.pushInt(leftInt % rightInt);
-			return;
-		}
-		throw new RuntimeException("Unexpected multiplicative operator: " + oper);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -75,5 +48,17 @@ public class Javascript_MultiplicativeExpression extends PrecedenceOperator
 		default:
 			throw new RuntimeException("Unexpected multiplicative operator: " + operator);
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue a = rt.eval(left);
+		EagleValue b = rt.eval(right);
+		String oper = operator.getValue();
+		if (_metrics == null) _metrics = new Operator2Metrics(interpreter._metrics, operator, oper);
+		_metrics.operated(a.getType(), b.getType());
+		interpreter.pushEagleValue(Javascript_AssignmentExpression.combine(oper, a, b));
 	}
 }

@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.interpret.EagleInterpreter;
+import com.eagle.tokens.TerminalToken;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.math.EagleArray;
 import com.eagle.math.EagleValue;
@@ -74,25 +77,60 @@ public class Javascript_Variable extends TokenSequence implements EagleRunnable
 		public @S(40) PunctuationRightBracket rightBracket;
 	}
 
+	/** The value this variable names: the first name, then every qualifier in turn. receiver, when given, is what the first name is a property of. */
+	public static EagleValue evaluate(JsRuntime rt, Javascript_Variable v, EagleValue receiver, int skipLast)
+	{
+		AbstractToken first = v.firstId.getWhich();
+		EagleValue value;
+		if (receiver != null) value = rt.getProperty(receiver, firstName(v), false);
+		else if (first instanceof Javascript_Identifier_Reference) value = rt.read(((Javascript_Identifier_Reference) first).getValue());
+		else if (first instanceof Javascript_KeywordChoice) value = rt.thisValue();
+		else value = rt.read(first.toString());
+		if (!JsRuntime.has(v.qualifiers)) return value;
+		int n = v.qualifiers.size() - skipLast;
+		for (int i = 0; i < n; i++)
+		{
+			AbstractToken which = v.qualifiers._elements.get(i).getWhich();
+			if (which instanceof Javascript_Subscript)
+			{
+				value = rt.getIndex(value, rt.eval(((Javascript_Subscript) which).expr), false);
+			}
+			else if (which instanceof Javascript_VariableQualifier.Javascript_VarField)
+			{
+				Javascript_VariableQualifier.Javascript_VarField field = (Javascript_VariableQualifier.Javascript_VarField) which;
+				if ("?.".equals(field.dot.getValue()) && JsValues.isNullish(value)) return JsValues.undefined();
+				value = rt.getProperty(value, field.id.getValue(), false);
+			}
+			else if (which instanceof Javascript_OptionalCall)
+			{
+				if (JsValues.isNullish(value)) return JsValues.undefined();
+				value = rt.call(value, JsValues.undefined(), rt.args(((Javascript_OptionalCall) which).arguments.expressions), v);
+			}
+			else if (which instanceof Javascript_OptionalSubscript)
+			{
+				if (JsValues.isNullish(value)) return JsValues.undefined();
+				value = rt.getIndex(value, rt.eval(((Javascript_OptionalSubscript) which).index), true);
+			}
+		}
+		return value;
+	}
+
+	public static String firstName(Javascript_Variable v)
+	{
+		AbstractToken first = v.firstId.getWhich();
+		return first instanceof TerminalToken ? ((TerminalToken) first).getValue() : first.toString();
+	}
+
+	/** The last qualifier: a field name (with "?." noted) or null when it is a subscript. */
+	public static AbstractToken lastQualifier(Javascript_Variable v)
+	{
+		if (!JsRuntime.has(v.qualifiers)) return null;
+		return v.qualifiers._elements.get(v.qualifiers.size() - 1).getWhich();
+	}
+
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		EagleValue value = interpreter.findSymbol(firstId.getWhich().toString());
-
-		if (qualifiers != null && qualifiers.isPresent() && qualifiers.size() == 1)
-		{
-			AbstractToken which = qualifiers._elements.get(0).getWhich();
-			if (which instanceof Javascript_Subscript)
-			{
-				Javascript_Subscript subscript = (Javascript_Subscript) which;
-				EagleArray array = (EagleArray) value;
-				int sub = interpreter.getIntValue(subscript.expr);
-				EagleValue val = array.getValue(sub);
-				interpreter.pushEagleValue(val);
-				return;
-			}
-		}
-
-		interpreter.pushEagleValue(value);
+		interpreter.pushEagleValue(evaluate(JsRuntime.of(interpreter), this, null, 0));
 	}
 }

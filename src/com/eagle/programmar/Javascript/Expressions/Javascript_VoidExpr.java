@@ -4,12 +4,25 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Javascript_Expression;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Number;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Javascript_VoidExpr extends PrimaryOperator
+public class Javascript_VoidExpr extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Javascript_Keyword VOID = new Javascript_Keyword("void");
 	public @S(20) Javascript_Expression expr; // was a number only; void read() is common (Oct 2026)
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime.of(interpreter).eval(expr);
+		interpreter.pushEagleValue(JsValues.undefined());
+	}
 }

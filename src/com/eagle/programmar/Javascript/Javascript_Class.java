@@ -4,6 +4,12 @@
 package com.eagle.programmar.Javascript;
 
 import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Definition;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.tokens.punctuation.PunctuationSemicolon;
 import com.eagle.tokens.punctuation.PunctuationRightBracket;
 import com.eagle.tokens.punctuation.PunctuationLeftBracket;
@@ -34,7 +40,7 @@ import com.eagle.tokens.punctuation.PunctuationPeriod;
 import com.eagle.tokens.punctuation.PunctuationRightBrace;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_Class extends TokenSequence
+public class Javascript_Class extends TokenSequence implements EagleRunnable
 {
 	public @S(10) @OPT Javascript_Keyword EXPORT = new Javascript_Keyword("export");
 	public @S(12) @OPT Javascript_Keyword DEFAULT = new Javascript_Keyword("default");
@@ -140,5 +146,14 @@ public class Javascript_Class extends TokenSequence
 	{
 		public @S(10) Javascript_Keyword STATIC = new Javascript_Keyword("static");
 		public @S(20) Javascript_FunctionBody body;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		// Hoisted already when this class is a statement of a body; defined here otherwise.
+		JsRuntime rt = JsRuntime.of(interpreter);
+		if (name != null && name.isPresent() && !rt.env.hasLocal(name.getValue()))
+			rt.env.define(name.getValue(), rt.makeClass(name.getValue(), extend, elements, this));
 	}
 }

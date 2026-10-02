@@ -4,15 +4,33 @@
 package com.eagle.programmar.Javascript.Functions;
 
 import com.eagle.programmar.Javascript.Javascript_ParenthesizedExpression;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.tokens.PrimaryOperator;
 
-public class Javascript_AwaitFunctionCall extends PrimaryOperator
+public class Javascript_AwaitFunctionCall extends PrimaryOperator implements EagleRunnable
 {
 	public @S(10) Javascript_Keyword AWAIT = new Javascript_Keyword("await");
 	public @S(20) @OPT Javascript_Keyword NEW = new Javascript_Keyword("new");
 	public @S(30) Javascript_Variable functionName;
 	public @S(35) @OPT @NOSPACE com.eagle.programmar.Javascript.TypeScript.TS_TypeArguments typeArguments;
 	public @S(40) @OPT Javascript_ParenthesizedExpression arguments;
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		if (NEW != null && NEW.isPresent())
+		{
+			EagleValue cls = Javascript_Variable.evaluate(rt, functionName, null, 0);
+			interpreter.pushEagleValue(rt.construct(cls, rt.args(arguments == null ? null : arguments.expressions), this));
+		}
+		else interpreter.pushEagleValue(com.eagle.programmar.Javascript.Expressions.Javascript_FunctionCall.invoke(rt, functionName, arguments, null, this));
+	}
 }

@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.BuiltInEnum;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -25,16 +27,18 @@ public class Javascript_BuiltInVar extends PrimaryOperator
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		switch (builtinConstant.toString())
+		switch (builtinConstant.getValue())
 		{
-		case "false":
-			interpreter.pushBool(false);
-			return;
-		case "true":
-			interpreter.pushBool(true);
-			return;
+		case "true": interpreter.pushBool(true); return;
+		case "false": interpreter.pushBool(false); return;
+		case "null": interpreter.pushEagleValue(JsValues.nul()); return;
+		case "undefined": interpreter.pushEagleValue(JsValues.undefined()); return;
+		case "NaN": interpreter.pushEagleValue(JsValues.num(Double.NaN)); return;
+		case "Infinity": interpreter.pushEagleValue(JsValues.num(Double.POSITIVE_INFINITY)); return;
+		case "this": interpreter.pushEagleValue(JsRuntime.of(interpreter).thisValue()); return;
+		case "arguments": interpreter.pushEagleValue(JsValues.undefined()); return;
+		default: interpreter.pushEagleValue(JsRuntime.of(interpreter).read(builtinConstant.getValue()));
 		}
-		throw new RuntimeException("Can't handle BuiltIn's other than true/false: " + builtinConstant);
 	}
 
 	@Override

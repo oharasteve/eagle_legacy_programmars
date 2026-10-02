@@ -4,6 +4,10 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_Expression;
@@ -23,17 +27,16 @@ public class Javascript_BitwiseNotExpression extends PrimaryOperator
 	public @S(20) Javascript_Expression expr;
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		boolean value = interpreter.getBoolValue(expr);
-		interpreter.pushBool(!value);
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		AbstractExpression theExpr = transformer.transformExpression(generator, expr);
 		return generator.newLogicalNotExpression(theExpr, this);
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		interpreter.pushEagleValue(JsValues.num(~(int) JsValues.toNumber(JsRuntime.of(interpreter).eval(expr))));
 	}
 }

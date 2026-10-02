@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript.Functions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -29,16 +31,6 @@ public class Javascript_Length extends PrimaryOperator
 	public @S(30) Javascript_Keyword LENGTH = new Javascript_Keyword("length");
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		AbstractToken which = variableName.firstId.getWhich();
-		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) which;
-		EagleValue val = interpreter.findSymbol(id.getValue());
-		String str = val.forceStringValue();
-		interpreter.pushInt(str.length());
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -51,5 +43,12 @@ public class Javascript_Length extends PrimaryOperator
 		AbstractExpression theExpr = generator.newVariableExpression(idRef.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, null, this);
 		return generator.newLengthFunction(theExpr, this);
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		interpreter.pushEagleValue(rt.getProperty(Javascript_Variable.evaluate(rt, variableName, null, 0), "length", false));
 	}
 }

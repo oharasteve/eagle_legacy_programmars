@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.NegativeEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -28,32 +31,6 @@ public class Javascript_NegativeExpression extends PrimaryOperator
 	private @SKIP Operator1Metrics _metrics = null;
 
 	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		EagleValue value = interpreter.getEagleValue(expr);
-		String oper = operator.getValue();
-
-		if (_metrics == null)
-		{
-			_metrics = new Operator1Metrics(interpreter._metrics, operator, oper);
-		}
-		_metrics.operated(value.getType());
-
-		int val = value.forceIntegerValue();
-		switch (oper)
-		{
-		case "+":
-			interpreter.pushInt(val);
-			break;
-		case "-":
-			interpreter.pushInt(-val);
-			break;
-		default:
-			throw new RuntimeException("Unexpected negation operator: " + oper);
-		}
-	}
-
-	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
@@ -67,5 +44,12 @@ public class Javascript_NegativeExpression extends PrimaryOperator
 		default:
 			throw new RuntimeException("Unexpected negation operator: " + operator);
 		}
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		double v = JsValues.toNumber(JsRuntime.of(interpreter).eval(expr));
+		interpreter.pushEagleValue(JsValues.num("-".equals(operator.getValue()) ? -v : v));
 	}
 }

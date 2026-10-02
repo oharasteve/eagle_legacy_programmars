@@ -4,6 +4,9 @@
 package com.eagle.programmar.Javascript.Statements;
 
 import com.eagle.generate.EagleGenerator;
+import com.eagle.interpret.EagleRunnableWithResult.Eagle_Statement_Result;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnableWithResult;
 import com.eagle.math.EagleValue;
@@ -28,31 +31,29 @@ public class Javascript_ReturnStatement extends TokenSequence
 	public @S(30) @OPT PunctuationSemicolon semicolon;
 
 	@Override
+	public AbstractStatement transformStatement(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		AbstractExpression expr = transformer.transformExpression(generator, expression);
+		return generator.newReturnStatement(expr, this);
+	}
+
+	@Override
 	public Eagle_Statement_Result interpretStatement(EagleInterpreter interpreter)
 	{
-		EagleValue val = interpreter.getEagleValue(expression);
-
+		EagleValue val = expression != null && expression.isPresent() ? JsRuntime.of(interpreter).eval(expression) : JsValues.undefined();
 		AbstractToken parent = this.getParent();
 		while (parent != null)
 		{
 			if (parent instanceof Javascript_Function)
 			{
 				Javascript_Function func = (Javascript_Function) parent;
-				func._returnMetrics.returned(val.getType());
+				if (func._returnMetrics != null) func._returnMetrics.returned(val.getType());
 				break;
 			}
 			parent = parent.getParent();
 		}
-
 		interpreter.pushEagleValue(val);
 		return Eagle_Statement_Result.RETURN;
-	}
-
-	@Override
-	public AbstractStatement transformStatement(EagleTransformer transformer,
-			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
-	{
-		AbstractExpression expr = transformer.transformExpression(generator, expression);
-		return generator.newReturnStatement(expr, this);
 	}
 }

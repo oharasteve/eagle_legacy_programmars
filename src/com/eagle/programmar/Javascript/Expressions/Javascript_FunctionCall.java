@@ -4,6 +4,10 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import java.util.ArrayList;
+import com.eagle.tokens.TokenList;
+import com.eagle.programmar.Javascript.Javascript_Subscript;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.TypeScript.TS_TypeArguments;
 
 import com.eagle.generate.EagleGenerator;
@@ -38,93 +42,7 @@ public class Javascript_FunctionCall extends PrimaryOperator
 	public @S(10) Javascript_Variable functionName;
 	public @S(15) @OPT @NOSPACE TS_TypeArguments typeArguments;
 	public @S(20) Javascript_ParenthesizedExpression arguments;
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		String name = "unknown";
-		AbstractToken first = functionName.firstId.getWhich();
-		if (first instanceof Javascript_Identifier_Reference)
-		{
-			// Look it up
-			name = ((Javascript_Identifier_Reference) first).getValue();
-		}
-
-		// Make sure the function args match up
-		int argCount = 0;
-		if (arguments.expressions != null && arguments.expressions.isPresent())
-		{
-			argCount = arguments.expressions.getPrimaryCount();
-		}
-
-		AbstractFunction fn = interpreter.findFunction(name);
-		if (fn == null)
-		{
-			throw new RuntimeException("Unable to find a function named " + name);
-		}
-		Javascript_Function func = (Javascript_Function) fn;
-
-		Javascript_FunctionParameters parameters = func.implementation.params;
-		int paramCount = 0;
-		if (parameters != null && parameters.isPresent())
-		{
-			if (parameters.param != null) paramCount = 1;
-			if (parameters.moreParams != null && parameters.moreParams.isPresent())
-			{
-				paramCount += parameters.moreParams.size();
-			}
-		}
-
-		if (argCount != paramCount)
-		{
-			throw new RuntimeException(
-					"Function " + name + " expects #args = " + paramCount + ", but was given " + argCount);
-		}
-
-		// Now assign all the parameters
-		ArrayList<TypeEnum> argTypes = new ArrayList<TypeEnum>();
-		if (argCount > 0)
-		{
-			Javascript_FunctionParameter param = parameters.param;
-			for (int i = 0; i < argCount; i++)
-			{
-				Javascript_Expression expr = arguments.expressions.getPrimaryElement(i);
-				if (i > 0)
-				{
-					param = parameters.moreParams._elements.get(i - 1).param;
-				}
-				EagleValue val = interpreter.getEagleValue(expr);
-				AbstractToken which = param.paramName.getWhich();
-				if (which instanceof Javascript_Variable_Definition)
-				{
-					Javascript_Variable_Definition id = (Javascript_Variable_Definition) which;
-					interpreter.setSymbol(param, id.getValue(), val);
-					argTypes.add(val.getType());
-				}
-			}
-		}
-
-		// Prepare to evaluate the method
-		long startTime = System.nanoTime();
-
-		// And transfer control to the method
-		interpreter.callingFunction(name, func);
-		Eagle_Statement_Result result = Eagle_Statement_Result.NORMAL;
-		Javascript_FunctionBody body = func.implementation.body;
-		for (Javascript_StatementOrComment stmt : body.statements._elements)
-		{
-			result = interpreter.tryToInterpret(stmt);
-			if (result != Eagle_Statement_Result.NORMAL) break;
-		}
-
-		// The result was already put on the runtime stack
-		long elapsedTime = System.nanoTime() - startTime;
-		func._callMetrics.addCallFrom(this, elapsedTime);
-		func._argumentsMetrics.calledWith(argTypes);
-
-		// Now remove all those parameters
-		interpreter.completedFunction(name, func);
-	}
+	public @S(30) @OPT @NOSPACE TokenList<Javascript_ParenthesizedExpression> moreCalls; // twice(f)(3) (Oct 2026)
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
@@ -148,5 +66,43 @@ public class Javascript_FunctionCall extends PrimaryOperator
 			return generator.newMethodInvocation(var, args, types, this);
 		}
 		throw new RuntimeException("Can't handle: " + this);
+	}
+
+	/** Calls what a variable names, with this bound when the name is a property; the receiver, when given, is what the first name belongs to. */
+	public static EagleValue invoke(JsRuntime rt, Javascript_Variable functionName, Javascript_ParenthesizedExpression arguments, EagleValue receiver, AbstractToken site)
+	{
+		java.util.List<EagleValue> args = rt.args(arguments == null ? null : arguments.expressions);
+		AbstractToken last = Javascript_Variable.lastQualifier(functionName);
+		if (last == null)
+		{
+			String name = Javascript_Variable.firstName(functionName);
+			if (receiver != null) return rt.callMethod(receiver, name, args, site);
+			if ("super".equals(name)) { rt.superCall(args, site); return JsValues.undefined(); }
+			return rt.call(rt.read(name), JsValues.undefined(), args, site);
+		}
+		EagleValue target = Javascript_Variable.evaluate(rt, functionName, receiver, 1);
+		if (last instanceof Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField)
+		{
+			Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField field = (Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField) last;
+			if ("?.".equals(field.dot.getValue()) && JsValues.isNullish(target)) return JsValues.undefined();
+			return rt.callMethod(target, field.id.getValue(), args, site);
+		}
+		if (last instanceof Javascript_Subscript)
+		{
+			EagleValue f = rt.getIndex(target, rt.eval(((Javascript_Subscript) last).expr), false);
+			return rt.call(f, target, args, site);
+		}
+		EagleValue f = Javascript_Variable.evaluate(rt, functionName, receiver, 0);
+		return rt.call(f, JsValues.undefined(), args, site);
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue result = invoke(rt, functionName, arguments, null, this);
+		if (JsRuntime.has(moreCalls))
+			for (Javascript_ParenthesizedExpression more : moreCalls._elements) result = rt.call(result, JsValues.undefined(), rt.args(more.expressions), this);
+		interpreter.pushEagleValue(result);
 	}
 }

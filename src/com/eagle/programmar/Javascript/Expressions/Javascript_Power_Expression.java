@@ -4,12 +4,28 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.programmar.Javascript.Javascript_Expression;
+import com.eagle.interpret.EagleInterpreter;
+import com.eagle.interpret.EagleRunnable;
+import com.eagle.tokens.AbstractToken;
+import com.eagle.math.EagleValue;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Punctuation;
 import com.eagle.tokens.PrecedenceOperator;
 
-public class Javascript_Power_Expression extends PrecedenceOperator
+public class Javascript_Power_Expression extends PrecedenceOperator implements EagleRunnable
 {
 	public @S(10) Javascript_Expression left = new Javascript_Expression(this, AllowedPrecedence.HIGHER);
 	public @S(20) Javascript_Punctuation stars = new Javascript_Punctuation("**");
 	public @S(30) Javascript_Expression right = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		EagleValue a = rt.eval(left);
+		EagleValue b = rt.eval(right);
+		String oper = "**";
+		interpreter.pushEagleValue(Javascript_AssignmentExpression.combine(oper, a, b));
+	}
 }

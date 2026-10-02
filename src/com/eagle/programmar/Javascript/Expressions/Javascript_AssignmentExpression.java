@@ -4,6 +4,8 @@
 package com.eagle.programmar.Javascript.Expressions;
 
 import com.eagle.generate.AssignmentEnum;
+import com.eagle.programmar.Javascript.Runtime.JsValues;
+import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
@@ -32,43 +34,6 @@ public class Javascript_AssignmentExpression extends PrecedenceOperator
 	public @S(20) Javascript_PunctuationChoice operator = new Javascript_PunctuationChoice(
 			"=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|=");
 	public @S(30) Javascript_Expression expr = new Javascript_Expression(this, AllowedPrecedence.ATLEAST);
-
-	@Override
-	public void interpret(EagleInterpreter interpreter)
-	{
-		if (!(var.getWhich() instanceof Javascript_VariableExpression))
-		{
-			throw new RuntimeException("Unexpected assignment variable: " + var.getWhich());
-		}
-
-		Javascript_VariableExpression varExpr = (Javascript_VariableExpression) var.getWhich();
-		AbstractToken token = varExpr.variable.firstId.getWhich();
-		if (token instanceof Javascript_Identifier_Reference)
-		{
-			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) token;
-			switch (operator.getValue())
-			{
-			case "=":
-				EagleValue val = interpreter.getEagleValue(expr);
-				interpreter.setSymbol(id, id.getValue(), val);
-				break;
-			case "+=":
-				int newVal1 = interpreter.getIntValue(expr);
-				EagleValue oldVar1 = interpreter.findSymbol(id.toString());
-				EagleInteger newValue1 = new EagleInteger(oldVar1.forceIntegerValue() + newVal1);
-				interpreter.setSymbol(id, id.getValue(), newValue1);
-				break;
-			case "-=":
-				int newVal2 = interpreter.getIntValue(expr);
-				EagleValue oldVar2 = interpreter.findSymbol(id.toString());
-				EagleInteger newValue2 = new EagleInteger(oldVar2.forceIntegerValue() - newVal2);
-				interpreter.setSymbol(id, id.getValue(), newValue2);
-				break;
-			default:
-				throw new RuntimeException("Unexpected assignment operator: " + operator.getValue());
-			}
-		}
-	}
 
 	@Override
 	public AbstractExpression transformExpression(EagleTransformer transformer,
@@ -119,5 +84,93 @@ public class Javascript_AssignmentExpression extends PrecedenceOperator
 		AbstractExpression asgExpr = generator.newAssignmentExpression(id.getValue(),
 				SubscriptEnum.FIRST_IS_ZERO, newSub, asg, value, this);
 		return asgExpr;
+	}
+
+	@Override
+	public void interpret(EagleInterpreter interpreter)
+	{
+		JsRuntime rt = JsRuntime.of(interpreter);
+		String op = operator.getValue();
+		AbstractToken target = var.getWhich();
+		if (target instanceof Javascript_Subfield || target instanceof Javascript_SubfieldKeyword)
+		{
+			// receiver.member = value, where the receiver is any expression (this, a call, ...)
+			EagleValue receiver;
+			String member;
+			if (target instanceof Javascript_Subfield)
+			{
+				Javascript_Subfield sub = (Javascript_Subfield) target;
+				receiver = rt.eval(sub.left);
+				AbstractToken right = sub.right.getWhich();
+				if (!(right instanceof Javascript_VariableExpression)) throw new RuntimeException("Cannot assign to " + right.getClass().getSimpleName());
+				Javascript_Variable rv = ((Javascript_VariableExpression) right).variable;
+				AbstractToken rlast = Javascript_Variable.lastQualifier(rv);
+				if (rlast != null) { receiver = Javascript_Variable.evaluate(rt, rv, receiver, 1); member = rlast instanceof Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField ? ((Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField) rlast).id.getValue() : null;
+					if (member == null) { EagleValue key = rt.eval(((Javascript_Subscript) rlast).expr); EagleValue value = "=".equals(op) ? rt.eval(expr) : combine(op.substring(0, op.length() - 1), rt.getIndex(receiver, key, false), rt.eval(expr)); rt.setIndex(receiver, key, value); interpreter.pushEagleValue(value); return; } }
+				else member = Javascript_Variable.firstName(rv);
+			}
+			else
+			{
+				Javascript_SubfieldKeyword sub = (Javascript_SubfieldKeyword) target;
+				receiver = rt.eval(sub.left);
+				member = sub.field.getValue();
+			}
+			EagleValue value = "=".equals(op) ? rt.eval(expr) : combine(op.substring(0, op.length() - 1), rt.getProperty(receiver, member, false), rt.eval(expr));
+			rt.setProperty(receiver, member, value);
+			interpreter.pushEagleValue(value);
+			return;
+		}
+		if (!(target instanceof Javascript_VariableExpression))
+			throw new RuntimeException("Cannot assign to " + target.getClass().getSimpleName());
+		Javascript_Variable v = ((Javascript_VariableExpression) target).variable;
+		EagleValue value;
+		if ("=".equals(op)) value = rt.eval(expr);
+		else
+		{
+			EagleValue current = Javascript_Variable.evaluate(rt, v, null, 0);
+			if ("??=".equals(op)) value = JsValues.isNullish(current) ? rt.eval(expr) : current;
+			else if ("||=".equals(op)) value = JsValues.truthy(current) ? current : rt.eval(expr);
+			else if ("&&=".equals(op)) value = JsValues.truthy(current) ? rt.eval(expr) : current;
+			else value = combine(op.substring(0, op.length() - 1), current, rt.eval(expr));
+		}
+		AbstractToken last = Javascript_Variable.lastQualifier(v);
+		if (last == null)
+		{
+			rt.assign(v, Javascript_Variable.firstName(v), value);
+		}
+		else
+		{
+			EagleValue receiver = Javascript_Variable.evaluate(rt, v, null, 1);
+			if (last instanceof Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField)
+				rt.setProperty(receiver, ((Javascript_Variable.Javascript_VariableQualifier.Javascript_VarField) last).id.getValue(), value);
+			else if (last instanceof Javascript_Subscript)
+				rt.setIndex(receiver, rt.eval(((Javascript_Subscript) last).expr), value);
+			else throw new RuntimeException("Cannot assign through " + last.getClass().getSimpleName());
+		}
+		interpreter.pushEagleValue(value);
+	}
+
+	/** a op b for the arithmetic operators, with JavaScript's string rule for +. */
+	public static EagleValue combine(String op, EagleValue a, EagleValue b)
+	{
+		if ("+".equals(op) && (a.isString() || b.isString() || a instanceof JsValues.JsObject || b instanceof JsValues.JsObject || a.isArray() || b.isArray()))
+			return JsValues.str(JsValues.toText(a) + JsValues.toText(b));
+		double x = JsValues.toNumber(a), y = JsValues.toNumber(b);
+		switch (op)
+		{
+		case "+": return JsValues.num(x + y);
+		case "-": return JsValues.num(x - y);
+		case "*": return JsValues.num(x * y);
+		case "/": return JsValues.num(x / y);
+		case "%": return JsValues.num(x % y);
+		case "**": return JsValues.num(Math.pow(x, y));
+		case "<<": return JsValues.num((int) x << (int) y);
+		case ">>": return JsValues.num((int) x >> (int) y);
+		case ">>>": return JsValues.num((int) x >>> (int) y);
+		case "&": return JsValues.num((int) x & (int) y);
+		case "|": return JsValues.num((int) x | (int) y);
+		case "^": return JsValues.num((int) x ^ (int) y);
+		default: throw new RuntimeException("Unexpected operator: " + op);
+		}
 	}
 }
