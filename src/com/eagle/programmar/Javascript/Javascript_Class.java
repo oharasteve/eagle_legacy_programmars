@@ -27,6 +27,7 @@ import com.eagle.programmar.Javascript.TypeScript.TS_TypeAnnotation;
 import com.eagle.programmar.Javascript.TypeScript.TS_TypeArguments;
 import com.eagle.programmar.Javascript.TypeScript.TS_Generics;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Class_Reference;
+import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Function_Definition;
 import com.eagle.programmar.Javascript.Terminals.Javascript_Keyword;
 import com.eagle.programmar.Javascript.Terminals.Javascript_KeywordChoice;
@@ -80,6 +81,7 @@ public class Javascript_Class extends TokenSequence implements EagleRunnable
 
 	public static class Javascript_Method extends TokenSequence
 	{
+		public @S(1) @OPT TokenList<Javascript_Decorator> decorators;
 		public @S(2) @OPT Javascript_ClassModifiers modifiers;
 		public @S(10) @OPT Javascript_Keyword STATIC = new Javascript_Keyword("static");
 		public @S(15) @OPT Javascript_KeywordChoice ASYNC = new Javascript_KeywordChoice("async", "readonly", "override");
@@ -93,6 +95,14 @@ public class Javascript_Class extends TokenSequence implements EagleRunnable
 		public @S(65) @OPT TS_TypeAnnotation returns;
 		public @S(70) @OPT Javascript_FunctionBody body; // absent in an abstract or overload signature
 		public @S(80) @OPT PunctuationSemicolon semicolon;
+	}
+
+	/** @service repo;  @action save() {}  @tracked(x) y;  @a.b c;  — decorators before a member (Oct 2026) */
+	public static class Javascript_Decorator extends TokenSequence
+	{
+		public @S(10) Javascript_Punctuation at = new Javascript_Punctuation('@');
+		public @S(20) @NOSPACE SeparatedList<Javascript_Identifier_Reference, PunctuationPeriod> name;
+		public @S(30) @OPT @NOSPACE Javascript_ParenthesizedExpression arguments;
 	}
 
 	/** public, private, protected, abstract, declare, override, in any order, before a member. */
@@ -125,6 +135,7 @@ public class Javascript_Class extends TokenSequence implements EagleRunnable
 	/** name = value;  static count = 0;  private db!: D1Database;  readonly x?: number; (Oct 2026) */
 	public static class Javascript_ClassField extends TokenSequence
 	{
+		public @S(1) @OPT TokenList<Javascript_Decorator> decorators;
 		public @S(2) @OPT Javascript_ClassModifiers modifiers;
 		public @S(10) @OPT Javascript_Keyword STATIC = new Javascript_Keyword("static");
 		public @S(15) @OPT Javascript_KeywordChoice READONLY = new Javascript_KeywordChoice("readonly", "accessor");
