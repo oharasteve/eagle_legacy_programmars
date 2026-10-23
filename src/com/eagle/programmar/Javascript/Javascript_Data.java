@@ -91,6 +91,17 @@ public class Javascript_Data extends TokenSequence
 
 		// See if the Declaration has some assignments in the metrics file
 		TypeEnum typeEnum = transformer.findAssignMetric(requireName(target));
+
+		// A variable holding a function value: its type is the target's to infer (Oct 2026)
+		if (init != null && init.isPresent() && (moreVars == null || moreVars.size() == 0)
+				&& generator instanceof com.eagle.programmar.Generate.ModernGenerator
+				&& Javascript_FunctionValues.holdsFunction(typeEnum, init.expr))
+		{
+			AbstractExpression value = transformer.transformExpression(generator, init.expr);
+			result.add(com.eagle.programmar.Generate.ModernGenerator.of(generator, "a function value")
+					.newFunctionValueDeclaration(requireName(target).getValue(), value, this));
+			return result;
+		}
 		AbstractType newType = generator.transformType(typeEnum, null, this);
 
 		String name1 = requireName(target).getValue();

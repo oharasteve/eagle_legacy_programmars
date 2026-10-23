@@ -80,6 +80,22 @@ public class Rust_LetStatement extends TokenSequence
 		return stmt;
 	}
 	
+	/** let mut name = value; with no type: a closure's type is Rust's to infer (Oct 2026) */
+	public static Rust_LetStatement newInferredDeclaration(String name, Rust_Expression initial, AbstractToken source)
+	{
+		Rust_LetStatement letStmt = new Rust_LetStatement();
+		letStmt.MUT.setPresent(true);
+		letStmt.semicolon = new PunctuationSemicolon();
+		letStmt.semicolon.setPresent(true);
+		letStmt.var = Rust_Variable.generateVariable(name);
+		letStmt.init = new Rust_DataInitialize();
+		letStmt.init.equals = new PunctuationEquals();
+		letStmt.init.expr = initial;
+		letStmt.init.setPresent(true);
+		letStmt.setTransformationSource(source);
+		return letStmt;
+	}
+
 	public static Rust_LetStatement newDataDeclaration(StaticEnum isStatic, String name,
 			Rust_Expression size, Rust_Type typ, Rust_Expression initial, AbstractToken source)
 	{

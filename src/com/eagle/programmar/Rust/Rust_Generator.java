@@ -25,6 +25,9 @@ import com.eagle.generate.SubstringSCEnum;
 import com.eagle.generate.TypeEnum;
 import com.eagle.metrics.Operator2Metrics.Oper2Types;
 import com.eagle.parsers.ParserManager;
+import com.eagle.programmar.Generate.ModernGenerator;
+import com.eagle.programmar.Rust.Expressions.Rust_IfExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_Closure;
 import com.eagle.programmar.Rust.Rust_Program.Rust_TopElement;
 import com.eagle.programmar.Rust.Expressions.Rust_AdditiveExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_AsExpression;
@@ -84,6 +87,7 @@ import com.eagle.tokens.punctuation.PunctuationRightParen;
 
 public class Rust_Generator
 		extends EagleGenerator<Rust_Statement, Rust_Expression, Rust_Variable, Rust_Type>
+		implements ModernGenerator<Rust_Statement, Rust_Expression, Rust_Variable, Rust_Type>
 {
 	public static String NAME = "Rust";
 	public static String SUFFIX = ".rs";
@@ -793,5 +797,33 @@ public class Rust_Generator
 	public Rust_Character_Literal newCharLiteral(String value, AbstractToken source)
 	{
 		return Rust_Character_Literal.generateCharLiteral(value, source);
+	}
+
+	// ================ ModernGenerator ================
+
+	@Override
+	public Rust_Expression newConditionalExpression(Rust_Expression cond, Rust_Expression whenTrue,
+			Rust_Expression whenFalse, AbstractToken source)
+	{
+		return Rust_IfExpression.generateIf(cond, whenTrue, whenFalse, source);
+	}
+
+	@Override
+	public Rust_Expression newClosure(ArrayList<String> names, ArrayList<Rust_Type> types,
+			ArrayList<Rust_Statement> body, Rust_Expression exprBody, boolean escapes, AbstractToken source)
+	{
+		return Rust_Closure.generateClosure(names, types, body, exprBody, escapes, source);
+	}
+
+	@Override
+	public Rust_Statement newFunctionValueDeclaration(String name, Rust_Expression initial, AbstractToken source)
+	{
+		return wrapStatement(Rust_LetStatement.newInferredDeclaration(name, initial, source));
+	}
+
+	@Override
+	public Rust_Type newFunctionType(ArrayList<Rust_Type> params, Rust_Type returns, AbstractToken source)
+	{
+		return Rust_Type.transformFunctionType(params, returns);
 	}
 }

@@ -99,7 +99,12 @@ public class Javascript_Function extends TokenSequence
 	{
 		AbstractType newReturnType = null;
 		TypeEnum metricRetType = transformer.findReturnMetric(implementation.id);
-		if (metricRetType != null)
+		if (metricRetType == TypeEnum.TOKEN)
+		{
+			// It returns a function value: the type comes from the value it returns (Oct 2026)
+			newReturnType = Javascript_FunctionValues.returnedFunctionType(transformer, generator, implementation.body, implementation);
+		}
+		if (metricRetType != null && newReturnType == null)
 		{
 			newReturnType = generator.transformType(metricRetType, null, implementation);
 		}

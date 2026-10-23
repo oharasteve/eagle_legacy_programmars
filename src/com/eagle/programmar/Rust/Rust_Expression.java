@@ -15,6 +15,8 @@ import com.eagle.programmar.Rust.Expressions.Rust_ExpressionArray;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalAndExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_LogicalOrExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_FunctionCall;
+import com.eagle.programmar.Rust.Expressions.Rust_IfExpression;
+import com.eagle.programmar.Rust.Expressions.Rust_Closure;
 import com.eagle.programmar.Rust.Expressions.Rust_MultiplicativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NegativeExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_NotExpression;
@@ -82,6 +84,8 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(40) Rust_Literal literal;
 	public @P(50) Rust_Character_Literal characters;
 	public @P(60) Rust_Underscore underscore;
+	public @P(70) Rust_IfExpression ifExpression;
+	public @P(75) Rust_Closure closure;
 
 	///////////////////////////////////////////////
 	// Primary expressions

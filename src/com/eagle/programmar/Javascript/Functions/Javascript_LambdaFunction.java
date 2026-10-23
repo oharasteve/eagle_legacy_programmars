@@ -3,6 +3,14 @@
 
 package com.eagle.programmar.Javascript.Functions;
 
+import com.eagle.generate.EagleGenerator;
+import com.eagle.programmar.Javascript.Javascript_FunctionValues;
+import com.eagle.tokens.interfaces.AbstractExpression;
+import com.eagle.tokens.interfaces.AbstractStatement;
+import com.eagle.tokens.interfaces.AbstractType;
+import com.eagle.tokens.interfaces.AbstractVariable;
+import com.eagle.transform.EagleTransformableExpression;
+import com.eagle.transform.EagleTransformer;
 import com.eagle.programmar.Javascript.Javascript_Element;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
@@ -27,7 +35,7 @@ import com.eagle.tokens.punctuation.PunctuationEquals;
 import com.eagle.tokens.punctuation.PunctuationLeftParen;
 import com.eagle.tokens.punctuation.PunctuationRightParen;
 
-public class Javascript_LambdaFunction extends PrimaryOperator implements EagleRunnable
+public class Javascript_LambdaFunction extends PrimaryOperator implements EagleRunnable, EagleTransformableExpression
 {
 	public @S(10) @OPT Javascript_Keyword ASYNC = new Javascript_Keyword("async");
 	public @S(20) Javascript_LambdaParams params;
@@ -85,5 +93,13 @@ public class Javascript_LambdaFunction extends PrimaryOperator implements EagleR
 		JsValues.JsFunction f = new JsValues.JsFunction("anonymous", this, rt.env);
 		f.boundThis = rt.thisValue(); // an arrow keeps the this of where it was written
 		interpreter.pushEagleValue(f);
+	}
+
+	/** A function value: the generator's closure (Rust: |x: i32| x * 2). */
+	@Override
+	public AbstractExpression transformExpression(EagleTransformer transformer,
+			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
+	{
+		return Javascript_FunctionValues.closure(transformer, generator, Javascript_FunctionValues.shape(this), this);
 	}
 }

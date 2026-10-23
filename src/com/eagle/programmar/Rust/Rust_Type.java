@@ -3,6 +3,10 @@
 
 package com.eagle.programmar.Rust;
 
+import com.eagle.tokens.punctuation.PunctuationRightParen;
+import com.eagle.tokens.punctuation.PunctuationLeftParen;
+import com.eagle.tokens.punctuation.PunctuationComma;
+import com.eagle.tokens.SeparatedList;
 import com.eagle.generate.EagleGenerator;
 import com.eagle.generate.TypeEnum;
 import com.eagle.programmar.Rust.Terminals.Rust_Keyword;
@@ -37,6 +41,44 @@ public class Rust_Type extends TokenChooser implements AbstractType
 			public @S(20) @NOSPACE Rust_Punctuation quote = new Rust_Punctuation("'");
 			public @S(30) @NOSPACE Rust_Keyword STATIC = new Rust_Keyword("static");
 		}
+	}
+
+	/** impl FnMut(i32) -> i32: the type of a closure a function returns or takes (Oct 2026) */
+	public @CHOICE static class Rust_TypeImplFn extends TokenSequence
+	{
+		public @S(10) Rust_Keyword IMPL = new Rust_Keyword("impl");
+		public @S(20) Rust_KeywordChoice FN = new Rust_KeywordChoice("Fn", "FnMut", "FnOnce");
+		public @S(30) @NOSPACE PunctuationLeftParen leftParen;
+		public @S(40) @NOSPACE @OPT SeparatedList<Rust_Type, PunctuationComma> params;
+		public @S(50) @NOSPACE PunctuationRightParen rightParen;
+		public @S(60) @OPT Rust_TypeImplFnReturns returns;
+
+		public static class Rust_TypeImplFnReturns extends TokenSequence
+		{
+			public @S(10) Rust_Punctuation arrow = new Rust_Punctuation("->");
+			public @S(20) Rust_Type type;
+		}
+	}
+
+	public static Rust_Type transformFunctionType(java.util.ArrayList<Rust_Type> params, Rust_Type returns)
+	{
+		Rust_TypeImplFn fn = new Rust_TypeImplFn();
+		fn.FN.setValue("FnMut");
+		fn.leftParen = new PunctuationLeftParen();
+		fn.params = new SeparatedList<Rust_Type, PunctuationComma>();
+		fn.params.setPresent(!params.isEmpty());
+		for (int i = 0; i < params.size(); i++)
+		{
+			if (i > 0) fn.params.addSecondaryElement(new PunctuationComma());
+			fn.params.addPrimaryElement(params.get(i));
+		}
+		fn.rightParen = new PunctuationRightParen();
+		fn.returns = new Rust_TypeImplFn.Rust_TypeImplFnReturns();
+		fn.returns.setPresent(returns != null);
+		if (returns != null) fn.returns.type = returns;
+		Rust_Type type = new Rust_Type();
+		type.setWhich(fn);
+		return type;
 	}
 
 	public @CHOICE static class Rust_TypeArray extends TokenSequence
