@@ -747,6 +747,21 @@ public final class JsRuntime
 	/** `text ${expr} more`: the expressions are parsed and evaluated here. */
 	public EagleValue template(String raw)
 	{
+		StringBuilder out = new StringBuilder();
+		for (String[] part : templateParts(raw))
+		{
+			out.append(part[0] != null ? part[0] : JsValues.toText(evalSource(part[1])));
+		}
+		return JsValues.str(out.toString());
+	}
+
+	/**
+	 * A template literal's pieces in order: {text, null} for literal text (escapes decoded),
+	 * {null, source} for each ${expression}.
+	 */
+	public static java.util.List<String[]> templateParts(String raw)
+	{
+		java.util.List<String[]> parts = new java.util.ArrayList<String[]>();
 		String body = raw.substring(1, raw.length() - 1);
 		StringBuilder out = new StringBuilder();
 		int i = 0;
@@ -770,15 +785,17 @@ public final class JsRuntime
 					else if (d == '}') { if (depth == 0) break; depth--; }
 					else if (d == '`') { j = body.indexOf('`', j + 1); if (j < 0) j = body.length() - 1; }
 				}
-				String expr = body.substring(i + 2, j).trim();
-				out.append(JsValues.toText(evalSource(expr)));
+				if (out.length() > 0) parts.add(new String[] { out.toString(), null });
+				out.setLength(0);
+				parts.add(new String[] { null, body.substring(i + 2, j).trim() });
 				i = j + 1;
 				continue;
 			}
 			out.append(c);
 			i++;
 		}
-		return JsValues.str(out.toString());
+		if (out.length() > 0 || parts.isEmpty()) parts.add(new String[] { out.toString(), null });
+		return parts;
 	}
 
 	/** Parses and evaluates one expression written as text, in the current environment. */

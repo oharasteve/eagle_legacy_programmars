@@ -6,6 +6,7 @@ package com.eagle.programmar.Javascript.Expressions;
 import java.util.ArrayList;
 import com.eagle.tokens.TokenList;
 import com.eagle.programmar.Javascript.Javascript_Subscript;
+import com.eagle.programmar.Javascript.Javascript_Transform;
 import com.eagle.programmar.Javascript.Runtime.JsValues;
 import com.eagle.programmar.Javascript.Runtime.JsRuntime;
 import com.eagle.programmar.Javascript.TypeScript.TS_TypeArguments;
@@ -49,13 +50,27 @@ public class Javascript_FunctionCall extends PrimaryOperator
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
 		Javascript_Variable variable = this.functionName;
+		if (JsRuntime.has(moreCalls))
+		{
+			throw new RuntimeException("Cannot translate a call on a call's result yet: " + this);
+		}
+		if (Javascript_Transform.qualifierCount(variable) > 0)
+		{
+			ArrayList<Javascript_Expression> callArgs = new ArrayList<Javascript_Expression>();
+			if (arguments.expressions != null && arguments.expressions.isPresent())
+			{
+				for (int i = 0; i < arguments.expressions.getPrimaryCount(); i++) callArgs.add(arguments.expressions.getPrimaryElement(i));
+			}
+			if (Javascript_Transform.isConsole(variable)) return Javascript_Transform.console(transformer, generator, variable, callArgs, this);
+			return Javascript_Transform.method(transformer, generator, variable, callArgs, this);
+		}
 		if (variable.firstId.getWhich() instanceof Javascript_Identifier_Reference)
 		{
 			Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) variable.firstId.getWhich();
 			String name = id.getValue();
 			ArrayList<TypeEnum> types = transformer.findArgumentsMetricForFunction(name);
 			ArrayList<AbstractExpression> args = new ArrayList<AbstractExpression>();
-			int numArgs = arguments.expressions.getPrimaryCount();
+			int numArgs = arguments.expressions == null || !arguments.expressions.isPresent() ? 0 : arguments.expressions.getPrimaryCount();
 			for (int i = 0; i < numArgs; i++)
 			{
 				Javascript_Expression expr = arguments.expressions.getPrimaryElement(i);

@@ -8,6 +8,7 @@ import com.eagle.generate.SubscriptEnum;
 import com.eagle.interpret.EagleInterpreter;
 import com.eagle.interpret.EagleRunnable;
 import com.eagle.programmar.Javascript.Javascript_Subscript;
+import com.eagle.programmar.Javascript.Javascript_Transform;
 import com.eagle.programmar.Javascript.Javascript_Variable;
 import com.eagle.programmar.Javascript.Javascript_Variable.Javascript_VariableQualifier;
 import com.eagle.programmar.Javascript.Symbols.Javascript_Identifier_Reference;
@@ -35,24 +36,8 @@ public class Javascript_VariableExpression extends PrimaryOperator
 	public AbstractExpression transformExpression(EagleTransformer transformer,
 			EagleGenerator<AbstractStatement, AbstractExpression, AbstractVariable, AbstractType> generator)
 	{
-		AbstractExpression newSub = null;
-		if (variable.qualifiers != null && variable.qualifiers.size() == 1)
-		{
-			Javascript_VariableQualifier qual = variable.qualifiers.first();
-			if (qual.getWhich() instanceof Javascript_Subscript)
-			{
-				Javascript_Subscript sub = (Javascript_Subscript) qual.getWhich();
-				newSub = transformer.transformExpression(generator, sub.expr);
-			}
-		}
-
-		AbstractToken which = variable.firstId.getWhich();
-		if (!(which instanceof Javascript_Identifier_Reference))
-		{
-			throw new RuntimeException("Cannot handle variable: " + which);
-		}
-		Javascript_Identifier_Reference id = (Javascript_Identifier_Reference) which;
-		return generator.newVariableExpression(id.getValue(),
-				SubscriptEnum.FIRST_IS_ZERO, newSub, this);
+		// A name, a name[i], or a .length; anything else stops by name rather than being dropped.
+		return Javascript_Transform.variable(transformer, generator, variable,
+				Javascript_Transform.qualifierCount(variable), this);
 	}
 }
