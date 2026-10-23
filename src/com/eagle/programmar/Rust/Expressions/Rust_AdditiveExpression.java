@@ -192,6 +192,12 @@ public class Rust_AdditiveExpression extends PrecedenceOperator
 		{
 			add.right = Rust_BorrowExpression.generateBorrow(add.right, add.right);
 		}
+		else if (rightWhich instanceof Rust_Number)
+		{
+			// "n=" + 5: a String takes only a &str on the right
+			add.right = Rust_ToStringMethod.generateString(TypeEnum.OTHER, add.right, null);
+			add.right = Rust_BorrowExpression.generateBorrow(add.right, add.right);
+		}
 
 		add.setTransformationSource(source);
 		return Rust_Generator.wrapExpression(add);

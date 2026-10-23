@@ -45,6 +45,7 @@ import com.eagle.programmar.Rust.Expressions.Rust_ShiftExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_SubscriptExpression;
 import com.eagle.programmar.Rust.Expressions.Rust_VariableExpression;
 import com.eagle.programmar.Rust.Functions.Rust_AbsMethod;
+import com.eagle.programmar.Rust.Functions.Rust_EndsWithMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FindMethod;
 import com.eagle.programmar.Rust.Functions.Rust_FormatFunction;
 import com.eagle.programmar.Rust.Functions.Rust_LenMethod;
@@ -721,9 +722,7 @@ public class Rust_Generator
 	public AbstractExpression newEndsWithFunction(Rust_Expression expr, Rust_Expression patt,
 			AbstractToken source)
 	{
-		throw new RuntimeException("Need to implement");
-//		Rust_EndsWithMethod endsMeth = new Rust_EndsWithMethod();
-//		return endsMeth.generateEndsWith(expr, patt, source);
+		return Rust_EndsWithMethod.generateEndsWith(expr, patt, source);
 	}
 
 	@Override

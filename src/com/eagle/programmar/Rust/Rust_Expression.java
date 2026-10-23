@@ -38,6 +38,7 @@ import com.eagle.programmar.Rust.Functions.Rust_PowMethod;
 import com.eagle.programmar.Rust.Functions.Rust_PrintlnFunction;
 import com.eagle.programmar.Rust.Functions.Rust_RevMethod;
 import com.eagle.programmar.Rust.Functions.Rust_StartsWithMethod;
+import com.eagle.programmar.Rust.Functions.Rust_EndsWithMethod;
 import com.eagle.programmar.Rust.Functions.Rust_StepByMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToOwnedMethod;
 import com.eagle.programmar.Rust.Functions.Rust_ToStringMethod;
@@ -110,6 +111,7 @@ public class Rust_Expression extends PrecedenceChooser implements AbstractExpres
 	public @P(1030) Rust_RevMethod revMethod;
 	public @P(1040) Rust_StepByMethod stepByMethod;
 	public @P(1050) Rust_StartsWithMethod startsWithMethod;
+	public @P(1051) Rust_EndsWithMethod endsWithMethod;
 	public @P(1060) Rust_ToStringMethod toStringMethod;
 	public @P(1070) Rust_ToOwnedMethod toOwnedMethod;
 	public @P(1080) Rust_TrimMethod trimMethod;

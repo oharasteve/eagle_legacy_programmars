@@ -26,15 +26,14 @@ public class Rust_Variable extends TokenSequence
 	{
 		Rust_Variable var = new Rust_Variable();
 		var.var = new Rust_Identifier_Reference();
-		if (name.length() == 1)
-		{
-			// Rust does not like single letter variable names
-			var.var.setValue(name + name);
-		}
-		else
-		{
-			var.var.setValue(name);
-		}
+		var.var.setValue(rustName(name));
 		return var;
+	}
+
+	/** The name a variable has in the generated Rust; definitions and references must agree. */
+	public static String rustName(String name)
+	{
+		// Rust does not like single letter variable names
+		return name.length() == 1 ? name + name : name;
 	}
 }
