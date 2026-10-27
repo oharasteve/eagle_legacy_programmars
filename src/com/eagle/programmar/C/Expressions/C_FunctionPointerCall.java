@@ -20,7 +20,7 @@ public class C_FunctionPointerCall extends PrimaryOperator
 	public @S(10) PunctuationLeftParen leftParen1;
 	public @S(20) @OPT PunctuationStar star;
 	public @S(30) C_MethodParameter firstParam;
-	public @S(40) TokenList<C_MethodNextParam> moreParams;
+	public @S(40) @OPT TokenList<C_MethodNextParam> moreParams; // (*fp)(args) has none; (*p->fp)(args) has one
 	public @S(50) @OPT C_Subscript subscript;
 	public @S(60) PunctuationRightParen rightParen1;
 	public @S(70) PunctuationLeftParen leftParen2;

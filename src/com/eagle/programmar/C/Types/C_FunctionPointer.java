@@ -6,6 +6,7 @@ package com.eagle.programmar.C.Types;
 import com.eagle.programmar.C.C_Function.C_FunctionParameter;
 import com.eagle.programmar.C.C_Function.C_Function_ParameterDefs;
 import com.eagle.programmar.C.C_Function.C_MoreParameterDefs;
+import com.eagle.programmar.C.C_DataInitialValue;
 import com.eagle.programmar.C.C_Program;
 import com.eagle.programmar.C.C_Type;
 import com.eagle.programmar.C.Symbols.C_Field_Definition;
@@ -33,5 +34,6 @@ public class C_FunctionPointer extends TokenSequence
 	public @S(110) @OPT C_FunctionParameter param;
 	public @S(120) @OPT TokenList<C_MoreParameterDefs> moreParams;
 	public @S(130) PunctuationRightParen rightParen2;
+	public @S(135) @OPT C_DataInitialValue initialValue; // int (*op)(int, int) = add;
 	public @S(140) @OPT PunctuationSemicolon semicolon;
 }
