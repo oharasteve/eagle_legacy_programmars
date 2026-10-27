@@ -211,37 +211,39 @@ public class C_Function extends TokenSequence
 	@Override
 	public void interpret(EagleInterpreter interpreter)
 	{
-		if (_callMetrics == null)
+		String fname = "main";
+		AbstractToken which = typeName.getWhich();
+		if (which instanceof C_Function_TypeAndName)
 		{
-			String fname = "main";
-			AbstractToken which = typeName.getWhich();
-			if (which instanceof C_Function_TypeAndName)
+			C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
+			C_Function_Definition id = typeAndName.functionName;
+			fname = id.getValue();
+			if (_callMetrics == null)
 			{
-				C_Function_TypeAndName typeAndName = (C_Function_TypeAndName) which;
-				C_Function_Definition id = typeAndName.functionName;
-				fname = id.getValue();
 				_callMetrics = new CallMetrics(interpreter._metrics, id.getValue(), id);
 				_argumentsMetrics = new ArgumentsMetrics(interpreter._metrics, id.getValue(), id);
 				_returnMetrics = new ReturnMetrics(interpreter._metrics, id.getValue(), id);
 			}
+		}
 
-			// Don't do anything here, unless the function name is 'main'
-			// We searched for all the functions in a preliminary pass
-			// And we only evaluate them when they are called
-			if (fname.equals("main"))
+		// Don't do anything here, unless the function name is 'main'
+		// We searched for all the functions in a preliminary pass
+		// And we only evaluate them when they are called.
+		// (The metrics guard used to wrap this too, so a tree interpreted twice --
+		// once for its profile, once to compare output -- ran 'main' only the first time.)
+		if (fname.equals("main"))
+		{
+			interpreter.callingFunction("main", this);
+			AbstractToken token = body.getWhich();
+			if (token instanceof C_FunctionImplementation)
 			{
-				interpreter.callingFunction("main", this);
-				AbstractToken token = body.getWhich();
-				if (token instanceof C_FunctionImplementation)
+				C_FunctionImplementation impl = (C_FunctionImplementation) token;
+				for (C_StatementOrComment stmt : impl.elements._elements)
 				{
-					C_FunctionImplementation impl = (C_FunctionImplementation) token;
-					for (C_StatementOrComment stmt : impl.elements._elements)
-					{
-						interpreter.tryToInterpret(stmt);
-					}
+					interpreter.tryToInterpret(stmt);
 				}
-				interpreter.completedFunction("main", this);
 			}
+			interpreter.completedFunction("main", this);
 		}
 	}
 
